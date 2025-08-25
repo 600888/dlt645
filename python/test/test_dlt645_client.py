@@ -1,0 +1,10 @@
+import sys
+
+sys.path.append("..")
+from src.service.clientsvc.client_service import MeterClientService
+
+if __name__ == "__main__":
+    client_svc = MeterClientService.new_tcp_client("127.0.0.1", 10521, 3000)
+    client_svc.set_address(bytes([0x50, 0x05, 0x00, 0x66, 0x16, 0x57]))
+    data_item = client_svc.read_01(0x00000000)
+    print(data_item)
