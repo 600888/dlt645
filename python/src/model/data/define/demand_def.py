@@ -1,7 +1,7 @@
 from typing import List
 
-from src.model.data.define.energy_def import DIMap
-from src.model.types.data_type import DataItem, DataFormat
+from ....model.data.define.energy_def import DIMap
+from ....model.types.data_type import DataItem, DataFormat
 
 # 需求DI列表
 demand_di_list = [
@@ -60,7 +60,7 @@ def init_demand_def(demand_types: List[DataItem]):
                 di=key,
                 name=name_prefix + demand_types[i].name,
                 data_format=DataFormat.XX_XXXX.value,
-                unit=demand_types[i].unit
+                unit=demand_types[i].unit,
             )
 
             # 反向有功需量
@@ -69,7 +69,7 @@ def init_demand_def(demand_types: List[DataItem]):
                 di=key,
                 name=name_prefix + demand_types[64 + i].name,
                 data_format=DataFormat.XX_XXXX.value,
-                unit=demand_types[64 + i].unit
+                unit=demand_types[64 + i].unit,
             )
 
             # 组合无功1需量
@@ -78,7 +78,7 @@ def init_demand_def(demand_types: List[DataItem]):
                 di=key,
                 name=name_prefix + demand_types[64 * 2 + i].name,
                 data_format=DataFormat.XX_XXXX.value,
-                unit=demand_types[64 * 2 + i].unit
+                unit=demand_types[64 * 2 + i].unit,
             )
 
             # 组合无功2需量
@@ -87,7 +87,7 @@ def init_demand_def(demand_types: List[DataItem]):
                 di=key,
                 name=name_prefix + demand_types[64 * 3 + i].name,
                 data_format=DataFormat.XX_XXXX.value,
-                unit=demand_types[64 * 3 + i].unit
+                unit=demand_types[64 * 3 + i].unit,
             )
 
             # 第一象限无功费率最大需量
@@ -96,7 +96,7 @@ def init_demand_def(demand_types: List[DataItem]):
                 di=key,
                 name=name_prefix + demand_types[64 * 4 + i].name,
                 data_format=DataFormat.XX_XXXX.value,
-                unit=demand_types[64 * 4 + i].unit
+                unit=demand_types[64 * 4 + i].unit,
             )
 
             # 第二象限无功费率最大需量
@@ -105,7 +105,7 @@ def init_demand_def(demand_types: List[DataItem]):
                 di=key,
                 name=name_prefix + demand_types[64 * 5 + i].name,
                 data_format=DataFormat.XX_XXXX.value,
-                unit=demand_types[64 * 5 + i].unit
+                unit=demand_types[64 * 5 + i].unit,
             )
 
             # 第三象限无功费率最大需量
@@ -114,7 +114,7 @@ def init_demand_def(demand_types: List[DataItem]):
                 di=key,
                 name=name_prefix + demand_types[64 * 6 + i].name,
                 data_format=DataFormat.XX_XXXX.value,
-                unit=demand_types[64 * 6 + i].unit
+                unit=demand_types[64 * 6 + i].unit,
             )
 
             # 第四象限无功费率最大需量
@@ -123,7 +123,7 @@ def init_demand_def(demand_types: List[DataItem]):
                 di=key,
                 name=name_prefix + demand_types[64 * 7 + i].name,
                 data_format=DataFormat.XX_XXXX.value,
-                unit=demand_types[64 * 7 + i].unit
+                unit=demand_types[64 * 7 + i].unit,
             )
 
             # 正向视在最大需量
@@ -132,7 +132,7 @@ def init_demand_def(demand_types: List[DataItem]):
                 di=key,
                 name=name_prefix + demand_types[64 * 8 + i].name,
                 data_format=DataFormat.XX_XXXX.value,
-                unit=demand_types[64 * 8 + i].unit
+                unit=demand_types[64 * 8 + i].unit,
             )
 
             # 反向视在最大需量
@@ -141,15 +141,16 @@ def init_demand_def(demand_types: List[DataItem]):
                 di=key,
                 name=name_prefix + demand_types[64 * 9 + i].name,
                 data_format=DataFormat.XX_XXXX.value,
-                unit=demand_types[64 * 9 + i].unit
+                unit=demand_types[64 * 9 + i].unit,
             )
 
             # 最后几个数据特殊处理
             for k in range(len(demand_di_list)):
-                key = demand_di_list[k]
+                # 提取demandDiList中的前24位，然后添加结算日信息（最后8位）
+                key = (demand_di_list[k] & 0xFFFFFF00) | (di0 + j);
                 DIMap[key] = DataItem(
                     di=key,
                     name=name_prefix + demand_types[64 * 10 + k].name,
                     data_format=DataFormat.XX_XXXX.value,
-                    unit=demand_types[64 * 10 + k].unit
+                    unit=demand_types[64 * 10 + k].unit,
                 )

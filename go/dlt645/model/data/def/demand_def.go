@@ -117,7 +117,7 @@ func initDemandDef() {
 
 			// 最后几个数据特殊处理
 			for k := 0; k < len(demandDiList); k++ {
-				value := demandDiList[k]
+				value := uint32(demandDiList[k]&0xFFFFFF00) | uint32(di0+j) // 提取demandDiList中的前24位，然后添加结算日信息（最后8位）
 				DIMap[value] = model.DataItem{
 					Name:       namePrefix + dlt645type.DemandTypes[64*10+k].Name,
 					DataFormat: model.XX_XXXX,

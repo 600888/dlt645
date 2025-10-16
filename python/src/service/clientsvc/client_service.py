@@ -4,19 +4,20 @@ import time
 import struct
 from typing import Optional, Union
 
-from src.common.transform import (
+from ...common.transform import (
     bcd_to_float,
     bcd_to_time,
     bytes_to_int,
     bytes_to_spaced_hex,
 )
-from src.model.types.data_type import DataFormat, DataItem
-from src.model.types.dlt645_type import CtrlCode, Demand
-from src.protocol.protocol import DLT645Protocol, Frame
-from src.protocol.log import log
-from src.model.data import data_handler as data
-from src.transport.client.rtu_client import RtuClient
-from src.transport.client.tcp_client import TcpClient
+from ...model.types.data_type import DataFormat, DataItem
+from ...model.types.dlt645_type import CtrlCode, Demand
+from ...protocol.protocol import DLT645Protocol
+from ...protocol.frame import Frame
+from ...protocol.log import log
+from ...model.data import data_handler as data
+from ...transport.client.rtu_client import RtuClient
+from ...transport.client.tcp_client import TcpClient
 
 
 class MeterClientService:
@@ -28,7 +29,7 @@ class MeterClientService:
 
     @classmethod
     def new_tcp_client(
-        cls, ip: str, port: int, timeout: float
+        cls, ip: str, port: int, timeout: float = 30.0
     ) -> Optional["MeterClientService"]:
         """创建TCP客户端"""
         tcp_client = TcpClient(ip=ip, port=port, timeout=timeout)

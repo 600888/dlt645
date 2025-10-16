@@ -1,198 +1,232 @@
-### 🌴通讯支持
+# DLT645协议多语言实现库
 
-| 功能                            | 状态 |
-| ------------------------------- | ---- |
-| **TCP客户端（方便通讯测试）** 🐾 | ✅    |
-| **TCP服务端（方便通讯测试）** 🐾 | ✅    |
-| **RTU主站** 🐾                   | ✅    |
-| **RTU从站** 🐾                   | ✅    |
+一个功能完整的DLT645电能表通信协议的多语言实现项目，同时支持C++、Python和Go三种编程语言，提供了统一的接口和功能。
 
-### 🌴 功能完成情况
+# 选择语言版本
 
-| 功能                                           | 状态 |
-| ---------------------------------------------- | -- |
-| **读、写通讯地址** 🐾  | ✅  |
-| **广播校时** 🐾  | ✅  |
-| **电能量** 🐾  | ✅  |
-| **最大需量及发生时间** 🐾         | ✅ |
-| **变量** 🐾                | ✅ |
-| **事件记录** 🐾                 | ❌ |
-| **参变量** 🐾            | ❌ |
-| **冻结量** 🐾               | ❌ |
-| **负荷纪录** 🐾           | ❌ |
+请选择您感兴趣的语言版本查看详细文档：
 
-因为本人使用DLT645协议需求大多是读取电能表上的电能、需量、变量等数据，后续的功能暂无开发计划
+- C++版本(目前只支持Linux平台)
+- [Python版本](python/README.md)
+- [Go版本](go/README.md)
 
-### 目录结构
+# DLT645-2007 Protocol Implementation in C++
 
-```bash
-├── config
-├── dlt645
-│   ├── common
-│   ├── model
-│   │   ├── data       # 数据模型
-│   │   │   └── def    
-│   │   └── type       # dlt645数据类型
-│   ├── protocol       # 协议解析层
-│   ├── service
-│   │   ├── clientsvc  # dlt645客户端api及实现
-│   │   └── serversvc  # dlt645服务端api及实现
-│   └── transport
-│       ├── client     # 客户端通讯接口,支持TCP客户端、RTU主站
-│       └── server	   # 服务端通讯接口,支持TCP服务端、RTU从站
-└── test  # 测试文件
+这是一个完整的DLT645-2007电能表通信协议的C++实现，支持TCP和RTU两种通信方式，提供了完整的客户端和服务端功能。
+
+## 项目结构
+
+```
+├── cpp/
+│   ├── include/         # 头文件
+│   │   └── dlt645/      # DLT645协议相关头文件
+│   │       ├── common/  # 通用工具（日志、转换等）
+│   │       ├── model/   # 数据模型
+│   │       ├── protocol/ # 协议实现
+│   │       ├── service/  # 业务服务
+│   │       └── transport/# 传输层实现
+│   ├── src/             # 源代码实现
+│   ├── example/         # 示例程序
+│   ├── third/           # 第三方库
+│   ├── build/           # 构建目录
+│   └── CMakeLists.txt   # CMake构建配置
+└── README_CPP.md        # C++版本项目说明文档
 ```
 
-### 使用方法
+## 功能特性
 
-1. 创建DLT645从站
+- 完整实现DLT645-2007协议的帧格式、校验和、数据编解码
+- 支持TCP和RTU两种通信方式
+- 提供客户端和服务端完整实现
+- 支持异步通信
+- 完善的日志系统
+- 模拟设备数据（服务端）
+- 简单易用的API接口
 
-   ```go
-   func TestRTUServerStart(t *testing.T) {
-   	serverSvc, err := serversvc.NewRtuServer("/dev/ttyS0", 8, 1, 9600, serial.ParityNone, 5*time.Second)
-   	if err != nil {
-   		t.Fatalf("创建RTU服务器失败: %v", err)
-   	}
-   	serverSvc.SetAddress([]byte{0x50, 0x05, 0x00, 0x66, 0x16, 0x57})
+## 依赖项
+
+- C++20 标准
+- CMake 3.16+ 
+- Boost >=1.81（用于Asio网络编程）
+- spdlog 日志库（已包含在third目录）
+- rapidjson （已包含在third目录）
+
+## 构建步骤
+
+1. 确保已安装必要的依赖：
+   ```bash
+   # Ubuntu/Debian
+   sudo apt-get install cmake libboost-all-dev
    
-   	// 启动服务器
-   	if err := serverSvc.Server.Start(); err != nil {
-   		t.Fatalf("启动RTU服务器失败: %v", err)
-   	}
-   }
+   # CentOS/RHEL
+   sudo yum install cmake boost-devel
+   
+   # macOS
+   brew install cmake boost
    ```
 
-2. 创建DLT645主站
-
-   ```go
-   func TestRtuClientStart(t *testing.T) {
-   	clientSvc, err := clientsvc.NewRtuClient("COM1", 2400, 8, 1, serial.ParityNone, 5*time.Second)
-   	if err != nil {
-   		t.Fatalf("创建RTU客户端失败: %v", err)
-   	}
-   	clientSvc.SetAddress([]byte{0x50, 0x05, 0x00, 0x66, 0x16, 0x57})
-   
-   	// 连接服务器
-   	if err := clientSvc.Conn.Connect(); err != nil {
-   		t.Log("连接服务器失败")
-   		t.Fatal(err)
-   	}
-   }
+2. 创建构建目录并编译项目：
+   ```bash
+   cd cpp
+   mkdir build
+   cd build
+   cmake ..
+   make
    ```
 
-3. 服务端接口（注释的接口待实现）
-
-   ```go
-   type DLT645Server interface {
-   	HandleRequest(frame *protocol.Frame) ([]byte, error) // 处理请求
-   	Set00(di uint32, value float32) (bool, error)        // 写电能量
-   	Set01(di uint32, value *model.Demand) (bool, error)  // 写最大需量及发生时间
-   	Set02(di uint32, value float32) (bool, error)        // 写变量
-   	// Set03(di uint32, value uint32) (bool, error)       // 写事件记录
-   	// Set04(di uint32, value uint32) (bool, error)          // 写参变量
-   	// Set05(di uint32) (bool, error)                        // 写冻结
-   	// Set06(di uint32) (bool, error)                        // 写负荷记录
-   	// Set(di uint32, bytes []byte) (*model.DataItem, error) // 写数据
-   	SetAddress(address []byte) error // 写通信地址
-   	// TimeCalibration(dateTime []byte) error // 广播校时
-   	// SetFreeze(address []byte, date []byte) error          // 冻结命令
-   	// ChangeCommunicationRate(rate CommunicationRate) error        // 更改通信速率
-   	// ChangePassword(oldPassword []byte, newPassword []byte) error // 修改密码
-   	// MaximumDemandReset() error                                   // 最大需量清零
-   	// MeterReset() error                                           // 电表清零
-   	// EventReset(di []byte) error                                  // 事件清零
-   }
+3. 安装（可选）：
+   ```bash
+   sudo make install
    ```
 
-4. 客户端接口（注释的接口待实现）
+## 使用示例
 
-   ```go
-   type Dlt645Client interface {
-   	Read00(di uint32) (*model.DataItem, error) // 读电能量
-   	Read01(di uint32) (*model.DataItem, error) // 读最大需量及发生时间
-   	Read02(di uint32) (*model.DataItem, error) // 读变量
-   	// Read03(di uint32) (*model.DataItem, error)              // 读事件记录
-   	// Read04(di uint32) (*model.DataItem, error)              // 读参变量
-   	// Read05(di uint32) (*model.DataItem, error)              // 读冻结
-   	// Read06(di uint32) (*model.DataItem, error)              // 读负荷记录
-   	// Write(di uint32, bytes []byte) (*model.DataItem, error) // 写数据
-   	ReadAddress() ([]byte, error)      // 读通信地址
-   	WriteAddress(address []byte) error // 写通信地址
-   	// TimeCalibration(dateTime []byte) error                  // 广播校时
-   	// Freeze(address []byte, date []byte) error               // 冻结命令
-   	// ChangeCommunicationRate(rate CommunicationRate) error        // 更改通信速率
-   	ChangePassword(oldPassword []byte, newPassword []byte) error // 修改密码
-   	// MaximumDemandReset() error                                   // 最大需量清零
-   	// MeterReset() error                                           // 电表清零
-   	// EventReset(di []byte) error                                  // 事件清零
-   }
-   ```
+### TCP服务端示例
 
-### 例子
+启动一个DLT645 TCP服务端，监听指定端口，并提供模拟的电能表数据。
 
-#### 使用服务端和客户端互测
+```bash
+./bin/tcp_server_example
+```
 
-为了方便测试，这里使用TCP服务端和客户端
+服务端会在端口10521上监听连接，并响应客户端的读取请求。
 
-1. 启动DLT645服务端并设置电能数据
+### TCP客户端示例
 
-   ```go
-   func main() {
-   	common.InitLogger()
-   	defer common.LogFile.Close()
-   	log.Println("start server")
-   
-   	serverSvc, err := serversvc.NewTcpServer("10.10.112.5", 10521, 5*time.Second)
-   	if err != nil {
-   		log.Printf("创建TCP服务器失败: %v", err)
-   	}
-   	serverSvc.SetAddress([]byte{0x50, 0x05, 0x00, 0x66, 0x16, 0x57})
-   
-   	// 设置电能数据
-   	serverSvc.Set00(0x00000000, 123456.78)
-   
-   	// 启动服务器
-   	if err := serverSvc.Server.Start(); err != nil {
-   		log.Printf("启动TCP服务器失败: %v", err)
-   	}
-   }
-   ```
+连接到DLT645 TCP服务端，读取电能表数据。
 
-   ![](resource/1.png)
+```bash
+./bin/tcp_client_example
+```
 
-2. 启动DLT645客户端读取电能数据
+客户端会连接到本地的10521端口，并尝试读取电能、电压、电流等数据。
 
-   ```go
-   func TestTcpClientStart(t *testing.T) {
-   	clientSvc, err := clientsvc.NewTcpClient("10.10.112.5", 10521, 5*time.Second)
-   	if err != nil {
-   		t.Fatalf("创建TCP客户端失败: %v", err)
-   	}
-   	clientSvc.SetAddress([]byte{0x50, 0x05, 0x00, 0x66, 0x16, 0x57})
-   
-   	// 连接服务器
-   	if err := clientSvc.Conn.Connect(); err != nil {
-   		t.Log("连接服务器失败")
-   		t.Fatal(err)
-   	}
-   
-   	dataItem, err := clientSvc.Read01(0x00000000)
-   	if err != nil {
-   		t.Log("读取数据项失败")
-   		t.Fatal(err)
-   	}
-   	fmt.Printf("%.2f %v\n", dataItem.Value.(float32), dataItem.Unit)
-   }
-   ```
+### RTU服务端示例
 
-   ![](resource/2.png)
+启动一个DLT645 RTU服务端，通过串口与客户端通信。
 
-#### 使用第三方工具测试
+```bash
+./bin/rtu_server_example
+```
 
-模拟测试软件地址
+注意：需要根据实际情况修改代码中的串口配置（端口名、波特率等）。
 
-[https://www.redisant.cn/dl645master]: https://www.redisant.cn/dl645master
+### RTU客户端示例
 
-测试效果
+通过串口连接到DLT645 RTU服务端，读取电能表数据。
 
-![](resource/3.gif)
+```bash
+./bin/rtu_client_example
+```
+
+注意：需要根据实际情况修改代码中的串口配置（端口名、波特率等）。
+
+## 代码示例
+
+### 创建TCP客户端
+
+```cpp
+#include "dlt645/service/client_service.h"
+
+// 创建TCP客户端
+auto client = service::ClientService::createTcpClient("127.0.0.1", 10521);
+
+// 设置设备地址
+std::array<uint8_t, 6> deviceAddr = {0x12, 0x34, 0x56, 0x78, 0x9A, 0xBC};
+client->setAddress(deviceAddr);
+
+// 设置密码
+std::array<uint8_t, 4> password = {0x00, 0x00, 0x00, 0x00};
+client->setPassword(password);
+
+// 连接设备
+bool connected = client->connect();
+
+// 读取电能数据(00类)
+auto energyData = client->read00(0x00000001);
+
+// 读取最大需量数据(01类)
+auto demandData = client->read01(0x01000100);
+
+// 读取变量数据(02类)
+auto variableData = client->read02(0x02010100);
+
+// 读取通讯地址
+auto addressData = client->readAddress();
+
+// 广播校时
+client->broadcastTimeSync();
+
+// 断开连接
+client->disconnect();
+```
+
+### 创建TCP服务端
+
+```cpp
+#include "dlt645/service/server_service.h"
+
+// 创建TCP服务端
+auto server = service::ServerService::createTcpServer("0.0.0.0", 10521);
+
+// 注册设备
+std::array<uint8_t, 6> deviceAddr = {0x12, 0x34, 0x56, 0x78, 0x9A, 0xBC};
+server->registerDevice(deviceAddr);
+server->setAddress(deviceAddr);
+
+// 设置密码
+std::array<uint8_t, 4> password = {0x00, 0x00, 0x00, 0x00};
+server->setPassword(password);
+
+// 设置电能量数据(00类)
+server->set00(0x00000001, 100.5);
+
+// 设置变量数据(02类)
+server->set02(0x02010100, 220.0);
+
+// 启动服务
+server->start();
+
+// 当需要停止服务时
+server->stop();
+```
+
+## 接口说明
+
+### 客户端主要接口
+
+- **createTcpClient**：创建TCP客户端连接
+- **createRtuClient**：创建RTU客户端连接
+- **setAddress**：设置设备地址
+- **setPassword**：设置设备密码
+- **connect**：连接到设备
+- **read00**：读取电能量数据(00类)
+- **read01**：读取最大需量数据(01类)
+- **read02**：读取变量数据(02类)
+- **readAddress**：读取通讯地址
+- **writeAddress**：写入通讯地址
+- **changePassword**：修改密码
+- **broadcastTimeSync**：广播校时
+- **disconnect**：断开连接
+
+### 服务端主要接口
+
+- **createTcpServer**：创建TCP服务端
+- **createRtuServer**：创建RTU服务端
+- **registerDevice**：注册设备
+- **validateDevice**：验证设备地址
+- **setAddress**：设置设备地址
+- **setPassword**：设置设备密码
+- **set00**：设置电能量数据
+- **set01**：设置最大需量及发生时间
+- **set02**：设置变量数据
+- **start**：启动服务
+- **stop**：停止服务
+
+## 注意事项
+
+1. RTU模式需要正确配置串口参数，包括端口名、波特率、数据位、停止位和校验位
+2. 示例程序中的设备地址和密码使用了默认值，实际使用时需要根据设备情况修改
+3. 服务端示例提供了简单的模拟数据，实际应用中可能需要连接到真实的设备或数据库
+4. 在生产环境中，请确保正确处理异常和错误情况
+5. 接口定义可能会随着版本更新而变化，请以最新的头文件为准

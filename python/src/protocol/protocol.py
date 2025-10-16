@@ -1,7 +1,7 @@
 from typing import Optional
 
-from src.protocol.frame import FRAME_START_BYTE, FRAME_END_BYTE, Frame
-from src.protocol.log import log
+from .frame import FRAME_START_BYTE, FRAME_END_BYTE, Frame
+from .log import log
 
 
 class DLT645Protocol:

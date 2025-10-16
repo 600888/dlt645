@@ -2,8 +2,8 @@ import socket
 import time
 from typing import Optional, Any
 
-from src.common.transform import bytes_to_spaced_hex
-from src.transport.client.log import log
+from ...common.transform import bytes_to_spaced_hex
+from ...transport.client.log import log
 
 
 class TcpClient:

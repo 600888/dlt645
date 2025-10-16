@@ -1,7 +1,7 @@
 import json
 from enum import IntEnum
 from time import time
-from src.model.log import log
+from ...model.log import log
 
 
 # 模拟 DICategory 枚举

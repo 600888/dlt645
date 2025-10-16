@@ -1,19 +1,26 @@
 import struct
-from typing import Union
-import time
+from typing import Optional, Union
+from datetime import datetime
+import struct
 
-from src.common.transform import bytes_to_spaced_hex, float_to_bcd, time_to_bcd
-from src.model.data.data_handler import set_data_item, get_data_item
-from src.model.types.dlt645_type import CtrlCode, Demand
-from src.protocol.protocol import DLT645Protocol
-from src.protocol.log import log
-from src.model.data import data_handler as data
-from src.transport.server.rtu_server import RtuServer
-from src.transport.server.tcp_server import TcpServer
+from ...common.transform import bytes_to_spaced_hex, float_to_bcd, time_to_bcd
+from ...model.data.data_handler import set_data_item, get_data_item
+from ...model.types.data_type import DataItem
+from ...model.types.dlt645_type import CtrlCode, Demand
+from ...protocol.protocol import DLT645Protocol
+from ...protocol.log import log
+from ...model.data import data_handler as data
+from ...transport.server.rtu_server import RtuServer
+from ...transport.server.tcp_server import TcpServer
 
 
 class MeterServerService:
-    def __init__(self, server: Union[TcpServer, RtuServer], address: bytearray = None, password=None):
+    def __init__(
+        self,
+        server: Union[TcpServer, RtuServer],
+        address: Optional[bytearray] = None,
+        password: Optional[bytearray] = None,
+    ):
         self.server = server
         if address is None:
             self.address = bytearray([0x00, 0x00, 0x00, 0x00, 0x00, 0x00])
@@ -112,6 +119,14 @@ class MeterServerService:
             raise ValueError("invalid password length")
         self.password = password
         log.info(f"设置密码: {self.password}")
+        
+    def get_data_item(self, di: int) -> Optional[DataItem]:
+        """
+        获取数据项
+        :param di: 数据项
+        :return:
+        """
+        return get_data_item(di)
 
     def handle_request(self, frame):
         """
@@ -128,7 +143,9 @@ class MeterServerService:
         if frame.ctrl_code == CtrlCode.BroadcastTimeSync:  # 广播校时
             log.info(f"广播校时: {frame.Data.hex(' ')}")
             self.set_time(frame.Data)
-            return DLT645Protocol.build_frame(frame.addr, frame.ctrl_code | 0x80, frame.data)
+            return DLT645Protocol.build_frame(
+                frame.addr, frame.ctrl_code | 0x80, frame.data
+            )
         elif frame.ctrl_code == CtrlCode.ReadData:
             # 解析数据标识
             di = frame.data
@@ -144,9 +161,11 @@ class MeterServerService:
                 res_data[:4] = frame.data[:4]  # 仅复制前 4 字节数据标识
                 value = data_item.value
                 # 转换为 BCD 码
-                bcd_value = float_to_bcd(value, data_item.data_format, 'little')
+                bcd_value = float_to_bcd(value, data_item.data_format, "little")
                 res_data[4:] = bcd_value
-                return DLT645Protocol.build_frame(frame.addr, frame.ctrl_code | 0x80, bytes(res_data))
+                return DLT645Protocol.build_frame(
+                    frame.addr, frame.ctrl_code | 0x80, bytes(res_data)
+                )
             elif di3 == 0x01:  # 读取最大需量及发生时间
                 res_data = bytearray(12)
                 data_id = struct.unpack("<I", frame.data[:4])[0]
@@ -156,12 +175,14 @@ class MeterServerService:
                 res_data[:4] = frame.data[:4]  # 返回数据标识
                 value = data_item.value
                 # 转换为 BCD 码
-                bcd_value = float_to_bcd(value, data_item.data_format, 'little')
+                bcd_value = float_to_bcd(value, data_item.data_format, "little")
                 res_data[4:7] = bcd_value[:3]
                 # 需量发生时间
-                res_data[7:12] = time_to_bcd(time.time())
+                res_data[7:12] = time_to_bcd(datetime.now())
                 log.info(f"读取最大需量及发生时间: {res_data}")
-                return DLT645Protocol.build_frame(frame.addr, frame.ctrl_code | 0x80, bytes(res_data))
+                return DLT645Protocol.build_frame(
+                    frame.addr, frame.ctrl_code | 0x80, bytes(res_data)
+                )
             elif di3 == 0x02:  # 读变量
                 data_id = struct.unpack("<I", frame.data[:4])[0]
                 data_item = data.get_data_item(data_id)
@@ -169,34 +190,42 @@ class MeterServerService:
                     raise Exception("data item not found")
                 # 变量数据长度
                 data_len = 4
-                data_len += (len(data_item.data_format) - 1) // 2  # (数据格式长度 - 1 位小数点)/2
+                data_len += (
+                    len(data_item.data_format) - 1
+                ) // 2  # (数据格式长度 - 1 位小数点)/2
                 # 构建响应帧
                 res_data = bytearray(data_len)
                 res_data[:4] = frame.data[:4]  # 仅复制前 4 字节
                 value = data_item.value
                 # 转换为 BCD 码（小端序）
-                bcd_value = float_to_bcd(value, data_item.data_format, 'little')
+                bcd_value = float_to_bcd(value, data_item.data_format, "little")
                 res_data[4:data_len] = bcd_value
-                return DLT645Protocol.build_frame(frame.addr, frame.ctrl_code | 0x80, bytes(res_data))
+                return DLT645Protocol.build_frame(
+                    frame.addr, frame.ctrl_code | 0x80, bytes(res_data)
+                )
             else:
                 log.info(f"unknown: {hex(di3)}")
                 return Exception("unknown di3")
         elif frame.ctrl_code == CtrlCode.ReadAddress:
             # 构建响应帧
             res_data = self.address[:6]
-            return DLT645Protocol.build_frame(self.address, frame.ctrl_code | 0x80, res_data)
+            return DLT645Protocol.build_frame(
+                bytes(self.address), frame.ctrl_code | 0x80, bytes(res_data)
+            )
         elif frame.ctrl_code == CtrlCode.WriteAddress:
-            res_data = b''  # 写通讯地址不需要返回数据
+            res_data = b""  # 写通讯地址不需要返回数据
             # 解析数据
             addr = frame.data[:6]
             self.set_address(addr)  # 设置通讯地址
-            return DLT645Protocol.build_frame(self.address, frame.ctrl_code | 0x80, res_data)
+            return DLT645Protocol.build_frame(
+                bytes(self.address), frame.ctrl_code | 0x80, res_data
+            )
         else:
             log.info(f"unknown control code: {hex(frame.ctrl_code)}")
             raise Exception("unknown control code")
 
 
-def new_tcp_server(ip: str, port: int, timeout: int) -> MeterServerService:
+def new_tcp_server(ip: str, port: int, timeout: int = 30) -> MeterServerService:
     """
     创建 TCP 服务器
     :param ip: IP 地址
@@ -215,8 +244,9 @@ def new_tcp_server(ip: str, port: int, timeout: int) -> MeterServerService:
     return meter_service
 
 
-def new_rtu_server(port: str, dataBits: int, stopBits: int, baudRate: int, parity: str,
-                   timeout: float) -> MeterServerService:
+def new_rtu_server(
+    port: str, dataBits: int, stopBits: int, baudRate: int, parity: str, timeout: float
+) -> MeterServerService:
     """
     创建 RTU 服务器
     :param port: 端口

@@ -152,7 +152,7 @@ func initEnergyDef() {
 
 			// 最后几个数据特殊处理
 			for k := 0; k < len(energyDiList); k++ {
-				value := energyDiList[k]
+				value := uint32(energyDiList[k]&0xFFFFFF00) | uint32(di0+j) // 提取energyDiList中的前24位，然后添加结算日信息（最后8位）
 				DIMap[value] = model.DataItem{
 					Name:       namePrefix + dlt645type.EnergyTypes[64*11+k].Name,
 					DataFormat: model.XXXXXX_XX,

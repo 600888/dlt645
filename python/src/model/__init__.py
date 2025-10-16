@@ -1,11 +1,11 @@
 # 初始化数据类型
 import os
 
-from src.common.env import conf_path
-from src.model.data.define.demand_def import init_demand_def
-from src.model.data.define.energy_def import init_energy_def
-from src.model.data.define.variable_def import init_variable_def
-from src.model.types.dlt645_type import initDataTypeFromJson
+from ..common.env import conf_path
+from ..model.data.define.demand_def import init_demand_def
+from ..model.data.define.energy_def import init_energy_def
+from ..model.data.define.variable_def import init_variable_def
+from ..model.types.dlt645_type import initDataTypeFromJson
 
 EnergyTypes = []
 DemandTypes = []

@@ -6,8 +6,8 @@ FRAME_END_BYTE = 0x16
 BROADCAST_ADDR = 0xAA
 
 class Frame:
-    def __init__(self, preamble: List[int] = None, start_flag: int = 0, addr: List[int] = None,
-                 ctrl_code: int = 0, data_len: int = 0, data: List[int] = None,
+    def __init__(self, preamble: List[int] = [], start_flag: int = 0, addr: List[int] = [],
+                 ctrl_code: int = 0, data_len: int = 0, data: List[int] = [],
                  check_sum: int = 0, end_flag: int = 0):
         self.preamble = preamble if preamble is not None else []
         self.start_flag = start_flag

@@ -1,8 +1,8 @@
 from typing import Any, Optional, Union
 
-from src.model.data.define.energy_def import DIMap
-from src.model.types.data_type import DataItem, DataFormat
-from src.model.log import log
+from ...model.data.define.energy_def import DIMap
+from ...model.types.data_type import DataItem, DataFormat
+from ...model.log import log
 
 
 # 模拟定义 DIMap 和数据格式常量
