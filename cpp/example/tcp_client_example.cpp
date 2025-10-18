@@ -43,11 +43,48 @@ int main()
         std::cout << "Reading energy data..." << std::endl;
         auto energyData = client->read00(0x00000000);
         if (energyData) {
+            std::cout << "Energy data: " << std::endl;
+            std::cout << "  Name: " << energyData->name << std::endl;
+            std::cout << "  Format: " << energyData->dataFormat << std::endl;
+            std::cout << "  Unit: " << energyData->unit << std::endl;
             if (std::holds_alternative<float>(energyData->value)) {
-                std::cout << fmt::format("  Value: {:.2f}", std::get<float>(energyData->value)) << std::endl;
+                std::cout << "  Value: " << std::get<float>(energyData->value) << std::endl;
             }
         } else {
             std::cout << "Failed to read energy data" << std::endl;
+        }
+
+        // 读取需量数据
+        std::cout << "Reading demand data..." << std::endl;
+        auto demandData = client->read01(0x01010000);
+        if (demandData) {
+            std::cout << "Demand data: " << std::endl;
+            std::cout << "  Name: " << demandData->name << std::endl;
+            std::cout << "  Format: " << demandData->dataFormat << std::endl;
+            std::cout << "  Unit: " << demandData->unit << std::endl;
+            // 判断是否为需量
+            if (std::holds_alternative<model::Demand>(demandData->value)) {
+                auto demand = std::get<model::Demand>(demandData->value);
+                std::cout << "  Value: " << demand.value << std::endl;
+                std::cout << "  Timestamp: " << demand.occurTime.time_since_epoch().count() << std::endl;
+            }
+        } else {
+            std::cout << "Failed to read demand data" << std::endl;
+        }
+
+        // 读取变量数据
+        std::cout << "Reading variable data..." << std::endl;
+        auto variableData = client->read02(0x02010100);
+        if (variableData) {
+            std::cout << "Variable data: " << std::endl;
+            std::cout << "  Name: " << variableData->name << std::endl;
+            std::cout << "  Format: " << variableData->dataFormat << std::endl;
+            std::cout << "  Unit: " << variableData->unit << std::endl;
+            if (std::holds_alternative<float>(variableData->value)) {
+                std::cout << "  Value: " << std::get<float>(variableData->value) << std::endl;
+            }
+        } else {
+            std::cout << "Failed to read variable data" << std::endl;
         }
 
         // 断开连接

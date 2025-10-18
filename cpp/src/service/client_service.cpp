@@ -385,7 +385,7 @@ namespace dlt645 {
                     case 0x02: {
                         // 02类：变量数据
                         LOG_INFO("Reading variable data response");
-                        if (frame->data.size() >= 8) {
+                        if (frame->data.size() >= 6) {
                             // 解析变量值（4-7字节）
                             std::vector<uint8_t> valueBytes(frame->data.begin() + 4, frame->data.begin() + 8);
                             float value = 0.0f;
