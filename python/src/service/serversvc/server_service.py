@@ -49,8 +49,6 @@ class MeterServerService:
             return True
         if address == [0x99] * 6:  # 广播时间同步命令
             return True
-        # 验证设备地址是否匹配
-        log.info(f"address:{self.address}, received_address:{address}")
         return address == self.address
 
     # 设置时间，需根据实际情况实现

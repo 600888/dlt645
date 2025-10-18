@@ -12,7 +12,7 @@ func TestTcpClientStart(t *testing.T) {
 	if err != nil {
 		t.Fatalf("创建TCP客户端失败: %v", err)
 	}
-	clientSvc.SetAddress([]byte{0x50, 0x05, 0x00, 0x66, 0x16, 0x57})
+	clientSvc.SetAddress([]byte{0x00, 0x00, 0x00, 0x00, 0x00, 0x00})
 
 	// 连接服务器
 	if err := clientSvc.Conn.Connect(); err != nil {

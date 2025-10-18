@@ -11,7 +11,7 @@ func TestTcpServerStart(t *testing.T) {
 	if err != nil {
 		t.Fatalf("创建TCP服务器失败: %v", err)
 	}
-	serverSvc.SetAddress([]byte{0x50, 0x05, 0x00, 0x66, 0x16, 0x57})
+	serverSvc.SetAddress([]byte{0x00, 0x00, 0x00, 0x00, 0x00, 0x00})
 
 	// 启动服务器
 	if err := serverSvc.Server.Start(); err != nil {

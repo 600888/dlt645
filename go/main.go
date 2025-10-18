@@ -4,7 +4,8 @@ import (
 	"log"
 	"main/dlt645/common"
 	"main/dlt645/service/serversvc"
-	"time"
+
+	"github.com/tarm/serial"
 )
 
 func main() {
@@ -12,9 +13,13 @@ func main() {
 	defer common.LogFile.Close()
 	log.Println("start server")
 
-	serverSvc, err := serversvc.NewTcpServer("0.0.0.0", 10521, 5*time.Second)
+	// serverSvc, err := serversvc.NewTcpServer("0.0.0.0", 10521, 5*time.Second)
+	// if err != nil {
+	// 	log.Printf("创建TCP服务器失败: %v", err)
+	// }
+	serverSvc, err := serversvc.NewRtuServer("COM11", 8, 1, 2400, serial.ParityEven, 1000)
 	if err != nil {
-		log.Printf("创建TCP服务器失败: %v", err)
+		log.Printf("创建RTU服务器失败: %v", err)
 	}
 	serverSvc.SetAddress([]byte{0x00, 0x00, 0x00, 0x00, 0x00, 0x00})
 

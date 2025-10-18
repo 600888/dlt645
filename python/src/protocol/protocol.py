@@ -42,6 +42,9 @@ class DLT645Protocol:
         buf.append(check_sum)
         buf.append(FRAME_END_BYTE)
 
+        # 前导字节添加
+        preamble = [0xFE, 0xFE, 0xFE, 0xFE]
+        buf = preamble + buf
         return bytearray(buf)
 
     @classmethod

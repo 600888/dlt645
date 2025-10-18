@@ -66,7 +66,12 @@ func BuildFrame(addr [6]byte, ctrlCode byte, data []byte) []byte {
 	buf.WriteByte(checkSum)
 	buf.WriteByte(FrameEndByte)
 
-	return buf.Bytes()
+	// 前导字节添加
+	var finalBuf bytes.Buffer
+	var preamble [4]byte = [4]byte{0xFE, 0xFE, 0xFE, 0xFE}
+	finalBuf.Write(preamble[:])
+	finalBuf.Write(buf.Bytes())
+	return finalBuf.Bytes()
 }
 
 // Deserialize 将字节切片反序列化为 Frame 结构体

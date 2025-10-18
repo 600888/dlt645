@@ -10,15 +10,15 @@ import (
 )
 
 func TestRtuClientStart(t *testing.T) {
-	clientSvc, err := clientsvc.NewRtuClient("COM1", 2400, 8, 1, serial.ParityNone, 5*time.Second)
+	clientSvc, err := clientsvc.NewRtuClient("COM10", 2400, 8, 1, serial.ParityNone, 5*time.Second)
 	if err != nil {
 		t.Fatalf("创建RTU客户端失败: %v", err)
 	}
-	clientSvc.SetAddress([]byte{0x50, 0x05, 0x00, 0x66, 0x16, 0x57})
+	clientSvc.SetAddress([]byte{0x00, 0x00, 0x00, 0x00, 0x00, 0x00})
 
-	// 连接服务器
+	// 连接串口
 	if err := clientSvc.Conn.Connect(); err != nil {
-		t.Log("连接服务器失败")
+		t.Log("连接串口失败")
 		t.Fatal(err)
 	}
 

@@ -19,6 +19,7 @@ type RtuServer struct {
 	Timeout  time.Duration
 	Service  DLT645Server
 	conn     *serial.Port
+	quit     chan struct{}
 }
 
 func (s *RtuServer) Start() error {
@@ -36,20 +37,30 @@ func (s *RtuServer) Start() error {
 	if err != nil {
 		return fmt.Errorf("failed to open serial port: %w", err)
 	}
-	defer func(conn *serial.Port) {
-		_ = s.conn.Close()
-	}(s.conn)
+
+	// 初始化退出通道
+	s.quit = make(chan struct{})
 
 	log.Printf("RTU server started on port %s", s.Port)
 
+	// 启动连接处理goroutine
 	go s.HandleConnection(s.conn)
+
+	// 阻塞等待退出信号
+	<-s.quit
 	return nil
 }
 
 func (s *RtuServer) Stop() error {
 	if s.conn != nil {
 		log.Println("Shutting down RTU server...")
-		return s.conn.Close()
+		// 发送退出信号
+		if s.quit != nil {
+			close(s.quit)
+		}
+		// 关闭连接
+		err := s.conn.Close()
+		return err
 	}
 	return nil
 }
@@ -72,6 +83,10 @@ func (s *RtuServer) HandleConnection(conn interface{}) {
 		n, err := serialConn.Read(buf)
 		if err != nil {
 			break
+		}
+
+		if n == 0 {
+			continue
 		}
 
 		log.Printf("Received data: %v", common.BytesToSpacedHex(buf[:n]))

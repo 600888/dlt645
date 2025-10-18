@@ -46,7 +46,7 @@ class RtuServer:
         
         # 等待服务器启动完成
         time.sleep(0.1)
-        log.info(f"RTU server starting in background on {self.port}")
+        log.info(f"RTU server starting in background on {self.port}, baud_rate={self.baud_rate}, data_bits={self.data_bits}, stop_bits={self.stop_bits}, parity={self.parity}, timeout={self.timeout}")
         return True
     
     def _run_server(self):
@@ -115,51 +115,61 @@ class RtuServer:
         if not isinstance(conn, serial.Serial):
             log.error(f"Invalid connection type: {type(conn)}")
             return
+        
+        log.info(f"Starting to handle connection on {self.port} - Baud rate: {conn.baudrate}, Data bits: {conn.bytesize}, "
+                 f"Stop bits: {conn.stopbits}, Parity: {conn.parity}, Timeout: {conn.timeout}")
 
         try:
+            # 确保串口已经打开
+            if not conn.is_open:
+                log.error("Serial port is not open")
+                return
+                
+            log.info("Waiting for data...")
             while not self._stop_event.is_set():
-                # 读取数据（使用较短的超时以便检查停止信号）
-                data = conn.read(256)
-                if not data:
-                    # 短暂等待以避免CPU占用过高
-                    time.sleep(0.01)
-                    continue
-
-                log.info(f"Received data: {bytes_to_spaced_hex(data)}")
-
-                # 协议解析
+                # 检查串口是否仍然打开
+                if not conn.is_open:
+                    log.error("Serial port was closed unexpectedly")
+                    break
+                    
+                # 使用较短的超时，以便定期检查停止信号
                 try:
-                    frame = DLT645Protocol.deserialize(data)
-                except Exception as e:
-                    log.error(f"Error parsing frame: {e}")
-                    continue
+                    # 先检查是否有数据可读
+                    if conn.in_waiting > 0:
+                        # 读取所有可用数据
+                        data = conn.read(conn.in_waiting)
+                        log.info(f"RX: {bytes_to_spaced_hex(data)} ({conn.in_waiting} bytes)")
 
-                # 业务处理
-                if self.service is None:
-                    log.warning("No service configured to handle request")
-                    continue
+                        # 协议解析
+                        frame = DLT645Protocol.deserialize(data)
 
-                try:
-                    resp = self.service.handle_request(frame)
-                except Exception as e:
-                    log.error(f"Error handling request: {e}")
-                    continue
-
-                # 响应
-                if resp is not None:
-                    try:
-                        conn.write(resp)
-                        log.info(f"Sent response: {bytes_to_spaced_hex(resp)}")
-                    except Exception as e:
-                        log.error(f"Error writing response: {e}")
-                        continue
-
+                        resp = self.service.handle_request(frame)
+                        
+                        if resp is not None:
+                            try:
+                                bytes_written = conn.write(resp)
+                                log.info(f"TX: {bytes_to_spaced_hex(resp)} ({bytes_written} bytes)")
+                            except Exception as e:
+                                log.error(f"Error writing response: {e}")
+                                continue
+                    else:
+                        # 没有数据可读，短暂等待以避免CPU占用过高
+                        time.sleep(0.01)
+                        
+                except Exception as read_error:
+                    log.error(f"Error reading from serial port: {read_error}")
+                    # 短暂暂停后继续尝试
+                    time.sleep(0.1)
+                    
         except Exception as e:
             if not self._stop_event.is_set():
                 log.error(f"Connection handling error: {e}")
         finally:
+            log.info("Exiting connection handler")
             try:
                 if conn and conn.is_open:
+                    log.info("Closing serial connection")
                     conn.close()
+                    log.info("Serial connection closed")
             except Exception as e:
                 log.error(f"Error closing connection: {e}")
