@@ -13,7 +13,8 @@ import (
 
 func (s *MeterClientService) HandleResponse(frame *protocol.Frame) (*model.DataItem, error) {
 	// 验证设备地址
-	if !s.validateDevice(frame.Addr) {
+	if !s.validateDevice(frame.CtrlCode, frame.Addr) {
+		log.Println("Device", frame.CtrlCode, "InvalidateDevice", frame.Addr)
 		log.Printf("验证设备地址: %x 失败", common.BytesToSpacedHex(frame.Addr[:]))
 		return nil, errors.New("unauthorized device")
 	}
@@ -32,10 +33,10 @@ func (s *MeterClientService) HandleResponse(frame *protocol.Frame) (*model.DataI
 		return dataItem, nil
 	case model.CtrlReadData | 0x80: // 读数据响应
 		// 解析数据标识
-		if len(frame.Data) < 4 {
+		if len(frame.Data) < model.DataItemLength {
 			return nil, errors.New("invalid data length for read response")
 		}
-		di := frame.Data[0:4]
+		di := frame.Data[0:model.DataItemLength]
 		di3 := di[3]
 		switch di3 {
 		case 0x00:
@@ -45,7 +46,7 @@ func (s *MeterClientService) HandleResponse(frame *protocol.Frame) (*model.DataI
 				log.Printf("获取数据项失败: %v", err)
 				return nil, err
 			}
-			dataItem.Value, err = common.BCDToFloat32(frame.Data[4:8], dataItem.DataFormat, binary.LittleEndian)
+			dataItem.Value, err = common.BCDToFloat32(frame.Data[model.DataItemLength:model.DataItemLength+4], dataItem.DataFormat, binary.LittleEndian)
 			if err != nil {
 				log.Printf("转换BCD码到浮点数失败: %v", err)
 				return nil, err
@@ -63,7 +64,7 @@ func (s *MeterClientService) HandleResponse(frame *protocol.Frame) (*model.DataI
 				log.Printf("转换时间失败: %v", err)
 				return nil, err
 			}
-			demandValue, err := common.BCDToFloat32(frame.Data[4:7], dataItem.DataFormat, binary.LittleEndian)
+			demandValue, err := common.BCDToFloat32(frame.Data[model.DataItemLength:model.DataItemLength+3], dataItem.DataFormat, binary.LittleEndian)
 			if err != nil {
 				log.Printf("转换BCD码到浮点数失败: %v", err)
 				return nil, err
@@ -79,10 +80,46 @@ func (s *MeterClientService) HandleResponse(frame *protocol.Frame) (*model.DataI
 				log.Printf("获取数据项失败: %v", err)
 				return nil, err
 			}
-			dataItem.Value, err = common.BCDToFloat32(frame.Data[4:8], dataItem.DataFormat, binary.LittleEndian)
+			dataItem.Value, err = common.BCDToFloat32(frame.Data[model.DataItemLength:model.DataItemLength+4], dataItem.DataFormat, binary.LittleEndian)
 			if err != nil {
 				log.Printf("转换BCD码到浮点数失败: %v", err)
 				return nil, err
+			}
+			return dataItem, nil
+		case 0x04:
+			log.Printf("读取参变量响应: % x", frame.Data)
+			dataItem, err := data.GetDataItem(common.BytesToUint32(di))
+			if err != nil {
+				log.Printf("获取数据项失败: %v", err)
+				return nil, err
+			}
+			
+			// 时段表数据处理
+			diValue := common.BytesToUint32(di)
+			if diValue >= 0x04010000 && diValue <= 0x04020008 {
+				step := len(dataItem.DataFormat) / 2
+				// 初始化 value 为字符串切片
+				stringValues := make([]string, 14)
+				for i := 0; i < 14; i++ {
+					// 提取BCD数据部分
+					startIdx := model.DataItemLength + step*i
+					endIdx := model.DataItemLength + step*(i+1)
+					if endIdx > len(frame.Data) {
+						break
+					}
+					bcdData := frame.Data[startIdx:endIdx]
+					// 转换为数字，先反转字节序
+					reversedBcd := common.ReverseBytes(bcdData)
+					stringValues[i] = common.BcdToDigits(reversedBcd)
+				}
+				dataItem.Value = stringValues
+			} else {
+				// 非时段表数据，直接处理
+				// 提取BCD数据部分
+				bcdData := frame.Data[model.DataItemLength:]
+				// 转换为数字，先反转字节序
+				reversedBcd := common.ReverseBytes(bcdData)
+				dataItem.Value = common.BcdToDigits(reversedBcd)
 			}
 			return dataItem, nil
 		default:
@@ -91,13 +128,13 @@ func (s *MeterClientService) HandleResponse(frame *protocol.Frame) (*model.DataI
 		}
 	case model.ReadAddress | 0x80: // 读通讯地址响应
 		log.Printf("读通讯地址响应: %v", frame.Data)
-		if len(frame.Data) == 6 {
-			var address [6]byte
+		if len(frame.Data) == model.AddrLength {
+			var address [model.AddrLength]byte
 			copy(address[:], frame.Data)
 			s.Address = address
 		}
 		return &model.DataItem{
-			Di:         common.BytesToUint32(frame.Data[0:4]),
+			Di:         common.BytesToUint32(frame.Data[0:model.DataItemLength]),
 			Name:       "通讯地址",
 			DataFormat: model.XXXXXXXXXXXX,
 			Value:      frame.Data,
@@ -107,7 +144,7 @@ func (s *MeterClientService) HandleResponse(frame *protocol.Frame) (*model.DataI
 	case model.WriteAddress | 0x80: // 写通讯地址响应
 		log.Printf("写通讯地址响应: %v", frame.Data)
 		return &model.DataItem{
-			Di:         common.BytesToUint32(frame.Data[0:4]),
+			Di:         common.BytesToUint32(frame.Data[0:model.DataItemLength]),
 			Name:       "通讯地址",
 			DataFormat: model.XXXXXXXXXXXX,
 			Value:      frame.Data,

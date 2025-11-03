@@ -8,4 +8,5 @@ func init() {
 	initEnergyDef()
 	initDemandDef()
 	initVariablesDef()
+	initParaMeterDef()
 }

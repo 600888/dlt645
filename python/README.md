@@ -2,15 +2,40 @@
 
 一个功能完整的DLT645电能表通信协议的多语言实现项目，同时支持C++、Python和Go三种编程语言，提供了统一的接口和功能。
 
-# 选择语言版本
+## 🌴通讯支持
+
+| 功能                            | 状态 |
+| ------------------------------- | ---- |
+| **TCP客户端（方便通讯测试）** 🐾 | ✅    |
+| **TCP服务端（方便通讯测试）** 🐾 | ✅    |
+| **RTU主站** 🐾                   | ✅    |
+| **RTU从站** 🐾                   | ✅    |
+
+## 🌴 功能完成情况
+
+| 功能                                           | 状态 |
+| ---------------------------------------------- | -- |
+| **读、写通讯地址** 🐾  | ✅  |
+| **广播校时** 🐾  | ✅  |
+| **电能量** 🐾  | ✅  |
+| **最大需量及发生时间** 🐾         | ✅ |
+| **变量** 🐾                | ✅ |
+| **参变量** 🐾            | ✅ |
+| **事件记录** 🐾                 | ❌ |
+| **冻结量** 🐾               | ❌ |
+| **负荷纪录** 🐾           | ❌ |
+
+因为本人使用DLT645协议需求大多是读取电能表上的电能、需量、变量等数据，后续的功能暂无开发计划，如果需要可以联系我
+
+## 选择语言版本
 
 请选择您感兴趣的语言版本查看详细文档：
 
-- [C++版本](../README.md)
+- [C++版本](../cpp/README.md)
 - Python版本
 - [Go版本](../go/README.md)
 
-# DLT645协议Python实现库
+## DLT645协议Python实现库
 
 一个功能完整的DLT645电能表通信协议Python实现库，支持TCP和RTU两种通信方式，可用于电能表数据读写和通信测试。
 
@@ -29,6 +54,7 @@
 - **电能量数据**（00类）：正向有功电能、反向有功电能等
 - **最大需量数据**（01类）：最大需量及发生时间
 - **变量数据**（02类）：实时电压、电流、功率等
+- **参变量数据**（04类）：设备参数、配置信息等
 
 ## 安装
 
@@ -41,58 +67,84 @@ pip install dlt645
 ### 创建TCP服务器
 
 ```python
-from dlt645 import new_tcp_server
+from dlt645 import MeterServerService
 
 # 创建TCP服务器
-server_service = new_tcp_server("127.0.0.1", 8021, 3000)
+server_svc = MeterServerService.new_tcp_server("127.0.0.1", 8021, 3000)
 
-# 设置电能量数据
-server_service.set_00(0x00000000, 100.0)
+# 设置设备地址
+server_svc.set_address(b'\x01\x02\x03\x04\x05\x06')
 
-# 设置变量数据
-server_service.set_02(0x02010100, 86.0)
+# 写电能
+server_svc.set_00(0x00000000, 50.5)
+    
+# 写最大需量
+server_svc.set_01(0x01010000, Demand(78.0, datetime.strptime("2023-01-01 12:00:00", "%Y-%m-%d %H:%M:%S")))
+        
+# 写参变量
+server_svc.set_04(0x04000101, "25110201")   # 2025年11月2日星期一
+server_svc.set_04(0x04000204, "10") 		# 设置费率数为10
 
 # 启动服务器
-server_service.server.start()
+server_svc.server.start()
 ```
+
+![](../resource/python/1.png)
 
 ### 创建RTU服务器
 
 ```python
-from dlt645 import new_rtu_server
+from dlt645 import MeterServerService
 
 # 创建RTU服务器
-server_service = new_rtu_server("COM4", 8, 1, 9600, "N", 1000)
+server_svc = MeterServerService.new_rtu_server(port="COM11",data_bits=8,stop_bits=1,baud_rate=9600,parity="N",timeout=1.0)
 
-# 设置数据
-server_service.set_00(0x00000000, 100.0)
-server_service.set_02(0x02010100, 86.0)
+# 设置设备地址
+server_svc.set_address(b'\x01\x02\x03\x04\x05\x06')
+
+# 写电能
+server_svc.set_00(0x00000000, 50.5)
+    
+# 写最大需量
+server_svc.set_01(0x01010000, Demand(78.0, datetime.strptime("2023-01-01 12:00:00", "%Y-%m-%d %H:%M:%S")))
 
 # 启动服务器
-server_service.server.start()
+server_svc.server.start()
 ```
+
+![](../resource/python/2.png)
 
 ### 创建TCP客户端
 
 ```python
 from dlt645 import MeterClientService
 
-# 创建TCP客户端
-client = MeterClientService.new_tcp_client("127.0.0.1", 8021, 30.0)
+client_svc = MeterClientService.new_tcp_client("127.0.0.1", 10521, timeout=1)
 
-# 设置设备地址
-client.set_address(b'\x00\x00\x00\x00\x00\x00')
+# 读取通讯地址
+address_data = client_svc.read_address()
 
-# 读取电能量数据
-data = client.read_01(0x00000000)
-if data:
-    print(f"电能量: {data.value}")
+# 设置通讯地址
+client_svc.set_address(address_data.value)
+
+# 读取电能数据
+data_item = client_svc.read_00(0x00000000)
+
+# 读取最大需量及发生时间
+data_item2 = client_svc.read_01(0x01010000)
 
 # 读取变量数据
-data = client.read_03(0x02010100)
-if data:
-    print(f"变量值: {data.value}")
+data_item3 = client_svc.read_02(0x02010100)
+
+# 读取参变量
+data_item4 = client_svc.read_04(0x04000101)
+print(f"日期及星期: {data_item4}")
+
+data_item5 = client_svc.read_04(0x04000204)
+print(f"费率数: {data_item5}")
 ```
+
+![](../resource/python/3.png)
 
 ### 创建RTU客户端
 
@@ -101,20 +153,43 @@ from dlt645 import MeterClientService
 
 # 创建RTU客户端
 client = MeterClientService.new_rtu_client(
-    port="COM4",
+    port="COM10",
     baudrate=9600,
     databits=8,
     stopbits=1,
     parity="N",
-    timeout=30.0
+    timeout=0.5
 )
 
-# 设置设备地址
-client.set_address(b'\x01\x02\x03\x04\x05\x06')
+# 读取通讯地址
+address_data = client_svc.read_address()
 
-# 读取数据
-data = client.read_01(0x00000000)
+# 设置通讯地址
+client_svc.set_address(address_data.value)
+
+# 读取电能数据
+data_item = client_svc.read_00(0x00000000)
+
+# 读取最大需量及发生时间
+data_item2 = client_svc.read_01(0x01010000)
+
+# 读取变量数据
+data_item3 = client_svc.read_02(0x02010100)
+
+# 读取参变量
+data_item4 = client_svc.read_04(0x04000101)
+print(f"日期及星期: {data_item4}")
+
+data_item5 = client_svc.read_04(0x04000204)
+print(f"费率数: {data_item5}")
 ```
+![](../resource/python/4.png)
+
+### 使用第三方工具测试
+
+测试效果
+
+![](../resource/python/5.gif)
 
 ## API参考
 
@@ -123,17 +198,14 @@ data = client.read_01(0x00000000)
 #### MeterServerService
 
 主要的服务器服务类，提供以下方法：
-
+- `new_tcp_server(ip: str, port: int, timeout: float)` - 创建TCP服务器（类方法）
+- `new_rtu_server(port: str, data_bits: int, stop_bits: int, baud_rate: int, parity: str, timeout: float)` - 创建RTU服务器（类方法）
 - `set_00(di: int, value: float)` - 设置电能量数据
 - `set_01(di: int, demand: Demand)` - 设置最大需量数据
 - `set_02(di: int, value: float)` - 设置变量数据
+- `set_04(di: int, value: float)` - 设置参变量数据
 - `set_address(address: bytearray)` - 设置设备地址
 - `set_password(password: bytearray)` - 设置密码
-
-#### 便捷函数
-
-- `new_tcp_server(ip: str, port: int, timeout: int)` - 创建TCP服务器
-- `new_rtu_server(port: str, dataBits: int, stopBits: int, baudRate: int, parity: str, timeout: float)` - 创建RTU服务器
 
 ### 客户端API
 
@@ -143,9 +215,10 @@ data = client.read_01(0x00000000)
 
 - `new_tcp_client(ip: str, port: int, timeout: float)` - 创建TCP客户端（类方法）
 - `new_rtu_client(port: str, baudrate: int, databits: int, stopbits: int, parity: str, timeout: float)` - 创建RTU客户端（类方法）
-- `read_01(di: int)` - 读取电能量数据
-- `read_02(di: int)` - 读取最大需量数据
-- `read_03(di: int)` - 读取变量数据
+- `read_00(di: int)` - 读取电能量数据
+- `read_01(di: int)` - 读取最大需量数据
+- `read_02(di: int)` - 读取变量数据
+- `read_04(di: int)` - 读取参变量数据
 - `read_address()` - 读取设备地址
 - `write_address(new_address: bytes)` - 写入设备地址
 - `set_address(address: bytes)` - 设置本地设备地址
@@ -170,6 +243,11 @@ DLT645协议使用4字节的数据标识来标识不同的数据项：
 - `0x02010300` - C相电压
 - `0x02020100` - A相电流
 - `0x02020200` - B相电流
+- `0x02020300` - C相电流
+
+### 参变量数据（04类）
+- `0x04000101` - 日期及星期(0代表星期天)
+- `0x04000102` - 时间
 
 ## 配置文件
 
@@ -178,6 +256,7 @@ DLT645协议使用4字节的数据标识来标识不同的数据项：
 - `config/energy_types.json` - 电能量数据类型配置
 - `config/demand_types.json` - 最大需量数据类型配置  
 - `config/variable_types.json` - 变量数据类型配置
+- `config/parameter_types.json` - 参变量数据类型配置
 
 ## 开发指南
 

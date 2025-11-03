@@ -46,6 +46,7 @@ type DataType struct {
 var EnergyTypes = []DataType{}
 var DemandTypes = []DataType{}
 var VariableTypes = []DataType{}
+var ParameterTypes = []DataType{}
 
 func initDataTypeFromJson(filePath string) []DataType {
 	// 1. 读取 JSON 文件
@@ -69,4 +70,5 @@ func init() {
 	EnergyTypes = initDataTypeFromJson(common.GetProjectRoot() + "/config/energy_types.json")
 	DemandTypes = initDataTypeFromJson(common.GetProjectRoot() + "/config/demand_types.json")
 	VariableTypes = initDataTypeFromJson(common.GetProjectRoot() + "/config/variable_types.json")
+	ParameterTypes = initDataTypeFromJson(common.GetProjectRoot() + "/config/parameter_types.json")
 }

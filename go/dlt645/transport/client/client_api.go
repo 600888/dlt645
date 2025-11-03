@@ -7,7 +7,7 @@ type Dlt645Client interface {
 	Read01(di uint32) (*model.DataItem, error) // 读最大需量及发生时间
 	Read02(di uint32) (*model.DataItem, error) // 读变量
 	// Read03(di uint32) (*model.DataItem, error)              // 读事件记录
-	// Read04(di uint32) (*model.DataItem, error)              // 读参变量
+	Read04(di uint32) (*model.DataItem, error) // 读参变量
 	// Read05(di uint32) (*model.DataItem, error)              // 读冻结
 	// Read06(di uint32) (*model.DataItem, error)              // 读负荷记录
 	// Write(di uint32, bytes []byte) (*model.DataItem, error) // 写数据

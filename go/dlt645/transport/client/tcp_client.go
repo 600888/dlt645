@@ -76,7 +76,7 @@ func (c *TcpClient) SendRequest(data []byte) ([]byte, error) {
 	log.Printf("已发送请求: %v", common.BytesToSpacedHex(data))
 
 	// 设置读取超时
-	if err := c.conn.SetReadDeadline(time.Now().Add(c.Timeout)); err != nil {
+	if err = c.conn.SetReadDeadline(time.Now().Add(c.Timeout)); err != nil {
 		return nil, fmt.Errorf("设置读取超时失败: %v", err)
 	}
 

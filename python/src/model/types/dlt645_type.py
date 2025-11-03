@@ -1,6 +1,6 @@
 import json
 from enum import IntEnum
-from time import time
+from datetime import datetime
 from ...model.log import log
 
 
@@ -25,9 +25,12 @@ class CtrlCode(IntEnum):
     ChangeBaudRate = 0x17  # 修改通信速率
     ChangePassword = 0x18  # 改变密码
 
+DI_LEN = 4  # 数据标识长度
+ADDRESS_LEN = 6  # 地址长度
+PASSWORD_LEN = 4  # 密码长度
 
 class Demand:
-    def __init__(self, value: float, time: time):
+    def __init__(self, value: float, time: datetime):
         self.value = value
         self.time = time
 

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"main/dlt645/model"
 	dlt645type "main/dlt645/model/type"
+	"time"
 )
 
 var demandDiList = []uint32{
@@ -59,60 +60,70 @@ func initDemandDef() {
 				Name:       namePrefix + dlt645type.DemandTypes[i].Name,
 				DataFormat: model.XX_XXXX,
 				Unit:       dlt645type.DemandTypes[i].Unit,
+				Value:      &model.Demand{Value: 0.0, OccurTime: time.Unix(0, 0)},
 			}
 			// 反向有功需量
 			DIMap[uint32((di3+1)<<24|(di2+2)<<16|(di1+i)<<8|(di0+j))] = model.DataItem{
 				Name:       namePrefix + dlt645type.DemandTypes[64+i].Name,
 				DataFormat: model.XX_XXXX,
 				Unit:       dlt645type.DemandTypes[64+i].Unit,
+				Value:      &model.Demand{Value: 0.0, OccurTime: time.Unix(0, 0)},
 			}
 			// 组合无功1需量
 			DIMap[uint32((di3+1)<<24|(di2+3)<<16|(di1+i)<<8|(di0+j))] = model.DataItem{
 				Name:       namePrefix + dlt645type.DemandTypes[64*2+i].Name,
 				DataFormat: model.XX_XXXX,
 				Unit:       dlt645type.DemandTypes[64*2+i].Unit,
+				Value:      &model.Demand{Value: 0.0, OccurTime: time.Unix(0, 0)},
 			}
 			// 组合无功2需量
 			DIMap[uint32((di3+1)<<24|(di2+4)<<16|(di1+i)<<8|(di0+j))] = model.DataItem{
 				Name:       namePrefix + dlt645type.DemandTypes[64*3+i].Name,
 				DataFormat: model.XX_XXXX,
 				Unit:       dlt645type.DemandTypes[64*3+i].Unit,
+				Value:      &model.Demand{Value: 0.0, OccurTime: time.Unix(0, 0)},
 			}
 			// 第一象限无功费率最大需量
 			DIMap[uint32((di3+1)<<24|(di2+5)<<16|(di1+i)<<8|(di0+j))] = model.DataItem{
 				Name:       namePrefix + dlt645type.DemandTypes[64*4+i].Name,
 				DataFormat: model.XX_XXXX,
 				Unit:       dlt645type.DemandTypes[64*4+i].Unit,
+				Value:      &model.Demand{Value: 0.0, OccurTime: time.Unix(0, 0)},
 			}
 			// 第二象限无功费率最大需量
 			DIMap[uint32((di3+1)<<24|(di2+6)<<16|(di1+i)<<8|(di0+j))] = model.DataItem{
 				Name:       namePrefix + dlt645type.DemandTypes[64*5+i].Name,
 				DataFormat: model.XX_XXXX,
 				Unit:       dlt645type.DemandTypes[64*5+i].Unit,
+				Value:      &model.Demand{Value: 0.0, OccurTime: time.Unix(0, 0)},
 			}
 			// 第三象限无功费率最大需量
 			DIMap[uint32((di3+1)<<24|(di2+7)<<16|(di1+i)<<8|(di0+j))] = model.DataItem{
 				Name:       namePrefix + dlt645type.DemandTypes[64*6+i].Name,
 				DataFormat: model.XX_XXXX,
 				Unit:       dlt645type.DemandTypes[64*6+i].Unit,
+				Value:      &model.Demand{Value: 0.0, OccurTime: time.Unix(0, 0)},
 			}
 			// 第四象限无功费率最大需量
 			DIMap[uint32((di3+1)<<24|(di2+8)<<16|(di1+i)<<8|(di0+j))] = model.DataItem{
 				Name:       namePrefix + dlt645type.DemandTypes[64*7+i].Name,
 				DataFormat: model.XX_XXXX,
 				Unit:       dlt645type.DemandTypes[64*7+i].Unit,
+				Value:      &model.Demand{Value: 0.0, OccurTime: time.Unix(0, 0)},
 			}
 			// 正向视在最大需量
 			DIMap[uint32((di3+1)<<24|(di2+9)<<16|(di1+i)<<8|(di0+j))] = model.DataItem{
 				Name:       namePrefix + dlt645type.DemandTypes[64*8+i].Name,
 				DataFormat: model.XX_XXXX,
 				Unit:       dlt645type.DemandTypes[64*8+i].Unit,
+				Value:      &model.Demand{Value: 0.0, OccurTime: time.Unix(0, 0)},
 			}
 			// 反向视在最大需量
 			DIMap[uint32((di3+1)<<24|(di2+10)<<16|(di1+i)<<8|(di0+j))] = model.DataItem{
 				Name:       namePrefix + dlt645type.DemandTypes[64*9+i].Name,
 				DataFormat: model.XX_XXXX,
 				Unit:       dlt645type.DemandTypes[64*9+i].Unit,
+				Value:      &model.Demand{Value: 0.0, OccurTime: time.Unix(0, 0)},
 			}
 
 			// 最后几个数据特殊处理
@@ -122,6 +133,7 @@ func initDemandDef() {
 					Name:       namePrefix + dlt645type.DemandTypes[64*10+k].Name,
 					DataFormat: model.XX_XXXX,
 					Unit:       dlt645type.DemandTypes[64*10+k].Unit,
+					Value:      &model.Demand{Value: 0.0, OccurTime: time.Unix(0, 0)},
 				}
 			}
 		}

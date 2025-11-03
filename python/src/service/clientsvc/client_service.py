@@ -7,15 +7,16 @@ from typing import Optional, Union
 from ...common.transform import (
     bcd_to_float,
     bcd_to_time,
+    bcd_to_digits,
     bytes_to_int,
     bytes_to_spaced_hex,
 )
 from ...model.types.data_type import DataFormat, DataItem
-from ...model.types.dlt645_type import CtrlCode, Demand
+from ...model.types.dlt645_type import DI_LEN, ADDRESS_LEN, PASSWORD_LEN,CtrlCode, Demand
 from ...protocol.protocol import DLT645Protocol
 from ...protocol.frame import Frame
-from ...protocol.log import log
 from ...model.data import data_handler as data
+from ...service.clientsvc.log import log
 from ...transport.client.rtu_client import RtuClient
 from ...transport.client.tcp_client import TcpClient
 
@@ -65,48 +66,45 @@ class MeterClientService:
         cls, client: Union[TcpClient, RtuClient]
     ) -> Optional["MeterClientService"]:
         """创建新的MeterService实例"""
-        if client is None:
-            log.error("连接不能为None")
-            return None
-
         service = cls(client)
         return service
 
     def get_time(self, t: bytes) -> datetime:
         """从字节数据获取时间"""
         timestamp = bytes_to_int(t)
-        log.info("timestamp: %v", timestamp)
+        log.debug(f"timestamp: {timestamp}")
         return datetime.fromtimestamp(timestamp)
 
-    def validate_device(self, addr: bytes) -> bool:
+    def validate_device(self, ctrl_code: CtrlCode, addr: bytes) -> bool:
         """验证设备地址"""
-        if addr == bytes([0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA]):  # 读通讯地址命令
+        if ctrl_code == CtrlCode.ReadAddress | 0x80 or ctrl_code == CtrlCode.WriteAddress | 0x80:  # 读通讯地址命令
             return True
-        if addr == bytes([0x99, 0x99, 0x99, 0x99, 0x99, 0x99]):  # 广播时间同步命令
+        # 广播地址和广播时间同步地址
+        if addr == bytearray([0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA]) or addr == bytearray([0x99, 0x99, 0x99, 0x99, 0x99, 0x99]):
             return True
         return bytes(self.address) == addr
 
     def set_address(self, address: bytes) -> bool:
         """设置设备地址"""
-        if len(address) != 6:
+        if len(address) != ADDRESS_LEN:
             log.error("无效的地址长度")
             return False
 
         self.address = bytearray(address)
-        log.info("设置客户端通讯地址: %x", self.address)
+        log.info(f"设置客户端通讯地址: {bytes_to_spaced_hex(self.address)}")
         return True
 
     def set_password(self, password: bytes) -> bool:
         """设置设备密码"""
-        if len(password) != 4:
+        if len(password) != PASSWORD_LEN:
             log.error("无效的密码长度")
             return False
 
         self.password = bytearray(password)
-        log.info("设置客户端密码: %v", self.password)
+        log.info(f"设置客户端密码: {bytes_to_spaced_hex(self.password)}")
         return True
 
-    def read_01(self, di: int) -> Optional[DataItem]:
+    def read_00(self, di: int) -> Optional[DataItem]:
         """读取电能"""
         data_bytes = struct.pack("<I", di)  # 小端序
         frame_bytes = DLT645Protocol.build_frame(
@@ -114,7 +112,7 @@ class MeterClientService:
         )
         return self.send_and_handle_request(frame_bytes)
 
-    def read_02(self, di: int) -> Optional[DataItem]:
+    def read_01(self, di: int) -> Optional[DataItem]:
         """读取最大需量及发生时间"""
         data_bytes = struct.pack("<I", di)  # 小端序
         frame_bytes = DLT645Protocol.build_frame(
@@ -122,8 +120,16 @@ class MeterClientService:
         )
         return self.send_and_handle_request(frame_bytes)
 
-    def read_03(self, di: int) -> Optional[DataItem]:
+    def read_02(self, di: int) -> Optional[DataItem]:
         """读取变量"""
+        data_bytes = struct.pack("<I", di)  # 小端序
+        frame_bytes = DLT645Protocol.build_frame(
+            self.address, CtrlCode.ReadData, data_bytes
+        )
+        return self.send_and_handle_request(frame_bytes)
+    
+    def read_04(self, di: int) -> Optional[DataItem]:
+        """读取参变量"""
         data_bytes = struct.pack("<I", di)  # 小端序
         frame_bytes = DLT645Protocol.build_frame(
             self.address, CtrlCode.ReadData, data_bytes
@@ -132,14 +138,16 @@ class MeterClientService:
 
     def read_address(self) -> Optional[DataItem]:
         """读取通讯地址"""
+        # 读取通讯地址需要使用特殊的广播地址0xAAAAAAAAAAAA
+        broadcast_address = bytearray([0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA])
         frame_bytes = DLT645Protocol.build_frame(
-            self.address, CtrlCode.ReadAddress, None
+            broadcast_address, CtrlCode.ReadAddress, None
         )
         return self.send_and_handle_request(frame_bytes)
 
     def write_address(self, new_address: bytes) -> Optional[DataItem]:
         """写通讯地址"""
-        if len(new_address) != 6:
+        if len(new_address) != ADDRESS_LEN:
             log.error("无效的新地址长度")
             return None
 
@@ -166,7 +174,8 @@ class MeterClientService:
                 log.error("连接未初始化")
                 return None
 
-            if not self.client.connect():
+            # 确保连接有效（重用连接，如果断开则重新连接）
+            if not self.client._ensure_connection():
                 log.error("连接失败")
                 return None
 
@@ -191,14 +200,14 @@ class MeterClientService:
 
     def handle_response(self, frame: Frame) -> Optional[DataItem]:
         """处理响应帧"""
-        # 验证设备地址
-        if not self.validate_device(frame.addr):
-            log.warning("验证设备地址: %x 失败", bytes_to_spaced_hex(frame.addr))
+        # 验证设备地址 - 特殊控制码不需要验证
+        if not self.validate_device(frame.ctrl_code,frame.addr):
+            log.warning(f"验证设备地址: {bytes_to_spaced_hex(frame.addr)} 失败")
             return None
 
         # 根据控制码判断响应类型
         if frame.ctrl_code == (CtrlCode.BroadcastTimeSync | 0x80):  # 广播校时响应
-            log.info("广播校时响应: % x", frame.data)
+            log.debug(f"广播校时响应: {bytes_to_spaced_hex(frame.data)}")
             time_value = self.get_time(frame.data[0:4])
             data_item = data.get_data_item(bytes_to_int(frame.data[0:4]))
             if not data_item:
@@ -209,15 +218,15 @@ class MeterClientService:
 
         elif frame.ctrl_code == (CtrlCode.ReadData | 0x80):  # 读数据响应
             # 解析数据标识
-            if len(frame.data) < 4:
+            if len(frame.data) < DI_LEN:
                 log.warning("读数据响应数据长度无效")
                 return None
 
-            di = frame.data[0:4]
+            di = frame.data[0:DI_LEN]
             di3 = di[3]
 
             if di3 == 0x00:  # 读取电能响应
-                log.info(f"读取电能响应")
+                log.debug(f"读取电能响应: {bytes_to_spaced_hex(frame.data)}")
                 data_item = data.get_data_item(bytes_to_int(di))
                 if not data_item:
                     log.warning("获取数据项失败")
@@ -228,7 +237,7 @@ class MeterClientService:
                 return data_item
 
             elif di3 == 0x01:  # 读取最大需量及发生时间响应
-                log.info("读取最大需量及发生时间响应: % x", frame.data)
+                log.debug(f"读取最大需量及发生时间响应: {bytes_to_spaced_hex(frame.data)}")
                 data_item = data.get_data_item(bytes_to_int(di))
                 if not data_item:
                     log.warning("获取数据项失败")
@@ -239,10 +248,10 @@ class MeterClientService:
 
                 # 转换需量值
                 demand_value = bcd_to_float(
-                    frame.data[4:7], data_item.data_format, "little"
+                    frame.data[DI_LEN:DI_LEN+3], data_item.data_format, "little"
                 )
 
-                data_item.value = Demand(value=demand_value, occur_time=occur_time)
+                data_item.value = Demand(value=demand_value, time=occur_time)
                 return data_item
 
             elif di3 == 0x02:
@@ -251,19 +260,42 @@ class MeterClientService:
                     log.warning("获取数据项失败")
                     return None
                 data_item.value = bcd_to_float(
-                    frame.data[4:8], data_item.data_format, "little"
+                    frame.data[DI_LEN:DI_LEN+4], data_item.data_format, "little"
                 )
                 return data_item
+            elif di3 == 0x04:  # 读参变量响应
+                log.debug(f"读取参变量响应: {bytes_to_spaced_hex(frame.data)}")
+                data_item = data.get_data_item(bytes_to_int(di))
+                if not data_item:
+                    log.warning("获取数据项失败")
+                    return None
+                
+                # 时段表数据
+                if 0x04010000 <= int.from_bytes(di, byteorder='little') <=0x04020008:
+                    step = len(data_item.data_format) // 2
+                    for i in range(0, 14):
+                        # 提取BCD数据部分
+                        bcd_data = frame.data[DI_LEN+step*i:DI_LEN+step*(i+1)]
+                        # 转换为数字
+                        reversed_bcd= bytes(reversed(bcd_data))
+                        data_item.value[i] = bcd_to_digits(reversed_bcd)
+                else: 
+                    # 提取BCD数据部分
+                    bcd_data = frame.data[DI_LEN:]
+                    # 转换为数字
+                    reversed_bcd = bytes(reversed(bcd_data))
+                    data_item.value = bcd_to_digits(reversed_bcd)
+                return data_item
             else:
-                log.warning("<UNK> %x <UNK>", di3)
+                log.warning(f"未知数据项: {bytes_to_spaced_hex(di)}")
                 return None
 
         elif frame.ctrl_code == (CtrlCode.ReadAddress | 0x80):  # 读通讯地址响应
-            log.info("读通讯地址响应: %v", frame.data)
-            if len(frame.data) == 6:
-                self.address = frame.data[:6]
+            log.debug(f"读通讯地址响应: {bytes_to_spaced_hex(frame.data)}")
+            if len(frame.data) == ADDRESS_LEN:
+                self.address = frame.data[:ADDRESS_LEN]
             return DataItem(
-                di=bytes_to_int(frame.data[0:4]),
+                di=bytes_to_int(frame.data[0:DI_LEN]),
                 name="通讯地址",
                 data_format=DataFormat.XXXXXXXX.value,
                 value=frame.data,
@@ -272,9 +304,9 @@ class MeterClientService:
             )
 
         elif frame.ctrl_code == (CtrlCode.WriteAddress | 0x80):  # 写通讯地址响应
-            log.info("写通讯地址响应: %v", frame.data)
+            log.debug(f"写通讯地址响应: {bytes_to_spaced_hex(frame.data)}")
             return DataItem(
-                di=bytes_to_int(frame.data[0:4]),
+                di=bytes_to_int(frame.data[0:DI_LEN]),
                 name="通讯地址",
                 data_format=DataFormat.XXXXXXXX.value,
                 value=frame.data,
@@ -283,5 +315,5 @@ class MeterClientService:
             )
 
         else:
-            log.warning("<UNK> %x <UNK>", frame.ctrl_code)
+            log.warning(f"Unknown control code: {frame.ctrl_code}")
             return None

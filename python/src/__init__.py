@@ -14,8 +14,6 @@ __email__ = "1755696012@qq.com"
 # 导入主要的服务类
 from .service.serversvc.server_service import (
     MeterServerService,
-    new_tcp_server,
-    new_rtu_server,
 )
 from .service.clientsvc.client_service import MeterClientService
 
@@ -40,10 +38,6 @@ __all__ = [
     # 服务类
     "MeterServerService",
     "MeterClientService",
-    
-    # 便捷函数
-    "new_tcp_server",
-    "new_rtu_server",
     
     # 协议类
     "DLT645Protocol",

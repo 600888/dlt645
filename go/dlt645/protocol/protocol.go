@@ -29,7 +29,7 @@ type Frame struct {
 func DecodeData(data []byte) []byte {
 	result := make([]byte, len(data))
 	for i, b := range data {
-		result[i] = b - 0x33
+		result[i] = byte((int(b) - 0x33) % 256)
 	}
 	return result
 }
@@ -54,7 +54,7 @@ func BuildFrame(addr [6]byte, ctrlCode byte, data []byte) []byte {
 	// 数据域编码
 	encodedData := make([]byte, len(data))
 	for i, b := range data {
-		encodedData[i] = b + 0x33
+		encodedData[i] = byte((int(b) + 0x33) % 256)
 	}
 
 	buf.WriteByte(byte(len(encodedData)))

@@ -54,7 +54,7 @@ clean_build() {
 # 运行基本测试
 run_tests() {
     print_info "运行基本测试..."
-    if python test_basic.py; then
+    if python test/test_basic.py; then
         print_success "✓ 基本测试通过"
     else
         print_error "✗ 基本测试失败"

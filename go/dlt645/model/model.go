@@ -17,10 +17,26 @@ const (
 
 const (
 	XXXXXXXXXXXX = "XXXXXXXXXXXX"
-	XXXXXX_XX = "XXXXXX.XX"
-	XXXX_XX   = "XXXX.XX"
-	XXX_XXX   = "XXX.XXX"
-	XX_XXXX   = "XX.XXXX"
+	XXXXXX_XX    = "XXXXXX.XX"
+	XXXX_XX      = "XXXX.XX"
+	XXX_XXX      = "XXX.XXX"
+	XX_XXXX      = "XX.XXXX"
+	YYMMDDWW     = "YYMMDDWW"   // 日年月日星期
+	HHMMSS       = "HHMMSS"     // 时分秒
+	YYMMDDHHMM   = "YYMMDDHHMM" // 日年月日时分
+	NN           = "NN"
+	NNNN         = "NNNN"
+	NNNNNNNN     = "NNNNNNNN"
+)
+
+// 地址
+var BroadcastAddr = [6]byte{0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA}
+var BroadcastTimeAddr = [6]byte{0x99, 0x99, 0x99, 0x99, 0x99, 0x99}
+
+const (
+	AddrLength     = 6 // 地址长度
+	PasswordLength = 4 //密码长度
+	DataItemLength = 4 // 数据项地址长度
 )
 
 // 数据项结构体

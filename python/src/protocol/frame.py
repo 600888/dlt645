@@ -6,15 +6,15 @@ FRAME_END_BYTE = 0x16
 BROADCAST_ADDR = 0xAA
 
 class Frame:
-    def __init__(self, preamble: List[int] = [], start_flag: int = 0, addr: List[int] = [],
-                 ctrl_code: int = 0, data_len: int = 0, data: List[int] = [],
+    def __init__(self, preamble: bytearray = bytearray(), start_flag: int = 0, addr: bytearray = bytearray(),
+                 ctrl_code: int = 0, data_len: int = 0, data: bytearray = bytearray(),
                  check_sum: int = 0, end_flag: int = 0):
-        self.preamble = preamble if preamble is not None else []
+        self.preamble = preamble if preamble is not None else bytearray()
         self.start_flag = start_flag
-        self.addr = addr if addr is not None else [0] * 6
+        self.addr = addr if addr is not None else bytearray([0] * 6)
         self.ctrl_code = ctrl_code
         self.data_len = data_len
-        self.data = data if data is not None else []
+        self.data = data if data is not None else bytearray()
         self.check_sum = check_sum
         self.end_flag = end_flag
 

@@ -89,8 +89,9 @@ class RtuClient:
             bytes: 成功接收的响应数据
             None: 失败时返回
         """
-        if self.conn is None:
-            log.error("Serial port not connected")
+        # 确保连接已建立
+        if not self._ensure_connection():
+            log.error("Failed to establish serial port connection")
             return None
 
         response = bytearray()
@@ -143,3 +144,20 @@ class RtuClient:
         except Exception as e:
             log.warning(f"Clear buffer failed: {str(e)}")
         return False
+    
+    def _ensure_connection(self) -> bool:
+        """确保串口连接已建立，如果连接断开则尝试重新连接
+        
+        Returns:
+            bool: 连接是否成功建立
+        """
+        try:
+            # 检查连接是否存在且打开
+            if self.conn is None or not self.conn.is_open:
+                log.info("Connection lost or not established, attempting to reconnect...")
+                return self.connect()
+            return True
+        except Exception as e:
+            log.error(f"Connection check failed: {str(e)}")
+            # 尝试重新连接
+            return self.connect()

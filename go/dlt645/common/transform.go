@@ -57,8 +57,8 @@ func Uint8ToBCD(value uint8) byte {
 	return byte(digit1<<4 | digit2)
 }
 
-// bcdToDigits 将 BCD 码字节数组转换为数字字符串
-func bcdToDigits(bcd []byte) string {
+// BcdToDigits 将 BCD 码字节数组转换为数字字符串
+func BcdToDigits(bcd []byte) string {
 	digits := make([]byte, 0, len(bcd)*2)
 	for _, b := range bcd {
 		high := (b >> 4) & 0x0F
@@ -113,7 +113,7 @@ func Float32ToBCD(value float32, format string, endian binary.ByteOrder) ([]byte
 	digits := integerPart + decimalPart
 
 	// 转换为BCD码
-	bcd, err := stringToBCD(digits, endian)
+	bcd, err := StringToBCD(digits, endian)
 	if err != nil {
 		return nil, err
 	}
@@ -156,7 +156,7 @@ func BCDToFloat32(bcd []byte, format string, endian binary.ByteOrder) (float32, 
 	}
 
 	// 转换为字符串
-	digits := bcdToDigits(bcd)
+	digits := BcdToDigits(bcd)
 
 	// 解析格式获取小数位数和总长度
 	decimalPlaces, _, err := parseFormat(format)
@@ -214,7 +214,7 @@ func formatFloat(value float32, decimalPlaces, totalDigits int) string {
 }
 
 // 将数字字符串转换为BCD码（小端序）
-func stringToBCD(digits string, endian binary.ByteOrder) ([]byte, error) {
+func StringToBCD(digits string, endian binary.ByteOrder) ([]byte, error) {
 	if len(digits)%2 != 0 {
 		digits = "0" + digits // 奇数位补零
 	}

@@ -171,7 +171,7 @@ def bcd_to_float(bcd, format_str, endian="big") -> float:
     return value
 
 
-def time_to_bcd(t: time) -> bytearray:
+def datetime_to_bcd(t: datetime) -> bytearray:
     """将时间转换为BCD码字节数组（小端序）"""
     # 获取当前时间（年月日时分）
     year = t.year % 100  # 取年份后两位（如2025→25）

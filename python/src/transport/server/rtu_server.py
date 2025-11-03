@@ -138,7 +138,7 @@ class RtuServer:
                     if conn.in_waiting > 0:
                         # 读取所有可用数据
                         data = conn.read(conn.in_waiting)
-                        log.info(f"RX: {bytes_to_spaced_hex(data)} ({conn.in_waiting} bytes)")
+                        log.info(f"RX: {bytes_to_spaced_hex(data)} ({len(data)} bytes)")
 
                         # 协议解析
                         frame = DLT645Protocol.deserialize(data)

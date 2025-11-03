@@ -1,9 +1,11 @@
 from typing import List
+from datetime import datetime
 
 from ....model.data.define.energy_def import DIMap
 from ....model.types.data_type import DataItem, DataFormat
+from ....model.types.dlt645_type import Demand
 
-# 需求DI列表
+# 需量DI列表
 demand_di_list = [
     0x01150000,
     0x01160000,
@@ -61,6 +63,7 @@ def init_demand_def(demand_types: List[DataItem]):
                 name=name_prefix + demand_types[i].name,
                 data_format=DataFormat.XX_XXXX.value,
                 unit=demand_types[i].unit,
+                value=Demand(0.0, datetime.now()),
             )
 
             # 反向有功需量
@@ -70,6 +73,7 @@ def init_demand_def(demand_types: List[DataItem]):
                 name=name_prefix + demand_types[64 + i].name,
                 data_format=DataFormat.XX_XXXX.value,
                 unit=demand_types[64 + i].unit,
+                value=Demand(0.0, datetime.now()),
             )
 
             # 组合无功1需量
@@ -79,6 +83,7 @@ def init_demand_def(demand_types: List[DataItem]):
                 name=name_prefix + demand_types[64 * 2 + i].name,
                 data_format=DataFormat.XX_XXXX.value,
                 unit=demand_types[64 * 2 + i].unit,
+                value=Demand(0.0, datetime.now()),
             )
 
             # 组合无功2需量
@@ -88,6 +93,7 @@ def init_demand_def(demand_types: List[DataItem]):
                 name=name_prefix + demand_types[64 * 3 + i].name,
                 data_format=DataFormat.XX_XXXX.value,
                 unit=demand_types[64 * 3 + i].unit,
+                value=Demand(0.0, datetime.now()),
             )
 
             # 第一象限无功费率最大需量
@@ -97,6 +103,7 @@ def init_demand_def(demand_types: List[DataItem]):
                 name=name_prefix + demand_types[64 * 4 + i].name,
                 data_format=DataFormat.XX_XXXX.value,
                 unit=demand_types[64 * 4 + i].unit,
+                value=Demand(0.0, datetime.now()),
             )
 
             # 第二象限无功费率最大需量
@@ -106,6 +113,7 @@ def init_demand_def(demand_types: List[DataItem]):
                 name=name_prefix + demand_types[64 * 5 + i].name,
                 data_format=DataFormat.XX_XXXX.value,
                 unit=demand_types[64 * 5 + i].unit,
+                value=Demand(0.0, datetime.now()),
             )
 
             # 第三象限无功费率最大需量
@@ -115,6 +123,7 @@ def init_demand_def(demand_types: List[DataItem]):
                 name=name_prefix + demand_types[64 * 6 + i].name,
                 data_format=DataFormat.XX_XXXX.value,
                 unit=demand_types[64 * 6 + i].unit,
+                value=Demand(0.0, datetime.now()),
             )
 
             # 第四象限无功费率最大需量
@@ -124,6 +133,7 @@ def init_demand_def(demand_types: List[DataItem]):
                 name=name_prefix + demand_types[64 * 7 + i].name,
                 data_format=DataFormat.XX_XXXX.value,
                 unit=demand_types[64 * 7 + i].unit,
+                value=Demand(0.0, datetime.now()),
             )
 
             # 正向视在最大需量
@@ -133,6 +143,7 @@ def init_demand_def(demand_types: List[DataItem]):
                 name=name_prefix + demand_types[64 * 8 + i].name,
                 data_format=DataFormat.XX_XXXX.value,
                 unit=demand_types[64 * 8 + i].unit,
+                value=Demand(0.0, datetime.now()),
             )
 
             # 反向视在最大需量
@@ -142,6 +153,7 @@ def init_demand_def(demand_types: List[DataItem]):
                 name=name_prefix + demand_types[64 * 9 + i].name,
                 data_format=DataFormat.XX_XXXX.value,
                 unit=demand_types[64 * 9 + i].unit,
+                value=Demand(0.0, datetime.now()),
             )
 
             # 最后几个数据特殊处理
@@ -153,4 +165,5 @@ def init_demand_def(demand_types: List[DataItem]):
                     name=name_prefix + demand_types[64 * 10 + k].name,
                     data_format=DataFormat.XX_XXXX.value,
                     unit=demand_types[64 * 10 + k].unit,
+                    value=Demand(0.0, datetime.now()),
                 )

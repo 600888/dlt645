@@ -22,10 +22,18 @@ func TestRtuClientStart(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	dataItem, err := clientSvc.Read01(0x00000000)
+	dataItem, err := clientSvc.Read00(0x00000000)
 	if err != nil {
 		t.Log("读取数据项失败")
 		t.Fatal(err)
 	}
 	fmt.Printf("%.2f %v\n", dataItem.Value.(float32), dataItem.Unit)
+
+	// 读取第一套时区表
+	dataItem, err = clientSvc.Read04(0x04010000)
+	if err != nil {
+		t.Log("读取数据项失败")
+		t.Fatal(err)
+	}
+	fmt.Printf("%v\n", dataItem.Value)
 }

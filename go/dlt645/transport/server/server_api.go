@@ -11,7 +11,7 @@ type DLT645Server interface {
 	Set01(di uint32, value *model.Demand) (bool, error)  // 写最大需量及发生时间
 	Set02(di uint32, value float32) (bool, error)        // 写变量
 	// Set03(di uint32, value uint32) (bool, error)       // 写事件记录
-	// Set04(di uint32, value uint32) (bool, error)          // 写参变量
+	Set04(di uint32, value interface{}) (bool, error) // 写参变量
 	// Set05(di uint32) (bool, error)                        // 写冻结
 	// Set06(di uint32) (bool, error)                        // 写负荷记录
 	// Set(di uint32, bytes []byte) (*model.DataItem, error) // 写数据

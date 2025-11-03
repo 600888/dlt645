@@ -14,7 +14,7 @@ import os
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '.'))
 
 try:
-    from src.service.serversvc.server_service import MeterServerService, new_tcp_server, new_rtu_server
+    from src.service.serversvc.server_service import MeterServerService
     from src.service.clientsvc.client_service import MeterClientService
     from src.protocol.protocol import DLT645Protocol
     from src.model.types.dlt645_type import CtrlCode
@@ -40,7 +40,7 @@ class TestDLT645Basic(unittest.TestCase):
         """测试TCP服务器创建"""
         print("测试TCP服务器创建...")
         try:
-            server = new_tcp_server("127.0.0.1", 8022, 30)
+            server = MeterServerService.new_tcp_server("127.0.0.1", 8022, 30)
             self.assertIsNotNone(server)
             self.assertIsInstance(server, MeterServerService)
             print("✓ TCP服务器创建成功")
@@ -62,7 +62,7 @@ class TestDLT645Basic(unittest.TestCase):
         """测试服务器数据设置"""
         print("测试服务器数据设置...")
         try:
-            server = new_tcp_server("127.0.0.1", 8024, 30)
+            server = MeterServerService.new_tcp_server("127.0.0.1", 8024, 30)
             
             # 测试设置电能量数据
             result = server.set_00(0x00000000, 123.45)

@@ -8,7 +8,10 @@ class DLT645Protocol:
     @classmethod
     def decode_data(cls, data: bytes) -> bytes:
         """数据域解码（±33H转换）"""
-        return bytes([b - 0x33 for b in data])
+        if not data:
+            return b""
+        # 使用模256运算确保结果在0-255范围内，防止出现负数
+        return bytes([(b - 0x33) % 256 for b in data])
 
     @classmethod
     def calculate_checksum(cls, data: bytes) -> int:
@@ -18,7 +21,10 @@ class DLT645Protocol:
     @classmethod
     def encode_data(cls, data: bytes) -> bytes:
         """数据域编码"""
-        return bytes([b + 0x33 for b in data])
+        if not data:
+            return b""
+        # 使用模256运算确保结果在0-255范围内，防止溢出
+        return bytes([(b + 0x33) % 256 for b in data])
 
     @classmethod
     def build_frame(cls, addr: bytes, ctrl_code: int, data: bytes) -> bytearray:
@@ -103,7 +109,7 @@ class DLT645Protocol:
             raise Exception(f"invalid end flag: {raw[checksum_end + 1]}")
 
         # 转换为带缩进的JSON
-        log.info(f"frame: {frame}")
+        log.debug(f"frame: {frame}")
         return frame
 
     @classmethod

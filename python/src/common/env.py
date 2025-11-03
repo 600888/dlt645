@@ -11,5 +11,6 @@ log_path = os.path.join(package_root, 'log')
 if not os.path.exists(conf_path):
     # 开发模式下的路径结构
     root_path = os.path.dirname(os.path.dirname(current_path))
-    conf_path = os.path.join(root_path, 'config')
     log_path = os.path.join(root_path, 'log')
+    src_path = os.path.join(root_path, 'src')
+    conf_path = os.path.join(src_path, 'config')

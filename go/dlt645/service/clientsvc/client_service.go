@@ -20,8 +20,8 @@ type Connection interface {
 }
 
 type MeterClientService struct {
-	Address  [6]byte
-	Password [4]byte
+	Address  [model.AddrLength]byte
+	Password [model.PasswordLength]byte
 	Conn     Connection
 }
 
@@ -81,8 +81,8 @@ func NewMeterClientService(conn Connection) (*MeterClientService, error) {
 	}
 
 	return &MeterClientService{
-		Address:  [6]byte{},
-		Password: [4]byte{},
+		Address:  [model.AddrLength]byte{},
+		Password: [model.PasswordLength]byte{},
 		Conn:     conn,
 	}, nil
 }
@@ -95,11 +95,11 @@ func (s *MeterClientService) GetTime(t []byte) time.Time {
 }
 
 // 验证设备
-func (s *MeterClientService) validateDevice(addr [6]byte) bool {
-	if addr == [6]byte{0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA} { // 读通讯地址命令
+func (s *MeterClientService) validateDevice(ctrlCode byte, addr [model.AddrLength]byte) bool {
+	if ctrlCode == model.ReadAddress|0x80 || ctrlCode == model.WriteAddress|0x80 { // 读通讯地址命令
 		return true
 	}
-	if addr == [6]byte{0x99, 0x99, 0x99, 0x99, 0x99, 0x99} { // 广播时间同步命令
+	if addr == model.BroadcastAddr || addr == model.BroadcastTimeAddr { // 写通讯地址命令
 		return true
 	}
 	return s.Address == addr
@@ -107,7 +107,7 @@ func (s *MeterClientService) validateDevice(addr [6]byte) bool {
 
 // 设置设备地址
 func (s *MeterClientService) SetAddress(address []byte) error {
-	if len(address) != 6 {
+	if len(address) != model.AddrLength {
 		return errors.New("invalid address length")
 	}
 	copy(s.Address[:], address)
@@ -117,7 +117,7 @@ func (s *MeterClientService) SetAddress(address []byte) error {
 
 // 设置设备密码
 func (s *MeterClientService) SetPassword(password []byte) error {
-	if len(password) != 4 {
+	if len(password) != model.PasswordLength {
 		return errors.New("invalid password length")
 	}
 	copy(s.Password[:], password)
@@ -148,8 +148,8 @@ func (s *MeterClientService) SendAndHandleRequest(bytes []byte) (*model.DataItem
 }
 
 // 读取电能
-func (s *MeterClientService) Read01(di uint32) (*model.DataItem, error) {
-	data := make([]byte, 4)
+func (s *MeterClientService) Read00(di uint32) (*model.DataItem, error) {
+	data := make([]byte, model.DataItemLength)
 	binary.LittleEndian.PutUint32(data, di)
 	bytes := protocol.BuildFrame(s.Address, model.CtrlReadData, data)
 	// 发送请求并处理响应
@@ -161,8 +161,8 @@ func (s *MeterClientService) Read01(di uint32) (*model.DataItem, error) {
 }
 
 // 读取最大需量及发生时间
-func (s *MeterClientService) Read02(di uint32) (*model.DataItem, error) {
-	data := make([]byte, 4)
+func (s *MeterClientService) Read01(di uint32) (*model.DataItem, error) {
+	data := make([]byte, model.DataItemLength)
 	binary.LittleEndian.PutUint32(data, di)
 	bytes := protocol.BuildFrame(s.Address, model.CtrlReadData, data)
 	// 发送请求并处理响应
@@ -174,8 +174,21 @@ func (s *MeterClientService) Read02(di uint32) (*model.DataItem, error) {
 }
 
 // 读取变量
-func (s *MeterClientService) Read03(di uint32) (*model.DataItem, error) {
-	data := make([]byte, 4)
+func (s *MeterClientService) Read02(di uint32) (*model.DataItem, error) {
+	data := make([]byte, model.DataItemLength)
+	binary.LittleEndian.PutUint32(data, di)
+	bytes := protocol.BuildFrame(s.Address, model.CtrlReadData, data)
+	// 发送请求并处理响应
+	dataItem, err := s.SendAndHandleRequest(bytes)
+	if err != nil {
+		return nil, err
+	}
+	return dataItem, nil
+}
+
+// 读取参变量
+func (s *MeterClientService) Read04(di uint32) (*model.DataItem, error) {
+	data := make([]byte, model.DataItemLength)
 	binary.LittleEndian.PutUint32(data, di)
 	bytes := protocol.BuildFrame(s.Address, model.CtrlReadData, data)
 	// 发送请求并处理响应
@@ -188,7 +201,7 @@ func (s *MeterClientService) Read03(di uint32) (*model.DataItem, error) {
 
 // 读取通讯地址
 func (s *MeterClientService) ReadAddress() (*model.DataItem, error) {
-	bytes := protocol.BuildFrame(s.Address, model.ReadAddress, nil)
+	bytes := protocol.BuildFrame(model.BroadcastAddr, model.ReadAddress, nil)
 	// 发送请求并处理响应
 	dataItem, err := s.SendAndHandleRequest(bytes)
 	if err != nil {
@@ -198,7 +211,7 @@ func (s *MeterClientService) ReadAddress() (*model.DataItem, error) {
 }
 
 // 构建写通讯地址请求帧
-func (s *MeterClientService) WriteAddress(newAddress [6]byte) (*model.DataItem, error) {
+func (s *MeterClientService) WriteAddress(newAddress [model.AddrLength]byte) (*model.DataItem, error) {
 	bytes := protocol.BuildFrame(s.Address, model.WriteAddress, newAddress[:])
 	// 发送请求并处理响应
 	dataItem, err := s.SendAndHandleRequest(bytes)
