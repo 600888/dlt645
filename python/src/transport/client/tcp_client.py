@@ -3,6 +3,7 @@ import time
 from typing import Optional, Any
 
 from ...common.transform import bytes_to_spaced_hex
+from ...protocol.protocol import DLT645Protocol
 from ...transport.client.log import log
 
 
@@ -48,7 +49,7 @@ class TcpClient:
         min_response_len: int = 1,
         retries: int = 1,
     ) -> Optional[bytes]:
-        """增强版TCP请求-响应（带完整超时控制）
+        """增强版TCP请求-响应（支持超时控制和分片数据处理）
 
         Args:
             data: 要发送的请求数据
@@ -67,45 +68,70 @@ class TcpClient:
             return None
 
         original_timeout = self.conn.gettimeout()  # 保存原始超时设置
-        response = bytearray()
+        data_buffer = bytearray()
 
         for attempt in range(retries + 1):
             try:
-                # 0. 初始化计时器
+                # 0. 初始化计时器和缓冲区
                 start_time = time.time()
-                response.clear()
+                data_buffer.clear()
 
                 # 1. 设置socket超时（影响后续所有操作）
                 self.conn.settimeout(read_timeout)
 
                 # 2. 带超时的数据写入
                 try:
-                    self.conn.sendall(data)  # sendall本身不返回发送字节数
-                    log.info(f"Sent request: {bytes_to_spaced_hex(data)}")
+                    self.conn.sendall(data)
+                    log.info(f"TX: {bytes_to_spaced_hex(data)}")
                 except socket.timeout:
                     raise TimeoutError(f"Write timeout after {write_timeout}s")
 
-                # 3. 接收数据（带总超时控制）
+                # 3. 接收数据（带总超时控制和分片处理）
                 while (time.time() - start_time) < total_timeout:
                     try:
-                        chunk = self.conn.recv(256)
+                        # 读取数据到缓冲区
+                        chunk = self.conn.recv(1024)  # 增加缓冲区大小
                         if chunk:
-                            response.extend(chunk)
-                            log.info(f"Received: {bytes_to_spaced_hex(response)}")
-                            return bytes(response)
+                            data_buffer.extend(chunk)
+                            log.info(
+                                f"RX: {bytes_to_spaced_hex(chunk)} (buffer size: {len(data_buffer)})"
+                            )
+
+                            # 尝试解析缓冲区中的数据
+                            try:
+                                remaining_data, frame = (
+                                    DLT645Protocol.deserialize_with_remaining(
+                                        bytes(data_buffer)
+                                    )
+                                )
+                                if frame is not None:
+                                    log.debug(
+                                        f"Successfully received complete response: {bytes_to_spaced_hex(data_buffer)}"
+                                    )
+                                    # 恢复原始超时设置
+                                    self.conn.settimeout(original_timeout)
+                                    return data_buffer
+                            except Exception as parse_error:
+                                log.warning(
+                                    f"Parse error (might be incomplete data): {parse_error}"
+                                )
+                                # 继续等待更多数据
+                                continue
                         else:  # 空数据表示连接关闭
                             log.warning("Connection closed by peer")
                             break
                     except socket.timeout:
                         # 单次recv超时，检查总超时
                         if (time.time() - start_time) >= total_timeout:
+                            log.warning(f"Total timeout reached after {total_timeout}s")
                             break
+                        # 继续等待更多数据
                         continue
 
                 # 超时或中断处理
-                if len(response) >= min_response_len:
+                if len(data_buffer) >= min_response_len:
                     log.warning(
-                        f"Incomplete response ({len(response)} bytes): {bytes_to_spaced_hex(response)}"
+                        f"Incomplete response ({len(data_buffer)} bytes): {bytes_to_spaced_hex(data_buffer)}"
                     )
                 else:
                     log.error(f"No valid response within {total_timeout}s")
@@ -117,6 +143,7 @@ class TcpClient:
 
             # 非最后一次尝试时延迟重试
             if attempt < retries:
+                log.info(f"Retrying ({attempt+1}/{retries})...")
                 time.sleep(0.5 * (attempt + 1))  # 指数退避
                 # 重连逻辑（如果连接已断开）
                 if not self._ensure_connection():

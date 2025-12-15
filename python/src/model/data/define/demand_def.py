@@ -1,9 +1,9 @@
 from typing import List
 from datetime import datetime
 
-from ....model.data.define.energy_def import DIMap
 from ....model.types.data_type import DataItem, DataFormat
 from ....model.types.dlt645_type import Demand
+from . import DIMap
 
 # 需量DI列表
 demand_di_list = [
@@ -159,7 +159,7 @@ def init_demand_def(demand_types: List[DataItem]):
             # 最后几个数据特殊处理
             for k in range(len(demand_di_list)):
                 # 提取demandDiList中的前24位，然后添加结算日信息（最后8位）
-                key = (demand_di_list[k] & 0xFFFFFF00) | (di0 + j);
+                key = (demand_di_list[k] & 0xFFFFFF00) | (di0 + j)
                 DIMap[key] = DataItem(
                     di=key,
                     name=name_prefix + demand_types[64 * 10 + k].name,

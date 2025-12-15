@@ -1,6 +1,7 @@
 # 数据标识DI（完整定义）
-from typing import Dict, List
+from typing import List
 from ....model.types.data_type import DataItem, DataFormat
+from . import DIMap
 
 energy_di_list = [
     0x00800000,
@@ -62,8 +63,6 @@ energy_di_list = [
     0x00C10000,
     0x00C20000,
 ]
-
-DIMap: Dict[int, DataItem] = {}
 
 
 def init_energy_def(energy_types: List[DataItem]):
@@ -189,7 +188,9 @@ def init_energy_def(energy_types: List[DataItem]):
 
             # 最后几个数据特殊处理
             for k in range(len(energy_di_list)):
-                value = (energy_di_list[k] & 0xFFFFFF00) | (di0 + j) # 提取energyDiList中的前24位，然后添加结算日信息（最后8位）
+                value = (energy_di_list[k] & 0xFFFFFF00) | (
+                    di0 + j
+                )  # 提取energyDiList中的前24位，然后添加结算日信息（最后8位）
                 DIMap[value] = DataItem(
                     di=value,
                     name=name_prefix + energy_types[64 * 11 + k].name,

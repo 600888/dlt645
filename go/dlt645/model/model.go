@@ -39,6 +39,27 @@ const (
 	DataItemLength = 4 // 数据项地址长度
 )
 
+// 错误码
+const (
+	OtherError          = 0b0000001 // 其他错误
+	RequestDataEmpty    = 0b0000010 // 无请求数据
+	AuthFailed          = 0b0000100 // 认证失败
+	CommRateImmutable   = 0b0001000 // 通信速率不可改变
+	YearZoneNumExceeded = 0b0010000 // 年区数超出范围
+	DaySlotNumExceeded  = 0b0100000 // 日区数超出范围
+	RateNumExceeded     = 0b1000000 // 速率数超出范围
+)
+
+var errorMessages = map[uint32]string{
+	OtherError:          "其他错误",
+	RequestDataEmpty:    "无请求数据",
+	AuthFailed:          "认证失败",
+	CommRateImmutable:   "通信速率不可改变",
+	YearZoneNumExceeded: "年区数超出范围",
+	DaySlotNumExceeded:  "日区数超出范围",
+	RateNumExceeded:     "速率数超出范围",
+}
+
 // 数据项结构体
 type DataItem struct {
 	Di         uint32      // 数据项地址

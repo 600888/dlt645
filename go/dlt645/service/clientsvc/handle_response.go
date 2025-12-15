@@ -3,6 +3,7 @@ package clientsvc
 import (
 	"encoding/binary"
 	"errors"
+	"fmt"
 	"log"
 	"main/dlt645/common"
 	"main/dlt645/model"
@@ -11,10 +12,36 @@ import (
 	"time"
 )
 
+func (s *MeterClientService) isValidResponse(frame *protocol.Frame) bool {
+	// 验证响应帧是否有效
+	// 检测异常处理帧 (DLT645协议中，异常响应的控制码次高位为1)
+	if (frame.CtrlCode & 0x40) == 0x40 { // 检查次高位
+		errorMsg := "设备返回异常响应"
+
+		// 如果数据域不为空，尝试解析错误码
+		if len(frame.Data) > 0 {
+			errorCode := frame.Data[0]
+			// 在Go实现中，我们简化处理，直接记录错误码
+			errorMsg = fmt.Sprintf("设备返回异常响应: 错误码: %02X", errorCode)
+		} else {
+			errorMsg = "设备返回异常响应: 未知错误码"
+		}
+
+		log.Println(errorMsg)
+		return false
+	}
+	return true
+}
+
 func (s *MeterClientService) HandleResponse(frame *protocol.Frame) (*model.DataItem, error) {
+	// 验证响应帧是否正常
+	if !s.isValidResponse(frame) {
+		log.Printf("异常响应帧: % x", frame.Data)
+		return nil, errors.New("invalid response frame")
+	}
+
 	// 验证设备地址
 	if !s.validateDevice(frame.CtrlCode, frame.Addr) {
-		log.Println("Device", frame.CtrlCode, "InvalidateDevice", frame.Addr)
 		log.Printf("验证设备地址: %x 失败", common.BytesToSpacedHex(frame.Addr[:]))
 		return nil, errors.New("unauthorized device")
 	}
@@ -93,7 +120,7 @@ func (s *MeterClientService) HandleResponse(frame *protocol.Frame) (*model.DataI
 				log.Printf("获取数据项失败: %v", err)
 				return nil, err
 			}
-			
+
 			// 时段表数据处理
 			diValue := common.BytesToUint32(di)
 			if diValue >= 0x04010000 && diValue <= 0x04020008 {

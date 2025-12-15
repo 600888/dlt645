@@ -27,7 +27,9 @@ class DLT645Protocol:
         return bytes([(b + 0x33) % 256 for b in data])
 
     @classmethod
-    def build_frame(cls, addr: bytes, ctrl_code: int, data: bytes) -> bytearray:
+    def build_frame(
+        cls, addr: bytes, ctrl_code: int, data: bytes
+    ) -> bytearray:
         """帧构建（支持广播和单播）"""
         if len(addr) != 6:
             raise ValueError("地址长度必须为6字节")
@@ -56,37 +58,58 @@ class DLT645Protocol:
     @classmethod
     def deserialize(cls, raw: bytes) -> Optional[Frame]:
         """将字节切片反序列化为 Frame 结构体"""
-        # 基础校验
+        remaining, frame = cls.deserialize_with_remaining(raw)
+        if frame is None:
+            raise Exception("No complete frame found")
+        return frame
+
+    @classmethod
+    def deserialize_with_remaining(cls, raw: bytes) -> tuple[bytes, Optional[Frame]]:
+        """将字节切片反序列化为 Frame 结构体，并返回未解析的剩余数据
+
+        Args:
+            raw: 输入的原始字节数据
+
+        Returns:
+            tuple[bytes, Optional[Frame]]: (未解析的剩余数据, 解析出的帧)
+            如果数据不完整或无法解析，返回(原始数据, None)
+        """
+        # 基础校验 - 不完整的数据不会抛出异常，而是返回None
         if len(raw) < 12:
-            raise Exception(f"frame too short: {raw}")
+            return raw, None
 
         # 帧边界检查（需考虑前导FE）
         try:
             start_idx = raw.index(FRAME_START_BYTE)
         except ValueError:
-            log.error(f"invalid start flag: {raw}")
-            raise Exception("invalid start flag")
+            # 未找到起始标志，返回原始数据
+            return raw, None
 
-        if start_idx == -1 or start_idx + 10 >= len(raw):
-            log.error(f"invalid start flag: {raw}")
-            raise Exception("invalid start flag")
+        # 检查是否有足够的数据解析基本帧结构
+        if start_idx + 10 >= len(raw):
+            # 数据不完整，返回原始数据
+            return raw, None
+
         if start_idx + 7 >= len(raw) or raw[start_idx + 7] != FRAME_START_BYTE:
-            log.error(f"missing second start flag: {raw}")
-            raise Exception("missing second start flag")
+            # 缺少第二个起始标志，可能是数据不完整或损坏
+            # 跳过当前起始标志，尝试查找下一个
+            return raw[start_idx + 1 :], None
 
         # 构建帧结构
         frame = Frame()
         frame.start_flag = raw[start_idx]
-        frame.addr = raw[start_idx + 1:start_idx + 7]
+        frame.addr = raw[start_idx + 1 : start_idx + 7]
         frame.ctrl_code = raw[start_idx + 8]
         frame.data_len = raw[start_idx + 9]
 
         # 数据域提取（严格按协议1.2.5节处理）
         data_start = start_idx + 10
         data_end = data_start + frame.data_len
-        if data_end > len(raw) - 2:
-            log.error(f"invalid data length {frame.data_len}")
-            raise Exception(f"invalid data length {frame.data_len}")
+
+        # 检查是否有足够的数据解析完整帧
+        if data_end + 2 > len(raw):  # 至少需要校验和和结束符
+            # 数据不完整，返回原始数据
+            return raw, None
 
         # 数据域解码（需处理加33H/减33H）
         frame.data = DLT645Protocol.decode_data(raw[data_start:data_end])
@@ -94,30 +117,39 @@ class DLT645Protocol:
         # 校验和验证（从第一个68H到校验码前）
         checksum_start = start_idx
         checksum_end = data_end
-        if checksum_end >= len(raw):
-            log.error(f"frame truncated: {raw}")
-            raise Exception(f"frame truncated: {raw}")
 
-        calculated_sum = DLT645Protocol.calculate_checksum(raw[checksum_start:checksum_end])
+        calculated_sum = DLT645Protocol.calculate_checksum(
+            raw[checksum_start:checksum_end]
+        )
+
         if calculated_sum != raw[checksum_end]:
-            log.error(f"checksum error: calc=0x{calculated_sum:02X}, actual=0x{raw[checksum_end]:02X}")
-            raise Exception(f"checksum error: calc=0x{calculated_sum:02X}, actual=0x{raw[checksum_end]:02X}")
+            # 校验和错误，跳过当前起始标志，尝试查找下一个
+            log.warning(f"Checksum error, skipping frame starting at index {start_idx}")
+            return raw[start_idx + 1 :], None
+        frame.checksum = raw[checksum_end]
 
         # 结束符验证
-        if checksum_end + 1 >= len(raw) or raw[checksum_end + 1] != FRAME_END_BYTE:
-            log.error(f"invalid end flag: {raw[checksum_end + 1]}")
-            raise Exception(f"invalid end flag: {raw[checksum_end + 1]}")
+        if raw[checksum_end + 1] != FRAME_END_BYTE:
+            # 结束符错误，跳过当前起始标志，尝试查找下一个
+            log.warning(f"End flag error, skipping frame starting at index {start_idx}")
+            return raw[start_idx + 1 :], None
+        frame.end_flag = raw[checksum_end + 1]
+
+        # 解析成功，计算剩余数据
+        remaining_data = raw[checksum_end + 2 :]
 
         # 转换为带缩进的JSON
         log.debug(f"frame: {frame}")
-        return frame
+        return remaining_data, frame
 
     @classmethod
     def serialize(cls, frame: Frame) -> Optional[bytes]:
         """将 Frame 结构体序列化为字节切片"""
         if frame.start_flag != FRAME_START_BYTE or frame.end_flag != FRAME_END_BYTE:
             log.error(f"invalid start or end flag: {frame.start_flag} {frame.end_flag}")
-            raise Exception(f"invalid start or end flag: {frame.start_flag} {frame.end_flag}")
+            raise Exception(
+                f"invalid start or end flag: {frame.start_flag} {frame.end_flag}"
+            )
 
         buf = []
         # 写入前导字节

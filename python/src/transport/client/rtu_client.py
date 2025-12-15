@@ -4,6 +4,7 @@ from typing import Optional
 from ...common.transform import bytes_to_spaced_hex
 from ...transport.client.log import log
 from ...protocol.frame import FRAME_START_BYTE, FRAME_END_BYTE
+from ...protocol.protocol import DLT645Protocol
 
 
 class RtuClient:
@@ -74,12 +75,24 @@ class RtuClient:
                 return False
         return True
 
+    def _check_timeout(self, start_time: float) -> bool:
+        """检查是否超时
+
+        Args:
+            start_time: 开始时间
+            data_buffer: 数据缓冲区（可选）
+
+        Returns:
+            bool: 如果超时则返回True
+        """
+        return time.time() - start_time > self.timeout
+
     def send_request(
         self,
         data: bytes,
         retries: int = 1,
     ) -> Optional[bytes]:
-        """简化版串口请求-响应
+        """改进的串口请求-响应，支持超时和分片数据处理
 
         Args:
             data: 要发送的请求数据
@@ -94,9 +107,11 @@ class RtuClient:
             log.error("Failed to establish serial port connection")
             return None
 
-        response = bytearray()
+        # 保存原始超时设置
+        original_timeout = self.conn.timeout
 
         for attempt in range(retries + 1):
+            last_data_time = time.time()
             try:
                 # 清空缓冲区
                 if not self._safe_clear_buffer():
@@ -105,22 +120,61 @@ class RtuClient:
                 # 发送数据
                 written = self.conn.write(data)
                 if written != len(data):
-                    log.error(f"Write incomplete ({written}/{len(data)} bytes)")
+                    log.error(f"TX: Write incomplete ({written}/{len(data)} bytes)")
                     continue
 
-                log.info(f"Sent: {bytes_to_spaced_hex(data)}")
+                log.info(f"TX: {bytes_to_spaced_hex(data)}")
 
-                # 接收数据（持续读取直到收到完整帧）
-                response.clear()
-                while True:
-                    # 读取数据
+                # 初始化数据缓冲区和接收状态
+                data_buffer = bytearray()
+                max_buffer_size = 1024  # 增加缓冲区大小以处理较大的数据
+
+                # 持续读取直到收到完整帧或超时
+                while not self._check_timeout(last_data_time):
+                    # 读取数据, 在没有数据时等待直到超时
                     chunk = self.conn.read(256)
+
                     if chunk:
-                        response.extend(chunk)
-                        # 检查是否收到完整的DLT645帧
-                        if self._is_valid_response(response):
-                            log.info(f"Received: {bytes_to_spaced_hex(response)}")
-                            return bytes(response)
+                        data_buffer.extend(chunk)
+                        last_data_time = time.time()
+                        log.info(f"RX: {bytes_to_spaced_hex(chunk)} len{len(chunk)}")
+
+                    # 无论是否收到数据，只要缓冲区不为空就尝试解析
+                    if data_buffer:
+                        try:
+                            # 使用deserialize_with_remaining解析分片数据
+                            remaining_data, frame = (
+                                DLT645Protocol.deserialize_with_remaining(data_buffer)
+                            )
+
+                            if frame is not None:
+                                # 成功解析到完整帧
+                                log.info(
+                                    f"RX: Successfully parsed frame, buffer size after parsing: {len(remaining_data)}"
+                                )
+                                return bytes(data_buffer)
+                            else:
+                                # 更新缓冲区为未解析的剩余数据
+                                data_buffer = remaining_data
+
+                                # 检查缓冲区大小限制
+                                if len(data_buffer) > max_buffer_size:
+                                    log.warning(
+                                        f"RX: Buffer overflow, clearing {len(data_buffer)} bytes"
+                                    )
+                                    data_buffer.clear()
+                        except Exception as e:
+                            log.error(
+                                f"Error parsing data: {type(e).__name__}: {str(e)}"
+                            )
+                            # 出错时保留数据继续尝试
+
+                    # 小延迟避免CPU占用过高
+                    time.sleep(0.001)
+
+                log.warning(
+                    f"RX: Timeout after {original_timeout} seconds, received incomplete data"
+                )
 
             except Exception as e:
                 log.error(f"Attempt {attempt} failed: {type(e).__name__}: {str(e)}")
@@ -144,17 +198,19 @@ class RtuClient:
         except Exception as e:
             log.warning(f"Clear buffer failed: {str(e)}")
         return False
-    
+
     def _ensure_connection(self) -> bool:
         """确保串口连接已建立，如果连接断开则尝试重新连接
-        
+
         Returns:
             bool: 连接是否成功建立
         """
         try:
             # 检查连接是否存在且打开
             if self.conn is None or not self.conn.is_open:
-                log.info("Connection lost or not established, attempting to reconnect...")
+                log.info(
+                    "Connection lost or not established, attempting to reconnect..."
+                )
                 return self.connect()
             return True
         except Exception as e:

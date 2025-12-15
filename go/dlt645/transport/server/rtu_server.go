@@ -69,6 +69,7 @@ func (s *RtuServer) HandleConnection(conn interface{}) {
 	serialConn, ok := conn.(*serial.Port)
 	if !ok {
 		log.Printf("Invalid connection type: %T", conn)
+		return
 	}
 
 	defer func(conn *serial.Port) {
@@ -80,39 +81,54 @@ func (s *RtuServer) HandleConnection(conn interface{}) {
 
 	buf := make([]byte, 256)
 	for {
-		n, err := serialConn.Read(buf)
-		if err != nil {
-			break
-		}
+		// 创建一个带有超时的读取操作，以便定期检查退出信号
+		readDone := make(chan error, 1)
+		var n int
+		go func() {
+			var readErr error
+			n, readErr = serialConn.Read(buf)
+			readDone <- readErr
+		}()
 
-		if n == 0 {
-			continue
-		}
-
-		log.Printf("Received data: %v", common.BytesToSpacedHex(buf[:n]))
-
-		// 协议解析
-		frame, err := protocol.Deserialize(buf[:n])
-		if err != nil {
-			log.Printf("Error parsing frame: %v", err)
-			continue
-		}
-
-		// 业务处理
-		resp, err := s.Service.HandleRequest(frame)
-		if err != nil {
-			log.Printf("Error handling request: %v", err)
-			continue
-		}
-
-		// 响应
-		if resp != nil {
-			_, err := serialConn.Write(resp)
+		select {
+		case err := <-readDone:
 			if err != nil {
-				log.Printf("Error writing response: %v", err)
+				break
+			}
+
+			if n == 0 {
 				continue
 			}
-			log.Printf("Sent response: %v", common.BytesToSpacedHex(resp))
+
+			log.Printf("Received data: %v", common.BytesToSpacedHex(buf[:n]))
+
+			// 协议解析
+			frame, err := protocol.Deserialize(buf[:n])
+			if err != nil {
+				log.Printf("Error parsing frame: %v", err)
+				continue
+			}
+
+			// 业务处理
+			resp, err := s.Service.HandleRequest(frame)
+			if err != nil {
+				log.Printf("Error handling request: %v", err)
+				continue
+			}
+
+			// 响应
+			if resp != nil {
+				_, err := serialConn.Write(resp)
+				if err != nil {
+					log.Printf("Error writing response: %v", err)
+					continue
+				}
+				log.Printf("Sent response: %v", common.BytesToSpacedHex(resp))
+			}
+		case <-s.quit:
+			// 收到退出信号，退出循环
+			log.Printf("RTU server handle connection quit signal received")
+			return
 		}
 	}
 }

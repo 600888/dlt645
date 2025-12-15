@@ -10,12 +10,21 @@ import (
 	"main/dlt645/protocol"
 )
 
+func (s *MeterServerService) buildErrorResponse(frame *protocol.Frame, errorCode uint32) []byte {
+	var errorData = make([]byte, 2)
+	// 添加帧长度
+	errorData[0] = 0x01
+	// 添加错误码
+	errorData[1] = byte(errorCode)
+	return protocol.BuildFrame(frame.Addr, frame.CtrlCode|0xC0, errorData)
+}
+
 // 处理读数据请求（协议与业务分离）
 func (s *MeterServerService) HandleRequest(frame *protocol.Frame) ([]byte, error) {
 	// 1. 验证设备
 	if !s.validateDevice(frame.CtrlCode, frame.Addr) {
 		log.Printf("验证设备地址: %v 失败", common.BytesToSpacedHex(frame.Addr[:]))
-		return nil, errors.New("unauthorized device")
+		return s.buildErrorResponse(frame, model.AuthFailed), nil
 	}
 
 	// 2. 根据控制码判断请求类型
@@ -34,7 +43,7 @@ func (s *MeterServerService) HandleRequest(frame *protocol.Frame) ([]byte, error
 			resData := make([]byte, 8)
 			dataItem, err := data.GetDataItem(binary.LittleEndian.Uint32(frame.Data))
 			if err != nil {
-				return nil, err
+				return s.buildErrorResponse(frame, model.OtherError), err
 			}
 			copy(resData[:model.DataItemLength], frame.Data[:model.DataItemLength]) // 仅复制前4字节数据标识
 			value, _ := common.InterfaceToFloat32(dataItem.Value)
@@ -46,12 +55,12 @@ func (s *MeterServerService) HandleRequest(frame *protocol.Frame) ([]byte, error
 			resData := make([]byte, 12)
 			dataItem, err := data.GetDataItem(binary.LittleEndian.Uint32(frame.Data))
 			if err != nil {
-				return nil, err
+				return s.buildErrorResponse(frame, model.OtherError), err
 			}
 			copy(resData[:model.DataItemLength], frame.Data[:model.DataItemLength]) //返回数据标识
 			demand, ok := dataItem.Value.(*model.Demand)
 			if !ok {
-				return nil, errors.New("demand value is not legal")
+				return s.buildErrorResponse(frame, model.OtherError), errors.New("demand value is not legal")
 			}
 			demandValue, _ := common.InterfaceToFloat32(demand.Value)
 			// 转换为BCD码
@@ -83,7 +92,7 @@ func (s *MeterServerService) HandleRequest(frame *protocol.Frame) ([]byte, error
 			// 获取数据项
 			dataItem, err := data.GetDataItem(binary.LittleEndian.Uint32(frame.Data))
 			if err != nil {
-				return nil, err
+				return s.buildErrorResponse(frame, model.OtherError), err
 			}
 			// 构建响应帧，先复制数据标识
 			resData := make([]byte, model.DataItemLength)
@@ -97,7 +106,7 @@ func (s *MeterServerService) HandleRequest(frame *protocol.Frame) ([]byte, error
 					bcdValue, _ := common.StringToBCD(dataItem.Value.([]string)[i], binary.LittleEndian)
 					if err != nil {
 						log.Printf("字符串转换BCD码失败: %v", err)
-						return nil, err
+						return s.buildErrorResponse(frame, model.OtherError), err
 					}
 					resData = append(resData, bcdValue...)
 				}
@@ -109,20 +118,20 @@ func (s *MeterServerService) HandleRequest(frame *protocol.Frame) ([]byte, error
 					bcdValue, err := common.StringToBCD(v, binary.LittleEndian)
 					if err != nil {
 						log.Printf("字符串转换BCD码失败: %v", err)
-						return nil, err
+						return s.buildErrorResponse(frame, model.OtherError), err
 					}
 					// 扩展响应数据，添加BCD值
 					resData = append(resData, bcdValue...)
 				default:
 					// 不是字符串类型, 暂时不支持
 					log.Printf("不支持的参变量数据类型: %T", v)
-					return nil, errors.New("unsupported parameter variable type")
+					return s.buildErrorResponse(frame, model.OtherError), errors.New("unsupported parameter variable type")
 				}
 			}
 			return protocol.BuildFrame(frame.Addr, frame.CtrlCode|0x80, resData), nil
 		default:
 			log.Printf("<UNK> %x <UNK>", di3)
-			return nil, errors.New("unknown di3")
+			return s.buildErrorResponse(frame, model.OtherError), errors.New("unknown di3")
 		}
 	case model.ReadAddress:
 		// 构建响应帧
@@ -137,6 +146,6 @@ func (s *MeterServerService) HandleRequest(frame *protocol.Frame) ([]byte, error
 		return protocol.BuildFrame(s.Address, frame.CtrlCode|0x80, resData), nil
 	default:
 		log.Printf("<UNK> %x <UNK>", frame.CtrlCode)
-		return nil, errors.New("unknown control code")
+		return s.buildErrorResponse(frame, model.OtherError), errors.New("unknown control code")
 	}
 }

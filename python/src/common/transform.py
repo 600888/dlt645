@@ -1,13 +1,15 @@
 import binascii
 import struct
 from datetime import datetime
-from time import time
 from typing import Union
 
-from ..model.types.data_type import DataFormat
+
+# 根据长度补0
+def pad_with_zeros(length: int) -> str:
+    return "0" * length
 
 
-def bytes_to_int(byte_array) -> int:
+def bytes_to_int(byte_array: bytearray) -> int:
     """将字节数组转换为无符号整数"""
     if len(byte_array) < 4:
         # 补零操作
@@ -15,7 +17,7 @@ def bytes_to_int(byte_array) -> int:
     return int.from_bytes(byte_array, byteorder="little", signed=False)
 
 
-def bytes_to_float(byte_array) -> float:
+def bytes_to_float(byte_array: bytearray) -> float:
     """将字节数组转换为浮点数"""
     if len(byte_array) < 4:
         # 补零操作
@@ -23,7 +25,7 @@ def bytes_to_float(byte_array) -> float:
     return struct.unpack("<f", byte_array)[0]
 
 
-def bytes_to_spaced_hex(data) -> str:
+def bytes_to_spaced_hex(data: bytearray) -> str:
     """将字节切片转换为每两个字符用空格分隔的十六进制字符串，不足的补 0"""
     hex_str = binascii.hexlify(data).decode("utf-8")
     # 若十六进制字符串长度为奇数，在前面补 0
@@ -34,21 +36,24 @@ def bytes_to_spaced_hex(data) -> str:
     return spaced_hex
 
 
-def bcd_to_digits(bcd) -> str:
+def bcd_to_string(bcd: bytearray, endian="big") -> str:
     """将 BCD 码字节数组转换为数字字符串"""
     digits = []
+    if endian == "little":
+        bcd = bcd[::-1]
     for b in bcd:
         high = (b >> 4) & 0x0F
         low = b & 0x0F
         digits.append(str(high))
         digits.append(str(low))
+
     return "".join(digits)
 
 
-def parse_format(format_str) -> (int, int):
+def parse_format(format_str: str) -> (int, int):
     """解析格式字符串，返回小数位数和总位数"""
-    if format_str == DataFormat.XXXXXXXX.value:
-        return 0, 8
+    if format_str.find(".") == -1:
+        return 0, len(format_str)
     parts = format_str.split(".")
     if len(parts) != 2:
         raise ValueError(f"invalid format: {format_str}")
@@ -57,19 +62,19 @@ def parse_format(format_str) -> (int, int):
     return decimal_places, total_digits
 
 
-def round_float(value, decimal_places) -> float:
+def round_float(value: float, decimal_places: int) -> float:
     """浮点数四舍五入到指定小数位"""
     scale = 10**decimal_places
     return round(value * scale) / scale
 
 
-def format_float(value, decimal_places, total_digits) -> str:
+def format_float(value: float, decimal_places: int, total_digits: int) -> str:
     """格式化浮点数为固定长度字符串（补零对齐）"""
     format_str = f"{{:0{total_digits}.{decimal_places}f}}"
     return format_str.format(value)
 
 
-def string_to_bcd(digits, endian="big") -> bytearray:
+def string_to_bcd(digits: str, endian="big") -> bytearray:
     """将数字字符串转换为BCD码（支持大小端序）"""
     if len(digits) % 2 != 0:
         digits = "0" + digits  # 奇数位补零
@@ -86,7 +91,17 @@ def string_to_bcd(digits, endian="big") -> bytearray:
     return bytearray(bcd)
 
 
-def float_to_bcd(value, format_str, endian="big") -> bytearray:
+def bcd_to_value(bcd: bytearray, format_str: str, endian="big") -> Union[str, float]:
+    """将BCD码字节数组转换为数值，支持不同数据格式和字节序"""
+    if format_str.find(".") == -1:
+        # 无小数点格式，转换为字符串
+        return bcd_to_string(bcd, endian)
+    else:
+        # 有小数点格式，转换为浮点数
+        return bcd_to_float(bcd, format_str, endian)
+
+
+def float_to_bcd(value: float, format_str: str, endian="big") -> bytearray:
     """将float数值转换为BCD码字节数组，支持不同数据格式和字节序"""
     # 判断正负
     is_negative = value < 0
@@ -148,7 +163,7 @@ def bcd_to_float(bcd, format_str, endian="big") -> float:
         bcd = bcd[::-1]
 
     # 转换为字符串
-    digits = bcd_to_digits(bcd)
+    digits = bcd_to_string(bcd)
 
     # 解析格式获取小数位数和总长度
     decimal_places, total_length = parse_format(format_str)
