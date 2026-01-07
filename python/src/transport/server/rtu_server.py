@@ -19,6 +19,17 @@ class RtuServer:
         timeout: float = 5.0,
         service=None,
     ):
+        """初始化RTU服务器
+        
+        Args:
+            port: 串口端口名（如 '/dev/ttyUSB0'）
+            data_bits: 数据位（默认8位）
+            stop_bits: 停止位（默认1位）
+            baud_rate: 波特率（默认9600）
+            parity: 校验位（默认无校验）
+            timeout: 超时时间（默认5秒）
+            service: 服务实例，用于处理业务逻辑
+        """
         self.port = port
         self.data_bits = data_bits
         self.stop_bits = stop_bits
@@ -124,6 +135,11 @@ class RtuServer:
         return False
 
     def handle_connection(self, conn: Any) -> None:
+        """处理单个串口连接
+
+        Args:
+            conn: 串口连接对象，必须是 serial.Serial 实例
+        """
         if not isinstance(conn, serial.Serial):
             log.error(f"Invalid connection type: {type(conn)}")
             return

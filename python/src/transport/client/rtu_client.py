@@ -8,6 +8,11 @@ from ...protocol.protocol import DLT645Protocol
 
 
 class RtuClient:
+    """RTU客户端类，用于与DLT645设备进行串口通信
+    
+    该类实现了RTU（Remote Terminal Unit）客户端功能，支持与DLT645协议设备进行通信。
+    提供了连接管理、数据发送和接收等功能。
+    """
     def __init__(
         self,
         port: str = "",
@@ -17,6 +22,16 @@ class RtuClient:
         parity: str = serial.PARITY_NONE,
         timeout: float = 1.0,
     ):
+        """初始化RTU客户端
+        
+        Args:
+            port: 串口名称（如"COM1"或"/dev/ttyUSB0"）
+            baud_rate: 波特率，默认9600
+            data_bits: 数据位，默认8
+            stop_bits: 停止位，默认1
+            parity: 校验位，默认无校验（serial.PARITY_NONE）
+            timeout: 超时时间（秒），默认1.0
+        """
         self.port = port
         self.baud_rate = baud_rate
         self.data_bits = data_bits
@@ -26,7 +41,13 @@ class RtuClient:
         self.conn: Optional[serial.Serial] = None
 
     def connect(self) -> bool:
-        """连接到串口"""
+        """连接到串口
+        
+        建立与指定串口的连接，配置为DLT645协议通信所需的参数。
+        
+        Returns:
+            bool: 连接成功返回True，失败返回False
+        """
         try:
             self.conn = serial.Serial(
                 port=self.port,
@@ -63,7 +84,13 @@ class RtuClient:
         return False
 
     def disconnect(self) -> bool:
-        """断开与串口的连接"""
+        """断开与串口的连接
+        
+        关闭串口连接并释放资源。
+        
+        Returns:
+            bool: 断开连接成功返回True，失败返回False
+        """
         if self.conn is not None:
             try:
                 self.conn.close()
@@ -80,10 +107,9 @@ class RtuClient:
 
         Args:
             start_time: 开始时间
-            data_buffer: 数据缓冲区（可选）
 
         Returns:
-            bool: 如果超时则返回True
+            bool: 如果超时则返回True，否则返回False
         """
         return time.time() - start_time > self.timeout
 
@@ -92,11 +118,13 @@ class RtuClient:
         data: bytes,
         retries: int = 1,
     ) -> Optional[bytes]:
-        """改进的串口请求-响应，支持超时和分片数据处理
-
+        """发送请求并接收响应
+        
+        向DLT645设备发送请求数据，并接收响应。支持超时处理和自动重试机制。
+        
         Args:
             data: 要发送的请求数据
-            retries: 失败重试次数
+            retries: 失败重试次数，默认1次
 
         Returns:
             bytes: 成功接收的响应数据
@@ -188,7 +216,13 @@ class RtuClient:
         return None
 
     def _safe_clear_buffer(self) -> bool:
-        """安全清空串口缓冲区"""
+        """安全清空串口缓冲区
+        
+        清空输入和输出缓冲区，避免旧数据干扰新的通信。
+        
+        Returns:
+            bool: 清空成功返回True，失败返回False
+        """
         try:
             if self.conn is not None:
                 self.conn.reset_input_buffer()

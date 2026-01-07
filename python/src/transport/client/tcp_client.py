@@ -9,6 +9,13 @@ from ...transport.client.log import log
 
 class TcpClient:
     def __init__(self, ip: str = "", port: int = 0, timeout: float = 5.0):
+        """初始化TCP客户端
+        
+        Args:
+            ip: 服务器IP地址（如 '0.0.0.0'）
+            port: 服务器端口号（如 8080）
+            timeout: 连接超时时间（秒）
+        """
         self.ip = ip
         self.port = port
         self.timeout = timeout
@@ -61,7 +68,7 @@ class TcpClient:
 
         Returns:
             bytes: 成功接收的响应数据
-            None: 超时或失败时返回
+            None: 超时或失败时返回      
         """
         if self.conn is None:
             log.error("Not connected to server")

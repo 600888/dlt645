@@ -5,9 +5,24 @@ from .log import log
 
 
 class DLT645Protocol:
+    """DLT645协议实现类
+    
+    该类实现了DLT645协议的核心功能，包括数据编码/解码、校验和计算、
+    帧构建和解析等操作。所有方法均为类方法，可直接调用。
+    """
     @classmethod
     def decode_data(cls, data: bytes) -> bytes:
-        """数据域解码（±33H转换）"""
+        """数据域解码（±33H转换）
+        
+        按照DLT645协议规定，对数据域进行解码处理，
+        每个字节减去0x33H，并使用模256运算确保结果在0-255范围内。
+        
+        Args:
+            data: 需要解码的数据字节
+            
+        Returns:
+            bytes: 解码后的原始数据
+        """
         if not data:
             return b""
         # 使用模256运算确保结果在0-255范围内，防止出现负数
@@ -15,12 +30,32 @@ class DLT645Protocol:
 
     @classmethod
     def calculate_checksum(cls, data: bytes) -> int:
-        """校验和计算（模256求和）"""
+        """校验和计算（模256求和）
+        
+        按照DLT645协议规定，计算数据的校验和，
+        对所有字节进行累加，然后对结果取模256。
+        
+        Args:
+            data: 需要计算校验和的数据字节
+            
+        Returns:
+            int: 计算得到的校验和值（0-255范围）
+        """
         return sum(data) % 256
 
     @classmethod
     def encode_data(cls, data: bytes) -> bytes:
-        """数据域编码"""
+        """数据域编码（+33H转换）
+        
+        按照DLT645协议规定，对数据域进行编码处理，
+        每个字节加上0x33H，并使用模256运算确保结果在0-255范围内。
+        
+        Args:
+            data: 需要编码的原始数据字节
+            
+        Returns:
+            bytes: 编码后的数据
+        """
         if not data:
             return b""
         # 使用模256运算确保结果在0-255范围内，防止溢出
@@ -30,7 +65,22 @@ class DLT645Protocol:
     def build_frame(
         cls, addr: bytes, ctrl_code: int, data: bytes
     ) -> bytearray:
-        """帧构建（支持广播和单播）"""
+        """帧构建（支持广播和单播）
+        
+        按照DLT645协议规定，构建完整的协议帧，包括前导字节、
+        地址域、控制码、数据域、校验和和结束标志。
+        
+        Args:
+            addr: 设备地址，6字节
+            ctrl_code: 控制码
+            data: 原始数据域
+            
+        Returns:
+            bytearray: 完整的DLT645协议帧
+            
+        Raises:
+            ValueError: 当地址长度不为6字节时抛出
+        """
         if len(addr) != 6:
             raise ValueError("地址长度必须为6字节")
 
@@ -57,7 +107,20 @@ class DLT645Protocol:
 
     @classmethod
     def deserialize(cls, raw: bytes) -> Optional[Frame]:
-        """将字节切片反序列化为 Frame 结构体"""
+        """将字节切片反序列化为 Frame 结构体
+        
+        从原始字节数据中解析出DLT645协议帧。如果无法找到完整的帧，
+        则抛出异常。
+        
+        Args:
+            raw: 输入的原始字节数据
+            
+        Returns:
+            Optional[Frame]: 解析出的Frame对象，如果解析失败返回None
+            
+        Raises:
+            Exception: 当无法找到完整帧时抛出
+        """
         remaining, frame = cls.deserialize_with_remaining(raw)
         if frame is None:
             raise Exception("No complete frame found")
@@ -66,10 +129,13 @@ class DLT645Protocol:
     @classmethod
     def deserialize_with_remaining(cls, raw: bytes) -> tuple[bytes, Optional[Frame]]:
         """将字节切片反序列化为 Frame 结构体，并返回未解析的剩余数据
-
+        
+        从原始字节数据中解析出DLT645协议帧，并返回未解析的剩余数据。
+        如果数据不完整或无法解析，返回(原始数据, None)。
+        
         Args:
             raw: 输入的原始字节数据
-
+            
         Returns:
             tuple[bytes, Optional[Frame]]: (未解析的剩余数据, 解析出的帧)
             如果数据不完整或无法解析，返回(原始数据, None)
@@ -144,7 +210,19 @@ class DLT645Protocol:
 
     @classmethod
     def serialize(cls, frame: Frame) -> Optional[bytes]:
-        """将 Frame 结构体序列化为字节切片"""
+        """将 Frame 结构体序列化为字节切片
+        
+        按照DLT645协议规定，将Frame对象序列化为完整的协议帧字节。
+        
+        Args:
+            frame: 需要序列化的Frame对象
+            
+        Returns:
+            Optional[bytes]: 序列化后的协议帧字节，如果失败返回None
+            
+        Raises:
+            Exception: 当起始或结束标志无效时抛出
+        """
         if frame.start_flag != FRAME_START_BYTE or frame.end_flag != FRAME_END_BYTE:
             log.error(f"invalid start or end flag: {frame.start_flag} {frame.end_flag}")
             raise Exception(

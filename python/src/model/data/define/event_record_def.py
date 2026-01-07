@@ -7,6 +7,11 @@ from ....common.transform import pad_with_zeros
 
 
 def init_event_record_def(EventRecordTypes: List[DataItem]):
+    """初始化事件记录定义
+    
+    Args:
+        EventRecordTypes: 事件记录类型列表，包含事件记录类型
+    """
     for data_type in EventRecordTypes:
         if data_type.data_format.find(",") == -1:
             value = EventRecord(

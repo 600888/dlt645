@@ -66,6 +66,11 @@ energy_di_list = [
 
 
 def init_energy_def(energy_types: List[DataItem]):
+    """初始化电能定义
+    
+    Args:
+        energy_types: 电能类型列表，包含正向有功电能、反向有功电能等类型
+    """
     di3 = 0  # 数据类型
     di2 = 0  # 电能类型
     di1 = 0  # 同一类型电能里的不同项

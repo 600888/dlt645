@@ -9,6 +9,14 @@ from ...transport.server.log import log
 
 class TcpServer:
     def __init__(self, ip: str, port: int, timeout: float, service):
+        """初始化TCP服务器
+        
+        Args:
+            ip: 服务器IP地址（如 '0.0.0.0'）
+            port: 服务器端口号（如 8080）
+            timeout: 连接超时时间（秒）
+            service: 服务实例，用于处理业务逻辑
+        """
         self.ip = ip
         self.port = port
         self.timeout = timeout

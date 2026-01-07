@@ -147,7 +147,7 @@ class Log:
     
     def set_log_level(self, level: str, is_console: bool = True, is_file: bool = True):
         """设置日志等级
-        
+
         Args:
             level: 日志等级 (DEBUG, INFO, WARNING, ERROR, CRITICAL)
             is_console: 是否设置控制台日志等级
@@ -202,7 +202,7 @@ class Log:
         """设置日志配置参数
         
         Args:
-            **kwargs: 支持更新的参数，包括：
+            \**kwargs: 支持更新的参数，包括：
                 filename: 日志文件名
                 cmdlevel: 控制台日志等级
                 filelevel: 文件日志等级
