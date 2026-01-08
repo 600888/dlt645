@@ -1,0 +1,51 @@
+name: Deploy Sphinx Documentation
+
+on:
+  # 当主分支或开发分支有推送时触发
+  push:
+    branches: [ main, master, develop ]
+  # 允许手动触发
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # 需要写入内容权限
+      pages: write     # 需要操作 Pages 权限
+      id-token: write  # 需要生成 ID Token
+    steps:
+      # 步骤 1: 检出代码
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # 确保获取完整的提交历史
+
+      # 步骤 2: 设置 Python 环境
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+
+      # 步骤 3: 安装依赖
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r python/requirements.txt
+          pip install sphinx sphinx-rtd-theme sphinx-autodoc-typehints sphinx-copybutton
+
+      # 步骤 4: 生成 HTML 文档
+      - name: Build HTML documentation
+        run: |
+          cd python/docs
+          make html
+
+      # 步骤 5: 部署到 GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          # 文档源目录
+          publish_dir: ./python/docs/build/html
+          # 提交信息
+          commit_message: "Deploy Sphinx docs for ${{ github.sha }}"
