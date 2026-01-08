@@ -49,3 +49,5 @@ jobs:
           publish_dir: ./python/docs/build/html
           # 提交信息
           commit_message: "Deploy Sphinx docs for ${{ github.sha }}"
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
