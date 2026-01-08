@@ -1,0 +1,835 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>src.common.base_log &mdash; dlt645 v1.4.0 文档</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=1f20cfc1"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="搜索" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            dlt645
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">src</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../src.html">src package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../src.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../src.common.html">src.common package</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.common.html#submodules">Submodules</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.common.html#module-src.common.base_log">src.common.base_log module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../../src.common.html#src.common.base_log.Log"><code class="docutils literal notranslate"><span class="pre">Log</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="../../../src.common.html#src.common.base_log.Log.set_logger"><code class="docutils literal notranslate"><span class="pre">Log.set_logger()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../src.common.html#src.common.base_log.Log.set_log_enable"><code class="docutils literal notranslate"><span class="pre">Log.set_log_enable()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../src.common.html#src.common.base_log.Log.set_log_level"><code class="docutils literal notranslate"><span class="pre">Log.set_log_level()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../src.common.html#src.common.base_log.Log.set_config"><code class="docutils literal notranslate"><span class="pre">Log.set_config()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../src.common.html#src.common.base_log.Log.debug"><code class="docutils literal notranslate"><span class="pre">Log.debug()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../src.common.html#src.common.base_log.Log.info"><code class="docutils literal notranslate"><span class="pre">Log.info()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../src.common.html#src.common.base_log.Log.warning"><code class="docutils literal notranslate"><span class="pre">Log.warning()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../src.common.html#src.common.base_log.Log.error"><code class="docutils literal notranslate"><span class="pre">Log.error()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../src.common.html#src.common.base_log.Log.critical"><code class="docutils literal notranslate"><span class="pre">Log.critical()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../src.common.html#src.common.base_log.Log.exception"><code class="docutils literal notranslate"><span class="pre">Log.exception()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.common.html#module-src.common.env">src.common.env module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.common.html#module-src.common.transform">src.common.transform module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../../src.common.html#src.common.transform.pad_with_zeros"><code class="docutils literal notranslate"><span class="pre">pad_with_zeros()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../src.common.html#src.common.transform.bytes_to_int"><code class="docutils literal notranslate"><span class="pre">bytes_to_int()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../src.common.html#src.common.transform.bytes_to_float"><code class="docutils literal notranslate"><span class="pre">bytes_to_float()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../src.common.html#src.common.transform.bytes_to_spaced_hex"><code class="docutils literal notranslate"><span class="pre">bytes_to_spaced_hex()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../src.common.html#src.common.transform.bcd_to_string"><code class="docutils literal notranslate"><span class="pre">bcd_to_string()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../src.common.html#src.common.transform.parse_format"><code class="docutils literal notranslate"><span class="pre">parse_format()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../src.common.html#src.common.transform.round_float"><code class="docutils literal notranslate"><span class="pre">round_float()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../src.common.html#src.common.transform.format_float"><code class="docutils literal notranslate"><span class="pre">format_float()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../src.common.html#src.common.transform.string_to_bcd"><code class="docutils literal notranslate"><span class="pre">string_to_bcd()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../src.common.html#src.common.transform.bcd_to_value"><code class="docutils literal notranslate"><span class="pre">bcd_to_value()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../src.common.html#src.common.transform.float_to_bcd"><code class="docutils literal notranslate"><span class="pre">float_to_bcd()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../src.common.html#src.common.transform.bcd_to_float"><code class="docutils literal notranslate"><span class="pre">bcd_to_float()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../src.common.html#src.common.transform.datetime_to_bcd"><code class="docutils literal notranslate"><span class="pre">datetime_to_bcd()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../src.common.html#src.common.transform.bcd_to_byte"><code class="docutils literal notranslate"><span class="pre">bcd_to_byte()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../src.common.html#src.common.transform.bcd_to_time"><code class="docutils literal notranslate"><span class="pre">bcd_to_time()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../src.common.html#src.common.transform.uint8_to_bcd"><code class="docutils literal notranslate"><span class="pre">uint8_to_bcd()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../src.common.html#src.common.transform.reverse_bytes"><code class="docutils literal notranslate"><span class="pre">reverse_bytes()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.common.html#module-src.common">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../../src.model.html">src.model package</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.model.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../../src.model.data.html">src.model.data package</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="../../../src.model.data.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="../../../src.model.data.define.html">src.model.data.define package</a><ul>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.model.data.define.html#submodules">Submodules</a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.model.data.define.html#module-src.model.data.define.demand_def">src.model.data.define.demand_def module</a><ul>
+<li class="toctree-l10"><a class="reference internal" href="../../../src.model.data.define.html#src.model.data.define.demand_def.init_demand_def"><code class="docutils literal notranslate"><span class="pre">init_demand_def()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.model.data.define.html#module-src.model.data.define.energy_def">src.model.data.define.energy_def module</a><ul>
+<li class="toctree-l10"><a class="reference internal" href="../../../src.model.data.define.html#src.model.data.define.energy_def.init_energy_def"><code class="docutils literal notranslate"><span class="pre">init_energy_def()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.model.data.define.html#module-src.model.data.define.event_record_def">src.model.data.define.event_record_def module</a><ul>
+<li class="toctree-l10"><a class="reference internal" href="../../../src.model.data.define.html#src.model.data.define.event_record_def.init_event_record_def"><code class="docutils literal notranslate"><span class="pre">init_event_record_def()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.model.data.define.html#module-src.model.data.define.parameter_def">src.model.data.define.parameter_def module</a><ul>
+<li class="toctree-l10"><a class="reference internal" href="../../../src.model.data.define.html#src.model.data.define.parameter_def.init_parameter_def"><code class="docutils literal notranslate"><span class="pre">init_parameter_def()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.model.data.define.html#module-src.model.data.define.variable_def">src.model.data.define.variable_def module</a><ul>
+<li class="toctree-l10"><a class="reference internal" href="../../../src.model.data.define.html#src.model.data.define.variable_def.init_variable_def"><code class="docutils literal notranslate"><span class="pre">init_variable_def()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.model.data.define.html#module-src.model.data.define">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="../../../src.model.data.html#submodules">Submodules</a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../src.model.data.html#module-src.model.data.data_handler">src.model.data.data_handler module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="../../../src.model.data.html#src.model.data.data_handler.get_data_item"><code class="docutils literal notranslate"><span class="pre">get_data_item()</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="../../../src.model.data.html#src.model.data.data_handler.set_data_item"><code class="docutils literal notranslate"><span class="pre">set_data_item()</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="../../../src.model.data.html#src.model.data.data_handler.is_value_valid"><code class="docutils literal notranslate"><span class="pre">is_value_valid()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="../../../src.model.data.html#module-src.model.data">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="../../../src.model.types.html">src.model.types package</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="../../../src.model.types.html#submodules">Submodules</a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../src.model.types.html#module-src.model.types.data_type">src.model.types.data_type module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="../../../src.model.types.html#src.model.types.data_type.DataItem"><code class="docutils literal notranslate"><span class="pre">DataItem</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="../../../src.model.types.html#src.model.types.data_type.DataType"><code class="docutils literal notranslate"><span class="pre">DataType</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.model.types.html#src.model.types.data_type.DataType.from_dict"><code class="docutils literal notranslate"><span class="pre">DataType.from_dict()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l8"><a class="reference internal" href="../../../src.model.types.html#src.model.types.data_type.uint32_from_string"><code class="docutils literal notranslate"><span class="pre">uint32_from_string</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.model.types.html#src.model.types.data_type.uint32_from_string.from_json"><code class="docutils literal notranslate"><span class="pre">uint32_from_string.from_json()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l8"><a class="reference internal" href="../../../src.model.types.html#src.model.types.data_type.init_data_type_from_json"><code class="docutils literal notranslate"><span class="pre">init_data_type_from_json()</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="../../../src.model.types.html#src.model.types.data_type.DataFormat"><code class="docutils literal notranslate"><span class="pre">DataFormat</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.model.types.html#src.model.types.data_type.DataFormat.XXXXXXXX"><code class="docutils literal notranslate"><span class="pre">DataFormat.XXXXXXXX</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.model.types.html#src.model.types.data_type.DataFormat.XXXXXX_XX"><code class="docutils literal notranslate"><span class="pre">DataFormat.XXXXXX_XX</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.model.types.html#src.model.types.data_type.DataFormat.XXXX_XX"><code class="docutils literal notranslate"><span class="pre">DataFormat.XXXX_XX</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.model.types.html#src.model.types.data_type.DataFormat.XXX_XXX"><code class="docutils literal notranslate"><span class="pre">DataFormat.XXX_XXX</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.model.types.html#src.model.types.data_type.DataFormat.XX_XXXX"><code class="docutils literal notranslate"><span class="pre">DataFormat.XX_XXXX</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.model.types.html#src.model.types.data_type.DataFormat.XXX_X"><code class="docutils literal notranslate"><span class="pre">DataFormat.XXX_X</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.model.types.html#src.model.types.data_type.DataFormat.X_XXX"><code class="docutils literal notranslate"><span class="pre">DataFormat.X_XXX</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.model.types.html#src.model.types.data_type.DataFormat.YYMMDDWW"><code class="docutils literal notranslate"><span class="pre">DataFormat.YYMMDDWW</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.model.types.html#src.model.types.data_type.DataFormat.hhmmss"><code class="docutils literal notranslate"><span class="pre">DataFormat.hhmmss</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.model.types.html#src.model.types.data_type.DataFormat.YYMMDDhhmm"><code class="docutils literal notranslate"><span class="pre">DataFormat.YYMMDDhhmm</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.model.types.html#src.model.types.data_type.DataFormat.NN"><code class="docutils literal notranslate"><span class="pre">DataFormat.NN</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.model.types.html#src.model.types.data_type.DataFormat.NNNN"><code class="docutils literal notranslate"><span class="pre">DataFormat.NNNN</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.model.types.html#src.model.types.data_type.DataFormat.NNNNNNNN"><code class="docutils literal notranslate"><span class="pre">DataFormat.NNNNNNNN</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="../../../src.model.types.html#module-src.model.types.dlt645_type">src.model.types.dlt645_type module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.DICategory"><code class="docutils literal notranslate"><span class="pre">DICategory</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.DICategory.CategoryEnergy"><code class="docutils literal notranslate"><span class="pre">DICategory.CategoryEnergy</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.DICategory.CategoryDemand"><code class="docutils literal notranslate"><span class="pre">DICategory.CategoryDemand</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.DICategory.CategoryVariable"><code class="docutils literal notranslate"><span class="pre">DICategory.CategoryVariable</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.DICategory.CategoryEvent"><code class="docutils literal notranslate"><span class="pre">DICategory.CategoryEvent</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.DICategory.CategoryParameter"><code class="docutils literal notranslate"><span class="pre">DICategory.CategoryParameter</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.DICategory.CategoryFreeze"><code class="docutils literal notranslate"><span class="pre">DICategory.CategoryFreeze</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.DICategory.CategoryLoad"><code class="docutils literal notranslate"><span class="pre">DICategory.CategoryLoad</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l8"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.CtrlCode"><code class="docutils literal notranslate"><span class="pre">CtrlCode</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.CtrlCode.BroadcastTimeSync"><code class="docutils literal notranslate"><span class="pre">CtrlCode.BroadcastTimeSync</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.CtrlCode.ReadData"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ReadData</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.CtrlCode.ReadAddress"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ReadAddress</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.CtrlCode.WriteData"><code class="docutils literal notranslate"><span class="pre">CtrlCode.WriteData</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.CtrlCode.WriteAddress"><code class="docutils literal notranslate"><span class="pre">CtrlCode.WriteAddress</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.CtrlCode.FreezeCmd"><code class="docutils literal notranslate"><span class="pre">CtrlCode.FreezeCmd</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.CtrlCode.ChangeBaudRate"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ChangeBaudRate</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.CtrlCode.ChangePassword"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ChangePassword</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l8"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.ErrorCode"><code class="docutils literal notranslate"><span class="pre">ErrorCode</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.ErrorCode.OtherError"><code class="docutils literal notranslate"><span class="pre">ErrorCode.OtherError</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.ErrorCode.RequestDataEmpty"><code class="docutils literal notranslate"><span class="pre">ErrorCode.RequestDataEmpty</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.ErrorCode.AuthFailed"><code class="docutils literal notranslate"><span class="pre">ErrorCode.AuthFailed</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.ErrorCode.CommRateImmutable"><code class="docutils literal notranslate"><span class="pre">ErrorCode.CommRateImmutable</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.ErrorCode.YearZoneNumExceeded"><code class="docutils literal notranslate"><span class="pre">ErrorCode.YearZoneNumExceeded</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.ErrorCode.DaySlotNumExceeded"><code class="docutils literal notranslate"><span class="pre">ErrorCode.DaySlotNumExceeded</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.ErrorCode.RateNumExceeded"><code class="docutils literal notranslate"><span class="pre">ErrorCode.RateNumExceeded</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l8"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.get_error_msg"><code class="docutils literal notranslate"><span class="pre">get_error_msg()</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.Demand"><code class="docutils literal notranslate"><span class="pre">Demand</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.EventRecord"><code class="docutils literal notranslate"><span class="pre">EventRecord</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.PasswordManager"><code class="docutils literal notranslate"><span class="pre">PasswordManager</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.PasswordManager.is_password_valid"><code class="docutils literal notranslate"><span class="pre">PasswordManager.is_password_valid()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.PasswordManager.set_password"><code class="docutils literal notranslate"><span class="pre">PasswordManager.set_password()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.PasswordManager.get_password"><code class="docutils literal notranslate"><span class="pre">PasswordManager.get_password()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.PasswordManager.check_password"><code class="docutils literal notranslate"><span class="pre">PasswordManager.check_password()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.PasswordManager.change_password"><code class="docutils literal notranslate"><span class="pre">PasswordManager.change_password()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="../../../src.model.types.html#module-src.model.types">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.model.html#submodules">Submodules</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.model.html#module-src.model.log">src.model.log module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.model.html#module-src.model.validators">src.model.validators module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../../src.model.html#src.model.validators.validate_device"><code class="docutils literal notranslate"><span class="pre">validate_device()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.model.html#module-src.model">Module contents</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../../src.model.html#src.model.init"><code class="docutils literal notranslate"><span class="pre">init()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../../src.protocol.html">src.protocol package</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.protocol.html#submodules">Submodules</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.protocol.html#module-src.protocol.frame">src.protocol.frame module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../../src.protocol.html#src.protocol.frame.Frame"><code class="docutils literal notranslate"><span class="pre">Frame</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.protocol.html#module-src.protocol.log">src.protocol.log module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.protocol.html#module-src.protocol.protocol">src.protocol.protocol module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../../src.protocol.html#src.protocol.protocol.DLT645Protocol"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="../../../src.protocol.html#src.protocol.protocol.DLT645Protocol.decode_data"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.decode_data()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../src.protocol.html#src.protocol.protocol.DLT645Protocol.calculate_checksum"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.calculate_checksum()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../src.protocol.html#src.protocol.protocol.DLT645Protocol.encode_data"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.encode_data()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../src.protocol.html#src.protocol.protocol.DLT645Protocol.build_frame"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.build_frame()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../src.protocol.html#src.protocol.protocol.DLT645Protocol.deserialize"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.deserialize()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../src.protocol.html#src.protocol.protocol.DLT645Protocol.deserialize_with_remaining"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.deserialize_with_remaining()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../src.protocol.html#src.protocol.protocol.DLT645Protocol.serialize"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.serialize()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.protocol.html#module-src.protocol">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../../src.service.html">src.service package</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.service.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../../src.service.clientsvc.html">src.service.clientsvc package</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="../../../src.service.clientsvc.html#submodules">Submodules</a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../src.service.clientsvc.html#module-src.service.clientsvc.client_service">src.service.clientsvc.client_service module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="../../../src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService"><code class="docutils literal notranslate"><span class="pre">MeterClientService</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.new_tcp_client"><code class="docutils literal notranslate"><span class="pre">MeterClientService.new_tcp_client()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.new_rtu_client"><code class="docutils literal notranslate"><span class="pre">MeterClientService.new_rtu_client()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.new_meter_client_service"><code class="docutils literal notranslate"><span class="pre">MeterClientService.new_meter_client_service()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.get_time"><code class="docutils literal notranslate"><span class="pre">MeterClientService.get_time()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.set_address"><code class="docutils literal notranslate"><span class="pre">MeterClientService.set_address()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.set_password"><code class="docutils literal notranslate"><span class="pre">MeterClientService.set_password()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.change_password"><code class="docutils literal notranslate"><span class="pre">MeterClientService.change_password()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.read_00"><code class="docutils literal notranslate"><span class="pre">MeterClientService.read_00()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.read_01"><code class="docutils literal notranslate"><span class="pre">MeterClientService.read_01()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.read_02"><code class="docutils literal notranslate"><span class="pre">MeterClientService.read_02()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.read_03"><code class="docutils literal notranslate"><span class="pre">MeterClientService.read_03()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.read_04"><code class="docutils literal notranslate"><span class="pre">MeterClientService.read_04()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.write_04"><code class="docutils literal notranslate"><span class="pre">MeterClientService.write_04()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.read_address"><code class="docutils literal notranslate"><span class="pre">MeterClientService.read_address()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.write_address"><code class="docutils literal notranslate"><span class="pre">MeterClientService.write_address()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.send_and_handle_request"><code class="docutils literal notranslate"><span class="pre">MeterClientService.send_and_handle_request()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.handle_response"><code class="docutils literal notranslate"><span class="pre">MeterClientService.handle_response()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="../../../src.service.clientsvc.html#module-src.service.clientsvc.log">src.service.clientsvc.log module</a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../src.service.clientsvc.html#module-src.service.clientsvc">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="../../../src.service.serversvc.html">src.service.serversvc package</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="../../../src.service.serversvc.html#submodules">Submodules</a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../src.service.serversvc.html#module-src.service.serversvc.log">src.service.serversvc.log module</a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../src.service.serversvc.html#module-src.service.serversvc.server_service">src.service.serversvc.server_service module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="../../../src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService"><code class="docutils literal notranslate"><span class="pre">MeterServerService</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.new_tcp_server"><code class="docutils literal notranslate"><span class="pre">MeterServerService.new_tcp_server()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.new_rtu_server"><code class="docutils literal notranslate"><span class="pre">MeterServerService.new_rtu_server()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.new_meter_server_service"><code class="docutils literal notranslate"><span class="pre">MeterServerService.new_meter_server_service()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.set_time"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_time()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.set_address"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_address()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.set_password"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_password()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.set_00"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_00()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.set_01"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_01()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.set_02"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_02()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.set_03"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_03()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.set_04"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_04()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.get_data_item"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_data_item()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.handle_request"><code class="docutils literal notranslate"><span class="pre">MeterServerService.handle_request()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="../../../src.service.serversvc.html#module-src.service.serversvc">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.service.html#module-src.service">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../../src.transport.html">src.transport package</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.transport.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../../src.transport.client.html">src.transport.client package</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="../../../src.transport.client.html#submodules">Submodules</a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../src.transport.client.html#module-src.transport.client.log">src.transport.client.log module</a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../src.transport.client.html#module-src.transport.client.rtu_client">src.transport.client.rtu_client module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="../../../src.transport.client.html#src.transport.client.rtu_client.RtuClient"><code class="docutils literal notranslate"><span class="pre">RtuClient</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.transport.client.html#src.transport.client.rtu_client.RtuClient.connect"><code class="docutils literal notranslate"><span class="pre">RtuClient.connect()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.transport.client.html#src.transport.client.rtu_client.RtuClient.disconnect"><code class="docutils literal notranslate"><span class="pre">RtuClient.disconnect()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.transport.client.html#src.transport.client.rtu_client.RtuClient.send_request"><code class="docutils literal notranslate"><span class="pre">RtuClient.send_request()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="../../../src.transport.client.html#module-src.transport.client.tcp_client">src.transport.client.tcp_client module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="../../../src.transport.client.html#src.transport.client.tcp_client.TcpClient"><code class="docutils literal notranslate"><span class="pre">TcpClient</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.transport.client.html#src.transport.client.tcp_client.TcpClient.connect"><code class="docutils literal notranslate"><span class="pre">TcpClient.connect()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.transport.client.html#src.transport.client.tcp_client.TcpClient.disconnect"><code class="docutils literal notranslate"><span class="pre">TcpClient.disconnect()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.transport.client.html#src.transport.client.tcp_client.TcpClient.send_request"><code class="docutils literal notranslate"><span class="pre">TcpClient.send_request()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="../../../src.transport.client.html#module-src.transport.client">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="../../../src.transport.server.html">src.transport.server package</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="../../../src.transport.server.html#submodules">Submodules</a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../src.transport.server.html#module-src.transport.server.log">src.transport.server.log module</a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../src.transport.server.html#module-src.transport.server.rtu_server">src.transport.server.rtu_server module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="../../../src.transport.server.html#src.transport.server.rtu_server.RtuServer"><code class="docutils literal notranslate"><span class="pre">RtuServer</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.transport.server.html#src.transport.server.rtu_server.RtuServer.start"><code class="docutils literal notranslate"><span class="pre">RtuServer.start()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.transport.server.html#src.transport.server.rtu_server.RtuServer.stop"><code class="docutils literal notranslate"><span class="pre">RtuServer.stop()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.transport.server.html#src.transport.server.rtu_server.RtuServer.is_running"><code class="docutils literal notranslate"><span class="pre">RtuServer.is_running()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.transport.server.html#src.transport.server.rtu_server.RtuServer.handle_connection"><code class="docutils literal notranslate"><span class="pre">RtuServer.handle_connection()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="../../../src.transport.server.html#module-src.transport.server.tcp_server">src.transport.server.tcp_server module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="../../../src.transport.server.html#src.transport.server.tcp_server.TcpServer"><code class="docutils literal notranslate"><span class="pre">TcpServer</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.transport.server.html#src.transport.server.tcp_server.TcpServer.start"><code class="docutils literal notranslate"><span class="pre">TcpServer.start()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.transport.server.html#src.transport.server.tcp_server.TcpServer.stop"><code class="docutils literal notranslate"><span class="pre">TcpServer.stop()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.transport.server.html#src.transport.server.tcp_server.TcpServer.is_running"><code class="docutils literal notranslate"><span class="pre">TcpServer.is_running()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../src.transport.server.html#src.transport.server.tcp_server.TcpServer.handle_connection"><code class="docutils literal notranslate"><span class="pre">TcpServer.handle_connection()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="../../../src.transport.server.html#module-src.transport.server">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.transport.html#module-src.transport">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../src.html#module-src">Module contents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../src.html#src.MeterServerService"><code class="docutils literal notranslate"><span class="pre">MeterServerService</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.MeterServerService.new_tcp_server"><code class="docutils literal notranslate"><span class="pre">MeterServerService.new_tcp_server()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.MeterServerService.new_rtu_server"><code class="docutils literal notranslate"><span class="pre">MeterServerService.new_rtu_server()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.MeterServerService.new_meter_server_service"><code class="docutils literal notranslate"><span class="pre">MeterServerService.new_meter_server_service()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.MeterServerService.set_time"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_time()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.MeterServerService.set_address"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_address()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.MeterServerService.set_password"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_password()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.MeterServerService.set_00"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_00()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.MeterServerService.set_01"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_01()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.MeterServerService.set_02"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_02()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.MeterServerService.set_03"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_03()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.MeterServerService.set_04"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_04()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.MeterServerService.get_data_item"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_data_item()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.MeterServerService.handle_request"><code class="docutils literal notranslate"><span class="pre">MeterServerService.handle_request()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../../src.html#src.MeterClientService"><code class="docutils literal notranslate"><span class="pre">MeterClientService</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.MeterClientService.new_tcp_client"><code class="docutils literal notranslate"><span class="pre">MeterClientService.new_tcp_client()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.MeterClientService.new_rtu_client"><code class="docutils literal notranslate"><span class="pre">MeterClientService.new_rtu_client()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.MeterClientService.new_meter_client_service"><code class="docutils literal notranslate"><span class="pre">MeterClientService.new_meter_client_service()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.MeterClientService.get_time"><code class="docutils literal notranslate"><span class="pre">MeterClientService.get_time()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.MeterClientService.set_address"><code class="docutils literal notranslate"><span class="pre">MeterClientService.set_address()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.MeterClientService.set_password"><code class="docutils literal notranslate"><span class="pre">MeterClientService.set_password()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.MeterClientService.change_password"><code class="docutils literal notranslate"><span class="pre">MeterClientService.change_password()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.MeterClientService.read_00"><code class="docutils literal notranslate"><span class="pre">MeterClientService.read_00()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.MeterClientService.read_01"><code class="docutils literal notranslate"><span class="pre">MeterClientService.read_01()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.MeterClientService.read_02"><code class="docutils literal notranslate"><span class="pre">MeterClientService.read_02()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.MeterClientService.read_03"><code class="docutils literal notranslate"><span class="pre">MeterClientService.read_03()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.MeterClientService.read_04"><code class="docutils literal notranslate"><span class="pre">MeterClientService.read_04()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.MeterClientService.write_04"><code class="docutils literal notranslate"><span class="pre">MeterClientService.write_04()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.MeterClientService.read_address"><code class="docutils literal notranslate"><span class="pre">MeterClientService.read_address()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.MeterClientService.write_address"><code class="docutils literal notranslate"><span class="pre">MeterClientService.write_address()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.MeterClientService.send_and_handle_request"><code class="docutils literal notranslate"><span class="pre">MeterClientService.send_and_handle_request()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.MeterClientService.handle_response"><code class="docutils literal notranslate"><span class="pre">MeterClientService.handle_response()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../../src.html#src.DLT645Protocol"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.DLT645Protocol.decode_data"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.decode_data()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.DLT645Protocol.calculate_checksum"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.calculate_checksum()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.DLT645Protocol.encode_data"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.encode_data()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.DLT645Protocol.build_frame"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.build_frame()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.DLT645Protocol.deserialize"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.deserialize()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.DLT645Protocol.deserialize_with_remaining"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.deserialize_with_remaining()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.DLT645Protocol.serialize"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.serialize()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../../src.html#src.CtrlCode"><code class="docutils literal notranslate"><span class="pre">CtrlCode</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.CtrlCode.BroadcastTimeSync"><code class="docutils literal notranslate"><span class="pre">CtrlCode.BroadcastTimeSync</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.CtrlCode.ReadData"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ReadData</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.CtrlCode.ReadAddress"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ReadAddress</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.CtrlCode.WriteData"><code class="docutils literal notranslate"><span class="pre">CtrlCode.WriteData</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.CtrlCode.WriteAddress"><code class="docutils literal notranslate"><span class="pre">CtrlCode.WriteAddress</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.CtrlCode.FreezeCmd"><code class="docutils literal notranslate"><span class="pre">CtrlCode.FreezeCmd</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.CtrlCode.ChangeBaudRate"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ChangeBaudRate</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.CtrlCode.ChangePassword"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ChangePassword</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../../src.html#src.Demand"><code class="docutils literal notranslate"><span class="pre">Demand</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../src.html#src.DataItem"><code class="docutils literal notranslate"><span class="pre">DataItem</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../src.html#src.DataFormat"><code class="docutils literal notranslate"><span class="pre">DataFormat</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.DataFormat.XXXXXXXX"><code class="docutils literal notranslate"><span class="pre">DataFormat.XXXXXXXX</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.DataFormat.XXXXXX_XX"><code class="docutils literal notranslate"><span class="pre">DataFormat.XXXXXX_XX</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.DataFormat.XXXX_XX"><code class="docutils literal notranslate"><span class="pre">DataFormat.XXXX_XX</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.DataFormat.XXX_XXX"><code class="docutils literal notranslate"><span class="pre">DataFormat.XXX_XXX</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.DataFormat.XX_XXXX"><code class="docutils literal notranslate"><span class="pre">DataFormat.XX_XXXX</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.DataFormat.XXX_X"><code class="docutils literal notranslate"><span class="pre">DataFormat.XXX_X</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.DataFormat.X_XXX"><code class="docutils literal notranslate"><span class="pre">DataFormat.X_XXX</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.DataFormat.YYMMDDWW"><code class="docutils literal notranslate"><span class="pre">DataFormat.YYMMDDWW</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.DataFormat.hhmmss"><code class="docutils literal notranslate"><span class="pre">DataFormat.hhmmss</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.DataFormat.YYMMDDhhmm"><code class="docutils literal notranslate"><span class="pre">DataFormat.YYMMDDhhmm</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.DataFormat.NN"><code class="docutils literal notranslate"><span class="pre">DataFormat.NN</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.DataFormat.NNNN"><code class="docutils literal notranslate"><span class="pre">DataFormat.NNNN</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.DataFormat.NNNNNNNN"><code class="docutils literal notranslate"><span class="pre">DataFormat.NNNNNNNN</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../../src.html#src.TcpServer"><code class="docutils literal notranslate"><span class="pre">TcpServer</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.TcpServer.start"><code class="docutils literal notranslate"><span class="pre">TcpServer.start()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.TcpServer.stop"><code class="docutils literal notranslate"><span class="pre">TcpServer.stop()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.TcpServer.is_running"><code class="docutils literal notranslate"><span class="pre">TcpServer.is_running()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.TcpServer.handle_connection"><code class="docutils literal notranslate"><span class="pre">TcpServer.handle_connection()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../../src.html#src.RtuServer"><code class="docutils literal notranslate"><span class="pre">RtuServer</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.RtuServer.start"><code class="docutils literal notranslate"><span class="pre">RtuServer.start()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.RtuServer.stop"><code class="docutils literal notranslate"><span class="pre">RtuServer.stop()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.RtuServer.is_running"><code class="docutils literal notranslate"><span class="pre">RtuServer.is_running()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.RtuServer.handle_connection"><code class="docutils literal notranslate"><span class="pre">RtuServer.handle_connection()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../../src.html#src.TcpClient"><code class="docutils literal notranslate"><span class="pre">TcpClient</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.TcpClient.connect"><code class="docutils literal notranslate"><span class="pre">TcpClient.connect()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.TcpClient.disconnect"><code class="docutils literal notranslate"><span class="pre">TcpClient.disconnect()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.TcpClient.send_request"><code class="docutils literal notranslate"><span class="pre">TcpClient.send_request()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../../src.html#src.RtuClient"><code class="docutils literal notranslate"><span class="pre">RtuClient</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.RtuClient.connect"><code class="docutils literal notranslate"><span class="pre">RtuClient.connect()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.RtuClient.disconnect"><code class="docutils literal notranslate"><span class="pre">RtuClient.disconnect()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../src.html#src.RtuClient.send_request"><code class="docutils literal notranslate"><span class="pre">RtuClient.send_request()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">dlt645</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">模块代码</a></li>
+      <li class="breadcrumb-item active">src.common.base_log</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>src.common.base_log 源代码</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">inspect</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">loguru</span><span class="w"> </span><span class="kn">import</span> <span class="n">logger</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="n">LOG_COLORS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;DEBUG&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;36m&quot;</span><span class="p">,</span>  <span class="c1"># CYAN</span>
+    <span class="s2">&quot;INFO&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;32m&quot;</span><span class="p">,</span>  <span class="c1"># GREEN</span>
+    <span class="s2">&quot;WARNING&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;33m&quot;</span><span class="p">,</span>  <span class="c1"># YELLOW</span>
+    <span class="s2">&quot;ERROR&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;31m&quot;</span><span class="p">,</span>  <span class="c1"># RED</span>
+    <span class="s2">&quot;CRITICAL&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;31m&quot;</span><span class="p">,</span>  <span class="c1"># RED</span>
+    <span class="s2">&quot;EXCEPTION&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;31m&quot;</span><span class="p">,</span>  <span class="c1"># RED</span>
+<span class="p">}</span>
+<span class="n">COLOR_RESET</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[1;0m&quot;</span>
+
+<span class="n">logger</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="Log">
+<a class="viewcode-back" href="../../../src.common.html#src.common.base_log.Log">[文档]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Log</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">filename</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">cmdlevel</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;DEBUG&quot;</span><span class="p">,</span>
+        <span class="n">filelevel</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;INFO&quot;</span><span class="p">,</span>
+        <span class="n">backup_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">7</span><span class="p">,</span>  <span class="c1"># 默认保留7天/7个文件</span>
+        <span class="n">limit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;20 MB&quot;</span><span class="p">,</span>  <span class="c1"># 支持字符串格式</span>
+        <span class="n">when</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">colorful</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">compression</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># 新增压缩功能</span>
+        <span class="n">is_backtrace</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_backtrace</span> <span class="o">=</span> <span class="n">is_backtrace</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logger</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="n">filename</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
+        <span class="c1"># 设置日志文件路径</span>
+        <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="s2">&quot;__main__&quot;</span><span class="p">],</span> <span class="s2">&quot;__file__&quot;</span><span class="p">,</span> <span class="s2">&quot;log.py&quot;</span><span class="p">)</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">filename</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.py&quot;</span><span class="p">,</span> <span class="s2">&quot;.log&quot;</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
+
+        <span class="c1"># 确保日志目录存在</span>
+        <span class="n">log_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">log_dir</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">log_dir</span><span class="p">)</span>
+
+        <span class="c1"># 保存初始配置</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmdlevel</span> <span class="o">=</span> <span class="n">cmdlevel</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filelevel</span> <span class="o">=</span> <span class="n">filelevel</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">colorful</span> <span class="o">=</span> <span class="n">colorful</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">compression</span> <span class="o">=</span> <span class="n">compression</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">backup_count</span> <span class="o">=</span> <span class="n">backup_count</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">when</span> <span class="o">=</span> <span class="n">when</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">limit</span> <span class="o">=</span> <span class="n">limit</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_enabled</span> <span class="o">=</span> <span class="kc">True</span>
+        
+        <span class="c1"># 存储 sink IDs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmd_sink_id</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file_sink_id</span> <span class="o">=</span> <span class="kc">None</span>
+        
+        <span class="c1"># 初始化日志</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_init_loggers</span><span class="p">()</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="nf">_init_loggers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;初始化日志输出器&quot;&quot;&quot;</span>
+        <span class="c1"># 控制台输出配置</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmd_sink_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span>
+            <span class="n">level</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cmdlevel</span><span class="p">,</span>
+            <span class="nb">format</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_formatter</span><span class="p">,</span>
+            <span class="n">colorize</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">colorful</span><span class="p">,</span>
+            <span class="n">backtrace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">enqueue</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>  <span class="c1"># 控制台输出同步写入</span>
+            <span class="nb">filter</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_filter_func</span><span class="p">(),</span>
+        <span class="p">)</span>
+
+        <span class="c1"># 文件输出配置</span>
+        <span class="n">rotation_config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_rotation_config</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">when</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">limit</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file_sink_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span>
+            <span class="n">level</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">filelevel</span><span class="p">,</span>
+            <span class="nb">format</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_formatter</span><span class="p">,</span>
+            <span class="n">backtrace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">rotation</span><span class="o">=</span><span class="n">rotation_config</span><span class="p">,</span>
+            <span class="n">retention</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">backup_count</span><span class="si">}</span><span class="s2"> days&quot;</span><span class="p">,</span>
+            <span class="n">compression</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">compression</span><span class="p">,</span>
+            <span class="n">enqueue</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="nb">filter</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_filter_func</span><span class="p">(),</span>
+        <span class="p">)</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_filter_func</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;获取日志过滤器函数&quot;&quot;&quot;</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">filter_func</span><span class="p">(</span><span class="n">record</span><span class="p">):</span>
+            <span class="c1"># 如果日志被禁用，则不输出任何日志</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_enabled</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+            <span class="c1"># 正常的任务过滤</span>
+            <span class="k">return</span> <span class="n">record</span><span class="p">[</span><span class="s2">&quot;extra&quot;</span><span class="p">][</span><span class="s2">&quot;task&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span>
+        <span class="k">return</span> <span class="n">filter_func</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_formatter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">record</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_backtrace</span><span class="p">:</span>
+            <span class="c1"># 获取调用栈，跳过 Loguru 和工具类的帧</span>
+            <span class="n">frame</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">currentframe</span><span class="p">()</span>
+            <span class="k">while</span> <span class="n">frame</span><span class="p">:</span>
+                <span class="c1"># 排除 Loguru 内部调用和工具类自身的帧</span>
+                <span class="k">if</span> <span class="p">(</span>
+                    <span class="s2">&quot;loguru&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">frame</span><span class="o">.</span><span class="n">f_code</span><span class="o">.</span><span class="n">co_filename</span>
+                    <span class="ow">and</span> <span class="s2">&quot;log.py&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">frame</span><span class="o">.</span><span class="n">f_code</span><span class="o">.</span><span class="n">co_filename</span>
+                <span class="p">):</span>
+                    <span class="k">break</span>
+                <span class="n">frame</span> <span class="o">=</span> <span class="n">frame</span><span class="o">.</span><span class="n">f_back</span>
+
+            <span class="c1"># 动态获取调用函数名、文件名和行号</span>
+            <span class="n">func_name</span> <span class="o">=</span> <span class="n">frame</span><span class="o">.</span><span class="n">f_code</span><span class="o">.</span><span class="n">co_name</span> <span class="k">if</span> <span class="n">frame</span> <span class="k">else</span> <span class="n">record</span><span class="p">[</span><span class="s2">&quot;function&quot;</span><span class="p">]</span>
+            <span class="n">file_name</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">frame</span><span class="o">.</span><span class="n">f_code</span><span class="o">.</span><span class="n">co_filename</span><span class="p">)</span> <span class="k">if</span> <span class="n">frame</span> <span class="k">else</span> <span class="n">record</span><span class="p">[</span><span class="s2">&quot;file&quot;</span><span class="p">]</span>
+            <span class="p">)</span>
+            <span class="n">line_no</span> <span class="o">=</span> <span class="n">frame</span><span class="o">.</span><span class="n">f_lineno</span> <span class="k">if</span> <span class="n">frame</span> <span class="k">else</span> <span class="n">record</span><span class="p">[</span><span class="s2">&quot;line&quot;</span><span class="p">]</span>
+            <span class="n">file_info</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="n">file_name</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">func_name</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">line_no</span><span class="si">}</span><span class="s2">] &quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">file_info</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="n">record</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">record</span><span class="p">[</span><span class="s1">&#39;line&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">]&quot;</span>
+        <span class="n">level_color</span> <span class="o">=</span> <span class="n">LOG_COLORS</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">record</span><span class="p">[</span><span class="s2">&quot;level&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">level_color</span><span class="si">}</span><span class="s2">[</span><span class="si">{</span><span class="n">record</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S.</span><span class="si">%f</span><span class="s1">&#39;</span><span class="p">)[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span><span class="si">}</span><span class="s2">] &quot;</span>
+            <span class="o">+</span> <span class="n">file_info</span>
+            <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="n">record</span><span class="p">[</span><span class="s1">&#39;level&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">] </span><span class="si">{</span><span class="n">record</span><span class="p">[</span><span class="s1">&#39;message&#39;</span><span class="p">]</span><span class="si">}{</span><span class="n">COLOR_RESET</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_rotation_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">when</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">limit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">]):</span>
+        <span class="k">if</span> <span class="n">when</span><span class="p">:</span>  <span class="c1"># 时间轮转</span>
+            <span class="k">return</span> <span class="n">when</span>  <span class="c1"># &quot;D&quot;（天）、&quot;H&quot;（小时）、&quot;midnight&quot;等</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># 大小轮转</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">limit</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+                <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">limit</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">1024</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">1024</span><span class="si">}</span><span class="s2"> MB&quot;</span>
+            <span class="k">return</span> <span class="n">limit</span>  <span class="c1"># 直接支持&quot;10 MB&quot;、&quot;1 GB&quot;等字符串格式</span>
+
+<div class="viewcode-block" id="Log.set_logger">
+<a class="viewcode-back" href="../../../src.common.html#src.common.base_log.Log.set_logger">[文档]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_logger</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;For backward compatibility.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+    
+<div class="viewcode-block" id="Log.set_log_enable">
+<a class="viewcode-back" href="../../../src.common.html#src.common.base_log.Log.set_log_enable">[文档]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_log_enable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enable</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;开启日志功能&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_enabled</span> <span class="o">=</span> <span class="n">enable</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+    
+<div class="viewcode-block" id="Log.set_log_level">
+<a class="viewcode-back" href="../../../src.common.html#src.common.base_log.Log.set_log_level">[文档]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_log_level</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">level</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">is_console</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">is_file</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;设置日志等级</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            level: 日志等级 (DEBUG, INFO, WARNING, ERROR, CRITICAL)</span>
+<span class="sd">            is_console: 是否设置控制台日志等级</span>
+<span class="sd">            is_file: 是否设置文件日志等级</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: 设置是否成功</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># 验证日志等级</span>
+        <span class="n">valid_levels</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;DEBUG&quot;</span><span class="p">,</span> <span class="s2">&quot;INFO&quot;</span><span class="p">,</span> <span class="s2">&quot;WARNING&quot;</span><span class="p">,</span> <span class="s2">&quot;ERROR&quot;</span><span class="p">,</span> <span class="s2">&quot;CRITICAL&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">level</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">valid_levels</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid log level: </span><span class="si">{</span><span class="n">level</span><span class="si">}</span><span class="s2">. Valid levels are: </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">valid_levels</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        
+        <span class="c1"># 更新存储的日志等级</span>
+        <span class="k">if</span> <span class="n">is_console</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cmdlevel</span> <span class="o">=</span> <span class="n">level</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+            <span class="c1"># 移除并重新添加控制台输出器以更新等级</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cmd_sink_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cmd_sink_id</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">cmd_sink_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+                    <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span>
+                    <span class="n">level</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cmdlevel</span><span class="p">,</span>
+                    <span class="nb">format</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_formatter</span><span class="p">,</span>
+                    <span class="n">colorize</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">colorful</span><span class="p">,</span>
+                    <span class="n">backtrace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="n">enqueue</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                    <span class="nb">filter</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_filter_func</span><span class="p">(),</span>
+                <span class="p">)</span>
+        
+        <span class="k">if</span> <span class="n">is_file</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">filelevel</span> <span class="o">=</span> <span class="n">level</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+            <span class="c1"># 移除并重新添加文件输出器以更新等级</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_sink_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">file_sink_id</span><span class="p">)</span>
+                <span class="n">rotation_config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_rotation_config</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">when</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">limit</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">file_sink_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span>
+                    <span class="n">level</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">filelevel</span><span class="p">,</span>
+                    <span class="nb">format</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_formatter</span><span class="p">,</span>
+                    <span class="n">backtrace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="n">rotation</span><span class="o">=</span><span class="n">rotation_config</span><span class="p">,</span>
+                    <span class="n">retention</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">backup_count</span><span class="si">}</span><span class="s2"> days&quot;</span><span class="p">,</span>
+                    <span class="n">compression</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">compression</span><span class="p">,</span>
+                    <span class="n">enqueue</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="nb">filter</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_filter_func</span><span class="p">(),</span>
+                <span class="p">)</span>
+        
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+    
+<div class="viewcode-block" id="Log.set_config">
+<a class="viewcode-back" href="../../../src.common.html#src.common.base_log.Log.set_config">[文档]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;设置日志配置参数</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            \**kwargs: 支持更新的参数，包括：</span>
+<span class="sd">                filename: 日志文件名</span>
+<span class="sd">                cmdlevel: 控制台日志等级</span>
+<span class="sd">                filelevel: 文件日志等级</span>
+<span class="sd">                backup_count: 保留的日志文件数量</span>
+<span class="sd">                limit: 日志文件大小限制</span>
+<span class="sd">                when: 日志轮转时间配置</span>
+<span class="sd">                colorful: 是否启用彩色输出</span>
+<span class="sd">                compression: 压缩格式</span>
+<span class="sd">                is_backtrace: 是否启用回溯</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: 更新是否成功</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># 验证并更新参数</span>
+        <span class="k">if</span> <span class="s1">&#39;cmdlevel&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span> <span class="ow">or</span> <span class="s1">&#39;filelevel&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="n">valid_levels</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;DEBUG&quot;</span><span class="p">,</span> <span class="s2">&quot;INFO&quot;</span><span class="p">,</span> <span class="s2">&quot;WARNING&quot;</span><span class="p">,</span> <span class="s2">&quot;ERROR&quot;</span><span class="p">,</span> <span class="s2">&quot;CRITICAL&quot;</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">level_key</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;cmdlevel&#39;</span><span class="p">,</span> <span class="s1">&#39;filelevel&#39;</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="n">level_key</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">kwargs</span><span class="p">[</span><span class="n">level_key</span><span class="p">]</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">valid_levels</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid </span><span class="si">{</span><span class="n">level_key</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">kwargs</span><span class="p">[</span><span class="n">level_key</span><span class="p">]</span><span class="si">}</span><span class="s2">. Valid levels are: </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">valid_levels</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                        <span class="k">return</span> <span class="kc">False</span>
+                    <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">level_key</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">[</span><span class="n">level_key</span><span class="p">]</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
+        
+        <span class="c1"># 更新其他参数</span>
+        <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;backup_count&#39;</span><span class="p">,</span> <span class="s1">&#39;limit&#39;</span><span class="p">,</span> <span class="s1">&#39;when&#39;</span><span class="p">,</span> <span class="s1">&#39;colorful&#39;</span><span class="p">,</span> <span class="s1">&#39;compression&#39;</span><span class="p">,</span> <span class="s1">&#39;is_backtrace&#39;</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">[</span><span class="n">param</span><span class="p">])</span>
+        
+        <span class="c1"># 特殊处理filename参数，需要重新绑定task</span>
+        <span class="k">if</span> <span class="s1">&#39;filename&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;filename&#39;</span><span class="p">]</span>
+            <span class="c1"># 确保日志目录存在</span>
+            <span class="n">log_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">))</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">log_dir</span><span class="p">):</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">log_dir</span><span class="p">)</span>
+            <span class="c1"># 重新绑定logger的task属性</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logger</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span>
+        
+        <span class="c1"># 重新初始化日志输出器</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cmd_sink_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cmd_sink_id</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_sink_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">file_sink_id</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_init_loggers</span><span class="p">()</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="Log.debug">
+<a class="viewcode-back" href="../../../src.common.html#src.common.base_log.Log.debug">[文档]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Log.info">
+<a class="viewcode-back" href="../../../src.common.html#src.common.base_log.Log.info">[文档]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Log.warning">
+<a class="viewcode-back" href="../../../src.common.html#src.common.base_log.Log.warning">[文档]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">warning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Log.error">
+<a class="viewcode-back" href="../../../src.common.html#src.common.base_log.Log.error">[文档]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Log.critical">
+<a class="viewcode-back" href="../../../src.common.html#src.common.base_log.Log.critical">[文档]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">critical</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Log.exception">
+<a class="viewcode-back" href="../../../src.common.html#src.common.base_log.Log.exception">[文档]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">exception</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2026, 陈东宇。</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

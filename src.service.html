@@ -1,0 +1,607 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>src.service package &mdash; dlt645 v1.4.0 文档</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=1f20cfc1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="搜索" href="search.html" />
+    <link rel="next" title="src.service.clientsvc package" href="src.service.clientsvc.html" />
+    <link rel="prev" title="src.protocol package" href="src.protocol.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            dlt645
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">src</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="src.html">src package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="src.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="src.common.html">src.common package</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="src.common.html#submodules">Submodules</a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.common.html#module-src.common.base_log">src.common.base_log module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="src.common.html#src.common.base_log.Log"><code class="docutils literal notranslate"><span class="pre">Log</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="src.common.html#src.common.base_log.Log.set_logger"><code class="docutils literal notranslate"><span class="pre">Log.set_logger()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.common.html#src.common.base_log.Log.set_log_enable"><code class="docutils literal notranslate"><span class="pre">Log.set_log_enable()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.common.html#src.common.base_log.Log.set_log_level"><code class="docutils literal notranslate"><span class="pre">Log.set_log_level()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.common.html#src.common.base_log.Log.set_config"><code class="docutils literal notranslate"><span class="pre">Log.set_config()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.common.html#src.common.base_log.Log.debug"><code class="docutils literal notranslate"><span class="pre">Log.debug()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.common.html#src.common.base_log.Log.info"><code class="docutils literal notranslate"><span class="pre">Log.info()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.common.html#src.common.base_log.Log.warning"><code class="docutils literal notranslate"><span class="pre">Log.warning()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.common.html#src.common.base_log.Log.error"><code class="docutils literal notranslate"><span class="pre">Log.error()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.common.html#src.common.base_log.Log.critical"><code class="docutils literal notranslate"><span class="pre">Log.critical()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.common.html#src.common.base_log.Log.exception"><code class="docutils literal notranslate"><span class="pre">Log.exception()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="src.common.html#module-src.common.env">src.common.env module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.common.html#module-src.common.transform">src.common.transform module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="src.common.html#src.common.transform.pad_with_zeros"><code class="docutils literal notranslate"><span class="pre">pad_with_zeros()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="src.common.html#src.common.transform.bytes_to_int"><code class="docutils literal notranslate"><span class="pre">bytes_to_int()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="src.common.html#src.common.transform.bytes_to_float"><code class="docutils literal notranslate"><span class="pre">bytes_to_float()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="src.common.html#src.common.transform.bytes_to_spaced_hex"><code class="docutils literal notranslate"><span class="pre">bytes_to_spaced_hex()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="src.common.html#src.common.transform.bcd_to_string"><code class="docutils literal notranslate"><span class="pre">bcd_to_string()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="src.common.html#src.common.transform.parse_format"><code class="docutils literal notranslate"><span class="pre">parse_format()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="src.common.html#src.common.transform.round_float"><code class="docutils literal notranslate"><span class="pre">round_float()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="src.common.html#src.common.transform.format_float"><code class="docutils literal notranslate"><span class="pre">format_float()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="src.common.html#src.common.transform.string_to_bcd"><code class="docutils literal notranslate"><span class="pre">string_to_bcd()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="src.common.html#src.common.transform.bcd_to_value"><code class="docutils literal notranslate"><span class="pre">bcd_to_value()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="src.common.html#src.common.transform.float_to_bcd"><code class="docutils literal notranslate"><span class="pre">float_to_bcd()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="src.common.html#src.common.transform.bcd_to_float"><code class="docutils literal notranslate"><span class="pre">bcd_to_float()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="src.common.html#src.common.transform.datetime_to_bcd"><code class="docutils literal notranslate"><span class="pre">datetime_to_bcd()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="src.common.html#src.common.transform.bcd_to_byte"><code class="docutils literal notranslate"><span class="pre">bcd_to_byte()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="src.common.html#src.common.transform.bcd_to_time"><code class="docutils literal notranslate"><span class="pre">bcd_to_time()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="src.common.html#src.common.transform.uint8_to_bcd"><code class="docutils literal notranslate"><span class="pre">uint8_to_bcd()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="src.common.html#src.common.transform.reverse_bytes"><code class="docutils literal notranslate"><span class="pre">reverse_bytes()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="src.common.html#module-src.common">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="src.model.html">src.model package</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="src.model.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="src.model.data.html">src.model.data package</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="src.model.data.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="src.model.data.define.html">src.model.data.define package</a><ul>
+<li class="toctree-l9"><a class="reference internal" href="src.model.data.define.html#submodules">Submodules</a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.data.define.html#module-src.model.data.define.demand_def">src.model.data.define.demand_def module</a><ul>
+<li class="toctree-l10"><a class="reference internal" href="src.model.data.define.html#src.model.data.define.demand_def.init_demand_def"><code class="docutils literal notranslate"><span class="pre">init_demand_def()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.data.define.html#module-src.model.data.define.energy_def">src.model.data.define.energy_def module</a><ul>
+<li class="toctree-l10"><a class="reference internal" href="src.model.data.define.html#src.model.data.define.energy_def.init_energy_def"><code class="docutils literal notranslate"><span class="pre">init_energy_def()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.data.define.html#module-src.model.data.define.event_record_def">src.model.data.define.event_record_def module</a><ul>
+<li class="toctree-l10"><a class="reference internal" href="src.model.data.define.html#src.model.data.define.event_record_def.init_event_record_def"><code class="docutils literal notranslate"><span class="pre">init_event_record_def()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.data.define.html#module-src.model.data.define.parameter_def">src.model.data.define.parameter_def module</a><ul>
+<li class="toctree-l10"><a class="reference internal" href="src.model.data.define.html#src.model.data.define.parameter_def.init_parameter_def"><code class="docutils literal notranslate"><span class="pre">init_parameter_def()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.data.define.html#module-src.model.data.define.variable_def">src.model.data.define.variable_def module</a><ul>
+<li class="toctree-l10"><a class="reference internal" href="src.model.data.define.html#src.model.data.define.variable_def.init_variable_def"><code class="docutils literal notranslate"><span class="pre">init_variable_def()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.data.define.html#module-src.model.data.define">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="src.model.data.html#submodules">Submodules</a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.model.data.html#module-src.model.data.data_handler">src.model.data.data_handler module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="src.model.data.html#src.model.data.data_handler.get_data_item"><code class="docutils literal notranslate"><span class="pre">get_data_item()</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="src.model.data.html#src.model.data.data_handler.set_data_item"><code class="docutils literal notranslate"><span class="pre">set_data_item()</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="src.model.data.html#src.model.data.data_handler.is_value_valid"><code class="docutils literal notranslate"><span class="pre">is_value_valid()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="src.model.data.html#module-src.model.data">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="src.model.types.html">src.model.types package</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="src.model.types.html#submodules">Submodules</a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.model.types.html#module-src.model.types.data_type">src.model.types.data_type module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.data_type.DataItem"><code class="docutils literal notranslate"><span class="pre">DataItem</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.data_type.DataType"><code class="docutils literal notranslate"><span class="pre">DataType</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.data_type.DataType.from_dict"><code class="docutils literal notranslate"><span class="pre">DataType.from_dict()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.data_type.uint32_from_string"><code class="docutils literal notranslate"><span class="pre">uint32_from_string</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.data_type.uint32_from_string.from_json"><code class="docutils literal notranslate"><span class="pre">uint32_from_string.from_json()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.data_type.init_data_type_from_json"><code class="docutils literal notranslate"><span class="pre">init_data_type_from_json()</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.data_type.DataFormat"><code class="docutils literal notranslate"><span class="pre">DataFormat</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.data_type.DataFormat.XXXXXXXX"><code class="docutils literal notranslate"><span class="pre">DataFormat.XXXXXXXX</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.data_type.DataFormat.XXXXXX_XX"><code class="docutils literal notranslate"><span class="pre">DataFormat.XXXXXX_XX</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.data_type.DataFormat.XXXX_XX"><code class="docutils literal notranslate"><span class="pre">DataFormat.XXXX_XX</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.data_type.DataFormat.XXX_XXX"><code class="docutils literal notranslate"><span class="pre">DataFormat.XXX_XXX</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.data_type.DataFormat.XX_XXXX"><code class="docutils literal notranslate"><span class="pre">DataFormat.XX_XXXX</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.data_type.DataFormat.XXX_X"><code class="docutils literal notranslate"><span class="pre">DataFormat.XXX_X</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.data_type.DataFormat.X_XXX"><code class="docutils literal notranslate"><span class="pre">DataFormat.X_XXX</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.data_type.DataFormat.YYMMDDWW"><code class="docutils literal notranslate"><span class="pre">DataFormat.YYMMDDWW</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.data_type.DataFormat.hhmmss"><code class="docutils literal notranslate"><span class="pre">DataFormat.hhmmss</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.data_type.DataFormat.YYMMDDhhmm"><code class="docutils literal notranslate"><span class="pre">DataFormat.YYMMDDhhmm</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.data_type.DataFormat.NN"><code class="docutils literal notranslate"><span class="pre">DataFormat.NN</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.data_type.DataFormat.NNNN"><code class="docutils literal notranslate"><span class="pre">DataFormat.NNNN</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.data_type.DataFormat.NNNNNNNN"><code class="docutils literal notranslate"><span class="pre">DataFormat.NNNNNNNN</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="src.model.types.html#module-src.model.types.dlt645_type">src.model.types.dlt645_type module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.DICategory"><code class="docutils literal notranslate"><span class="pre">DICategory</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.DICategory.CategoryEnergy"><code class="docutils literal notranslate"><span class="pre">DICategory.CategoryEnergy</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.DICategory.CategoryDemand"><code class="docutils literal notranslate"><span class="pre">DICategory.CategoryDemand</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.DICategory.CategoryVariable"><code class="docutils literal notranslate"><span class="pre">DICategory.CategoryVariable</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.DICategory.CategoryEvent"><code class="docutils literal notranslate"><span class="pre">DICategory.CategoryEvent</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.DICategory.CategoryParameter"><code class="docutils literal notranslate"><span class="pre">DICategory.CategoryParameter</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.DICategory.CategoryFreeze"><code class="docutils literal notranslate"><span class="pre">DICategory.CategoryFreeze</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.DICategory.CategoryLoad"><code class="docutils literal notranslate"><span class="pre">DICategory.CategoryLoad</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.CtrlCode"><code class="docutils literal notranslate"><span class="pre">CtrlCode</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.CtrlCode.BroadcastTimeSync"><code class="docutils literal notranslate"><span class="pre">CtrlCode.BroadcastTimeSync</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.CtrlCode.ReadData"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ReadData</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.CtrlCode.ReadAddress"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ReadAddress</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.CtrlCode.WriteData"><code class="docutils literal notranslate"><span class="pre">CtrlCode.WriteData</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.CtrlCode.WriteAddress"><code class="docutils literal notranslate"><span class="pre">CtrlCode.WriteAddress</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.CtrlCode.FreezeCmd"><code class="docutils literal notranslate"><span class="pre">CtrlCode.FreezeCmd</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.CtrlCode.ChangeBaudRate"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ChangeBaudRate</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.CtrlCode.ChangePassword"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ChangePassword</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.ErrorCode"><code class="docutils literal notranslate"><span class="pre">ErrorCode</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.ErrorCode.OtherError"><code class="docutils literal notranslate"><span class="pre">ErrorCode.OtherError</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.ErrorCode.RequestDataEmpty"><code class="docutils literal notranslate"><span class="pre">ErrorCode.RequestDataEmpty</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.ErrorCode.AuthFailed"><code class="docutils literal notranslate"><span class="pre">ErrorCode.AuthFailed</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.ErrorCode.CommRateImmutable"><code class="docutils literal notranslate"><span class="pre">ErrorCode.CommRateImmutable</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.ErrorCode.YearZoneNumExceeded"><code class="docutils literal notranslate"><span class="pre">ErrorCode.YearZoneNumExceeded</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.ErrorCode.DaySlotNumExceeded"><code class="docutils literal notranslate"><span class="pre">ErrorCode.DaySlotNumExceeded</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.ErrorCode.RateNumExceeded"><code class="docutils literal notranslate"><span class="pre">ErrorCode.RateNumExceeded</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.get_error_msg"><code class="docutils literal notranslate"><span class="pre">get_error_msg()</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.Demand"><code class="docutils literal notranslate"><span class="pre">Demand</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.EventRecord"><code class="docutils literal notranslate"><span class="pre">EventRecord</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.PasswordManager"><code class="docutils literal notranslate"><span class="pre">PasswordManager</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.PasswordManager.is_password_valid"><code class="docutils literal notranslate"><span class="pre">PasswordManager.is_password_valid()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.PasswordManager.set_password"><code class="docutils literal notranslate"><span class="pre">PasswordManager.set_password()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.PasswordManager.get_password"><code class="docutils literal notranslate"><span class="pre">PasswordManager.get_password()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.PasswordManager.check_password"><code class="docutils literal notranslate"><span class="pre">PasswordManager.check_password()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.PasswordManager.change_password"><code class="docutils literal notranslate"><span class="pre">PasswordManager.change_password()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="src.model.types.html#module-src.model.types">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="src.model.html#submodules">Submodules</a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.model.html#module-src.model.log">src.model.log module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.model.html#module-src.model.validators">src.model.validators module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="src.model.html#src.model.validators.validate_device"><code class="docutils literal notranslate"><span class="pre">validate_device()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="src.model.html#module-src.model">Module contents</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="src.model.html#src.model.init"><code class="docutils literal notranslate"><span class="pre">init()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="src.protocol.html">src.protocol package</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="src.protocol.html#submodules">Submodules</a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.protocol.html#module-src.protocol.frame">src.protocol.frame module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="src.protocol.html#src.protocol.frame.Frame"><code class="docutils literal notranslate"><span class="pre">Frame</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="src.protocol.html#module-src.protocol.log">src.protocol.log module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.protocol.html#module-src.protocol.protocol">src.protocol.protocol module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.decode_data"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.decode_data()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.calculate_checksum"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.calculate_checksum()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.encode_data"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.encode_data()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.build_frame"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.build_frame()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.deserialize"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.deserialize()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.deserialize_with_remaining"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.deserialize_with_remaining()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.serialize"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.serialize()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="src.protocol.html#module-src.protocol">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">src.service package</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="src.service.clientsvc.html">src.service.clientsvc package</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="src.service.clientsvc.html#submodules">Submodules</a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.service.clientsvc.html#module-src.service.clientsvc.client_service">src.service.clientsvc.client_service module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService"><code class="docutils literal notranslate"><span class="pre">MeterClientService</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.new_tcp_client"><code class="docutils literal notranslate"><span class="pre">MeterClientService.new_tcp_client()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.new_rtu_client"><code class="docutils literal notranslate"><span class="pre">MeterClientService.new_rtu_client()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.new_meter_client_service"><code class="docutils literal notranslate"><span class="pre">MeterClientService.new_meter_client_service()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.get_time"><code class="docutils literal notranslate"><span class="pre">MeterClientService.get_time()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.set_address"><code class="docutils literal notranslate"><span class="pre">MeterClientService.set_address()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.set_password"><code class="docutils literal notranslate"><span class="pre">MeterClientService.set_password()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.change_password"><code class="docutils literal notranslate"><span class="pre">MeterClientService.change_password()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.read_00"><code class="docutils literal notranslate"><span class="pre">MeterClientService.read_00()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.read_01"><code class="docutils literal notranslate"><span class="pre">MeterClientService.read_01()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.read_02"><code class="docutils literal notranslate"><span class="pre">MeterClientService.read_02()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.read_03"><code class="docutils literal notranslate"><span class="pre">MeterClientService.read_03()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.read_04"><code class="docutils literal notranslate"><span class="pre">MeterClientService.read_04()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.write_04"><code class="docutils literal notranslate"><span class="pre">MeterClientService.write_04()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.read_address"><code class="docutils literal notranslate"><span class="pre">MeterClientService.read_address()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.write_address"><code class="docutils literal notranslate"><span class="pre">MeterClientService.write_address()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.send_and_handle_request"><code class="docutils literal notranslate"><span class="pre">MeterClientService.send_and_handle_request()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.handle_response"><code class="docutils literal notranslate"><span class="pre">MeterClientService.handle_response()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="src.service.clientsvc.html#module-src.service.clientsvc.log">src.service.clientsvc.log module</a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.service.clientsvc.html#module-src.service.clientsvc">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="src.service.serversvc.html">src.service.serversvc package</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="src.service.serversvc.html#submodules">Submodules</a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.service.serversvc.html#module-src.service.serversvc.log">src.service.serversvc.log module</a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.service.serversvc.html#module-src.service.serversvc.server_service">src.service.serversvc.server_service module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService"><code class="docutils literal notranslate"><span class="pre">MeterServerService</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.new_tcp_server"><code class="docutils literal notranslate"><span class="pre">MeterServerService.new_tcp_server()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.new_rtu_server"><code class="docutils literal notranslate"><span class="pre">MeterServerService.new_rtu_server()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.new_meter_server_service"><code class="docutils literal notranslate"><span class="pre">MeterServerService.new_meter_server_service()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.set_time"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_time()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.set_address"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_address()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.set_password"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_password()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.set_00"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_00()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.set_01"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_01()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.set_02"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_02()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.set_03"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_03()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.set_04"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_04()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.get_data_item"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_data_item()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.handle_request"><code class="docutils literal notranslate"><span class="pre">MeterServerService.handle_request()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="src.service.serversvc.html#module-src.service.serversvc">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#module-src.service">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="src.transport.html">src.transport package</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="src.transport.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="src.transport.client.html">src.transport.client package</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="src.transport.client.html#submodules">Submodules</a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.transport.client.html#module-src.transport.client.log">src.transport.client.log module</a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.transport.client.html#module-src.transport.client.rtu_client">src.transport.client.rtu_client module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="src.transport.client.html#src.transport.client.rtu_client.RtuClient"><code class="docutils literal notranslate"><span class="pre">RtuClient</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.rtu_client.RtuClient.connect"><code class="docutils literal notranslate"><span class="pre">RtuClient.connect()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.rtu_client.RtuClient.disconnect"><code class="docutils literal notranslate"><span class="pre">RtuClient.disconnect()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.rtu_client.RtuClient.send_request"><code class="docutils literal notranslate"><span class="pre">RtuClient.send_request()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="src.transport.client.html#module-src.transport.client.tcp_client">src.transport.client.tcp_client module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="src.transport.client.html#src.transport.client.tcp_client.TcpClient"><code class="docutils literal notranslate"><span class="pre">TcpClient</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.tcp_client.TcpClient.connect"><code class="docutils literal notranslate"><span class="pre">TcpClient.connect()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.tcp_client.TcpClient.disconnect"><code class="docutils literal notranslate"><span class="pre">TcpClient.disconnect()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.tcp_client.TcpClient.send_request"><code class="docutils literal notranslate"><span class="pre">TcpClient.send_request()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="src.transport.client.html#module-src.transport.client">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="src.transport.server.html">src.transport.server package</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="src.transport.server.html#submodules">Submodules</a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.transport.server.html#module-src.transport.server.log">src.transport.server.log module</a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.transport.server.html#module-src.transport.server.rtu_server">src.transport.server.rtu_server module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="src.transport.server.html#src.transport.server.rtu_server.RtuServer"><code class="docutils literal notranslate"><span class="pre">RtuServer</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="src.transport.server.html#src.transport.server.rtu_server.RtuServer.start"><code class="docutils literal notranslate"><span class="pre">RtuServer.start()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.transport.server.html#src.transport.server.rtu_server.RtuServer.stop"><code class="docutils literal notranslate"><span class="pre">RtuServer.stop()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.transport.server.html#src.transport.server.rtu_server.RtuServer.is_running"><code class="docutils literal notranslate"><span class="pre">RtuServer.is_running()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.transport.server.html#src.transport.server.rtu_server.RtuServer.handle_connection"><code class="docutils literal notranslate"><span class="pre">RtuServer.handle_connection()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="src.transport.server.html#module-src.transport.server.tcp_server">src.transport.server.tcp_server module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="src.transport.server.html#src.transport.server.tcp_server.TcpServer"><code class="docutils literal notranslate"><span class="pre">TcpServer</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="src.transport.server.html#src.transport.server.tcp_server.TcpServer.start"><code class="docutils literal notranslate"><span class="pre">TcpServer.start()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.transport.server.html#src.transport.server.tcp_server.TcpServer.stop"><code class="docutils literal notranslate"><span class="pre">TcpServer.stop()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.transport.server.html#src.transport.server.tcp_server.TcpServer.is_running"><code class="docutils literal notranslate"><span class="pre">TcpServer.is_running()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.transport.server.html#src.transport.server.tcp_server.TcpServer.handle_connection"><code class="docutils literal notranslate"><span class="pre">TcpServer.handle_connection()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="src.transport.server.html#module-src.transport.server">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="src.transport.html#module-src.transport">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.html#module-src">Module contents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.html#src.MeterServerService"><code class="docutils literal notranslate"><span class="pre">MeterServerService</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterServerService.new_tcp_server"><code class="docutils literal notranslate"><span class="pre">MeterServerService.new_tcp_server()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterServerService.new_rtu_server"><code class="docutils literal notranslate"><span class="pre">MeterServerService.new_rtu_server()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterServerService.new_meter_server_service"><code class="docutils literal notranslate"><span class="pre">MeterServerService.new_meter_server_service()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterServerService.set_time"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_time()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterServerService.set_address"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_address()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterServerService.set_password"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_password()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterServerService.set_00"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_00()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterServerService.set_01"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_01()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterServerService.set_02"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_02()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterServerService.set_03"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_03()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterServerService.set_04"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_04()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterServerService.get_data_item"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_data_item()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterServerService.handle_request"><code class="docutils literal notranslate"><span class="pre">MeterServerService.handle_request()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="src.html#src.MeterClientService"><code class="docutils literal notranslate"><span class="pre">MeterClientService</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.new_tcp_client"><code class="docutils literal notranslate"><span class="pre">MeterClientService.new_tcp_client()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.new_rtu_client"><code class="docutils literal notranslate"><span class="pre">MeterClientService.new_rtu_client()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.new_meter_client_service"><code class="docutils literal notranslate"><span class="pre">MeterClientService.new_meter_client_service()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.get_time"><code class="docutils literal notranslate"><span class="pre">MeterClientService.get_time()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.set_address"><code class="docutils literal notranslate"><span class="pre">MeterClientService.set_address()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.set_password"><code class="docutils literal notranslate"><span class="pre">MeterClientService.set_password()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.change_password"><code class="docutils literal notranslate"><span class="pre">MeterClientService.change_password()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.read_00"><code class="docutils literal notranslate"><span class="pre">MeterClientService.read_00()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.read_01"><code class="docutils literal notranslate"><span class="pre">MeterClientService.read_01()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.read_02"><code class="docutils literal notranslate"><span class="pre">MeterClientService.read_02()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.read_03"><code class="docutils literal notranslate"><span class="pre">MeterClientService.read_03()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.read_04"><code class="docutils literal notranslate"><span class="pre">MeterClientService.read_04()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.write_04"><code class="docutils literal notranslate"><span class="pre">MeterClientService.write_04()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.read_address"><code class="docutils literal notranslate"><span class="pre">MeterClientService.read_address()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.write_address"><code class="docutils literal notranslate"><span class="pre">MeterClientService.write_address()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.send_and_handle_request"><code class="docutils literal notranslate"><span class="pre">MeterClientService.send_and_handle_request()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.handle_response"><code class="docutils literal notranslate"><span class="pre">MeterClientService.handle_response()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="src.html#src.DLT645Protocol"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.DLT645Protocol.decode_data"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.decode_data()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.DLT645Protocol.calculate_checksum"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.calculate_checksum()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.DLT645Protocol.encode_data"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.encode_data()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.DLT645Protocol.build_frame"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.build_frame()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.DLT645Protocol.deserialize"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.deserialize()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.DLT645Protocol.deserialize_with_remaining"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.deserialize_with_remaining()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.DLT645Protocol.serialize"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.serialize()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="src.html#src.CtrlCode"><code class="docutils literal notranslate"><span class="pre">CtrlCode</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.CtrlCode.BroadcastTimeSync"><code class="docutils literal notranslate"><span class="pre">CtrlCode.BroadcastTimeSync</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.CtrlCode.ReadData"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ReadData</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.CtrlCode.ReadAddress"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ReadAddress</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.CtrlCode.WriteData"><code class="docutils literal notranslate"><span class="pre">CtrlCode.WriteData</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.CtrlCode.WriteAddress"><code class="docutils literal notranslate"><span class="pre">CtrlCode.WriteAddress</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.CtrlCode.FreezeCmd"><code class="docutils literal notranslate"><span class="pre">CtrlCode.FreezeCmd</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.CtrlCode.ChangeBaudRate"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ChangeBaudRate</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.CtrlCode.ChangePassword"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ChangePassword</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="src.html#src.Demand"><code class="docutils literal notranslate"><span class="pre">Demand</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.html#src.DataItem"><code class="docutils literal notranslate"><span class="pre">DataItem</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.html#src.DataFormat"><code class="docutils literal notranslate"><span class="pre">DataFormat</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.DataFormat.XXXXXXXX"><code class="docutils literal notranslate"><span class="pre">DataFormat.XXXXXXXX</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.DataFormat.XXXXXX_XX"><code class="docutils literal notranslate"><span class="pre">DataFormat.XXXXXX_XX</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.DataFormat.XXXX_XX"><code class="docutils literal notranslate"><span class="pre">DataFormat.XXXX_XX</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.DataFormat.XXX_XXX"><code class="docutils literal notranslate"><span class="pre">DataFormat.XXX_XXX</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.DataFormat.XX_XXXX"><code class="docutils literal notranslate"><span class="pre">DataFormat.XX_XXXX</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.DataFormat.XXX_X"><code class="docutils literal notranslate"><span class="pre">DataFormat.XXX_X</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.DataFormat.X_XXX"><code class="docutils literal notranslate"><span class="pre">DataFormat.X_XXX</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.DataFormat.YYMMDDWW"><code class="docutils literal notranslate"><span class="pre">DataFormat.YYMMDDWW</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.DataFormat.hhmmss"><code class="docutils literal notranslate"><span class="pre">DataFormat.hhmmss</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.DataFormat.YYMMDDhhmm"><code class="docutils literal notranslate"><span class="pre">DataFormat.YYMMDDhhmm</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.DataFormat.NN"><code class="docutils literal notranslate"><span class="pre">DataFormat.NN</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.DataFormat.NNNN"><code class="docutils literal notranslate"><span class="pre">DataFormat.NNNN</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.DataFormat.NNNNNNNN"><code class="docutils literal notranslate"><span class="pre">DataFormat.NNNNNNNN</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="src.html#src.TcpServer"><code class="docutils literal notranslate"><span class="pre">TcpServer</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.TcpServer.start"><code class="docutils literal notranslate"><span class="pre">TcpServer.start()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.TcpServer.stop"><code class="docutils literal notranslate"><span class="pre">TcpServer.stop()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.TcpServer.is_running"><code class="docutils literal notranslate"><span class="pre">TcpServer.is_running()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.TcpServer.handle_connection"><code class="docutils literal notranslate"><span class="pre">TcpServer.handle_connection()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="src.html#src.RtuServer"><code class="docutils literal notranslate"><span class="pre">RtuServer</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.RtuServer.start"><code class="docutils literal notranslate"><span class="pre">RtuServer.start()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.RtuServer.stop"><code class="docutils literal notranslate"><span class="pre">RtuServer.stop()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.RtuServer.is_running"><code class="docutils literal notranslate"><span class="pre">RtuServer.is_running()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.RtuServer.handle_connection"><code class="docutils literal notranslate"><span class="pre">RtuServer.handle_connection()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="src.html#src.TcpClient"><code class="docutils literal notranslate"><span class="pre">TcpClient</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.TcpClient.connect"><code class="docutils literal notranslate"><span class="pre">TcpClient.connect()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.TcpClient.disconnect"><code class="docutils literal notranslate"><span class="pre">TcpClient.disconnect()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.TcpClient.send_request"><code class="docutils literal notranslate"><span class="pre">TcpClient.send_request()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="src.html#src.RtuClient"><code class="docutils literal notranslate"><span class="pre">RtuClient</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.RtuClient.connect"><code class="docutils literal notranslate"><span class="pre">RtuClient.connect()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.RtuClient.disconnect"><code class="docutils literal notranslate"><span class="pre">RtuClient.disconnect()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.RtuClient.send_request"><code class="docutils literal notranslate"><span class="pre">RtuClient.send_request()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">dlt645</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">src</a></li>
+          <li class="breadcrumb-item"><a href="src.html">src package</a></li>
+      <li class="breadcrumb-item active">src.service package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/src.service.rst.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="src-service-package">
+<h1>src.service package<a class="headerlink" href="#src-service-package" title="Link to this heading"></a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="src.service.clientsvc.html">src.service.clientsvc package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="src.service.clientsvc.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.service.clientsvc.html#module-src.service.clientsvc.client_service">src.service.clientsvc.client_service module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService"><code class="docutils literal notranslate"><span class="pre">MeterClientService</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.new_tcp_client"><code class="docutils literal notranslate"><span class="pre">MeterClientService.new_tcp_client()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.new_rtu_client"><code class="docutils literal notranslate"><span class="pre">MeterClientService.new_rtu_client()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.new_meter_client_service"><code class="docutils literal notranslate"><span class="pre">MeterClientService.new_meter_client_service()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.get_time"><code class="docutils literal notranslate"><span class="pre">MeterClientService.get_time()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.set_address"><code class="docutils literal notranslate"><span class="pre">MeterClientService.set_address()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.set_password"><code class="docutils literal notranslate"><span class="pre">MeterClientService.set_password()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.change_password"><code class="docutils literal notranslate"><span class="pre">MeterClientService.change_password()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.read_00"><code class="docutils literal notranslate"><span class="pre">MeterClientService.read_00()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.read_01"><code class="docutils literal notranslate"><span class="pre">MeterClientService.read_01()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.read_02"><code class="docutils literal notranslate"><span class="pre">MeterClientService.read_02()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.read_03"><code class="docutils literal notranslate"><span class="pre">MeterClientService.read_03()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.read_04"><code class="docutils literal notranslate"><span class="pre">MeterClientService.read_04()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.write_04"><code class="docutils literal notranslate"><span class="pre">MeterClientService.write_04()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.read_address"><code class="docutils literal notranslate"><span class="pre">MeterClientService.read_address()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.write_address"><code class="docutils literal notranslate"><span class="pre">MeterClientService.write_address()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.send_and_handle_request"><code class="docutils literal notranslate"><span class="pre">MeterClientService.send_and_handle_request()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.handle_response"><code class="docutils literal notranslate"><span class="pre">MeterClientService.handle_response()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="src.service.clientsvc.html#module-src.service.clientsvc.log">src.service.clientsvc.log module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.service.clientsvc.html#module-src.service.clientsvc">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="src.service.serversvc.html">src.service.serversvc package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="src.service.serversvc.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.service.serversvc.html#module-src.service.serversvc.log">src.service.serversvc.log module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.service.serversvc.html#module-src.service.serversvc.server_service">src.service.serversvc.server_service module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService"><code class="docutils literal notranslate"><span class="pre">MeterServerService</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.new_tcp_server"><code class="docutils literal notranslate"><span class="pre">MeterServerService.new_tcp_server()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.new_rtu_server"><code class="docutils literal notranslate"><span class="pre">MeterServerService.new_rtu_server()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.new_meter_server_service"><code class="docutils literal notranslate"><span class="pre">MeterServerService.new_meter_server_service()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.set_time"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_time()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.set_address"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_address()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.set_password"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_password()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.set_00"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_00()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.set_01"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_01()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.set_02"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_02()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.set_03"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_03()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.set_04"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_04()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.get_data_item"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_data_item()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.handle_request"><code class="docutils literal notranslate"><span class="pre">MeterServerService.handle_request()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="src.service.serversvc.html#module-src.service.serversvc">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="module-src.service">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-src.service" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="src.protocol.html" class="btn btn-neutral float-left" title="src.protocol package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="src.service.clientsvc.html" class="btn btn-neutral float-right" title="src.service.clientsvc package" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2026, 陈东宇。</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

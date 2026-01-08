@@ -1,0 +1,1562 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>src package &mdash; dlt645 v1.4.0 文档</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=1f20cfc1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="搜索" href="search.html" />
+    <link rel="next" title="src.common package" href="src.common.html" />
+    <link rel="prev" title="src" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            dlt645
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">src</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">src package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.common.html">src.common package</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="src.common.html#submodules">Submodules</a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.common.html#module-src.common.base_log">src.common.base_log module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="src.common.html#src.common.base_log.Log"><code class="docutils literal notranslate"><span class="pre">Log</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="src.common.html#src.common.base_log.Log.set_logger"><code class="docutils literal notranslate"><span class="pre">Log.set_logger()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.common.html#src.common.base_log.Log.set_log_enable"><code class="docutils literal notranslate"><span class="pre">Log.set_log_enable()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.common.html#src.common.base_log.Log.set_log_level"><code class="docutils literal notranslate"><span class="pre">Log.set_log_level()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.common.html#src.common.base_log.Log.set_config"><code class="docutils literal notranslate"><span class="pre">Log.set_config()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.common.html#src.common.base_log.Log.debug"><code class="docutils literal notranslate"><span class="pre">Log.debug()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.common.html#src.common.base_log.Log.info"><code class="docutils literal notranslate"><span class="pre">Log.info()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.common.html#src.common.base_log.Log.warning"><code class="docutils literal notranslate"><span class="pre">Log.warning()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.common.html#src.common.base_log.Log.error"><code class="docutils literal notranslate"><span class="pre">Log.error()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.common.html#src.common.base_log.Log.critical"><code class="docutils literal notranslate"><span class="pre">Log.critical()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.common.html#src.common.base_log.Log.exception"><code class="docutils literal notranslate"><span class="pre">Log.exception()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="src.common.html#module-src.common.env">src.common.env module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.common.html#module-src.common.transform">src.common.transform module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="src.common.html#src.common.transform.pad_with_zeros"><code class="docutils literal notranslate"><span class="pre">pad_with_zeros()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="src.common.html#src.common.transform.bytes_to_int"><code class="docutils literal notranslate"><span class="pre">bytes_to_int()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="src.common.html#src.common.transform.bytes_to_float"><code class="docutils literal notranslate"><span class="pre">bytes_to_float()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="src.common.html#src.common.transform.bytes_to_spaced_hex"><code class="docutils literal notranslate"><span class="pre">bytes_to_spaced_hex()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="src.common.html#src.common.transform.bcd_to_string"><code class="docutils literal notranslate"><span class="pre">bcd_to_string()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="src.common.html#src.common.transform.parse_format"><code class="docutils literal notranslate"><span class="pre">parse_format()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="src.common.html#src.common.transform.round_float"><code class="docutils literal notranslate"><span class="pre">round_float()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="src.common.html#src.common.transform.format_float"><code class="docutils literal notranslate"><span class="pre">format_float()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="src.common.html#src.common.transform.string_to_bcd"><code class="docutils literal notranslate"><span class="pre">string_to_bcd()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="src.common.html#src.common.transform.bcd_to_value"><code class="docutils literal notranslate"><span class="pre">bcd_to_value()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="src.common.html#src.common.transform.float_to_bcd"><code class="docutils literal notranslate"><span class="pre">float_to_bcd()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="src.common.html#src.common.transform.bcd_to_float"><code class="docutils literal notranslate"><span class="pre">bcd_to_float()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="src.common.html#src.common.transform.datetime_to_bcd"><code class="docutils literal notranslate"><span class="pre">datetime_to_bcd()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="src.common.html#src.common.transform.bcd_to_byte"><code class="docutils literal notranslate"><span class="pre">bcd_to_byte()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="src.common.html#src.common.transform.bcd_to_time"><code class="docutils literal notranslate"><span class="pre">bcd_to_time()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="src.common.html#src.common.transform.uint8_to_bcd"><code class="docutils literal notranslate"><span class="pre">uint8_to_bcd()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="src.common.html#src.common.transform.reverse_bytes"><code class="docutils literal notranslate"><span class="pre">reverse_bytes()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="src.common.html#module-src.common">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="src.model.html">src.model package</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="src.model.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="src.model.data.html">src.model.data package</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="src.model.data.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="src.model.data.define.html">src.model.data.define package</a><ul>
+<li class="toctree-l9"><a class="reference internal" href="src.model.data.define.html#submodules">Submodules</a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.data.define.html#module-src.model.data.define.demand_def">src.model.data.define.demand_def module</a><ul>
+<li class="toctree-l10"><a class="reference internal" href="src.model.data.define.html#src.model.data.define.demand_def.init_demand_def"><code class="docutils literal notranslate"><span class="pre">init_demand_def()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.data.define.html#module-src.model.data.define.energy_def">src.model.data.define.energy_def module</a><ul>
+<li class="toctree-l10"><a class="reference internal" href="src.model.data.define.html#src.model.data.define.energy_def.init_energy_def"><code class="docutils literal notranslate"><span class="pre">init_energy_def()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.data.define.html#module-src.model.data.define.event_record_def">src.model.data.define.event_record_def module</a><ul>
+<li class="toctree-l10"><a class="reference internal" href="src.model.data.define.html#src.model.data.define.event_record_def.init_event_record_def"><code class="docutils literal notranslate"><span class="pre">init_event_record_def()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.data.define.html#module-src.model.data.define.parameter_def">src.model.data.define.parameter_def module</a><ul>
+<li class="toctree-l10"><a class="reference internal" href="src.model.data.define.html#src.model.data.define.parameter_def.init_parameter_def"><code class="docutils literal notranslate"><span class="pre">init_parameter_def()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.data.define.html#module-src.model.data.define.variable_def">src.model.data.define.variable_def module</a><ul>
+<li class="toctree-l10"><a class="reference internal" href="src.model.data.define.html#src.model.data.define.variable_def.init_variable_def"><code class="docutils literal notranslate"><span class="pre">init_variable_def()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.data.define.html#module-src.model.data.define">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="src.model.data.html#submodules">Submodules</a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.model.data.html#module-src.model.data.data_handler">src.model.data.data_handler module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="src.model.data.html#src.model.data.data_handler.get_data_item"><code class="docutils literal notranslate"><span class="pre">get_data_item()</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="src.model.data.html#src.model.data.data_handler.set_data_item"><code class="docutils literal notranslate"><span class="pre">set_data_item()</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="src.model.data.html#src.model.data.data_handler.is_value_valid"><code class="docutils literal notranslate"><span class="pre">is_value_valid()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="src.model.data.html#module-src.model.data">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="src.model.types.html">src.model.types package</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="src.model.types.html#submodules">Submodules</a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.model.types.html#module-src.model.types.data_type">src.model.types.data_type module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.data_type.DataItem"><code class="docutils literal notranslate"><span class="pre">DataItem</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.data_type.DataType"><code class="docutils literal notranslate"><span class="pre">DataType</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.data_type.DataType.from_dict"><code class="docutils literal notranslate"><span class="pre">DataType.from_dict()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.data_type.uint32_from_string"><code class="docutils literal notranslate"><span class="pre">uint32_from_string</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.data_type.uint32_from_string.from_json"><code class="docutils literal notranslate"><span class="pre">uint32_from_string.from_json()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.data_type.init_data_type_from_json"><code class="docutils literal notranslate"><span class="pre">init_data_type_from_json()</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.data_type.DataFormat"><code class="docutils literal notranslate"><span class="pre">DataFormat</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.data_type.DataFormat.XXXXXXXX"><code class="docutils literal notranslate"><span class="pre">DataFormat.XXXXXXXX</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.data_type.DataFormat.XXXXXX_XX"><code class="docutils literal notranslate"><span class="pre">DataFormat.XXXXXX_XX</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.data_type.DataFormat.XXXX_XX"><code class="docutils literal notranslate"><span class="pre">DataFormat.XXXX_XX</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.data_type.DataFormat.XXX_XXX"><code class="docutils literal notranslate"><span class="pre">DataFormat.XXX_XXX</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.data_type.DataFormat.XX_XXXX"><code class="docutils literal notranslate"><span class="pre">DataFormat.XX_XXXX</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.data_type.DataFormat.XXX_X"><code class="docutils literal notranslate"><span class="pre">DataFormat.XXX_X</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.data_type.DataFormat.X_XXX"><code class="docutils literal notranslate"><span class="pre">DataFormat.X_XXX</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.data_type.DataFormat.YYMMDDWW"><code class="docutils literal notranslate"><span class="pre">DataFormat.YYMMDDWW</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.data_type.DataFormat.hhmmss"><code class="docutils literal notranslate"><span class="pre">DataFormat.hhmmss</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.data_type.DataFormat.YYMMDDhhmm"><code class="docutils literal notranslate"><span class="pre">DataFormat.YYMMDDhhmm</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.data_type.DataFormat.NN"><code class="docutils literal notranslate"><span class="pre">DataFormat.NN</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.data_type.DataFormat.NNNN"><code class="docutils literal notranslate"><span class="pre">DataFormat.NNNN</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.data_type.DataFormat.NNNNNNNN"><code class="docutils literal notranslate"><span class="pre">DataFormat.NNNNNNNN</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="src.model.types.html#module-src.model.types.dlt645_type">src.model.types.dlt645_type module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.DICategory"><code class="docutils literal notranslate"><span class="pre">DICategory</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.DICategory.CategoryEnergy"><code class="docutils literal notranslate"><span class="pre">DICategory.CategoryEnergy</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.DICategory.CategoryDemand"><code class="docutils literal notranslate"><span class="pre">DICategory.CategoryDemand</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.DICategory.CategoryVariable"><code class="docutils literal notranslate"><span class="pre">DICategory.CategoryVariable</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.DICategory.CategoryEvent"><code class="docutils literal notranslate"><span class="pre">DICategory.CategoryEvent</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.DICategory.CategoryParameter"><code class="docutils literal notranslate"><span class="pre">DICategory.CategoryParameter</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.DICategory.CategoryFreeze"><code class="docutils literal notranslate"><span class="pre">DICategory.CategoryFreeze</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.DICategory.CategoryLoad"><code class="docutils literal notranslate"><span class="pre">DICategory.CategoryLoad</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.CtrlCode"><code class="docutils literal notranslate"><span class="pre">CtrlCode</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.CtrlCode.BroadcastTimeSync"><code class="docutils literal notranslate"><span class="pre">CtrlCode.BroadcastTimeSync</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.CtrlCode.ReadData"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ReadData</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.CtrlCode.ReadAddress"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ReadAddress</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.CtrlCode.WriteData"><code class="docutils literal notranslate"><span class="pre">CtrlCode.WriteData</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.CtrlCode.WriteAddress"><code class="docutils literal notranslate"><span class="pre">CtrlCode.WriteAddress</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.CtrlCode.FreezeCmd"><code class="docutils literal notranslate"><span class="pre">CtrlCode.FreezeCmd</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.CtrlCode.ChangeBaudRate"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ChangeBaudRate</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.CtrlCode.ChangePassword"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ChangePassword</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.ErrorCode"><code class="docutils literal notranslate"><span class="pre">ErrorCode</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.ErrorCode.OtherError"><code class="docutils literal notranslate"><span class="pre">ErrorCode.OtherError</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.ErrorCode.RequestDataEmpty"><code class="docutils literal notranslate"><span class="pre">ErrorCode.RequestDataEmpty</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.ErrorCode.AuthFailed"><code class="docutils literal notranslate"><span class="pre">ErrorCode.AuthFailed</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.ErrorCode.CommRateImmutable"><code class="docutils literal notranslate"><span class="pre">ErrorCode.CommRateImmutable</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.ErrorCode.YearZoneNumExceeded"><code class="docutils literal notranslate"><span class="pre">ErrorCode.YearZoneNumExceeded</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.ErrorCode.DaySlotNumExceeded"><code class="docutils literal notranslate"><span class="pre">ErrorCode.DaySlotNumExceeded</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.ErrorCode.RateNumExceeded"><code class="docutils literal notranslate"><span class="pre">ErrorCode.RateNumExceeded</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.get_error_msg"><code class="docutils literal notranslate"><span class="pre">get_error_msg()</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.Demand"><code class="docutils literal notranslate"><span class="pre">Demand</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.EventRecord"><code class="docutils literal notranslate"><span class="pre">EventRecord</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.PasswordManager"><code class="docutils literal notranslate"><span class="pre">PasswordManager</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.PasswordManager.is_password_valid"><code class="docutils literal notranslate"><span class="pre">PasswordManager.is_password_valid()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.PasswordManager.set_password"><code class="docutils literal notranslate"><span class="pre">PasswordManager.set_password()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.PasswordManager.get_password"><code class="docutils literal notranslate"><span class="pre">PasswordManager.get_password()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.PasswordManager.check_password"><code class="docutils literal notranslate"><span class="pre">PasswordManager.check_password()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.PasswordManager.change_password"><code class="docutils literal notranslate"><span class="pre">PasswordManager.change_password()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="src.model.types.html#module-src.model.types">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="src.model.html#submodules">Submodules</a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.model.html#module-src.model.log">src.model.log module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.model.html#module-src.model.validators">src.model.validators module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="src.model.html#src.model.validators.validate_device"><code class="docutils literal notranslate"><span class="pre">validate_device()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="src.model.html#module-src.model">Module contents</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="src.model.html#src.model.init"><code class="docutils literal notranslate"><span class="pre">init()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="src.protocol.html">src.protocol package</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="src.protocol.html#submodules">Submodules</a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.protocol.html#module-src.protocol.frame">src.protocol.frame module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="src.protocol.html#src.protocol.frame.Frame"><code class="docutils literal notranslate"><span class="pre">Frame</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="src.protocol.html#module-src.protocol.log">src.protocol.log module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.protocol.html#module-src.protocol.protocol">src.protocol.protocol module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.decode_data"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.decode_data()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.calculate_checksum"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.calculate_checksum()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.encode_data"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.encode_data()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.build_frame"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.build_frame()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.deserialize"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.deserialize()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.deserialize_with_remaining"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.deserialize_with_remaining()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.serialize"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.serialize()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="src.protocol.html#module-src.protocol">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="src.service.html">src.service package</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="src.service.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="src.service.clientsvc.html">src.service.clientsvc package</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="src.service.clientsvc.html#submodules">Submodules</a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.service.clientsvc.html#module-src.service.clientsvc.client_service">src.service.clientsvc.client_service module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService"><code class="docutils literal notranslate"><span class="pre">MeterClientService</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.new_tcp_client"><code class="docutils literal notranslate"><span class="pre">MeterClientService.new_tcp_client()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.new_rtu_client"><code class="docutils literal notranslate"><span class="pre">MeterClientService.new_rtu_client()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.new_meter_client_service"><code class="docutils literal notranslate"><span class="pre">MeterClientService.new_meter_client_service()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.get_time"><code class="docutils literal notranslate"><span class="pre">MeterClientService.get_time()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.set_address"><code class="docutils literal notranslate"><span class="pre">MeterClientService.set_address()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.set_password"><code class="docutils literal notranslate"><span class="pre">MeterClientService.set_password()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.change_password"><code class="docutils literal notranslate"><span class="pre">MeterClientService.change_password()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.read_00"><code class="docutils literal notranslate"><span class="pre">MeterClientService.read_00()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.read_01"><code class="docutils literal notranslate"><span class="pre">MeterClientService.read_01()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.read_02"><code class="docutils literal notranslate"><span class="pre">MeterClientService.read_02()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.read_03"><code class="docutils literal notranslate"><span class="pre">MeterClientService.read_03()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.read_04"><code class="docutils literal notranslate"><span class="pre">MeterClientService.read_04()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.write_04"><code class="docutils literal notranslate"><span class="pre">MeterClientService.write_04()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.read_address"><code class="docutils literal notranslate"><span class="pre">MeterClientService.read_address()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.write_address"><code class="docutils literal notranslate"><span class="pre">MeterClientService.write_address()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.send_and_handle_request"><code class="docutils literal notranslate"><span class="pre">MeterClientService.send_and_handle_request()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.handle_response"><code class="docutils literal notranslate"><span class="pre">MeterClientService.handle_response()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="src.service.clientsvc.html#module-src.service.clientsvc.log">src.service.clientsvc.log module</a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.service.clientsvc.html#module-src.service.clientsvc">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="src.service.serversvc.html">src.service.serversvc package</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="src.service.serversvc.html#submodules">Submodules</a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.service.serversvc.html#module-src.service.serversvc.log">src.service.serversvc.log module</a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.service.serversvc.html#module-src.service.serversvc.server_service">src.service.serversvc.server_service module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService"><code class="docutils literal notranslate"><span class="pre">MeterServerService</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.new_tcp_server"><code class="docutils literal notranslate"><span class="pre">MeterServerService.new_tcp_server()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.new_rtu_server"><code class="docutils literal notranslate"><span class="pre">MeterServerService.new_rtu_server()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.new_meter_server_service"><code class="docutils literal notranslate"><span class="pre">MeterServerService.new_meter_server_service()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.set_time"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_time()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.set_address"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_address()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.set_password"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_password()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.set_00"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_00()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.set_01"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_01()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.set_02"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_02()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.set_03"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_03()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.set_04"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_04()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.get_data_item"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_data_item()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.handle_request"><code class="docutils literal notranslate"><span class="pre">MeterServerService.handle_request()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="src.service.serversvc.html#module-src.service.serversvc">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="src.service.html#module-src.service">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="src.transport.html">src.transport package</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="src.transport.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="src.transport.client.html">src.transport.client package</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="src.transport.client.html#submodules">Submodules</a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.transport.client.html#module-src.transport.client.log">src.transport.client.log module</a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.transport.client.html#module-src.transport.client.rtu_client">src.transport.client.rtu_client module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="src.transport.client.html#src.transport.client.rtu_client.RtuClient"><code class="docutils literal notranslate"><span class="pre">RtuClient</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.rtu_client.RtuClient.connect"><code class="docutils literal notranslate"><span class="pre">RtuClient.connect()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.rtu_client.RtuClient.disconnect"><code class="docutils literal notranslate"><span class="pre">RtuClient.disconnect()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.rtu_client.RtuClient.send_request"><code class="docutils literal notranslate"><span class="pre">RtuClient.send_request()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="src.transport.client.html#module-src.transport.client.tcp_client">src.transport.client.tcp_client module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="src.transport.client.html#src.transport.client.tcp_client.TcpClient"><code class="docutils literal notranslate"><span class="pre">TcpClient</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.tcp_client.TcpClient.connect"><code class="docutils literal notranslate"><span class="pre">TcpClient.connect()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.tcp_client.TcpClient.disconnect"><code class="docutils literal notranslate"><span class="pre">TcpClient.disconnect()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.tcp_client.TcpClient.send_request"><code class="docutils literal notranslate"><span class="pre">TcpClient.send_request()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="src.transport.client.html#module-src.transport.client">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="src.transport.server.html">src.transport.server package</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="src.transport.server.html#submodules">Submodules</a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.transport.server.html#module-src.transport.server.log">src.transport.server.log module</a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.transport.server.html#module-src.transport.server.rtu_server">src.transport.server.rtu_server module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="src.transport.server.html#src.transport.server.rtu_server.RtuServer"><code class="docutils literal notranslate"><span class="pre">RtuServer</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="src.transport.server.html#src.transport.server.rtu_server.RtuServer.start"><code class="docutils literal notranslate"><span class="pre">RtuServer.start()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.transport.server.html#src.transport.server.rtu_server.RtuServer.stop"><code class="docutils literal notranslate"><span class="pre">RtuServer.stop()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.transport.server.html#src.transport.server.rtu_server.RtuServer.is_running"><code class="docutils literal notranslate"><span class="pre">RtuServer.is_running()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.transport.server.html#src.transport.server.rtu_server.RtuServer.handle_connection"><code class="docutils literal notranslate"><span class="pre">RtuServer.handle_connection()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="src.transport.server.html#module-src.transport.server.tcp_server">src.transport.server.tcp_server module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="src.transport.server.html#src.transport.server.tcp_server.TcpServer"><code class="docutils literal notranslate"><span class="pre">TcpServer</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="src.transport.server.html#src.transport.server.tcp_server.TcpServer.start"><code class="docutils literal notranslate"><span class="pre">TcpServer.start()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.transport.server.html#src.transport.server.tcp_server.TcpServer.stop"><code class="docutils literal notranslate"><span class="pre">TcpServer.stop()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.transport.server.html#src.transport.server.tcp_server.TcpServer.is_running"><code class="docutils literal notranslate"><span class="pre">TcpServer.is_running()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.transport.server.html#src.transport.server.tcp_server.TcpServer.handle_connection"><code class="docutils literal notranslate"><span class="pre">TcpServer.handle_connection()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="src.transport.server.html#module-src.transport.server">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="src.transport.html#module-src.transport">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-src">Module contents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#src.MeterServerService"><code class="docutils literal notranslate"><span class="pre">MeterServerService</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#src.MeterServerService.new_tcp_server"><code class="docutils literal notranslate"><span class="pre">MeterServerService.new_tcp_server()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MeterServerService.new_rtu_server"><code class="docutils literal notranslate"><span class="pre">MeterServerService.new_rtu_server()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MeterServerService.new_meter_server_service"><code class="docutils literal notranslate"><span class="pre">MeterServerService.new_meter_server_service()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MeterServerService.set_time"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_time()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MeterServerService.set_address"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_address()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MeterServerService.set_password"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_password()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MeterServerService.set_00"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_00()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MeterServerService.set_01"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_01()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MeterServerService.set_02"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_02()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MeterServerService.set_03"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_03()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MeterServerService.set_04"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_04()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MeterServerService.get_data_item"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_data_item()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MeterServerService.handle_request"><code class="docutils literal notranslate"><span class="pre">MeterServerService.handle_request()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#src.MeterClientService"><code class="docutils literal notranslate"><span class="pre">MeterClientService</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#src.MeterClientService.new_tcp_client"><code class="docutils literal notranslate"><span class="pre">MeterClientService.new_tcp_client()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MeterClientService.new_rtu_client"><code class="docutils literal notranslate"><span class="pre">MeterClientService.new_rtu_client()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MeterClientService.new_meter_client_service"><code class="docutils literal notranslate"><span class="pre">MeterClientService.new_meter_client_service()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MeterClientService.get_time"><code class="docutils literal notranslate"><span class="pre">MeterClientService.get_time()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MeterClientService.set_address"><code class="docutils literal notranslate"><span class="pre">MeterClientService.set_address()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MeterClientService.set_password"><code class="docutils literal notranslate"><span class="pre">MeterClientService.set_password()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MeterClientService.change_password"><code class="docutils literal notranslate"><span class="pre">MeterClientService.change_password()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MeterClientService.read_00"><code class="docutils literal notranslate"><span class="pre">MeterClientService.read_00()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MeterClientService.read_01"><code class="docutils literal notranslate"><span class="pre">MeterClientService.read_01()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MeterClientService.read_02"><code class="docutils literal notranslate"><span class="pre">MeterClientService.read_02()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MeterClientService.read_03"><code class="docutils literal notranslate"><span class="pre">MeterClientService.read_03()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MeterClientService.read_04"><code class="docutils literal notranslate"><span class="pre">MeterClientService.read_04()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MeterClientService.write_04"><code class="docutils literal notranslate"><span class="pre">MeterClientService.write_04()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MeterClientService.read_address"><code class="docutils literal notranslate"><span class="pre">MeterClientService.read_address()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MeterClientService.write_address"><code class="docutils literal notranslate"><span class="pre">MeterClientService.write_address()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MeterClientService.send_and_handle_request"><code class="docutils literal notranslate"><span class="pre">MeterClientService.send_and_handle_request()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MeterClientService.handle_response"><code class="docutils literal notranslate"><span class="pre">MeterClientService.handle_response()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#src.DLT645Protocol"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#src.DLT645Protocol.decode_data"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.decode_data()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.DLT645Protocol.calculate_checksum"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.calculate_checksum()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.DLT645Protocol.encode_data"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.encode_data()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.DLT645Protocol.build_frame"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.build_frame()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.DLT645Protocol.deserialize"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.deserialize()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.DLT645Protocol.deserialize_with_remaining"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.deserialize_with_remaining()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.DLT645Protocol.serialize"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.serialize()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#src.CtrlCode"><code class="docutils literal notranslate"><span class="pre">CtrlCode</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#src.CtrlCode.BroadcastTimeSync"><code class="docutils literal notranslate"><span class="pre">CtrlCode.BroadcastTimeSync</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.CtrlCode.ReadData"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ReadData</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.CtrlCode.ReadAddress"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ReadAddress</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.CtrlCode.WriteData"><code class="docutils literal notranslate"><span class="pre">CtrlCode.WriteData</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.CtrlCode.WriteAddress"><code class="docutils literal notranslate"><span class="pre">CtrlCode.WriteAddress</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.CtrlCode.FreezeCmd"><code class="docutils literal notranslate"><span class="pre">CtrlCode.FreezeCmd</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.CtrlCode.ChangeBaudRate"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ChangeBaudRate</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.CtrlCode.ChangePassword"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ChangePassword</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#src.Demand"><code class="docutils literal notranslate"><span class="pre">Demand</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.DataItem"><code class="docutils literal notranslate"><span class="pre">DataItem</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.DataFormat"><code class="docutils literal notranslate"><span class="pre">DataFormat</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#src.DataFormat.XXXXXXXX"><code class="docutils literal notranslate"><span class="pre">DataFormat.XXXXXXXX</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.DataFormat.XXXXXX_XX"><code class="docutils literal notranslate"><span class="pre">DataFormat.XXXXXX_XX</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.DataFormat.XXXX_XX"><code class="docutils literal notranslate"><span class="pre">DataFormat.XXXX_XX</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.DataFormat.XXX_XXX"><code class="docutils literal notranslate"><span class="pre">DataFormat.XXX_XXX</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.DataFormat.XX_XXXX"><code class="docutils literal notranslate"><span class="pre">DataFormat.XX_XXXX</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.DataFormat.XXX_X"><code class="docutils literal notranslate"><span class="pre">DataFormat.XXX_X</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.DataFormat.X_XXX"><code class="docutils literal notranslate"><span class="pre">DataFormat.X_XXX</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.DataFormat.YYMMDDWW"><code class="docutils literal notranslate"><span class="pre">DataFormat.YYMMDDWW</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.DataFormat.hhmmss"><code class="docutils literal notranslate"><span class="pre">DataFormat.hhmmss</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.DataFormat.YYMMDDhhmm"><code class="docutils literal notranslate"><span class="pre">DataFormat.YYMMDDhhmm</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.DataFormat.NN"><code class="docutils literal notranslate"><span class="pre">DataFormat.NN</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.DataFormat.NNNN"><code class="docutils literal notranslate"><span class="pre">DataFormat.NNNN</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.DataFormat.NNNNNNNN"><code class="docutils literal notranslate"><span class="pre">DataFormat.NNNNNNNN</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#src.TcpServer"><code class="docutils literal notranslate"><span class="pre">TcpServer</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#src.TcpServer.start"><code class="docutils literal notranslate"><span class="pre">TcpServer.start()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.TcpServer.stop"><code class="docutils literal notranslate"><span class="pre">TcpServer.stop()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.TcpServer.is_running"><code class="docutils literal notranslate"><span class="pre">TcpServer.is_running()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.TcpServer.handle_connection"><code class="docutils literal notranslate"><span class="pre">TcpServer.handle_connection()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#src.RtuServer"><code class="docutils literal notranslate"><span class="pre">RtuServer</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#src.RtuServer.start"><code class="docutils literal notranslate"><span class="pre">RtuServer.start()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.RtuServer.stop"><code class="docutils literal notranslate"><span class="pre">RtuServer.stop()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.RtuServer.is_running"><code class="docutils literal notranslate"><span class="pre">RtuServer.is_running()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.RtuServer.handle_connection"><code class="docutils literal notranslate"><span class="pre">RtuServer.handle_connection()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#src.TcpClient"><code class="docutils literal notranslate"><span class="pre">TcpClient</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#src.TcpClient.connect"><code class="docutils literal notranslate"><span class="pre">TcpClient.connect()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.TcpClient.disconnect"><code class="docutils literal notranslate"><span class="pre">TcpClient.disconnect()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.TcpClient.send_request"><code class="docutils literal notranslate"><span class="pre">TcpClient.send_request()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#src.RtuClient"><code class="docutils literal notranslate"><span class="pre">RtuClient</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#src.RtuClient.connect"><code class="docutils literal notranslate"><span class="pre">RtuClient.connect()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.RtuClient.disconnect"><code class="docutils literal notranslate"><span class="pre">RtuClient.disconnect()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.RtuClient.send_request"><code class="docutils literal notranslate"><span class="pre">RtuClient.send_request()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">dlt645</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">src</a></li>
+      <li class="breadcrumb-item active">src package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/src.rst.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="src-package">
+<h1>src package<a class="headerlink" href="#src-package" title="Link to this heading"></a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="src.common.html">src.common package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="src.common.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.common.html#module-src.common.base_log">src.common.base_log module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src.common.html#src.common.base_log.Log"><code class="docutils literal notranslate"><span class="pre">Log</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.common.html#src.common.base_log.Log.set_logger"><code class="docutils literal notranslate"><span class="pre">Log.set_logger()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.common.html#src.common.base_log.Log.set_log_enable"><code class="docutils literal notranslate"><span class="pre">Log.set_log_enable()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.common.html#src.common.base_log.Log.set_log_level"><code class="docutils literal notranslate"><span class="pre">Log.set_log_level()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.common.html#src.common.base_log.Log.set_config"><code class="docutils literal notranslate"><span class="pre">Log.set_config()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.common.html#src.common.base_log.Log.debug"><code class="docutils literal notranslate"><span class="pre">Log.debug()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.common.html#src.common.base_log.Log.info"><code class="docutils literal notranslate"><span class="pre">Log.info()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.common.html#src.common.base_log.Log.warning"><code class="docutils literal notranslate"><span class="pre">Log.warning()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.common.html#src.common.base_log.Log.error"><code class="docutils literal notranslate"><span class="pre">Log.error()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.common.html#src.common.base_log.Log.critical"><code class="docutils literal notranslate"><span class="pre">Log.critical()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.common.html#src.common.base_log.Log.exception"><code class="docutils literal notranslate"><span class="pre">Log.exception()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="src.common.html#module-src.common.env">src.common.env module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.common.html#module-src.common.transform">src.common.transform module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src.common.html#src.common.transform.pad_with_zeros"><code class="docutils literal notranslate"><span class="pre">pad_with_zeros()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src.common.html#src.common.transform.bytes_to_int"><code class="docutils literal notranslate"><span class="pre">bytes_to_int()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src.common.html#src.common.transform.bytes_to_float"><code class="docutils literal notranslate"><span class="pre">bytes_to_float()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src.common.html#src.common.transform.bytes_to_spaced_hex"><code class="docutils literal notranslate"><span class="pre">bytes_to_spaced_hex()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src.common.html#src.common.transform.bcd_to_string"><code class="docutils literal notranslate"><span class="pre">bcd_to_string()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src.common.html#src.common.transform.parse_format"><code class="docutils literal notranslate"><span class="pre">parse_format()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src.common.html#src.common.transform.round_float"><code class="docutils literal notranslate"><span class="pre">round_float()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src.common.html#src.common.transform.format_float"><code class="docutils literal notranslate"><span class="pre">format_float()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src.common.html#src.common.transform.string_to_bcd"><code class="docutils literal notranslate"><span class="pre">string_to_bcd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src.common.html#src.common.transform.bcd_to_value"><code class="docutils literal notranslate"><span class="pre">bcd_to_value()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src.common.html#src.common.transform.float_to_bcd"><code class="docutils literal notranslate"><span class="pre">float_to_bcd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src.common.html#src.common.transform.bcd_to_float"><code class="docutils literal notranslate"><span class="pre">bcd_to_float()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src.common.html#src.common.transform.datetime_to_bcd"><code class="docutils literal notranslate"><span class="pre">datetime_to_bcd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src.common.html#src.common.transform.bcd_to_byte"><code class="docutils literal notranslate"><span class="pre">bcd_to_byte()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src.common.html#src.common.transform.bcd_to_time"><code class="docutils literal notranslate"><span class="pre">bcd_to_time()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src.common.html#src.common.transform.uint8_to_bcd"><code class="docutils literal notranslate"><span class="pre">uint8_to_bcd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src.common.html#src.common.transform.reverse_bytes"><code class="docutils literal notranslate"><span class="pre">reverse_bytes()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="src.common.html#module-src.common">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="src.model.html">src.model package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="src.model.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src.model.data.html">src.model.data package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.model.data.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.model.data.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.model.data.html#module-src.model.data.data_handler">src.model.data.data_handler module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.model.data.html#module-src.model.data">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.model.types.html">src.model.types package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.model.types.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.model.types.html#module-src.model.types.data_type">src.model.types.data_type module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.model.types.html#module-src.model.types.dlt645_type">src.model.types.dlt645_type module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.model.types.html#module-src.model.types">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="src.model.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.model.html#module-src.model.log">src.model.log module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.model.html#module-src.model.validators">src.model.validators module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src.model.html#src.model.validators.validate_device"><code class="docutils literal notranslate"><span class="pre">validate_device()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="src.model.html#module-src.model">Module contents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src.model.html#src.model.init"><code class="docutils literal notranslate"><span class="pre">init()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="src.protocol.html">src.protocol package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="src.protocol.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.protocol.html#module-src.protocol.frame">src.protocol.frame module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src.protocol.html#src.protocol.frame.Frame"><code class="docutils literal notranslate"><span class="pre">Frame</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="src.protocol.html#module-src.protocol.log">src.protocol.log module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.protocol.html#module-src.protocol.protocol">src.protocol.protocol module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.decode_data"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.decode_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.calculate_checksum"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.calculate_checksum()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.encode_data"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.encode_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.build_frame"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.build_frame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.deserialize"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.deserialize()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.deserialize_with_remaining"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.deserialize_with_remaining()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.serialize"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.serialize()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="src.protocol.html#module-src.protocol">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="src.service.html">src.service package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="src.service.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src.service.clientsvc.html">src.service.clientsvc package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.service.clientsvc.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.service.clientsvc.html#module-src.service.clientsvc.client_service">src.service.clientsvc.client_service module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.service.clientsvc.html#module-src.service.clientsvc.log">src.service.clientsvc.log module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.service.clientsvc.html#module-src.service.clientsvc">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.service.serversvc.html">src.service.serversvc package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.service.serversvc.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.service.serversvc.html#module-src.service.serversvc.log">src.service.serversvc.log module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.service.serversvc.html#module-src.service.serversvc.server_service">src.service.serversvc.server_service module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.service.serversvc.html#module-src.service.serversvc">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="src.service.html#module-src.service">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="src.transport.html">src.transport package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="src.transport.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src.transport.client.html">src.transport.client package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.transport.client.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.transport.client.html#module-src.transport.client.log">src.transport.client.log module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.transport.client.html#module-src.transport.client.rtu_client">src.transport.client.rtu_client module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.transport.client.html#module-src.transport.client.tcp_client">src.transport.client.tcp_client module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.transport.client.html#module-src.transport.client">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.transport.server.html">src.transport.server package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.transport.server.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.transport.server.html#module-src.transport.server.log">src.transport.server.log module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.transport.server.html#module-src.transport.server.rtu_server">src.transport.server.rtu_server module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.transport.server.html#module-src.transport.server.tcp_server">src.transport.server.tcp_server module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.transport.server.html#module-src.transport.server">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="src.transport.html#module-src.transport">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="module-src">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-src" title="Link to this heading"></a></h2>
+<p>DLT645协议Python实现库</p>
+<p>这个库提供了DLT645通信协议的完整实现，包括：
+- TCP和RTU通信方式
+- 客户端和服务端功能
+- 电能表数据读写操作
+- 电能量、最大需量、变量数据类型支持</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.MeterServerService">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.</span></span><span class="sig-name descname"><span class="pre">MeterServerService</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">server</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">address=bytearray(b'\\x00\\x00\\x00\\x00\\x00\\x00')</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password_manager=&lt;src.model.types.dlt645_type.PasswordManager</span> <span class="pre">object&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/serversvc/server_service.html#MeterServerService"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterServerService" title="Link to this definition"></a></dt>
+<dd><p>基类：<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MeterServerService.new_tcp_server">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">new_tcp_server</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ip</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/serversvc/server_service.html#MeterServerService.new_tcp_server"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterServerService.new_tcp_server" title="Link to this definition"></a></dt>
+<dd><p>创建 TCP 服务器
+:type ip: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>
+:param ip: IP 地址
+:type port: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>
+:param port: 端口
+:type timeout: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>
+:param timeout: 超时时间
+:rtype: <span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService" title="src.service.serversvc.server_service.MeterServerService"><code class="xref py py-class docutils literal notranslate"><span class="pre">MeterServerService</span></code></a></span>
+:return:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MeterServerService.new_rtu_server">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">new_rtu_server</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">port</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_bits</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop_bits</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">baud_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parity</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/serversvc/server_service.html#MeterServerService.new_rtu_server"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterServerService.new_rtu_server" title="Link to this definition"></a></dt>
+<dd><p>创建 RTU 服务器
+:type port: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>
+:param port: 端口
+:type data_bits: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>
+:param data_bits: 数据位
+:type stop_bits: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>
+:param stop_bits: 停止位
+:type baud_rate: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>
+:param baud_rate: 波特率
+:type parity: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>
+:param parity: 校验位
+:type timeout: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>
+:param timeout: 超时时间
+:rtype: <span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService" title="src.service.serversvc.server_service.MeterServerService"><code class="xref py py-class docutils literal notranslate"><span class="pre">MeterServerService</span></code></a></span>
+:return:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MeterServerService.new_meter_server_service">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">new_meter_server_service</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">server</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/serversvc/server_service.html#MeterServerService.new_meter_server_service"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterServerService.new_meter_server_service" title="Link to this definition"></a></dt>
+<dd><p>创建新的MeterServerService实例
+:type server: <span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<a class="reference internal" href="src.transport.server.html#src.transport.server.tcp_server.TcpServer" title="src.transport.server.tcp_server.TcpServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">TcpServer</span></code></a>, <a class="reference internal" href="src.transport.server.html#src.transport.server.rtu_server.RtuServer" title="src.transport.server.rtu_server.RtuServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">RtuServer</span></code></a>]</span>
+:param server: 服务器实例（TCP或RTU）
+:rtype: <span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService" title="src.service.serversvc.server_service.MeterServerService"><code class="xref py py-class docutils literal notranslate"><span class="pre">MeterServerService</span></code></a></span>
+:return: MeterServerService实例</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MeterServerService.set_time">
+<span class="sig-name descname"><span class="pre">set_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_bytes</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/serversvc/server_service.html#MeterServerService.set_time"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterServerService.set_time" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MeterServerService.set_address">
+<span class="sig-name descname"><span class="pre">set_address</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">address</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/serversvc/server_service.html#MeterServerService.set_address"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterServerService.set_address" title="Link to this definition"></a></dt>
+<dd><p>写通讯地址
+:type address: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>
+:param address:
+:return:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MeterServerService.set_password">
+<span class="sig-name descname"><span class="pre">set_password</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">password</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/serversvc/server_service.html#MeterServerService.set_password"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterServerService.set_password" title="Link to this definition"></a></dt>
+<dd><p>写密码
+:type password: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>
+:param password:
+:rtype: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="（在 Python v3.14）"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>
+:return:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MeterServerService.set_00">
+<span class="sig-name descname"><span class="pre">set_00</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">di</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/serversvc/server_service.html#MeterServerService.set_00"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterServerService.set_00" title="Link to this definition"></a></dt>
+<dd><p>写电能量
+:type di: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>
+:param di: 数据项
+:type value: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>
+:param value: 值
+:rtype: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>
+:return:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MeterServerService.set_01">
+<span class="sig-name descname"><span class="pre">set_01</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">di</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">demand</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/serversvc/server_service.html#MeterServerService.set_01"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterServerService.set_01" title="Link to this definition"></a></dt>
+<dd><p>写最大需量及发生时间
+:type di: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>
+:param di: 数据项
+:type demand: <span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.Demand" title="src.model.types.dlt645_type.Demand"><code class="xref py py-class docutils literal notranslate"><span class="pre">Demand</span></code></a></span>
+:param demand: 值
+:rtype: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>
+:return:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MeterServerService.set_02">
+<span class="sig-name descname"><span class="pre">set_02</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">di</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/serversvc/server_service.html#MeterServerService.set_02"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterServerService.set_02" title="Link to this definition"></a></dt>
+<dd><p>写变量
+:type di: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>
+:param di: 数据项
+:type value: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>
+:param value: 值
+:rtype: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>
+:return:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MeterServerService.set_03">
+<span class="sig-name descname"><span class="pre">set_03</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">di</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/serversvc/server_service.html#MeterServerService.set_03"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterServerService.set_03" title="Link to this definition"></a></dt>
+<dd><p>写事件记录
+:type di: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>
+:param di: 数据项
+:type value: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]]</span>
+:param value: 值
+:rtype: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>
+:return:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MeterServerService.set_04">
+<span class="sig-name descname"><span class="pre">set_04</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">di</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/serversvc/server_service.html#MeterServerService.set_04"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterServerService.set_04" title="Link to this definition"></a></dt>
+<dd><p>写参变量
+:type di: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>
+:param di: 数据项
+:type value: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a></span>
+:param value: 值
+:rtype: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>
+:return:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MeterServerService.get_data_item">
+<span class="sig-name descname"><span class="pre">get_data_item</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">di</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/serversvc/server_service.html#MeterServerService.get_data_item"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterServerService.get_data_item" title="Link to this definition"></a></dt>
+<dd><p>获取数据项
+:type di: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>
+:param di: 数据项
+:rtype: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="（在 Python v3.14）"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference internal" href="src.model.types.html#src.model.types.data_type.DataItem" title="src.model.types.data_type.DataItem"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataItem</span></code></a>]</span>
+:return:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MeterServerService.handle_request">
+<span class="sig-name descname"><span class="pre">handle_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/serversvc/server_service.html#MeterServerService.handle_request"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterServerService.handle_request" title="Link to this definition"></a></dt>
+<dd><p>处理读数据请求
+:type frame: 
+:param frame:
+:return:</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.MeterClientService">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.</span></span><span class="sig-name descname"><span class="pre">MeterClientService</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/clientsvc/client_service.html#MeterClientService"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterClientService" title="Link to this definition"></a></dt>
+<dd><p>基类：<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MeterClientService.new_tcp_client">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">new_tcp_client</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ip</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/clientsvc/client_service.html#MeterClientService.new_tcp_client"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterClientService.new_tcp_client" title="Link to this definition"></a></dt>
+<dd><p>创建TCP客户端</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="（在 Python v3.14）"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService" title="src.service.clientsvc.client_service.MeterClientService"><code class="xref py py-class docutils literal notranslate"><span class="pre">MeterClientService</span></code></a>]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MeterClientService.new_rtu_client">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">new_rtu_client</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">port</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">baudrate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">databits</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stopbits</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parity</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/clientsvc/client_service.html#MeterClientService.new_rtu_client"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterClientService.new_rtu_client" title="Link to this definition"></a></dt>
+<dd><p>创建RTU客户端</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="（在 Python v3.14）"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService" title="src.service.clientsvc.client_service.MeterClientService"><code class="xref py py-class docutils literal notranslate"><span class="pre">MeterClientService</span></code></a>]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MeterClientService.new_meter_client_service">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">new_meter_client_service</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/clientsvc/client_service.html#MeterClientService.new_meter_client_service"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterClientService.new_meter_client_service" title="Link to this definition"></a></dt>
+<dd><p>创建新的MeterService实例</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="（在 Python v3.14）"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService" title="src.service.clientsvc.client_service.MeterClientService"><code class="xref py py-class docutils literal notranslate"><span class="pre">MeterClientService</span></code></a>]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MeterClientService.get_time">
+<span class="sig-name descname"><span class="pre">get_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/clientsvc/client_service.html#MeterClientService.get_time"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterClientService.get_time" title="Link to this definition"></a></dt>
+<dd><p>从字节数据获取时间</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.datetime" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MeterClientService.set_address">
+<span class="sig-name descname"><span class="pre">set_address</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">address</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/clientsvc/client_service.html#MeterClientService.set_address"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterClientService.set_address" title="Link to this definition"></a></dt>
+<dd><p>设置设备地址</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MeterClientService.set_password">
+<span class="sig-name descname"><span class="pre">set_password</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">password</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/clientsvc/client_service.html#MeterClientService.set_password"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterClientService.set_password" title="Link to this definition"></a></dt>
+<dd><p>设置设备密码, 修改数据的命令会带上密码发送出去</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MeterClientService.change_password">
+<span class="sig-name descname"><span class="pre">change_password</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">old_password</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_password</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/clientsvc/client_service.html#MeterClientService.change_password"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterClientService.change_password" title="Link to this definition"></a></dt>
+<dd><p>修改设备密码</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MeterClientService.read_00">
+<span class="sig-name descname"><span class="pre">read_00</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">di</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/clientsvc/client_service.html#MeterClientService.read_00"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterClientService.read_00" title="Link to this definition"></a></dt>
+<dd><p>读取电能</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="（在 Python v3.14）"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference internal" href="src.model.types.html#src.model.types.data_type.DataItem" title="src.model.types.data_type.DataItem"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataItem</span></code></a>]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MeterClientService.read_01">
+<span class="sig-name descname"><span class="pre">read_01</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">di</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/clientsvc/client_service.html#MeterClientService.read_01"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterClientService.read_01" title="Link to this definition"></a></dt>
+<dd><p>读取最大需量及发生时间</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="（在 Python v3.14）"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference internal" href="src.model.types.html#src.model.types.data_type.DataItem" title="src.model.types.data_type.DataItem"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataItem</span></code></a>]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MeterClientService.read_02">
+<span class="sig-name descname"><span class="pre">read_02</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">di</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/clientsvc/client_service.html#MeterClientService.read_02"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterClientService.read_02" title="Link to this definition"></a></dt>
+<dd><p>读取变量</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="（在 Python v3.14）"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference internal" href="src.model.types.html#src.model.types.data_type.DataItem" title="src.model.types.data_type.DataItem"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataItem</span></code></a>]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MeterClientService.read_03">
+<span class="sig-name descname"><span class="pre">read_03</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">di</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/clientsvc/client_service.html#MeterClientService.read_03"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterClientService.read_03" title="Link to this definition"></a></dt>
+<dd><p>读取事件记录</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="（在 Python v3.14）"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference internal" href="src.model.types.html#src.model.types.data_type.DataItem" title="src.model.types.data_type.DataItem"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataItem</span></code></a>]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MeterClientService.read_04">
+<span class="sig-name descname"><span class="pre">read_04</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">di</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/clientsvc/client_service.html#MeterClientService.read_04"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterClientService.read_04" title="Link to this definition"></a></dt>
+<dd><p>读取参变量</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="（在 Python v3.14）"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference internal" href="src.model.types.html#src.model.types.data_type.DataItem" title="src.model.types.data_type.DataItem"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataItem</span></code></a>]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MeterClientService.write_04">
+<span class="sig-name descname"><span class="pre">write_04</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">di</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/clientsvc/client_service.html#MeterClientService.write_04"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterClientService.write_04" title="Link to this definition"></a></dt>
+<dd><p>写参变量</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="（在 Python v3.14）"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference internal" href="src.model.types.html#src.model.types.data_type.DataItem" title="src.model.types.data_type.DataItem"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataItem</span></code></a>]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MeterClientService.read_address">
+<span class="sig-name descname"><span class="pre">read_address</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/clientsvc/client_service.html#MeterClientService.read_address"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterClientService.read_address" title="Link to this definition"></a></dt>
+<dd><p>读取通讯地址</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="（在 Python v3.14）"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference internal" href="src.model.types.html#src.model.types.data_type.DataItem" title="src.model.types.data_type.DataItem"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataItem</span></code></a>]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MeterClientService.write_address">
+<span class="sig-name descname"><span class="pre">write_address</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_address</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/clientsvc/client_service.html#MeterClientService.write_address"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterClientService.write_address" title="Link to this definition"></a></dt>
+<dd><p>写通讯地址</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="（在 Python v3.14）"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference internal" href="src.model.types.html#src.model.types.data_type.DataItem" title="src.model.types.data_type.DataItem"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataItem</span></code></a>]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MeterClientService.send_and_handle_request">
+<span class="sig-name descname"><span class="pre">send_and_handle_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame_bytes</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/clientsvc/client_service.html#MeterClientService.send_and_handle_request"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterClientService.send_and_handle_request" title="Link to this definition"></a></dt>
+<dd><p>发送请求并处理响应（带超时控制）</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="（在 Python v3.14）"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference internal" href="src.model.types.html#src.model.types.data_type.DataItem" title="src.model.types.data_type.DataItem"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataItem</span></code></a>]</span></p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Args:</dt><dd><p>frame_bytes: 要发送的帧数据</p>
+</dd>
+<dt>Returns:</dt><dd><p>DataItem: 成功时返回数据项
+None: 超时或失败时返回</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MeterClientService.handle_response">
+<span class="sig-name descname"><span class="pre">handle_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/clientsvc/client_service.html#MeterClientService.handle_response"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterClientService.handle_response" title="Link to this definition"></a></dt>
+<dd><p>处理响应帧，包括异常帧检测</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="（在 Python v3.14）"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference internal" href="src.model.types.html#src.model.types.data_type.DataItem" title="src.model.types.data_type.DataItem"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataItem</span></code></a>]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.DLT645Protocol">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.</span></span><span class="sig-name descname"><span class="pre">DLT645Protocol</span></span><a class="reference internal" href="_modules/src/protocol/protocol.html#DLT645Protocol"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DLT645Protocol" title="Link to this definition"></a></dt>
+<dd><p>基类：<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>DLT645协议实现类</p>
+<p>该类实现了DLT645协议的核心功能，包括数据编码/解码、校验和计算、
+帧构建和解析等操作。所有方法均为类方法，可直接调用。</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DLT645Protocol.decode_data">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">decode_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/protocol/protocol.html#DLT645Protocol.decode_data"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DLT645Protocol.decode_data" title="Link to this definition"></a></dt>
+<dd><p>数据域解码（±33H转换）</p>
+<p>按照DLT645协议规定，对数据域进行解码处理，
+每个字节减去0x33H，并使用模256运算确保结果在0-255范围内。</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code></a></span></p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Args:</dt><dd><p>data: 需要解码的数据字节</p>
+</dd>
+<dt>Returns:</dt><dd><p>bytes: 解码后的原始数据</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DLT645Protocol.calculate_checksum">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">calculate_checksum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/protocol/protocol.html#DLT645Protocol.calculate_checksum"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DLT645Protocol.calculate_checksum" title="Link to this definition"></a></dt>
+<dd><p>校验和计算（模256求和）</p>
+<p>按照DLT645协议规定，计算数据的校验和，
+对所有字节进行累加，然后对结果取模256。</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span></p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Args:</dt><dd><p>data: 需要计算校验和的数据字节</p>
+</dd>
+<dt>Returns:</dt><dd><p>int: 计算得到的校验和值（0-255范围）</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DLT645Protocol.encode_data">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">encode_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/protocol/protocol.html#DLT645Protocol.encode_data"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DLT645Protocol.encode_data" title="Link to this definition"></a></dt>
+<dd><p>数据域编码（+33H转换）</p>
+<p>按照DLT645协议规定，对数据域进行编码处理，
+每个字节加上0x33H，并使用模256运算确保结果在0-255范围内。</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code></a></span></p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Args:</dt><dd><p>data: 需要编码的原始数据字节</p>
+</dd>
+<dt>Returns:</dt><dd><p>bytes: 编码后的数据</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DLT645Protocol.build_frame">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">build_frame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">addr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctrl_code</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/protocol/protocol.html#DLT645Protocol.build_frame"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DLT645Protocol.build_frame" title="Link to this definition"></a></dt>
+<dd><p>帧构建（支持广播和单播）</p>
+<p>按照DLT645协议规定，构建完整的协议帧，包括前导字节、
+地址域、控制码、数据域、校验和和结束标志。</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytearray</span></code></a></span></p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Args:</dt><dd><p>addr: 设备地址，6字节
+ctrl_code: 控制码
+data: 原始数据域</p>
+</dd>
+<dt>Returns:</dt><dd><p>bytearray: 完整的DLT645协议帧</p>
+</dd>
+<dt>Raises:</dt><dd><p>ValueError: 当地址长度不为6字节时抛出</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DLT645Protocol.deserialize">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">deserialize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raw</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/protocol/protocol.html#DLT645Protocol.deserialize"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DLT645Protocol.deserialize" title="Link to this definition"></a></dt>
+<dd><p>将字节切片反序列化为 Frame 结构体</p>
+<p>从原始字节数据中解析出DLT645协议帧。如果无法找到完整的帧，
+则抛出异常。</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="（在 Python v3.14）"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference internal" href="src.protocol.html#src.protocol.frame.Frame" title="src.protocol.frame.Frame"><code class="xref py py-class docutils literal notranslate"><span class="pre">Frame</span></code></a>]</span></p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Args:</dt><dd><p>raw: 输入的原始字节数据</p>
+</dd>
+<dt>Returns:</dt><dd><p>Optional[Frame]: 解析出的Frame对象，如果解析失败返回None</p>
+</dd>
+<dt>Raises:</dt><dd><p>Exception: 当无法找到完整帧时抛出</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DLT645Protocol.deserialize_with_remaining">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">deserialize_with_remaining</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raw</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/protocol/protocol.html#DLT645Protocol.deserialize_with_remaining"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DLT645Protocol.deserialize_with_remaining" title="Link to this definition"></a></dt>
+<dd><p>将字节切片反序列化为 Frame 结构体，并返回未解析的剩余数据</p>
+<p>从原始字节数据中解析出DLT645协议帧，并返回未解析的剩余数据。
+如果数据不完整或无法解析，返回(原始数据, None)。</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="（在 Python v3.14）"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference internal" href="src.protocol.html#src.protocol.frame.Frame" title="src.protocol.frame.Frame"><code class="xref py py-class docutils literal notranslate"><span class="pre">Frame</span></code></a>]]</span></p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Args:</dt><dd><p>raw: 输入的原始字节数据</p>
+</dd>
+<dt>Returns:</dt><dd><p>tuple[bytes, Optional[Frame]]: (未解析的剩余数据, 解析出的帧)
+如果数据不完整或无法解析，返回(原始数据, None)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DLT645Protocol.serialize">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">serialize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/protocol/protocol.html#DLT645Protocol.serialize"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DLT645Protocol.serialize" title="Link to this definition"></a></dt>
+<dd><p>将 Frame 结构体序列化为字节切片</p>
+<p>按照DLT645协议规定，将Frame对象序列化为完整的协议帧字节。</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="（在 Python v3.14）"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code></a>]</span></p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Args:</dt><dd><p>frame: 需要序列化的Frame对象</p>
+</dd>
+<dt>Returns:</dt><dd><p>Optional[bytes]: 序列化后的协议帧字节，如果失败返回None</p>
+</dd>
+<dt>Raises:</dt><dd><p>Exception: 当起始或结束标志无效时抛出</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.CtrlCode">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.</span></span><span class="sig-name descname"><span class="pre">CtrlCode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/model/types/dlt645_type.html#CtrlCode"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.CtrlCode" title="Link to this definition"></a></dt>
+<dd><p>基类：<a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.IntEnum" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">IntEnum</span></code></a></p>
+<p>An enumeration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.CtrlCode.BroadcastTimeSync">
+<span class="sig-name descname"><span class="pre">BroadcastTimeSync</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">8</span></em><a class="headerlink" href="#src.CtrlCode.BroadcastTimeSync" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.CtrlCode.ReadData">
+<span class="sig-name descname"><span class="pre">ReadData</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">17</span></em><a class="headerlink" href="#src.CtrlCode.ReadData" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.CtrlCode.ReadAddress">
+<span class="sig-name descname"><span class="pre">ReadAddress</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">19</span></em><a class="headerlink" href="#src.CtrlCode.ReadAddress" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.CtrlCode.WriteData">
+<span class="sig-name descname"><span class="pre">WriteData</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">20</span></em><a class="headerlink" href="#src.CtrlCode.WriteData" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.CtrlCode.WriteAddress">
+<span class="sig-name descname"><span class="pre">WriteAddress</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">21</span></em><a class="headerlink" href="#src.CtrlCode.WriteAddress" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.CtrlCode.FreezeCmd">
+<span class="sig-name descname"><span class="pre">FreezeCmd</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">22</span></em><a class="headerlink" href="#src.CtrlCode.FreezeCmd" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.CtrlCode.ChangeBaudRate">
+<span class="sig-name descname"><span class="pre">ChangeBaudRate</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">23</span></em><a class="headerlink" href="#src.CtrlCode.ChangeBaudRate" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.CtrlCode.ChangePassword">
+<span class="sig-name descname"><span class="pre">ChangePassword</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">24</span></em><a class="headerlink" href="#src.CtrlCode.ChangePassword" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.Demand">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.</span></span><span class="sig-name descname"><span class="pre">Demand</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/model/types/dlt645_type.html#Demand"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.Demand" title="Link to this definition"></a></dt>
+<dd><p>基类：<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.DataItem">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.</span></span><span class="sig-name descname"><span class="pre">DataItem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">di</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_format</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">datetime.datetime(2026,</span> <span class="pre">1,</span> <span class="pre">8,</span> <span class="pre">14,</span> <span class="pre">47,</span> <span class="pre">32,</span> <span class="pre">759092)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/model/types/data_type.html#DataItem"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DataItem" title="Link to this definition"></a></dt>
+<dd><p>基类：<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.DataFormat">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.</span></span><span class="sig-name descname"><span class="pre">DataFormat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/model/types/data_type.html#DataFormat"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DataFormat" title="Link to this definition"></a></dt>
+<dd><p>基类：<a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></a></p>
+<p>An enumeration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.DataFormat.XXXXXXXX">
+<span class="sig-name descname"><span class="pre">XXXXXXXX</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'XXXXXXXX'</span></em><a class="headerlink" href="#src.DataFormat.XXXXXXXX" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.DataFormat.XXXXXX_XX">
+<span class="sig-name descname"><span class="pre">XXXXXX_XX</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'XXXXXX.XX'</span></em><a class="headerlink" href="#src.DataFormat.XXXXXX_XX" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.DataFormat.XXXX_XX">
+<span class="sig-name descname"><span class="pre">XXXX_XX</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'XXXX.XX'</span></em><a class="headerlink" href="#src.DataFormat.XXXX_XX" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.DataFormat.XXX_XXX">
+<span class="sig-name descname"><span class="pre">XXX_XXX</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'XXX.XXX'</span></em><a class="headerlink" href="#src.DataFormat.XXX_XXX" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.DataFormat.XX_XXXX">
+<span class="sig-name descname"><span class="pre">XX_XXXX</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'XX.XXXX'</span></em><a class="headerlink" href="#src.DataFormat.XX_XXXX" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.DataFormat.XXX_X">
+<span class="sig-name descname"><span class="pre">XXX_X</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'XXX.X'</span></em><a class="headerlink" href="#src.DataFormat.XXX_X" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.DataFormat.X_XXX">
+<span class="sig-name descname"><span class="pre">X_XXX</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'X.XXX'</span></em><a class="headerlink" href="#src.DataFormat.X_XXX" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.DataFormat.YYMMDDWW">
+<span class="sig-name descname"><span class="pre">YYMMDDWW</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'YYMMDDWW'</span></em><a class="headerlink" href="#src.DataFormat.YYMMDDWW" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.DataFormat.hhmmss">
+<span class="sig-name descname"><span class="pre">hhmmss</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'hhmmss'</span></em><a class="headerlink" href="#src.DataFormat.hhmmss" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.DataFormat.YYMMDDhhmm">
+<span class="sig-name descname"><span class="pre">YYMMDDhhmm</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'YYMMDDhhmm'</span></em><a class="headerlink" href="#src.DataFormat.YYMMDDhhmm" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.DataFormat.NN">
+<span class="sig-name descname"><span class="pre">NN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'NN'</span></em><a class="headerlink" href="#src.DataFormat.NN" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.DataFormat.NNNN">
+<span class="sig-name descname"><span class="pre">NNNN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'NNNN'</span></em><a class="headerlink" href="#src.DataFormat.NNNN" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.DataFormat.NNNNNNNN">
+<span class="sig-name descname"><span class="pre">NNNNNNNN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'NNNNNNNN'</span></em><a class="headerlink" href="#src.DataFormat.NNNNNNNN" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.TcpServer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.</span></span><span class="sig-name descname"><span class="pre">TcpServer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ip</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">service</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/transport/server/tcp_server.html#TcpServer"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.TcpServer" title="Link to this definition"></a></dt>
+<dd><p>基类：<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>初始化TCP服务器</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>ip: 服务器IP地址（如 '0.0.0.0'）
+port: 服务器端口号（如 8080）
+timeout: 连接超时时间（秒）
+service: 服务实例，用于处理业务逻辑</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.TcpServer.start">
+<span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/transport/server/tcp_server.html#TcpServer.start"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.TcpServer.start" title="Link to this definition"></a></dt>
+<dd><p>启动TCP服务器（非阻塞，在后台线程中运行）</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.TcpServer.stop">
+<span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/transport/server/tcp_server.html#TcpServer.stop"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.TcpServer.stop" title="Link to this definition"></a></dt>
+<dd><p>停止TCP服务器</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.TcpServer.is_running">
+<span class="sig-name descname"><span class="pre">is_running</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/transport/server/tcp_server.html#TcpServer.is_running"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.TcpServer.is_running" title="Link to this definition"></a></dt>
+<dd><p>检查服务器是否正在运行</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.TcpServer.handle_connection">
+<span class="sig-name descname"><span class="pre">handle_connection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">conn</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/transport/server/tcp_server.html#TcpServer.handle_connection"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.TcpServer.handle_connection" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.RtuServer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.</span></span><span class="sig-name descname"><span class="pre">RtuServer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">port</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_bits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop_bits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">baud_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">9600</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'N'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">service</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/transport/server/rtu_server.html#RtuServer"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.RtuServer" title="Link to this definition"></a></dt>
+<dd><p>基类：<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>初始化RTU服务器</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>port: 串口端口名（如 '/dev/ttyUSB0'）
+data_bits: 数据位（默认8位）
+stop_bits: 停止位（默认1位）
+baud_rate: 波特率（默认9600）
+parity: 校验位（默认无校验）
+timeout: 超时时间（默认5秒）
+service: 服务实例，用于处理业务逻辑</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.RtuServer.start">
+<span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/transport/server/rtu_server.html#RtuServer.start"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.RtuServer.start" title="Link to this definition"></a></dt>
+<dd><p>启动RTU服务器（非阻塞，在后台线程中运行）</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.RtuServer.stop">
+<span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/transport/server/rtu_server.html#RtuServer.stop"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.RtuServer.stop" title="Link to this definition"></a></dt>
+<dd><p>停止RTU服务器</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.RtuServer.is_running">
+<span class="sig-name descname"><span class="pre">is_running</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/transport/server/rtu_server.html#RtuServer.is_running"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.RtuServer.is_running" title="Link to this definition"></a></dt>
+<dd><p>检查服务器是否正在运行</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.RtuServer.handle_connection">
+<span class="sig-name descname"><span class="pre">handle_connection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">conn</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/transport/server/rtu_server.html#RtuServer.handle_connection"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.RtuServer.handle_connection" title="Link to this definition"></a></dt>
+<dd><p>处理单个串口连接</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="（在 Python v3.14）"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Args:</dt><dd><p>conn: 串口连接对象，必须是 serial.Serial 实例</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.TcpClient">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.</span></span><span class="sig-name descname"><span class="pre">TcpClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ip</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/transport/client/tcp_client.html#TcpClient"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.TcpClient" title="Link to this definition"></a></dt>
+<dd><p>基类：<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>初始化TCP客户端</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>ip: 服务器IP地址（如 '0.0.0.0'）
+port: 服务器端口号（如 8080）
+timeout: 连接超时时间（秒）</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.TcpClient.connect">
+<span class="sig-name descname"><span class="pre">connect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/transport/client/tcp_client.html#TcpClient.connect"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.TcpClient.connect" title="Link to this definition"></a></dt>
+<dd><p>连接到服务器</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.TcpClient.disconnect">
+<span class="sig-name descname"><span class="pre">disconnect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/transport/client/tcp_client.html#TcpClient.disconnect"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.TcpClient.disconnect" title="Link to this definition"></a></dt>
+<dd><p>断开与服务器的连接</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.TcpClient.send_request">
+<span class="sig-name descname"><span class="pre">send_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">write_timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">read_timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_response_len</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">retries</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/transport/client/tcp_client.html#TcpClient.send_request"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.TcpClient.send_request" title="Link to this definition"></a></dt>
+<dd><p>增强版TCP请求-响应（支持超时控制和分片数据处理）</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="（在 Python v3.14）"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code></a>]</span></p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Args:</dt><dd><p>data: 要发送的请求数据
+write_timeout: 数据写入超时(秒)
+read_timeout: 单次recv操作的超时(秒)
+total_timeout: 整个请求-响应的总超时(秒)
+min_response_len: 最小有效响应长度
+retries: 失败重试次数</p>
+</dd>
+<dt>Returns:</dt><dd><p>bytes: 成功接收的响应数据
+None: 超时或失败时返回</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.RtuClient">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.</span></span><span class="sig-name descname"><span class="pre">RtuClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">baud_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">9600</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_bits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop_bits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'N'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/transport/client/rtu_client.html#RtuClient"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.RtuClient" title="Link to this definition"></a></dt>
+<dd><p>基类：<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>RTU客户端类，用于与DLT645设备进行串口通信</p>
+<p>该类实现了RTU（Remote Terminal Unit）客户端功能，支持与DLT645协议设备进行通信。
+提供了连接管理、数据发送和接收等功能。</p>
+<p>初始化RTU客户端</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>port: 串口名称（如&quot;COM1&quot;或&quot;/dev/ttyUSB0&quot;）
+baud_rate: 波特率，默认9600
+data_bits: 数据位，默认8
+stop_bits: 停止位，默认1
+parity: 校验位，默认无校验（serial.PARITY_NONE）
+timeout: 超时时间（秒），默认1.0</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.RtuClient.connect">
+<span class="sig-name descname"><span class="pre">connect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/transport/client/rtu_client.html#RtuClient.connect"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.RtuClient.connect" title="Link to this definition"></a></dt>
+<dd><p>连接到串口</p>
+<p>建立与指定串口的连接，配置为DLT645协议通信所需的参数。</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>bool: 连接成功返回True，失败返回False</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.RtuClient.disconnect">
+<span class="sig-name descname"><span class="pre">disconnect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/transport/client/rtu_client.html#RtuClient.disconnect"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.RtuClient.disconnect" title="Link to this definition"></a></dt>
+<dd><p>断开与串口的连接</p>
+<p>关闭串口连接并释放资源。</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>bool: 断开连接成功返回True，失败返回False</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.RtuClient.send_request">
+<span class="sig-name descname"><span class="pre">send_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">retries</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/transport/client/rtu_client.html#RtuClient.send_request"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.RtuClient.send_request" title="Link to this definition"></a></dt>
+<dd><p>发送请求并接收响应</p>
+<p>向DLT645设备发送请求数据，并接收响应。支持超时处理和自动重试机制。</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="（在 Python v3.14）"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code></a>]</span></p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Args:</dt><dd><p>data: 要发送的请求数据
+retries: 失败重试次数，默认1次</p>
+</dd>
+<dt>Returns:</dt><dd><p>bytes: 成功接收的响应数据
+None: 失败时返回</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="modules.html" class="btn btn-neutral float-left" title="src" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="src.common.html" class="btn btn-neutral float-right" title="src.common package" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2026, 陈东宇。</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
