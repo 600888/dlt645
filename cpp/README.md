@@ -30,7 +30,7 @@
 
 请选择您感兴趣的语言版本查看详细文档：
 
-- C++版本(目前只支持Linux平台)
+- C++版本(支持Linux平台和Windows平台)
 - [Python版本](../python/README.md)
 - [Go版本](../go/README.md)
 

@@ -18,11 +18,27 @@ elseif(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
     add_compile_options(/W4 /WX)
 endif()
 
+# 设置 Boost 的路径
+if(WIN32)
+    set(BOOST_ROOT "E:\\boost_1_83_0")  # 设置 Boost 根路径
+    set(Boost_USE_STATIC_LIBS ON)
+    set(Boost_NO_SYSTEM_PATHS ON)
+    set(Boost_ARCHITECTURE "-x64")
+    set(Boost_INCLUDE_DIR "E:\\boost_1_83_0")  # 设置 Boost 的 include 目录
+    set(Boost_LIBRARY_DIR "E:\\boost_1_83_0\\stage\\lib")  # 设置 Boost 的库目录
+else()
+    set(Boost_USE_STATIC_LIBS ON)
+    # Linux平台让系统自动查找Boost
+endif()
+# 查找Boost库
+find_package(Boost 1.83.0 REQUIRED)
+
 # 包含头文件目录
 include_directories(
     ${CMAKE_SOURCE_DIR}/third
     ${CMAKE_SOURCE_DIR}/include
     ${CMAKE_SOURCE_DIR}/src
+    ${Boost_INCLUDE_DIRS}
 )
 
 # 自动查找所有cpp文件
@@ -43,8 +59,14 @@ target_compile_definitions(dlt645 PRIVATE BOOST_ASIO_NO_DEPRECATED)
 
 # 链接库
 target_link_libraries(dlt645 
-    PRIVATE pthread
+    PRIVATE ${CMAKE_THREAD_LIBS_INIT}   # 链接线程库
+    PRIVATE ${Boost_LIBRARIES}
 )
+
+# Windows平台需要链接的网络库
+if(WIN32)
+    target_link_libraries(dlt645 PRIVATE ws2_32 mswsock)
+endif()
 
 # 添加示例目录
 add_subdirectory(example)

@@ -57,6 +57,14 @@ master_doc = 'index'
 # 主题名称
 html_theme = 'sphinx_rtd_theme'
 
+# 主题配置选项
+html_theme_options = {
+    # 导航菜单默认展开，不折叠
+    'collapse_navigation': False,
+    # 显示完整的目录树结构
+    'navigation_depth': -1,
+}
+
 # 静态资源路径
 html_static_path = ['_static']
 

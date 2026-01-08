@@ -8,15 +8,23 @@
 #endif
 
 #ifndef DEFAULT_ROOT_DIR
+#ifdef _WIN32
+#define DEFAULT_ROOT_DIR "e:/project/dlt645/cpp/build"
+#else
 #define DEFAULT_ROOT_DIR "/home/narada/dlt645/cpp/build"
 #endif
+#endif
 
-inline std::string rootPath() {
+inline std::string rootPath()
+{
   std::string rootDir;
   const char *envRoot = getenv(VAR_ENV);
-  if (nullptr == envRoot) {
+  if (nullptr == envRoot)
+  {
     rootDir = DEFAULT_ROOT_DIR;
-  } else {
+  }
+  else
+  {
     rootDir = envRoot;
   }
 
