@@ -43,7 +43,7 @@ jobs:
 
       # 步骤 5: 部署到 GitHub Pages
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4
         with:
           # 文档源目录
           publish_dir: ./python/docs/build/html
