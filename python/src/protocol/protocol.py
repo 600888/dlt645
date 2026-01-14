@@ -23,8 +23,7 @@ class DLT645Protocol:
 
     @classmethod
     def decode_data(cls, data: bytes) -> bytes:
-        """
-        数据域解码（-0x33H 转换）。
+        """数据域解码（-0x33H 转换）。
 
         按照 DLT645 协议规定，对数据域进行解码处理，
         每个字节减去 0x33H，并使用模 256 运算确保结果在 0-255 范围内。
@@ -41,8 +40,7 @@ class DLT645Protocol:
 
     @classmethod
     def calculate_checksum(cls, data: bytes) -> int:
-        """
-        校验和计算（模 256 求和）。
+        """校验和计算（模 256 求和）。
 
         按照 DLT645 协议规定，计算数据的校验和，
         对所有字节进行累加，然后对结果取模 256。
@@ -56,8 +54,7 @@ class DLT645Protocol:
 
     @classmethod
     def encode_data(cls, data: bytes) -> bytes:
-        """
-        数据域编码（+0x33H 转换）。
+        """数据域编码（+0x33H 转换）。
 
         按照 DLT645 协议规定，对数据域进行编码处理，
         每个字节加上 0x33H，并使用模 256 运算确保结果在 0-255 范围内。
@@ -76,8 +73,7 @@ class DLT645Protocol:
     def build_frame(
         cls, addr: bytes, ctrl_code: int, data: bytes
     ) -> bytearray:
-        """
-        构建 DLT645 协议帧。
+        """构建 DLT645 协议帧。
 
         按照 DLT645 协议规定，构建完整的协议帧，包括前导字节、
         地址域、控制码、数据域、校验和和结束标志。
@@ -118,8 +114,7 @@ class DLT645Protocol:
 
     @classmethod
     def deserialize(cls, raw: bytes) -> Optional[Frame]:
-        """
-        将字节数据反序列化为 Frame 对象。
+        """将字节数据反序列化为 Frame 对象。
 
         从原始字节数据中解析出 DLT645 协议帧。如果无法找到完整的帧，
         则抛出异常。
@@ -137,8 +132,7 @@ class DLT645Protocol:
 
     @classmethod
     def deserialize_with_remaining(cls, raw: bytes) -> tuple[bytes, Optional[Frame]]:
-        """
-        将字节数据反序列化为 Frame 对象，并返回未解析的剩余数据。
+        """将字节数据反序列化为 Frame 对象，并返回未解析的剩余数据。
 
         从原始字节数据中解析出 DLT645 协议帧，并返回未解析的剩余数据。
         如果数据不完整或无法解析，返回 (原始数据, None)。
@@ -219,8 +213,7 @@ class DLT645Protocol:
 
     @classmethod
     def serialize(cls, frame: Frame) -> Optional[bytes]:
-        """
-        将 Frame 对象序列化为字节数据。
+        """将 Frame 对象序列化为字节数据。
 
         按照 DLT645 协议规定，将 Frame 对象序列化为完整的协议帧字节。
 

@@ -1,5 +1,4 @@
-"""
-DLT645 协议帧结构模块。
+"""DLT645 协议帧结构模块。
 
 本模块定义了 DLT645 协议帧的数据结构和相关常量。
 """
@@ -15,8 +14,7 @@ BROADCAST_ADDR = 0xAA
 
 
 class Frame:
-    """
-    DLT645 协议帧结构类。
+    """DLT645 协议帧结构类。
 
     表示一个完整的 DLT645 协议数据帧。
 
@@ -46,8 +44,7 @@ class Frame:
         check_sum: int = 0,
         end_flag: int = 0,
     ):
-        """
-        初始化 Frame 实例。
+        """初始化 Frame 实例。
 
         :param preamble: 前导字节，默认为空。
         :type preamble: bytearray
@@ -76,8 +73,7 @@ class Frame:
         self.end_flag = end_flag
 
     def __repr__(self):
-        """
-        返回 Frame 的字符串表示。
+        """返回 Frame 的字符串表示。
 
         :return: 格式化的帧信息字符串。
         :rtype: str
