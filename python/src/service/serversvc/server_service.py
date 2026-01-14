@@ -1,5 +1,4 @@
-"""
-DLT645 服务端服务模块。
+"""DLT645 服务端服务模块。
 
 本模块实现了 DLT645 协议的服务端业务服务功能，包括：
 - 处理客户端数据读取请求
@@ -41,8 +40,7 @@ from ...transport.server.tcp_server import TcpServer
 
 
 class MeterServerService:
-    """
-    电表服务端服务类。
+    """电表服务端服务类。
 
     用于模拟 DLT645 电表设备，响应客户端的数据读写请求。
 
@@ -59,8 +57,7 @@ class MeterServerService:
         address: Optional[bytearray] = bytearray([0x00, 0x00, 0x00, 0x00, 0x00, 0x00]),
         password_manager: Optional[PasswordManager] = PasswordManager(),
     ):
-        """
-        初始化电表服务端服务。
+        """初始化电表服务端服务。
 
         :param server: 通信服务器实例（TcpServer 或 RtuServer）。
         :type server: Union[TcpServer, RtuServer]
@@ -79,8 +76,8 @@ class MeterServerService:
     def new_tcp_server(
         cls, ip: str, port: int, timeout: float = 5.0
     ) -> "MeterServerService":
-        """
-        创建 TCP 服务器
+        """创建 TCP 服务器
+
         :param ip: IP 地址
         :param port: 端口
         :param timeout: 超时时间
@@ -101,8 +98,8 @@ class MeterServerService:
         parity: str,
         timeout: float,
     ) -> "MeterServerService":
-        """
-        创建 RTU 服务器
+        """创建 RTU 服务器
+
         :param port: 端口
         :param data_bits: 数据位
         :param stop_bits: 停止位
@@ -120,8 +117,8 @@ class MeterServerService:
     def new_meter_server_service(
         cls, server: Union[TcpServer, RtuServer]
     ) -> "MeterServerService":
-        """
-        创建新的MeterServerService实例
+        """创建新的MeterServerService实例
+
         :param server: 服务器实例（TCP或RTU）
         :return: MeterServerService实例
         """
@@ -136,8 +133,8 @@ class MeterServerService:
         pass
 
     def set_address(self, address: str):
-        """
-        写通讯地址
+        """写通讯地址
+
         :param address:
         :return:
         """
@@ -147,8 +144,8 @@ class MeterServerService:
         self.address = address
 
     def set_password(self, password: str) -> None:
-        """
-        写密码
+        """写密码
+
         :param password:
         :return:
         """
@@ -157,8 +154,8 @@ class MeterServerService:
         log.info(f"设置密码: {bytes_to_spaced_hex(password)}")
 
     def set_00(self, di: int, value: float) -> bool:
-        """
-        写电能量
+        """写电能量
+
         :param di: 数据项
         :param value: 值
         :return:
@@ -169,8 +166,8 @@ class MeterServerService:
         return ok
 
     def set_01(self, di: int, demand: Demand) -> bool:
-        """
-        写最大需量及发生时间
+        """写最大需量及发生时间
+
         :param di: 数据项
         :param demand: 值
         :return:
@@ -181,8 +178,8 @@ class MeterServerService:
         return ok
 
     def set_02(self, di: int, value: float) -> bool:
-        """
-        写变量
+        """写变量
+
         :param di: 数据项
         :param value: 值
         :return:
@@ -199,8 +196,8 @@ class MeterServerService:
         return ok
 
     def set_03(self, di: int, value: list[str, tuple[str, str]]) -> bool:
-        """
-        写事件记录
+        """写事件记录
+
         :param di: 数据项
         :param value: 值
         :return:
@@ -216,8 +213,8 @@ class MeterServerService:
         return True
 
     def set_04(self, di: int, value: str | list) -> bool:
-        """
-        写参变量
+        """写参变量
+
         :param di: 数据项
         :param value: 值
         :return:
@@ -233,16 +230,16 @@ class MeterServerService:
         return True
 
     def get_data_item(self, di: int) -> Optional[DataItem]:
-        """
-        获取数据项
+        """获取数据项
+
         :param di: 数据项
         :return:
         """
         return get_data_item(di)
 
     def handle_request(self, frame):
-        """
-        处理读数据请求
+        """处理读数据请求
+
         :param frame:
         :return:
         """
@@ -505,8 +502,8 @@ class MeterServerService:
             return self._build_error_response(frame, error_code=ErrorCode.OtherError)
 
     def _build_error_response(self, frame, error_code: int):
-        """
-        构建异常响应帧
+        """构建异常响应帧
+
         :param frame: 原始请求帧
         :param error_code: 错误码
         :return: 异常响应帧

@@ -7,8 +7,7 @@ from ...model.log import log
 
 
 class DataItem:
-    """
-    数据项实体类，表示一个具体的数据项。
+    """数据项实体类，表示一个具体的数据项。
 
     :ivar di: 数据标识 (DI)，4 字节。
     :ivar name: 数据项名称。
@@ -27,8 +26,7 @@ class DataItem:
         unit: str = "",
         update_time: datetime.datetime = datetime.datetime.now(),
     ):
-        """
-        初始化 DataItem 实例。
+        """初始化 DataItem 实例。
 
         :param di: 数据标识 (DI)。
         :type di: int
@@ -51,8 +49,7 @@ class DataItem:
         self.update_time = update_time
 
     def __repr__(self):
-        """
-        返回 DataItem 的字符串表示。
+        """返回 DataItem 的字符串表示。
 
         :return: 字符串表示。
         :rtype: str
@@ -64,8 +61,7 @@ class DataItem:
 
 
 class DataType:
-    """
-    数据类型配置类，通常从 JSON 加载。
+    """数据类型配置类，通常从 JSON 加载。
 
     :ivar di: 数据标识 (DI)，整数形式。
     :ivar name: 数据类型名称。
@@ -74,8 +70,7 @@ class DataType:
     """
 
     def __init__(self, Di="", Name="", Unit="", DataFormat=""):
-        """
-        初始化 DataType 实例。
+        """初始化 DataType 实例。
 
         :param Di: 数据标识字符串（十六进制），默认为空字符串。
         :type Di: str, 可选
@@ -93,8 +88,7 @@ class DataType:
 
     @classmethod
     def from_dict(cls, data):
-        """
-        从字典创建 DataType 实例。
+        """从字典创建 DataType 实例。
 
         :param data: 包含 'Di', 'Name', 'Unit', 'DataFormat' 的字典。
         :type data: dict
@@ -105,14 +99,11 @@ class DataType:
 
 
 class uint32_from_string(int):
-    """
-    自定义整数类型，用于处理从 JSON 字符串（包括十六进制）解析 uint32。
-    """
+    """自定义整数类型，用于处理从 JSON 字符串（包括十六进制）解析 uint32。"""
 
     @classmethod
     def from_json(cls, data):
-        """
-        将输入数据解析为 uint32 整数。
+        """将输入数据解析为 uint32 整数。
 
         处理以下情况：
         - 空字符串 -> 0
@@ -136,8 +127,7 @@ class uint32_from_string(int):
 
 
 def init_data_type_from_json(file_path: str):
-    """
-    从 JSON 文件初始化 DataType 对象列表。
+    """从 JSON 文件初始化 DataType 对象列表。
 
     读取指定的 JSON 文件，解析后返回 DataType 实例列表。
 
@@ -166,8 +156,7 @@ def init_data_type_from_json(file_path: str):
 
 
 class DataFormat(Enum):
-    """
-    表示各种数据格式模板的枚举。
+    """表示各种数据格式模板的枚举。
 
     定义说明：
     - X: 十进制数字

@@ -1,5 +1,4 @@
-"""
-DLT645 协议类型定义模块。
+"""DLT645 协议类型定义模块。
 
 本模块定义了 DLT645 协议所需的各种类型，包括：
 - 数据标识分类枚举 (DICategory)
@@ -18,8 +17,7 @@ from ...model.log import log
 
 
 class DICategory(IntEnum):
-    """
-    数据标识分类枚举。
+    """数据标识分类枚举。
 
     DLT645 协议中数据项按功能分为多个类别，
     数据标识 (DI) 的高字节决定了数据所属的类别。
@@ -43,8 +41,7 @@ class DICategory(IntEnum):
 
 
 class CtrlCode(IntEnum):
-    """
-    控制码枚举。
+    """控制码枚举。
 
     DLT645 协议中控制码用于标识帧的功能类型。
 
@@ -69,8 +66,7 @@ class CtrlCode(IntEnum):
 
 
 class ErrorCode(IntEnum):
-    """
-    错误码枚举。
+    """错误码枚举。
 
     DLT645 协议中从站响应异常时返回的错误码。
     错误码采用位域方式，可以组合多个错误。
@@ -106,8 +102,7 @@ error_messages = {
 
 
 def get_error_msg(error_code: ErrorCode) -> str:
-    """
-    根据错误码获取对应的中文错误信息。
+    """根据错误码获取对应的中文错误信息。
 
     :param error_code: 错误码。
     :type error_code: ErrorCode
@@ -128,8 +123,7 @@ OPERATOR_CODE_LEN = 4
 
 
 class Demand:
-    """
-    需量数据类。
+    """需量数据类。
 
     用于表示最大需量及其发生时间。
 
@@ -138,8 +132,7 @@ class Demand:
     """
 
     def __init__(self, value: float, time: datetime):
-        """
-        初始化 Demand 实例。
+        """初始化 Demand 实例。
 
         :param value: 需量值。
         :type value: float
@@ -150,8 +143,7 @@ class Demand:
         self.time = time
 
     def __repr__(self) -> str:
-        """
-        返回 Demand 的字符串表示。
+        """返回 Demand 的字符串表示。
 
         :return: 字符串表示。
         :rtype: str
@@ -160,8 +152,7 @@ class Demand:
 
 
 class EventRecord:
-    """
-    事件记录类。
+    """事件记录类。
 
     用于表示电表的事件记录数据。
 
@@ -170,8 +161,7 @@ class EventRecord:
     """
 
     def __init__(self, di: int, event: tuple | float | str):
-        """
-        初始化 EventRecord 实例。
+        """初始化 EventRecord 实例。
 
         :param di: 数据标识。
         :type di: int
@@ -182,8 +172,7 @@ class EventRecord:
         self.event = event
 
     def __repr__(self) -> str:
-        """
-        返回 EventRecord 的字符串表示。
+        """返回 EventRecord 的字符串表示。
 
         :return: 字符串表示。
         :rtype: str
@@ -192,8 +181,7 @@ class EventRecord:
 
 
 class PasswordManager:
-    """
-    密码管理器类。
+    """密码管理器类。
 
     用于管理 DLT645 协议中的九级密码。
     密码级别从 0-8，数字越小权限越高。
@@ -202,8 +190,7 @@ class PasswordManager:
     """
 
     def __init__(self):
-        """
-        初始化 PasswordManager 实例。
+        """初始化 PasswordManager 实例。
 
         创建九级密码映射表，每级密码初始化为全零。
         """
@@ -212,8 +199,7 @@ class PasswordManager:
             self._password_map[i] = bytearray(PASSWORD_LEN)
 
     def is_password_valid(self, password: bytearray) -> bool:
-        """
-        验证密码格式是否有效。
+        """验证密码格式是否有效。
 
         检查密码长度是否为4字节，以及密码级别是否在有效范围内（0-8）。
 
@@ -234,8 +220,7 @@ class PasswordManager:
         return True
 
     def set_password(self, password: bytearray) -> bool:
-        """
-        设置指定级别的密码。
+        """设置指定级别的密码。
 
         :param password: 密码字节数组，第一个字节为密码级别。
         :type password: bytearray
@@ -250,8 +235,7 @@ class PasswordManager:
         return True
 
     def get_password(self, level: int) -> bytearray:
-        """
-        获取指定级别的密码。
+        """获取指定级别的密码。
 
         :param level: 密码级别（0-8）。
         :type level: int
@@ -261,8 +245,7 @@ class PasswordManager:
         return self._password_map.get(level, bytearray(PASSWORD_LEN))
 
     def check_password(self, password: bytearray) -> bool:
-        """
-        验证密码是否正确。
+        """验证密码是否正确。
 
         :param password: 待验证的密码字节数组。
         :type password: bytearray
@@ -275,8 +258,7 @@ class PasswordManager:
         return password == self._password_map.get(level, bytearray(PASSWORD_LEN))
 
     def change_password(self, old_password: bytearray, new_password: bytearray) -> bool:
-        """
-        修改密码。
+        """修改密码。
 
         只有当旧密码正确且旧密码权限等级不低于新密码权限等级时才能修改成功。
         权限等级数字越小权限越高（0级最高，8级最低）。

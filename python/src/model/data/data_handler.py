@@ -1,5 +1,4 @@
-"""
-数据项处理模块。
+"""数据项处理模块。
 
 本模块提供了数据项的获取和设置功能，用于管理 DLT645 协议中各类数据项的值。
 """
@@ -13,8 +12,7 @@ from .define import DIMap
 
 
 def get_data_item(di: int) -> Optional[DataItem | List[DataItem]]:
-    """
-    根据数据标识 (DI) 获取数据项。
+    """根据数据标识 (DI) 获取数据项。
 
     :param di: 数据标识，4字节整数。
     :type di: int
@@ -30,8 +28,7 @@ def get_data_item(di: int) -> Optional[DataItem | List[DataItem]]:
 
 
 def set_data_item(di: int, data: Union[int, float, str, Demand, list, tuple]) -> bool:
-    """
-    设置指定数据标识 (DI) 的数据项值。
+    """设置指定数据标识 (DI) 的数据项值。
 
     根据 DI 的类型自动处理不同的数据格式：
     - 需量数据 (Demand): 验证值后直接设置
@@ -76,8 +73,7 @@ def set_data_item(di: int, data: Union[int, float, str, Demand, list, tuple]) ->
 
 
 def is_value_valid(data_format: str, value: Union[int, float, str, tuple]) -> bool:
-    """
-    检查值是否符合指定的数据格式。
+    """检查值是否符合指定的数据格式。
 
     根据数据格式字符串验证值的有效范围：
     - XXXXXX.XX: 范围 [-799999.99, 799999.99]

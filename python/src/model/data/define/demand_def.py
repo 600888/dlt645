@@ -41,8 +41,7 @@ demand_di_list = [
 
 
 def init_demand_def(demand_types: List[DataItem]):
-    """
-    初始化需求定义
+    """初始化需求定义
     
     Args:
         demand_types: 需求类型列表，包含正向有功、反向有功等类型

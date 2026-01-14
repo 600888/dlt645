@@ -1,5 +1,4 @@
-"""
-设备验证模块。
+"""设备验证模块。
 
 本模块提供设备地址验证功能。
 """
@@ -8,8 +7,7 @@ from .types.dlt645_type import CtrlCode, PASSWORD_LEN
 
 
 def validate_device(address: bytearray, ctrl_code: CtrlCode, addr: bytes) -> bool:
-    """
-    验证设备地址是否匹配。
+    """验证设备地址是否匹配。
 
     以下情况验证通过：
     1. 读/写通讯地址命令的响应帧（控制码带 0x80 应答标志）

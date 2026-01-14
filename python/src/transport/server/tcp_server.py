@@ -1,5 +1,4 @@
-"""
-TCP 服务器模块。
+"""TCP 服务器模块。
 
 本模块实现了 DLT645 协议的 TCP 服务器功能。
 """
@@ -14,8 +13,7 @@ from ...transport.server.log import log
 
 
 class TcpServer:
-    """
-    TCP 服务器类，用于与 DLT645 客户端进行 TCP 通信。
+    """TCP 服务器类，用于与 DLT645 客户端进行 TCP 通信。
 
     :ivar ip: 服务器 IP 地址。
     :ivar port: 服务器端口号。
@@ -25,8 +23,7 @@ class TcpServer:
     """
 
     def __init__(self, ip: str, port: int, timeout: float, service):
-        """
-        初始化 TCP 服务器。
+        """初始化 TCP 服务器。
 
         :param ip: 服务器 IP 地址（如 '0.0.0.0'）。
         :type ip: str

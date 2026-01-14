@@ -1,5 +1,4 @@
-"""
-RTU 客户端模块。
+"""RTU 客户端模块。
 
 本模块实现了 DLT645 协议的 RTU（串口）客户端功能。
 """
@@ -14,8 +13,7 @@ from ...protocol.protocol import DLT645Protocol
 
 
 class RtuClient:
-    """
-    RTU 客户端类，用于与 DLT645 设备进行串口通信。
+    """RTU 客户端类，用于与 DLT645 设备进行串口通信。
 
     该类实现了 RTU（Remote Terminal Unit）客户端功能，
     支持与 DLT645 协议设备进行串口通信。
@@ -38,8 +36,7 @@ class RtuClient:
         parity: str = serial.PARITY_NONE,
         timeout: float = 1.0,
     ):
-        """
-        初始化 RTU 客户端。
+        """初始化 RTU 客户端。
 
         :param port: 串口名称（如 "COM1" 或 "/dev/ttyUSB0"）。
         :type port: str

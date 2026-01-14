@@ -1,5 +1,4 @@
-"""
-DLT645 客户端服务模块。
+"""DLT645 客户端服务模块。
 
 本模块实现了 DLT645 协议的客户端业务服务功能，包括：
 - 电能数据读取
@@ -47,8 +46,7 @@ from ...transport.client.tcp_client import TcpClient
 
 
 class MeterClientService:
-    """
-    电表客户端服务类。
+    """电表客户端服务类。
 
     用于与 DLT645 电表设备进行通信，提供数据读写等业务功能。
 
@@ -59,8 +57,7 @@ class MeterClientService:
     """
 
     def __init__(self, client: Union[TcpClient, RtuClient]):
-        """
-        初始化电表客户端服务。
+        """初始化电表客户端服务。
 
         :param client: 通信客户端实例（TcpClient 或 RtuClient）。
         :type client: Union[TcpClient, RtuClient]

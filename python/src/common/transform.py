@@ -15,8 +15,7 @@ from typing import Union
 
 
 def pad_with_zeros(length: int) -> str:
-    """
-    根据指定长度生成补零字符串。
+    """根据指定长度生成补零字符串。
 
     :param length: 需要生成的零的个数。
     :type length: int
@@ -27,8 +26,7 @@ def pad_with_zeros(length: int) -> str:
 
 
 def bytes_to_int(byte_array: bytearray) -> int:
-    """
-    将字节数组转换为无符号整数。
+    """将字节数组转换为无符号整数。
 
     使用小端序进行转换，如果字节数组长度不足4字节，
     会在右侧补零至4字节。
@@ -45,8 +43,7 @@ def bytes_to_int(byte_array: bytearray) -> int:
 
 
 def bytes_to_float(byte_array: bytearray) -> float:
-    """
-    将字节数组转换为浮点数。
+    """将字节数组转换为浮点数。
 
     使用小端序进行转换，如果字节数组长度不足4字节，
     会在右侧补零至4字节。
@@ -63,8 +60,7 @@ def bytes_to_float(byte_array: bytearray) -> float:
 
 
 def bytes_to_spaced_hex(data: bytearray) -> str:
-    """
-    将字节数组转换为空格分隔的十六进制字符串。
+    """将字节数组转换为空格分隔的十六进制字符串。
 
     每两个十六进制字符用空格分隔，便于阅读和调试。
     例如: bytearray([0x68, 0xAA]) -> "68 aa"
@@ -84,8 +80,7 @@ def bytes_to_spaced_hex(data: bytearray) -> str:
 
 
 def bcd_to_string(bcd: bytearray, endian="big") -> str:
-    """
-    将 BCD 码字节数组转换为数字字符串。
+    """将 BCD 码字节数组转换为数字字符串。
 
     BCD（Binary-Coded Decimal）码是一种用4位二进制数表示十进制数字的编码方式。
     每个字节包含两个 BCD 数字（高4位和低4位）。
@@ -110,8 +105,7 @@ def bcd_to_string(bcd: bytearray, endian="big") -> str:
 
 
 def parse_format(format_str: str) -> tuple:
-    """
-    解析数据格式字符串，返回小数位数和总位数。
+    """解析数据格式字符串，返回小数位数和总位数。
 
     格式字符串示例：
     - "XXXXXX.XX" -> (2, 8)  表示8位数字，2位小数
@@ -135,8 +129,7 @@ def parse_format(format_str: str) -> tuple:
 
 
 def round_float(value: float, decimal_places: int) -> float:
-    """
-    将浮点数四舍五入到指定的小数位数。
+    """将浮点数四舍五入到指定的小数位数。
 
     :param value: 待四舍五入的浮点数。
     :type value: float
@@ -150,8 +143,7 @@ def round_float(value: float, decimal_places: int) -> float:
 
 
 def format_float(value: float, decimal_places: int, total_digits: int) -> str:
-    """
-    格式化浮点数为固定长度字符串（补零对齐）。
+    """格式化浮点数为固定长度字符串（补零对齐）。
 
     :param value: 待格式化的浮点数。
     :type value: float
@@ -167,8 +159,7 @@ def format_float(value: float, decimal_places: int, total_digits: int) -> str:
 
 
 def string_to_bcd(digits: str, endian="big") -> bytearray:
-    """
-    将数字字符串转换为 BCD 码字节数组。
+    """将数字字符串转换为 BCD 码字节数组。
 
     如果数字字符串长度为奇数，会在前面补零使其变为偶数长度。
 
@@ -195,8 +186,7 @@ def string_to_bcd(digits: str, endian="big") -> bytearray:
 
 
 def bcd_to_value(bcd: bytearray, format_str: str, endian="big") -> Union[str, float]:
-    """
-    将 BCD 码字节数组转换为数值。
+    """将 BCD 码字节数组转换为数值。
 
     根据格式字符串决定返回类型：
     - 如果格式字符串不包含小数点，返回数字字符串
@@ -220,8 +210,7 @@ def bcd_to_value(bcd: bytearray, format_str: str, endian="big") -> Union[str, fl
 
 
 def float_to_bcd(value: float, format_str: str, endian="big") -> bytearray:
-    """
-    将浮点数转换为 BCD 码字节数组。
+    """将浮点数转换为 BCD 码字节数组。
 
     支持正负数转换，负数会在最高位设置符号位（0x80）。
 
@@ -278,8 +267,7 @@ def float_to_bcd(value: float, format_str: str, endian="big") -> bytearray:
 
 
 def bcd_to_float(bcd, format_str, endian="big") -> float:
-    """
-    将 BCD 码字节数组转换为浮点数。
+    """将 BCD 码字节数组转换为浮点数。
 
     支持带符号位的 BCD 码转换，最高位为 0x80 时表示负数。
 
@@ -331,8 +319,7 @@ def bcd_to_float(bcd, format_str, endian="big") -> float:
 
 
 def datetime_to_bcd(t: datetime) -> bytearray:
-    """
-    将 datetime 对象转换为 BCD 码字节数组（小端序）。
+    """将 datetime 对象转换为 BCD 码字节数组（小端序）。
 
     输出格式为：分时日月年（小端序），共5字节。
     年份只取后两位（如 2025 -> 25）。
@@ -363,8 +350,7 @@ def datetime_to_bcd(t: datetime) -> bytearray:
 
 
 def bcd_to_byte(b: int) -> int:
-    """
-    将单个 BCD 码字节转换为对应的十进制整数。
+    """将单个 BCD 码字节转换为对应的十进制整数。
 
     例如：0x25 -> 25
 
@@ -377,8 +363,7 @@ def bcd_to_byte(b: int) -> int:
 
 
 def bcd_to_time(bcd: Union[bytearray, bytes]) -> datetime:
-    """
-    将 BCD 码字节数组转换为 datetime 对象。
+    """将 BCD 码字节数组转换为 datetime 对象。
 
     输入格式为：年月日时分（大端序），共5字节。
     年份假设为21世纪（如 25 -> 2025）。
@@ -403,8 +388,7 @@ def bcd_to_time(bcd: Union[bytearray, bytes]) -> datetime:
 
 
 def uint8_to_bcd(n: int) -> int:
-    """
-    将 0-99 范围内的整数转换为 BCD 码。
+    """将 0-99 范围内的整数转换为 BCD 码。
 
     例如：25 -> 0x25
 
@@ -420,8 +404,7 @@ def uint8_to_bcd(n: int) -> int:
 
 
 def reverse_bytes(data: Union[bytearray, bytes]) -> bytearray:
-    """
-    反转字节数组的顺序。
+    """反转字节数组的顺序。
 
     用于大小端序之间的转换。
 
