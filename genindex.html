@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>索引 &mdash; dlt645 v1.4.0 文档</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
 
   
@@ -193,7 +193,12 @@
 <li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.ErrorCode.RateNumExceeded"><code class="docutils literal notranslate"><span class="pre">ErrorCode.RateNumExceeded</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.error_messages"><code class="docutils literal notranslate"><span class="pre">error_messages</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.get_error_msg"><code class="docutils literal notranslate"><span class="pre">get_error_msg()</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.DI_LEN"><code class="docutils literal notranslate"><span class="pre">DI_LEN</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.ADDRESS_LEN"><code class="docutils literal notranslate"><span class="pre">ADDRESS_LEN</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.PASSWORD_LEN"><code class="docutils literal notranslate"><span class="pre">PASSWORD_LEN</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.OPERATOR_CODE_LEN"><code class="docutils literal notranslate"><span class="pre">OPERATOR_CODE_LEN</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.Demand"><code class="docutils literal notranslate"><span class="pre">Demand</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.EventRecord"><code class="docutils literal notranslate"><span class="pre">EventRecord</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.PasswordManager"><code class="docutils literal notranslate"><span class="pre">PasswordManager</span></code></a><ul>
@@ -226,6 +231,9 @@
 <li class="toctree-l4"><a class="reference internal" href="src.protocol.html">src.protocol package</a><ul>
 <li class="toctree-l5"><a class="reference internal" href="src.protocol.html#submodules">Submodules</a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.protocol.html#module-src.protocol.frame">src.protocol.frame module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="src.protocol.html#src.protocol.frame.FRAME_START_BYTE"><code class="docutils literal notranslate"><span class="pre">FRAME_START_BYTE</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="src.protocol.html#src.protocol.frame.FRAME_END_BYTE"><code class="docutils literal notranslate"><span class="pre">FRAME_END_BYTE</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="src.protocol.html#src.protocol.frame.BROADCAST_ADDR"><code class="docutils literal notranslate"><span class="pre">BROADCAST_ADDR</span></code></a></li>
 <li class="toctree-l6"><a class="reference internal" href="src.protocol.html#src.protocol.frame.Frame"><code class="docutils literal notranslate"><span class="pre">Frame</span></code></a></li>
 </ul>
 </li>
@@ -530,6 +538,10 @@
 <h2 id="A">A</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="src.model.types.html#src.model.types.dlt645_type.ADDRESS_LEN">ADDRESS_LEN()（在 src.model.types.dlt645_type 模块中）</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="src.model.types.html#src.model.types.dlt645_type.ErrorCode.AuthFailed">AuthFailed（src.model.types.dlt645_type.ErrorCode 属性）</a>
 </li>
   </ul></td>
@@ -548,10 +560,12 @@
 </li>
       <li><a href="src.common.html#src.common.transform.bcd_to_value">bcd_to_value()（在 src.common.transform 模块中）</a>
 </li>
-      <li><a href="src.html#src.CtrlCode.BroadcastTimeSync">BroadcastTimeSync（src.CtrlCode 属性）</a>
+      <li><a href="src.protocol.html#src.protocol.frame.BROADCAST_ADDR">BROADCAST_ADDR()（在 src.protocol.frame 模块中）</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="src.html#src.CtrlCode.BroadcastTimeSync">BroadcastTimeSync（src.CtrlCode 属性）</a>
+</li>
       <li><a href="src.model.types.html#src.model.types.dlt645_type.CtrlCode.BroadcastTimeSync">BroadcastTimeSync（src.model.types.dlt645_type.CtrlCode 属性）</a>
 </li>
       <li><a href="src.html#src.DLT645Protocol.build_frame">build_frame()（src.DLT645Protocol 类方法）</a>
@@ -650,10 +664,10 @@
 </li>
       <li><a href="src.html#src.Demand">Demand（src 中的类）</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="src.model.types.html#src.model.types.dlt645_type.Demand">Demand（src.model.types.dlt645_type 中的类）</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="src.html#src.DLT645Protocol.deserialize">deserialize()（src.DLT645Protocol 类方法）</a>
 </li>
       <li><a href="src.protocol.html#src.protocol.protocol.DLT645Protocol.deserialize">deserialize()（src.protocol.protocol.DLT645Protocol 类方法）</a>
@@ -661,6 +675,8 @@
       <li><a href="src.html#src.DLT645Protocol.deserialize_with_remaining">deserialize_with_remaining()（src.DLT645Protocol 类方法）</a>
 </li>
       <li><a href="src.protocol.html#src.protocol.protocol.DLT645Protocol.deserialize_with_remaining">deserialize_with_remaining()（src.protocol.protocol.DLT645Protocol 类方法）</a>
+</li>
+      <li><a href="src.model.types.html#src.model.types.dlt645_type.DI_LEN">DI_LEN()（在 src.model.types.dlt645_type 模块中）</a>
 </li>
       <li><a href="src.model.types.html#src.model.types.dlt645_type.DICategory">DICategory（src.model.types.dlt645_type 中的类）</a>
 </li>
@@ -690,6 +706,8 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="src.model.types.html#src.model.types.dlt645_type.error_messages">error_messages()（在 src.model.types.dlt645_type 模块中）</a>
+</li>
       <li><a href="src.model.types.html#src.model.types.dlt645_type.ErrorCode">ErrorCode（src.model.types.dlt645_type 中的类）</a>
 </li>
       <li><a href="src.model.types.html#src.model.types.dlt645_type.EventRecord">EventRecord（src.model.types.dlt645_type 中的类）</a>
@@ -706,10 +724,14 @@
 </li>
       <li><a href="src.common.html#src.common.transform.format_float">format_float()（在 src.common.transform 模块中）</a>
 </li>
-      <li><a href="src.protocol.html#src.protocol.frame.Frame">Frame（src.protocol.frame 中的类）</a>
+      <li><a href="src.protocol.html#src.protocol.frame.FRAME_END_BYTE">FRAME_END_BYTE()（在 src.protocol.frame 模块中）</a>
+</li>
+      <li><a href="src.protocol.html#src.protocol.frame.FRAME_START_BYTE">FRAME_START_BYTE()（在 src.protocol.frame 模块中）</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="src.protocol.html#src.protocol.frame.Frame">Frame（src.protocol.frame 中的类）</a>
+</li>
       <li><a href="src.html#src.CtrlCode.FreezeCmd">FreezeCmd（src.CtrlCode 属性）</a>
 </li>
       <li><a href="src.model.types.html#src.model.types.dlt645_type.CtrlCode.FreezeCmd">FreezeCmd（src.model.types.dlt645_type.CtrlCode 属性）</a>
@@ -959,6 +981,10 @@
 <h2 id="O">O</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="src.model.types.html#src.model.types.dlt645_type.OPERATOR_CODE_LEN">OPERATOR_CODE_LEN()（在 src.model.types.dlt645_type 模块中）</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="src.model.types.html#src.model.types.dlt645_type.ErrorCode.OtherError">OtherError（src.model.types.dlt645_type.ErrorCode 属性）</a>
 </li>
   </ul></td>
@@ -969,9 +995,11 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="src.common.html#src.common.transform.pad_with_zeros">pad_with_zeros()（在 src.common.transform 模块中）</a>
 </li>
+      <li><a href="src.common.html#src.common.transform.parse_format">parse_format()（在 src.common.transform 模块中）</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="src.common.html#src.common.transform.parse_format">parse_format()（在 src.common.transform 模块中）</a>
+      <li><a href="src.model.types.html#src.model.types.dlt645_type.PASSWORD_LEN">PASSWORD_LEN()（在 src.model.types.dlt645_type 模块中）</a>
 </li>
       <li><a href="src.model.types.html#src.model.types.dlt645_type.PasswordManager">PasswordManager（src.model.types.dlt645_type 中的类）</a>
 </li>

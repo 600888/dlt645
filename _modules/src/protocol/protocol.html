@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>src.protocol.protocol &mdash; dlt645 v1.4.0 文档</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
 
   
@@ -193,7 +193,12 @@
 <li class="toctree-l9"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.ErrorCode.RateNumExceeded"><code class="docutils literal notranslate"><span class="pre">ErrorCode.RateNumExceeded</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l8"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.error_messages"><code class="docutils literal notranslate"><span class="pre">error_messages</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.get_error_msg"><code class="docutils literal notranslate"><span class="pre">get_error_msg()</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.DI_LEN"><code class="docutils literal notranslate"><span class="pre">DI_LEN</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.ADDRESS_LEN"><code class="docutils literal notranslate"><span class="pre">ADDRESS_LEN</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.PASSWORD_LEN"><code class="docutils literal notranslate"><span class="pre">PASSWORD_LEN</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.OPERATOR_CODE_LEN"><code class="docutils literal notranslate"><span class="pre">OPERATOR_CODE_LEN</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.Demand"><code class="docutils literal notranslate"><span class="pre">Demand</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.EventRecord"><code class="docutils literal notranslate"><span class="pre">EventRecord</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.PasswordManager"><code class="docutils literal notranslate"><span class="pre">PasswordManager</span></code></a><ul>
@@ -226,6 +231,9 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../src.protocol.html">src.protocol package</a><ul>
 <li class="toctree-l5"><a class="reference internal" href="../../../src.protocol.html#submodules">Submodules</a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../src.protocol.html#module-src.protocol.frame">src.protocol.frame module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../../src.protocol.html#src.protocol.frame.FRAME_START_BYTE"><code class="docutils literal notranslate"><span class="pre">FRAME_START_BYTE</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../src.protocol.html#src.protocol.frame.FRAME_END_BYTE"><code class="docutils literal notranslate"><span class="pre">FRAME_END_BYTE</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../src.protocol.html#src.protocol.frame.BROADCAST_ADDR"><code class="docutils literal notranslate"><span class="pre">BROADCAST_ADDR</span></code></a></li>
 <li class="toctree-l6"><a class="reference internal" href="../../../src.protocol.html#src.protocol.frame.Frame"><code class="docutils literal notranslate"><span class="pre">Frame</span></code></a></li>
 </ul>
 </li>
@@ -501,7 +509,16 @@
            <div itemprop="articleBody">
              
   <h1>src.protocol.protocol 源代码</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">DLT645 协议实现模块。</span>
+
+<span class="sd">本模块实现了 DLT645 协议的核心功能，包括：</span>
+<span class="sd">- 数据域编码/解码（±0x33H 转换）</span>
+<span class="sd">- 校验和计算</span>
+<span class="sd">- 帧构建和解析</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">.frame</span><span class="w"> </span><span class="kn">import</span> <span class="n">FRAME_START_BYTE</span><span class="p">,</span> <span class="n">FRAME_END_BYTE</span><span class="p">,</span> <span class="n">Frame</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.log</span><span class="w"> </span><span class="kn">import</span> <span class="n">log</span>
@@ -510,25 +527,27 @@
 <div class="viewcode-block" id="DLT645Protocol">
 <a class="viewcode-back" href="../../../src.protocol.html#src.DLT645Protocol">[文档]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">DLT645Protocol</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;DLT645协议实现类</span>
-<span class="sd">    </span>
-<span class="sd">    该类实现了DLT645协议的核心功能，包括数据编码/解码、校验和计算、</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    DLT645 协议实现类。</span>
+
+<span class="sd">    该类实现了 DLT645 协议的核心功能，包括数据编码/解码、校验和计算、</span>
 <span class="sd">    帧构建和解析等操作。所有方法均为类方法，可直接调用。</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
 <div class="viewcode-block" id="DLT645Protocol.decode_data">
 <a class="viewcode-back" href="../../../src.protocol.html#src.DLT645Protocol.decode_data">[文档]</a>
     <span class="nd">@classmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">decode_data</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;数据域解码（±33H转换）</span>
-<span class="sd">        </span>
-<span class="sd">        按照DLT645协议规定，对数据域进行解码处理，</span>
-<span class="sd">        每个字节减去0x33H，并使用模256运算确保结果在0-255范围内。</span>
-<span class="sd">        </span>
-<span class="sd">        Args:</span>
-<span class="sd">            data: 需要解码的数据字节</span>
-<span class="sd">            </span>
-<span class="sd">        Returns:</span>
-<span class="sd">            bytes: 解码后的原始数据</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        数据域解码（-0x33H 转换）。</span>
+
+<span class="sd">        按照 DLT645 协议规定，对数据域进行解码处理，</span>
+<span class="sd">        每个字节减去 0x33H，并使用模 256 运算确保结果在 0-255 范围内。</span>
+
+<span class="sd">        :param data: 需要解码的数据字节。</span>
+<span class="sd">        :type data: bytes</span>
+<span class="sd">        :return: 解码后的原始数据。</span>
+<span class="sd">        :rtype: bytes</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="p">:</span>
             <span class="k">return</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span>
@@ -540,16 +559,16 @@
 <a class="viewcode-back" href="../../../src.protocol.html#src.DLT645Protocol.calculate_checksum">[文档]</a>
     <span class="nd">@classmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">calculate_checksum</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;校验和计算（模256求和）</span>
-<span class="sd">        </span>
-<span class="sd">        按照DLT645协议规定，计算数据的校验和，</span>
-<span class="sd">        对所有字节进行累加，然后对结果取模256。</span>
-<span class="sd">        </span>
-<span class="sd">        Args:</span>
-<span class="sd">            data: 需要计算校验和的数据字节</span>
-<span class="sd">            </span>
-<span class="sd">        Returns:</span>
-<span class="sd">            int: 计算得到的校验和值（0-255范围）</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        校验和计算（模 256 求和）。</span>
+
+<span class="sd">        按照 DLT645 协议规定，计算数据的校验和，</span>
+<span class="sd">        对所有字节进行累加，然后对结果取模 256。</span>
+
+<span class="sd">        :param data: 需要计算校验和的数据字节。</span>
+<span class="sd">        :type data: bytes</span>
+<span class="sd">        :return: 计算得到的校验和值（0-255 范围）。</span>
+<span class="sd">        :rtype: int</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">%</span> <span class="mi">256</span></div>
 
@@ -558,16 +577,16 @@
 <a class="viewcode-back" href="../../../src.protocol.html#src.DLT645Protocol.encode_data">[文档]</a>
     <span class="nd">@classmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">encode_data</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;数据域编码（+33H转换）</span>
-<span class="sd">        </span>
-<span class="sd">        按照DLT645协议规定，对数据域进行编码处理，</span>
-<span class="sd">        每个字节加上0x33H，并使用模256运算确保结果在0-255范围内。</span>
-<span class="sd">        </span>
-<span class="sd">        Args:</span>
-<span class="sd">            data: 需要编码的原始数据字节</span>
-<span class="sd">            </span>
-<span class="sd">        Returns:</span>
-<span class="sd">            bytes: 编码后的数据</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        数据域编码（+0x33H 转换）。</span>
+
+<span class="sd">        按照 DLT645 协议规定，对数据域进行编码处理，</span>
+<span class="sd">        每个字节加上 0x33H，并使用模 256 运算确保结果在 0-255 范围内。</span>
+
+<span class="sd">        :param data: 需要编码的原始数据字节。</span>
+<span class="sd">        :type data: bytes</span>
+<span class="sd">        :return: 编码后的数据。</span>
+<span class="sd">        :rtype: bytes</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="p">:</span>
             <span class="k">return</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span>
@@ -581,21 +600,21 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">build_frame</span><span class="p">(</span>
         <span class="bp">cls</span><span class="p">,</span> <span class="n">addr</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">ctrl_code</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytearray</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;帧构建（支持广播和单播）</span>
-<span class="sd">        </span>
-<span class="sd">        按照DLT645协议规定，构建完整的协议帧，包括前导字节、</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        构建 DLT645 协议帧。</span>
+
+<span class="sd">        按照 DLT645 协议规定，构建完整的协议帧，包括前导字节、</span>
 <span class="sd">        地址域、控制码、数据域、校验和和结束标志。</span>
-<span class="sd">        </span>
-<span class="sd">        Args:</span>
-<span class="sd">            addr: 设备地址，6字节</span>
-<span class="sd">            ctrl_code: 控制码</span>
-<span class="sd">            data: 原始数据域</span>
-<span class="sd">            </span>
-<span class="sd">        Returns:</span>
-<span class="sd">            bytearray: 完整的DLT645协议帧</span>
-<span class="sd">            </span>
-<span class="sd">        Raises:</span>
-<span class="sd">            ValueError: 当地址长度不为6字节时抛出</span>
+
+<span class="sd">        :param addr: 设备地址（6字节）。</span>
+<span class="sd">        :type addr: bytes</span>
+<span class="sd">        :param ctrl_code: 控制码。</span>
+<span class="sd">        :type ctrl_code: int</span>
+<span class="sd">        :param data: 原始数据域（未编码）。</span>
+<span class="sd">        :type data: bytes</span>
+<span class="sd">        :return: 完整的 DLT645 协议帧。</span>
+<span class="sd">        :rtype: bytearray</span>
+<span class="sd">        :raises ValueError: 当地址长度不为6字节时抛出。</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">addr</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">6</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;地址长度必须为6字节&quot;</span><span class="p">)</span>
@@ -626,19 +645,17 @@
 <a class="viewcode-back" href="../../../src.protocol.html#src.DLT645Protocol.deserialize">[文档]</a>
     <span class="nd">@classmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">deserialize</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">raw</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Frame</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;将字节切片反序列化为 Frame 结构体</span>
-<span class="sd">        </span>
-<span class="sd">        从原始字节数据中解析出DLT645协议帧。如果无法找到完整的帧，</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        将字节数据反序列化为 Frame 对象。</span>
+
+<span class="sd">        从原始字节数据中解析出 DLT645 协议帧。如果无法找到完整的帧，</span>
 <span class="sd">        则抛出异常。</span>
-<span class="sd">        </span>
-<span class="sd">        Args:</span>
-<span class="sd">            raw: 输入的原始字节数据</span>
-<span class="sd">            </span>
-<span class="sd">        Returns:</span>
-<span class="sd">            Optional[Frame]: 解析出的Frame对象，如果解析失败返回None</span>
-<span class="sd">            </span>
-<span class="sd">        Raises:</span>
-<span class="sd">            Exception: 当无法找到完整帧时抛出</span>
+
+<span class="sd">        :param raw: 输入的原始字节数据。</span>
+<span class="sd">        :type raw: bytes</span>
+<span class="sd">        :return: 解析出的 Frame 对象。</span>
+<span class="sd">        :rtype: Optional[Frame]</span>
+<span class="sd">        :raises Exception: 当无法找到完整帧时抛出。</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">remaining</span><span class="p">,</span> <span class="n">frame</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">deserialize_with_remaining</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">frame</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -650,17 +667,17 @@
 <a class="viewcode-back" href="../../../src.protocol.html#src.DLT645Protocol.deserialize_with_remaining">[文档]</a>
     <span class="nd">@classmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">deserialize_with_remaining</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">raw</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Frame</span><span class="p">]]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;将字节切片反序列化为 Frame 结构体，并返回未解析的剩余数据</span>
-<span class="sd">        </span>
-<span class="sd">        从原始字节数据中解析出DLT645协议帧，并返回未解析的剩余数据。</span>
-<span class="sd">        如果数据不完整或无法解析，返回(原始数据, None)。</span>
-<span class="sd">        </span>
-<span class="sd">        Args:</span>
-<span class="sd">            raw: 输入的原始字节数据</span>
-<span class="sd">            </span>
-<span class="sd">        Returns:</span>
-<span class="sd">            tuple[bytes, Optional[Frame]]: (未解析的剩余数据, 解析出的帧)</span>
-<span class="sd">            如果数据不完整或无法解析，返回(原始数据, None)</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        将字节数据反序列化为 Frame 对象，并返回未解析的剩余数据。</span>
+
+<span class="sd">        从原始字节数据中解析出 DLT645 协议帧，并返回未解析的剩余数据。</span>
+<span class="sd">        如果数据不完整或无法解析，返回 (原始数据, None)。</span>
+
+<span class="sd">        :param raw: 输入的原始字节数据。</span>
+<span class="sd">        :type raw: bytes</span>
+<span class="sd">        :return: 元组 (未解析的剩余数据, 解析出的帧)。</span>
+<span class="sd">                 如果数据不完整或无法解析，返回 (原始数据, None)。</span>
+<span class="sd">        :rtype: tuple[bytes, Optional[Frame]]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># 基础校验 - 不完整的数据不会抛出异常，而是返回None</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">12</span><span class="p">:</span>
@@ -735,18 +752,16 @@
 <a class="viewcode-back" href="../../../src.protocol.html#src.DLT645Protocol.serialize">[文档]</a>
     <span class="nd">@classmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">serialize</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">frame</span><span class="p">:</span> <span class="n">Frame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;将 Frame 结构体序列化为字节切片</span>
-<span class="sd">        </span>
-<span class="sd">        按照DLT645协议规定，将Frame对象序列化为完整的协议帧字节。</span>
-<span class="sd">        </span>
-<span class="sd">        Args:</span>
-<span class="sd">            frame: 需要序列化的Frame对象</span>
-<span class="sd">            </span>
-<span class="sd">        Returns:</span>
-<span class="sd">            Optional[bytes]: 序列化后的协议帧字节，如果失败返回None</span>
-<span class="sd">            </span>
-<span class="sd">        Raises:</span>
-<span class="sd">            Exception: 当起始或结束标志无效时抛出</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        将 Frame 对象序列化为字节数据。</span>
+
+<span class="sd">        按照 DLT645 协议规定，将 Frame 对象序列化为完整的协议帧字节。</span>
+
+<span class="sd">        :param frame: 需要序列化的 Frame 对象。</span>
+<span class="sd">        :type frame: Frame</span>
+<span class="sd">        :return: 序列化后的协议帧字节。</span>
+<span class="sd">        :rtype: Optional[bytes]</span>
+<span class="sd">        :raises Exception: 当起始或结束标志无效时抛出。</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">frame</span><span class="o">.</span><span class="n">start_flag</span> <span class="o">!=</span> <span class="n">FRAME_START_BYTE</span> <span class="ow">or</span> <span class="n">frame</span><span class="o">.</span><span class="n">end_flag</span> <span class="o">!=</span> <span class="n">FRAME_END_BYTE</span><span class="p">:</span>
             <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;invalid start or end flag: </span><span class="si">{</span><span class="n">frame</span><span class="o">.</span><span class="n">start_flag</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">frame</span><span class="o">.</span><span class="n">end_flag</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>

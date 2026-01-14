@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>src.service.serversvc.server_service &mdash; dlt645 v1.4.0 文档</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
 
   
@@ -193,7 +193,12 @@
 <li class="toctree-l9"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.ErrorCode.RateNumExceeded"><code class="docutils literal notranslate"><span class="pre">ErrorCode.RateNumExceeded</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l8"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.error_messages"><code class="docutils literal notranslate"><span class="pre">error_messages</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.get_error_msg"><code class="docutils literal notranslate"><span class="pre">get_error_msg()</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.DI_LEN"><code class="docutils literal notranslate"><span class="pre">DI_LEN</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.ADDRESS_LEN"><code class="docutils literal notranslate"><span class="pre">ADDRESS_LEN</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.PASSWORD_LEN"><code class="docutils literal notranslate"><span class="pre">PASSWORD_LEN</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.OPERATOR_CODE_LEN"><code class="docutils literal notranslate"><span class="pre">OPERATOR_CODE_LEN</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.Demand"><code class="docutils literal notranslate"><span class="pre">Demand</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.EventRecord"><code class="docutils literal notranslate"><span class="pre">EventRecord</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.PasswordManager"><code class="docutils literal notranslate"><span class="pre">PasswordManager</span></code></a><ul>
@@ -226,6 +231,9 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../../src.protocol.html">src.protocol package</a><ul>
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.protocol.html#submodules">Submodules</a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.protocol.html#module-src.protocol.frame">src.protocol.frame module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../../../src.protocol.html#src.protocol.frame.FRAME_START_BYTE"><code class="docutils literal notranslate"><span class="pre">FRAME_START_BYTE</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../../src.protocol.html#src.protocol.frame.FRAME_END_BYTE"><code class="docutils literal notranslate"><span class="pre">FRAME_END_BYTE</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../../src.protocol.html#src.protocol.frame.BROADCAST_ADDR"><code class="docutils literal notranslate"><span class="pre">BROADCAST_ADDR</span></code></a></li>
 <li class="toctree-l6"><a class="reference internal" href="../../../../src.protocol.html#src.protocol.frame.Frame"><code class="docutils literal notranslate"><span class="pre">Frame</span></code></a></li>
 </ul>
 </li>
@@ -501,7 +509,17 @@
            <div itemprop="articleBody">
              
   <h1>src.service.serversvc.server_service 源代码</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">struct</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">DLT645 服务端服务模块。</span>
+
+<span class="sd">本模块实现了 DLT645 协议的服务端业务服务功能，包括：</span>
+<span class="sd">- 处理客户端数据读取请求</span>
+<span class="sd">- 处理客户端数据写入请求</span>
+<span class="sd">- 通讯地址管理</span>
+<span class="sd">- 密码验证和管理</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">struct</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">List</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">...common.transform</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
@@ -536,12 +554,34 @@
 <div class="viewcode-block" id="MeterServerService">
 <a class="viewcode-back" href="../../../../src.service.serversvc.html#src.MeterServerService">[文档]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">MeterServerService</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    电表服务端服务类。</span>
+
+<span class="sd">    用于模拟 DLT645 电表设备，响应客户端的数据读写请求。</span>
+
+<span class="sd">    :ivar server: 通信服务器（TCP 或 RTU）。</span>
+<span class="sd">    :ivar address: 设备地址（6字节）。</span>
+<span class="sd">    :ivar password_manager: 密码管理器。</span>
+<span class="sd">    :ivar clear_meter_event_records: 电表清零事件记录列表。</span>
+<span class="sd">    :ivar event_records: 事件记录列表。</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">server</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">TcpServer</span><span class="p">,</span> <span class="n">RtuServer</span><span class="p">],</span>
         <span class="n">address</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bytearray</span><span class="p">]</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">([</span><span class="mh">0x00</span><span class="p">,</span> <span class="mh">0x00</span><span class="p">,</span> <span class="mh">0x00</span><span class="p">,</span> <span class="mh">0x00</span><span class="p">,</span> <span class="mh">0x00</span><span class="p">,</span> <span class="mh">0x00</span><span class="p">]),</span>
         <span class="n">password_manager</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">PasswordManager</span><span class="p">]</span> <span class="o">=</span> <span class="n">PasswordManager</span><span class="p">(),</span>
     <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        初始化电表服务端服务。</span>
+
+<span class="sd">        :param server: 通信服务器实例（TcpServer 或 RtuServer）。</span>
+<span class="sd">        :type server: Union[TcpServer, RtuServer]</span>
+<span class="sd">        :param address: 设备地址，默认为全零。</span>
+<span class="sd">        :type address: Optional[bytearray]</span>
+<span class="sd">        :param password_manager: 密码管理器，默认创建新实例。</span>
+<span class="sd">        :type password_manager: Optional[PasswordManager]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">server</span> <span class="o">=</span> <span class="n">server</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">address</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">password_manager</span> <span class="o">=</span> <span class="n">password_manager</span>

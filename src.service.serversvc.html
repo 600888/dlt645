@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>src.service.serversvc package &mdash; dlt645 v1.4.0 文档</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
 
   
@@ -196,7 +196,12 @@
 <li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.ErrorCode.RateNumExceeded"><code class="docutils literal notranslate"><span class="pre">ErrorCode.RateNumExceeded</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.error_messages"><code class="docutils literal notranslate"><span class="pre">error_messages</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.get_error_msg"><code class="docutils literal notranslate"><span class="pre">get_error_msg()</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.DI_LEN"><code class="docutils literal notranslate"><span class="pre">DI_LEN</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.ADDRESS_LEN"><code class="docutils literal notranslate"><span class="pre">ADDRESS_LEN</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.PASSWORD_LEN"><code class="docutils literal notranslate"><span class="pre">PASSWORD_LEN</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.OPERATOR_CODE_LEN"><code class="docutils literal notranslate"><span class="pre">OPERATOR_CODE_LEN</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.Demand"><code class="docutils literal notranslate"><span class="pre">Demand</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.EventRecord"><code class="docutils literal notranslate"><span class="pre">EventRecord</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.PasswordManager"><code class="docutils literal notranslate"><span class="pre">PasswordManager</span></code></a><ul>
@@ -229,6 +234,9 @@
 <li class="toctree-l4"><a class="reference internal" href="src.protocol.html">src.protocol package</a><ul>
 <li class="toctree-l5"><a class="reference internal" href="src.protocol.html#submodules">Submodules</a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.protocol.html#module-src.protocol.frame">src.protocol.frame module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="src.protocol.html#src.protocol.frame.FRAME_START_BYTE"><code class="docutils literal notranslate"><span class="pre">FRAME_START_BYTE</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="src.protocol.html#src.protocol.frame.FRAME_END_BYTE"><code class="docutils literal notranslate"><span class="pre">FRAME_END_BYTE</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="src.protocol.html#src.protocol.frame.BROADCAST_ADDR"><code class="docutils literal notranslate"><span class="pre">BROADCAST_ADDR</span></code></a></li>
 <li class="toctree-l6"><a class="reference internal" href="src.protocol.html#src.protocol.frame.Frame"><code class="docutils literal notranslate"><span class="pre">Frame</span></code></a></li>
 </ul>
 </li>
@@ -516,10 +524,39 @@
 </section>
 <section id="module-src.service.serversvc.server_service">
 <span id="src-service-serversvc-server-service-module"></span><h2>src.service.serversvc.server_service module<a class="headerlink" href="#module-src.service.serversvc.server_service" title="Link to this heading"></a></h2>
+<p>DLT645 服务端服务模块。</p>
+<p>本模块实现了 DLT645 协议的服务端业务服务功能，包括：
+- 处理客户端数据读取请求
+- 处理客户端数据写入请求
+- 通讯地址管理
+- 密码验证和管理</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="src.service.serversvc.server_service.MeterServerService">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.service.serversvc.server_service.</span></span><span class="sig-name descname"><span class="pre">MeterServerService</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">server</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">address=bytearray(b'\\x00\\x00\\x00\\x00\\x00\\x00')</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password_manager=&lt;src.model.types.dlt645_type.PasswordManager</span> <span class="pre">object&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/serversvc/server_service.html#MeterServerService"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.service.serversvc.server_service.MeterServerService" title="Link to this definition"></a></dt>
 <dd><p>基类：<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>电表服务端服务类。</p>
+<p>用于模拟 DLT645 电表设备，响应客户端的数据读写请求。</p>
+<dl class="field-list simple">
+<dt class="field-odd">变量<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>server</strong> -- 通信服务器（TCP 或 RTU）。</p></li>
+<li><p><strong>address</strong> -- 设备地址（6字节）。</p></li>
+<li><p><strong>password_manager</strong> -- 密码管理器。</p></li>
+<li><p><strong>clear_meter_event_records</strong> -- 电表清零事件记录列表。</p></li>
+<li><p><strong>event_records</strong> -- 事件记录列表。</p></li>
+</ul>
+</dd>
+</dl>
+<p>初始化电表服务端服务。</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>server</strong> (<em>Union</em><em>[</em><a class="reference internal" href="src.html#src.TcpServer" title="src.TcpServer"><em>TcpServer</em></a><em>, </em><a class="reference internal" href="src.html#src.RtuServer" title="src.RtuServer"><em>RtuServer</em></a><em>]</em>) -- 通信服务器实例（TcpServer 或 RtuServer）。</p></li>
+<li><p><strong>address</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="（在 Python v3.14）"><em>bytearray</em></a><em>]</em>) -- 设备地址，默认为全零。</p></li>
+<li><p><strong>password_manager</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.PasswordManager" title="src.model.types.dlt645_type.PasswordManager"><em>PasswordManager</em></a><em>]</em>) -- 密码管理器，默认创建新实例。</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="src.service.serversvc.server_service.MeterServerService.new_tcp_server">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">new_tcp_server</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ip</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/serversvc/server_service.html#MeterServerService.new_tcp_server"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.service.serversvc.server_service.MeterServerService.new_tcp_server" title="Link to this definition"></a></dt>

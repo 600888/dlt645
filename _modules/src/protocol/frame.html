@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>src.protocol.frame &mdash; dlt645 v1.4.0 文档</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
 
   
@@ -193,7 +193,12 @@
 <li class="toctree-l9"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.ErrorCode.RateNumExceeded"><code class="docutils literal notranslate"><span class="pre">ErrorCode.RateNumExceeded</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l8"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.error_messages"><code class="docutils literal notranslate"><span class="pre">error_messages</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.get_error_msg"><code class="docutils literal notranslate"><span class="pre">get_error_msg()</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.DI_LEN"><code class="docutils literal notranslate"><span class="pre">DI_LEN</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.ADDRESS_LEN"><code class="docutils literal notranslate"><span class="pre">ADDRESS_LEN</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.PASSWORD_LEN"><code class="docutils literal notranslate"><span class="pre">PASSWORD_LEN</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.OPERATOR_CODE_LEN"><code class="docutils literal notranslate"><span class="pre">OPERATOR_CODE_LEN</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.Demand"><code class="docutils literal notranslate"><span class="pre">Demand</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.EventRecord"><code class="docutils literal notranslate"><span class="pre">EventRecord</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.PasswordManager"><code class="docutils literal notranslate"><span class="pre">PasswordManager</span></code></a><ul>
@@ -226,6 +231,9 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../src.protocol.html">src.protocol package</a><ul>
 <li class="toctree-l5"><a class="reference internal" href="../../../src.protocol.html#submodules">Submodules</a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../src.protocol.html#module-src.protocol.frame">src.protocol.frame module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../../src.protocol.html#src.protocol.frame.FRAME_START_BYTE"><code class="docutils literal notranslate"><span class="pre">FRAME_START_BYTE</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../src.protocol.html#src.protocol.frame.FRAME_END_BYTE"><code class="docutils literal notranslate"><span class="pre">FRAME_END_BYTE</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../src.protocol.html#src.protocol.frame.BROADCAST_ADDR"><code class="docutils literal notranslate"><span class="pre">BROADCAST_ADDR</span></code></a></li>
 <li class="toctree-l6"><a class="reference internal" href="../../../src.protocol.html#src.protocol.frame.Frame"><code class="docutils literal notranslate"><span class="pre">Frame</span></code></a></li>
 </ul>
 </li>
@@ -501,19 +509,76 @@
            <div itemprop="articleBody">
              
   <h1>src.protocol.frame 源代码</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">DLT645 协议帧结构模块。</span>
 
-<span class="c1"># 常量定义</span>
+<span class="sd">本模块定义了 DLT645 协议帧的数据结构和相关常量。</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span>
+
+<span class="c1">#: 帧起始字节</span>
 <span class="n">FRAME_START_BYTE</span> <span class="o">=</span> <span class="mh">0x68</span>
+<span class="c1">#: 帧结束字节</span>
 <span class="n">FRAME_END_BYTE</span> <span class="o">=</span> <span class="mh">0x16</span>
+<span class="c1">#: 广播地址</span>
 <span class="n">BROADCAST_ADDR</span> <span class="o">=</span> <span class="mh">0xAA</span>
+
 
 <div class="viewcode-block" id="Frame">
 <a class="viewcode-back" href="../../../src.protocol.html#src.protocol.frame.Frame">[文档]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Frame</span><span class="p">:</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">preamble</span><span class="p">:</span> <span class="nb">bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(),</span> <span class="n">start_flag</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">addr</span><span class="p">:</span> <span class="nb">bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(),</span>
-                 <span class="n">ctrl_code</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">data_len</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(),</span>
-                 <span class="n">check_sum</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">end_flag</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    DLT645 协议帧结构类。</span>
+
+<span class="sd">    表示一个完整的 DLT645 协议数据帧。</span>
+
+<span class="sd">    帧格式::</span>
+
+<span class="sd">        前导码(FE) | 起始符(68H) | 地址域(6B) | 起始符(68H) | 控制码(1B) |</span>
+<span class="sd">        数据长度(1B) | 数据域(NB) | 校验和(1B) | 结束符(16H)</span>
+
+<span class="sd">    :ivar preamble: 前导字节（通常为 0xFE 0xFE 0xFE 0xFE）。</span>
+<span class="sd">    :ivar start_flag: 起始标志（0x68）。</span>
+<span class="sd">    :ivar addr: 地址域（6字节）。</span>
+<span class="sd">    :ivar ctrl_code: 控制码。</span>
+<span class="sd">    :ivar data_len: 数据域长度。</span>
+<span class="sd">    :ivar data: 数据域内容（已解码）。</span>
+<span class="sd">    :ivar check_sum: 校验和。</span>
+<span class="sd">    :ivar end_flag: 结束标志（0x16）。</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">preamble</span><span class="p">:</span> <span class="nb">bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(),</span>
+        <span class="n">start_flag</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="n">addr</span><span class="p">:</span> <span class="nb">bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(),</span>
+        <span class="n">ctrl_code</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="n">data_len</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="n">data</span><span class="p">:</span> <span class="nb">bytearray</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(),</span>
+        <span class="n">check_sum</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="n">end_flag</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        初始化 Frame 实例。</span>
+
+<span class="sd">        :param preamble: 前导字节，默认为空。</span>
+<span class="sd">        :type preamble: bytearray</span>
+<span class="sd">        :param start_flag: 起始标志，默认为 0。</span>
+<span class="sd">        :type start_flag: int</span>
+<span class="sd">        :param addr: 地址域，默认为空（将初始化为6个0）。</span>
+<span class="sd">        :type addr: bytearray</span>
+<span class="sd">        :param ctrl_code: 控制码，默认为 0。</span>
+<span class="sd">        :type ctrl_code: int</span>
+<span class="sd">        :param data_len: 数据域长度，默认为 0。</span>
+<span class="sd">        :type data_len: int</span>
+<span class="sd">        :param data: 数据域内容，默认为空。</span>
+<span class="sd">        :type data: bytearray</span>
+<span class="sd">        :param check_sum: 校验和，默认为 0。</span>
+<span class="sd">        :type check_sum: int</span>
+<span class="sd">        :param end_flag: 结束标志，默认为 0。</span>
+<span class="sd">        :type end_flag: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">preamble</span> <span class="o">=</span> <span class="n">preamble</span> <span class="k">if</span> <span class="n">preamble</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">bytearray</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">start_flag</span> <span class="o">=</span> <span class="n">start_flag</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">addr</span> <span class="o">=</span> <span class="n">addr</span> <span class="k">if</span> <span class="n">addr</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">bytearray</span><span class="p">([</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">6</span><span class="p">)</span>
@@ -524,10 +589,18 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">end_flag</span> <span class="o">=</span> <span class="n">end_flag</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Frame(preamble=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">preamble</span><span class="si">}</span><span class="s2">, start_flag=0x</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">start_flag</span><span class="si">:</span><span class="s2">02X</span><span class="si">}</span><span class="s2">, &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;addr=</span><span class="si">{</span><span class="p">[</span><span class="nb">hex</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">addr</span><span class="p">]</span><span class="si">}</span><span class="s2">, ctrl_code=0x</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">ctrl_code</span><span class="si">:</span><span class="s2">02X</span><span class="si">}</span><span class="s2">, &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;data_len=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">data_len</span><span class="si">}</span><span class="s2">, data=</span><span class="si">{</span><span class="p">[</span><span class="nb">hex</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">]</span><span class="si">}</span><span class="s2">, &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;check_sum=0x</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">check_sum</span><span class="si">:</span><span class="s2">02X</span><span class="si">}</span><span class="s2">, end_flag=0x</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">end_flag</span><span class="si">:</span><span class="s2">02X</span><span class="si">}</span><span class="s2">)&quot;</span> <span class="p">)</span></div>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        返回 Frame 的字符串表示。</span>
+
+<span class="sd">        :return: 格式化的帧信息字符串。</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Frame(preamble=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">preamble</span><span class="si">}</span><span class="s2">, start_flag=0x</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">start_flag</span><span class="si">:</span><span class="s2">02X</span><span class="si">}</span><span class="s2">, &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;addr=</span><span class="si">{</span><span class="p">[</span><span class="nb">hex</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">addr</span><span class="p">]</span><span class="si">}</span><span class="s2">, ctrl_code=0x</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">ctrl_code</span><span class="si">:</span><span class="s2">02X</span><span class="si">}</span><span class="s2">, &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;data_len=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">data_len</span><span class="si">}</span><span class="s2">, data=</span><span class="si">{</span><span class="p">[</span><span class="nb">hex</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">]</span><span class="si">}</span><span class="s2">, &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;check_sum=0x</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">check_sum</span><span class="si">:</span><span class="s2">02X</span><span class="si">}</span><span class="s2">, end_flag=0x</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">end_flag</span><span class="si">:</span><span class="s2">02X</span><span class="si">}</span><span class="s2">)&quot;</span>
+        <span class="p">)</span></div>
 
 </pre></div>
 

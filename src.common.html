@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>src.common package &mdash; dlt645 v1.4.0 文档</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
 
   
@@ -196,7 +196,12 @@
 <li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.ErrorCode.RateNumExceeded"><code class="docutils literal notranslate"><span class="pre">ErrorCode.RateNumExceeded</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.error_messages"><code class="docutils literal notranslate"><span class="pre">error_messages</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.get_error_msg"><code class="docutils literal notranslate"><span class="pre">get_error_msg()</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.DI_LEN"><code class="docutils literal notranslate"><span class="pre">DI_LEN</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.ADDRESS_LEN"><code class="docutils literal notranslate"><span class="pre">ADDRESS_LEN</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.PASSWORD_LEN"><code class="docutils literal notranslate"><span class="pre">PASSWORD_LEN</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.OPERATOR_CODE_LEN"><code class="docutils literal notranslate"><span class="pre">OPERATOR_CODE_LEN</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.Demand"><code class="docutils literal notranslate"><span class="pre">Demand</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.EventRecord"><code class="docutils literal notranslate"><span class="pre">EventRecord</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.PasswordManager"><code class="docutils literal notranslate"><span class="pre">PasswordManager</span></code></a><ul>
@@ -229,6 +234,9 @@
 <li class="toctree-l4"><a class="reference internal" href="src.protocol.html">src.protocol package</a><ul>
 <li class="toctree-l5"><a class="reference internal" href="src.protocol.html#submodules">Submodules</a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.protocol.html#module-src.protocol.frame">src.protocol.frame module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="src.protocol.html#src.protocol.frame.FRAME_START_BYTE"><code class="docutils literal notranslate"><span class="pre">FRAME_START_BYTE</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="src.protocol.html#src.protocol.frame.FRAME_END_BYTE"><code class="docutils literal notranslate"><span class="pre">FRAME_END_BYTE</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="src.protocol.html#src.protocol.frame.BROADCAST_ADDR"><code class="docutils literal notranslate"><span class="pre">BROADCAST_ADDR</span></code></a></li>
 <li class="toctree-l6"><a class="reference internal" href="src.protocol.html#src.protocol.frame.Frame"><code class="docutils literal notranslate"><span class="pre">Frame</span></code></a></li>
 </ul>
 </li>
@@ -608,12 +616,25 @@ is_backtrace: 是否启用回溯</p>
 </section>
 <section id="module-src.common.transform">
 <span id="src-common-transform-module"></span><h2>src.common.transform module<a class="headerlink" href="#module-src.common.transform" title="Link to this heading"></a></h2>
+<p>数据转换工具模块。</p>
+<p>本模块提供了 DLT645 协议所需的各种数据转换功能，包括：
+- 字节数组与整数/浮点数之间的转换
+- BCD 码与数值/字符串之间的转换
+- 日期时间与 BCD 码之间的转换
+- 十六进制格式化等辅助功能</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="src.common.transform.pad_with_zeros">
 <span class="sig-prename descclassname"><span class="pre">src.common.transform.</span></span><span class="sig-name descname"><span class="pre">pad_with_zeros</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">length</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/common/transform.html#pad_with_zeros"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.common.transform.pad_with_zeros" title="Link to this definition"></a></dt>
-<dd><dl class="field-list simple">
+<dd><p>根据指定长度生成补零字符串。</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><em>int</em></a>) -- 需要生成的零的个数。</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>由指定数量零组成的字符串。</p>
+</dd>
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -621,10 +642,18 @@ is_backtrace: 是否启用回溯</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="src.common.transform.bytes_to_int">
 <span class="sig-prename descclassname"><span class="pre">src.common.transform.</span></span><span class="sig-name descname"><span class="pre">bytes_to_int</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">byte_array</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/common/transform.html#bytes_to_int"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.common.transform.bytes_to_int" title="Link to this definition"></a></dt>
-<dd><p>将字节数组转换为无符号整数</p>
+<dd><p>将字节数组转换为无符号整数。</p>
+<p>使用小端序进行转换，如果字节数组长度不足4字节，
+会在右侧补零至4字节。</p>
 <dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>byte_array</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="（在 Python v3.14）"><em>bytearray</em></a>) -- 待转换的字节数组。</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>转换后的无符号整数。</p>
+</dd>
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -632,10 +661,18 @@ is_backtrace: 是否启用回溯</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="src.common.transform.bytes_to_float">
 <span class="sig-prename descclassname"><span class="pre">src.common.transform.</span></span><span class="sig-name descname"><span class="pre">bytes_to_float</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">byte_array</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/common/transform.html#bytes_to_float"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.common.transform.bytes_to_float" title="Link to this definition"></a></dt>
-<dd><p>将字节数组转换为浮点数</p>
+<dd><p>将字节数组转换为浮点数。</p>
+<p>使用小端序进行转换，如果字节数组长度不足4字节，
+会在右侧补零至4字节。</p>
 <dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>byte_array</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="（在 Python v3.14）"><em>bytearray</em></a>) -- 待转换的字节数组。</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>转换后的浮点数。</p>
+</dd>
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="（在 Python v3.14）">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -643,10 +680,18 @@ is_backtrace: 是否启用回溯</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="src.common.transform.bytes_to_spaced_hex">
 <span class="sig-prename descclassname"><span class="pre">src.common.transform.</span></span><span class="sig-name descname"><span class="pre">bytes_to_spaced_hex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/common/transform.html#bytes_to_spaced_hex"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.common.transform.bytes_to_spaced_hex" title="Link to this definition"></a></dt>
-<dd><p>将字节切片转换为每两个字符用空格分隔的十六进制字符串，不足的补 0</p>
+<dd><p>将字节数组转换为空格分隔的十六进制字符串。</p>
+<p>每两个十六进制字符用空格分隔，便于阅读和调试。
+例如: bytearray([0x68, 0xAA]) -&gt; &quot;68 aa&quot;</p>
 <dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="（在 Python v3.14）"><em>bytearray</em></a>) -- 待转换的字节数组。</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>空格分隔的十六进制字符串。</p>
+</dd>
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -654,10 +699,21 @@ is_backtrace: 是否启用回溯</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="src.common.transform.bcd_to_string">
 <span class="sig-prename descclassname"><span class="pre">src.common.transform.</span></span><span class="sig-name descname"><span class="pre">bcd_to_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bcd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endian</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'big'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/common/transform.html#bcd_to_string"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.common.transform.bcd_to_string" title="Link to this definition"></a></dt>
-<dd><p>将 BCD 码字节数组转换为数字字符串</p>
+<dd><p>将 BCD 码字节数组转换为数字字符串。</p>
+<p>BCD（Binary-Coded Decimal）码是一种用4位二进制数表示十进制数字的编码方式。
+每个字节包含两个 BCD 数字（高4位和低4位）。</p>
 <dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bcd</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="（在 Python v3.14）"><em>bytearray</em></a>) -- BCD 码字节数组。</p></li>
+<li><p><strong>endian</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><em>str</em></a>) -- 字节序，&quot;big&quot; 为大端序，&quot;little&quot; 为小端序，默认为 &quot;big&quot;。</p></li>
+</ul>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>解码后的数字字符串。</p>
+</dd>
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -665,10 +721,23 @@ is_backtrace: 是否启用回溯</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="src.common.transform.parse_format">
 <span class="sig-prename descclassname"><span class="pre">src.common.transform.</span></span><span class="sig-name descname"><span class="pre">parse_format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">format_str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/common/transform.html#parse_format"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.common.transform.parse_format" title="Link to this definition"></a></dt>
-<dd><p>解析格式字符串，返回小数位数和总位数</p>
+<dd><p>解析数据格式字符串，返回小数位数和总位数。</p>
+<p>格式字符串示例：
+- &quot;XXXXXX.XX&quot; -&gt; (2, 8)  表示8位数字，2位小数
+- &quot;XXXX.XX&quot; -&gt; (2, 6)    表示6位数字，2位小数
+- &quot;XXXXXXXX&quot; -&gt; (0, 8)    表示8位整数，无小数</p>
 <dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>format_str</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><em>str</em></a>) -- 格式字符串。</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>元组 (小数位数, 总位数)。</p>
+</dd>
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type">(<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>)</span></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="（在 Python v3.14）">tuple</a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）">int</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）">int</a>]</p>
+</dd>
+<dt class="field-even">抛出<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="（在 Python v3.14）"><strong>ValueError</strong></a> -- 当格式字符串无效时抛出。</p>
 </dd>
 </dl>
 </dd></dl>
@@ -676,10 +745,19 @@ is_backtrace: 是否启用回溯</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="src.common.transform.round_float">
 <span class="sig-prename descclassname"><span class="pre">src.common.transform.</span></span><span class="sig-name descname"><span class="pre">round_float</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decimal_places</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/common/transform.html#round_float"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.common.transform.round_float" title="Link to this definition"></a></dt>
-<dd><p>浮点数四舍五入到指定小数位</p>
+<dd><p>将浮点数四舍五入到指定的小数位数。</p>
 <dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="（在 Python v3.14）"><em>float</em></a>) -- 待四舍五入的浮点数。</p></li>
+<li><p><strong>decimal_places</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><em>int</em></a>) -- 保留的小数位数。</p></li>
+</ul>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>四舍五入后的浮点数。</p>
+</dd>
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="（在 Python v3.14）">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -687,10 +765,20 @@ is_backtrace: 是否启用回溯</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="src.common.transform.format_float">
 <span class="sig-prename descclassname"><span class="pre">src.common.transform.</span></span><span class="sig-name descname"><span class="pre">format_float</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decimal_places</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_digits</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/common/transform.html#format_float"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.common.transform.format_float" title="Link to this definition"></a></dt>
-<dd><p>格式化浮点数为固定长度字符串（补零对齐）</p>
+<dd><p>格式化浮点数为固定长度字符串（补零对齐）。</p>
 <dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="（在 Python v3.14）"><em>float</em></a>) -- 待格式化的浮点数。</p></li>
+<li><p><strong>decimal_places</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><em>int</em></a>) -- 小数位数。</p></li>
+<li><p><strong>total_digits</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><em>int</em></a>) -- 总字符长度（包括小数点）。</p></li>
+</ul>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>格式化后的字符串。</p>
+</dd>
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -698,10 +786,20 @@ is_backtrace: 是否启用回溯</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="src.common.transform.string_to_bcd">
 <span class="sig-prename descclassname"><span class="pre">src.common.transform.</span></span><span class="sig-name descname"><span class="pre">string_to_bcd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">digits</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endian</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'big'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/common/transform.html#string_to_bcd"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.common.transform.string_to_bcd" title="Link to this definition"></a></dt>
-<dd><p>将数字字符串转换为BCD码（支持大小端序）</p>
+<dd><p>将数字字符串转换为 BCD 码字节数组。</p>
+<p>如果数字字符串长度为奇数，会在前面补零使其变为偶数长度。</p>
 <dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>digits</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><em>str</em></a>) -- 数字字符串（只包含 0-9）。</p></li>
+<li><p><strong>endian</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><em>str</em></a>) -- 字节序，&quot;big&quot; 为大端序，&quot;little&quot; 为小端序，默认为 &quot;big&quot;。</p></li>
+</ul>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>BCD 码字节数组。</p>
+</dd>
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytearray</span></code></a></span></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="（在 Python v3.14）">bytearray</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -709,10 +807,23 @@ is_backtrace: 是否启用回溯</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="src.common.transform.bcd_to_value">
 <span class="sig-prename descclassname"><span class="pre">src.common.transform.</span></span><span class="sig-name descname"><span class="pre">bcd_to_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bcd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">format_str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endian</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'big'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/common/transform.html#bcd_to_value"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.common.transform.bcd_to_value" title="Link to this definition"></a></dt>
-<dd><p>将BCD码字节数组转换为数值，支持不同数据格式和字节序</p>
+<dd><p>将 BCD 码字节数组转换为数值。</p>
+<p>根据格式字符串决定返回类型：
+- 如果格式字符串不包含小数点，返回数字字符串
+- 如果格式字符串包含小数点，返回浮点数</p>
 <dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bcd</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="（在 Python v3.14）"><em>bytearray</em></a>) -- BCD 码字节数组。</p></li>
+<li><p><strong>format_str</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><em>str</em></a>) -- 数据格式字符串（如 &quot;XXXXXX.XX&quot;）。</p></li>
+<li><p><strong>endian</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><em>str</em></a>) -- 字节序，&quot;big&quot; 或 &quot;little&quot;，默认为 &quot;big&quot;。</p></li>
+</ul>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>解析后的数值（字符串或浮点数）。</p>
+</dd>
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]</span></p>
+<dd class="field-odd"><p>Union[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）">str</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="（在 Python v3.14）">float</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -720,10 +831,21 @@ is_backtrace: 是否启用回溯</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="src.common.transform.float_to_bcd">
 <span class="sig-prename descclassname"><span class="pre">src.common.transform.</span></span><span class="sig-name descname"><span class="pre">float_to_bcd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">format_str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endian</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'big'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/common/transform.html#float_to_bcd"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.common.transform.float_to_bcd" title="Link to this definition"></a></dt>
-<dd><p>将float数值转换为BCD码字节数组，支持不同数据格式和字节序</p>
+<dd><p>将浮点数转换为 BCD 码字节数组。</p>
+<p>支持正负数转换，负数会在最高位设置符号位（0x80）。</p>
 <dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="（在 Python v3.14）"><em>float</em></a>) -- 待转换的浮点数。</p></li>
+<li><p><strong>format_str</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><em>str</em></a>) -- 数据格式字符串（如 &quot;XXXXXX.XX&quot;）。</p></li>
+<li><p><strong>endian</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><em>str</em></a>) -- 字节序，&quot;big&quot; 或 &quot;little&quot;，默认为 &quot;big&quot;。</p></li>
+</ul>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>BCD 码字节数组。</p>
+</dd>
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytearray</span></code></a></span></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="（在 Python v3.14）">bytearray</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -731,10 +853,21 @@ is_backtrace: 是否启用回溯</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="src.common.transform.bcd_to_float">
 <span class="sig-prename descclassname"><span class="pre">src.common.transform.</span></span><span class="sig-name descname"><span class="pre">bcd_to_float</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bcd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">format_str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endian</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'big'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/common/transform.html#bcd_to_float"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.common.transform.bcd_to_float" title="Link to this definition"></a></dt>
-<dd><p>将BCD码字节数组转换为float数值，支持不同字节序</p>
+<dd><p>将 BCD 码字节数组转换为浮点数。</p>
+<p>支持带符号位的 BCD 码转换，最高位为 0x80 时表示负数。</p>
 <dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bcd</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="（在 Python v3.14）"><em>bytearray</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）"><em>bytes</em></a><em>]</em>) -- BCD 码字节数组。</p></li>
+<li><p><strong>format_str</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><em>str</em></a>) -- 数据格式字符串（如 &quot;XXXXXX.XX&quot;）。</p></li>
+<li><p><strong>endian</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><em>str</em></a>) -- 字节序，&quot;big&quot; 或 &quot;little&quot;，默认为 &quot;big&quot;。</p></li>
+</ul>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>解析后的浮点数。</p>
+</dd>
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="（在 Python v3.14）">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -742,10 +875,18 @@ is_backtrace: 是否启用回溯</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="src.common.transform.datetime_to_bcd">
 <span class="sig-prename descclassname"><span class="pre">src.common.transform.</span></span><span class="sig-name descname"><span class="pre">datetime_to_bcd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/common/transform.html#datetime_to_bcd"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.common.transform.datetime_to_bcd" title="Link to this definition"></a></dt>
-<dd><p>将时间转换为BCD码字节数组（小端序）</p>
+<dd><p>将 datetime 对象转换为 BCD 码字节数组（小端序）。</p>
+<p>输出格式为：分时日月年（小端序），共5字节。
+年份只取后两位（如 2025 -&gt; 25）。</p>
 <dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>t</strong> (<em>datetime</em>) -- datetime 对象。</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>BCD 码字节数组，长度为5字节。</p>
+</dd>
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytearray</span></code></a></span></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="（在 Python v3.14）">bytearray</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -753,10 +894,17 @@ is_backtrace: 是否启用回溯</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="src.common.transform.bcd_to_byte">
 <span class="sig-prename descclassname"><span class="pre">src.common.transform.</span></span><span class="sig-name descname"><span class="pre">bcd_to_byte</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/common/transform.html#bcd_to_byte"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.common.transform.bcd_to_byte" title="Link to this definition"></a></dt>
-<dd><p>将一个字节的BCD码转换为对应的整数</p>
+<dd><p>将单个 BCD 码字节转换为对应的十进制整数。</p>
+<p>例如：0x25 -&gt; 25</p>
 <dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>b</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><em>int</em></a>) -- BCD 码字节（0x00-0x99）。</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>对应的十进制整数（0-99）。</p>
+</dd>
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -764,10 +912,21 @@ is_backtrace: 是否启用回溯</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="src.common.transform.bcd_to_time">
 <span class="sig-prename descclassname"><span class="pre">src.common.transform.</span></span><span class="sig-name descname"><span class="pre">bcd_to_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bcd</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/common/transform.html#bcd_to_time"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.common.transform.bcd_to_time" title="Link to this definition"></a></dt>
-<dd><p>将BCD码字节数组转换为时间</p>
+<dd><p>将 BCD 码字节数组转换为 datetime 对象。</p>
+<p>输入格式为：年月日时分（大端序），共5字节。
+年份假设为21世纪（如 25 -&gt; 2025）。</p>
 <dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>bcd</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="（在 Python v3.14）"><em>bytearray</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）"><em>bytes</em></a><em>]</em>) -- BCD 码字节数组，长度至少为5字节。</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>解析后的 datetime 对象。</p>
+</dd>
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.datetime" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code></a></span></p>
+<dd class="field-odd"><p>datetime</p>
+</dd>
+<dt class="field-even">抛出<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="（在 Python v3.14）"><strong>ValueError</strong></a> -- 当 BCD 码长度不足5字节时抛出。</p>
 </dd>
 </dl>
 </dd></dl>
@@ -775,10 +934,20 @@ is_backtrace: 是否启用回溯</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="src.common.transform.uint8_to_bcd">
 <span class="sig-prename descclassname"><span class="pre">src.common.transform.</span></span><span class="sig-name descname"><span class="pre">uint8_to_bcd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/common/transform.html#uint8_to_bcd"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.common.transform.uint8_to_bcd" title="Link to this definition"></a></dt>
-<dd><p>将0-99的整数转换为BCD码</p>
+<dd><p>将 0-99 范围内的整数转换为 BCD 码。</p>
+<p>例如：25 -&gt; 0x25</p>
 <dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><em>int</em></a>) -- 0-99 范围内的整数。</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>对应的 BCD 码值。</p>
+</dd>
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）">int</a></p>
+</dd>
+<dt class="field-even">抛出<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="（在 Python v3.14）"><strong>ValueError</strong></a> -- 当输入不在 0-99 范围内时抛出。</p>
 </dd>
 </dl>
 </dd></dl>
@@ -786,10 +955,17 @@ is_backtrace: 是否启用回溯</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="src.common.transform.reverse_bytes">
 <span class="sig-prename descclassname"><span class="pre">src.common.transform.</span></span><span class="sig-name descname"><span class="pre">reverse_bytes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/common/transform.html#reverse_bytes"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.common.transform.reverse_bytes" title="Link to this definition"></a></dt>
-<dd><p>反转字节数组</p>
+<dd><p>反转字节数组的顺序。</p>
+<p>用于大小端序之间的转换。</p>
 <dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="（在 Python v3.14）"><em>bytearray</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）"><em>bytes</em></a><em>]</em>) -- 待反转的字节数组。</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>反转后的字节数组。</p>
+</dd>
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytearray</span></code></a></span></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="（在 Python v3.14）">bytearray</a></p>
 </dd>
 </dl>
 </dd></dl>

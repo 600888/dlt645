@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>src.transport.server.rtu_server &mdash; dlt645 v1.4.0 文档</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
 
   
@@ -193,7 +193,12 @@
 <li class="toctree-l9"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.ErrorCode.RateNumExceeded"><code class="docutils literal notranslate"><span class="pre">ErrorCode.RateNumExceeded</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l8"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.error_messages"><code class="docutils literal notranslate"><span class="pre">error_messages</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.get_error_msg"><code class="docutils literal notranslate"><span class="pre">get_error_msg()</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.DI_LEN"><code class="docutils literal notranslate"><span class="pre">DI_LEN</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.ADDRESS_LEN"><code class="docutils literal notranslate"><span class="pre">ADDRESS_LEN</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.PASSWORD_LEN"><code class="docutils literal notranslate"><span class="pre">PASSWORD_LEN</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.OPERATOR_CODE_LEN"><code class="docutils literal notranslate"><span class="pre">OPERATOR_CODE_LEN</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.Demand"><code class="docutils literal notranslate"><span class="pre">Demand</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.EventRecord"><code class="docutils literal notranslate"><span class="pre">EventRecord</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.PasswordManager"><code class="docutils literal notranslate"><span class="pre">PasswordManager</span></code></a><ul>
@@ -226,6 +231,9 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../../src.protocol.html">src.protocol package</a><ul>
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.protocol.html#submodules">Submodules</a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.protocol.html#module-src.protocol.frame">src.protocol.frame module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../../../src.protocol.html#src.protocol.frame.FRAME_START_BYTE"><code class="docutils literal notranslate"><span class="pre">FRAME_START_BYTE</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../../src.protocol.html#src.protocol.frame.FRAME_END_BYTE"><code class="docutils literal notranslate"><span class="pre">FRAME_END_BYTE</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../../src.protocol.html#src.protocol.frame.BROADCAST_ADDR"><code class="docutils literal notranslate"><span class="pre">BROADCAST_ADDR</span></code></a></li>
 <li class="toctree-l6"><a class="reference internal" href="../../../../src.protocol.html#src.protocol.frame.Frame"><code class="docutils literal notranslate"><span class="pre">Frame</span></code></a></li>
 </ul>
 </li>
@@ -501,7 +509,13 @@
            <div itemprop="articleBody">
              
   <h1>src.transport.server.rtu_server 源代码</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Any</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">RTU 服务器模块。</span>
+
+<span class="sd">本模块实现了 DLT645 协议的 RTU（串口）服务器功能。</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Any</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">serial</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">threading</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
@@ -514,6 +528,22 @@
 <div class="viewcode-block" id="RtuServer">
 <a class="viewcode-back" href="../../../../src.transport.server.html#src.RtuServer">[文档]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">RtuServer</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    RTU 服务器类，用于与 DLT645 客户端进行串口通信。</span>
+
+<span class="sd">    该类实现了 RTU（Remote Terminal Unit）服务器功能，</span>
+<span class="sd">    支持与 DLT645 协议客户端进行串口通信。</span>
+
+<span class="sd">    :ivar port: 串口名称。</span>
+<span class="sd">    :ivar data_bits: 数据位。</span>
+<span class="sd">    :ivar stop_bits: 停止位。</span>
+<span class="sd">    :ivar baud_rate: 波特率。</span>
+<span class="sd">    :ivar parity: 校验位。</span>
+<span class="sd">    :ivar timeout: 超时时间（秒）。</span>
+<span class="sd">    :ivar service: 服务实例，用于处理业务逻辑。</span>
+<span class="sd">    :ivar conn: 串口连接对象。</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">port</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -524,16 +554,23 @@
         <span class="n">timeout</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">5.0</span><span class="p">,</span>
         <span class="n">service</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;初始化RTU服务器</span>
-<span class="sd">        </span>
-<span class="sd">        Args:</span>
-<span class="sd">            port: 串口端口名（如 &#39;/dev/ttyUSB0&#39;）</span>
-<span class="sd">            data_bits: 数据位（默认8位）</span>
-<span class="sd">            stop_bits: 停止位（默认1位）</span>
-<span class="sd">            baud_rate: 波特率（默认9600）</span>
-<span class="sd">            parity: 校验位（默认无校验）</span>
-<span class="sd">            timeout: 超时时间（默认5秒）</span>
-<span class="sd">            service: 服务实例，用于处理业务逻辑</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        初始化 RTU 服务器。</span>
+
+<span class="sd">        :param port: 串口端口名（如 &#39;/dev/ttyUSB0&#39;）。</span>
+<span class="sd">        :type port: str</span>
+<span class="sd">        :param data_bits: 数据位，默认 8。</span>
+<span class="sd">        :type data_bits: int</span>
+<span class="sd">        :param stop_bits: 停止位，默认 1。</span>
+<span class="sd">        :type stop_bits: int</span>
+<span class="sd">        :param baud_rate: 波特率，默认 9600。</span>
+<span class="sd">        :type baud_rate: int</span>
+<span class="sd">        :param parity: 校验位，默认无校验。</span>
+<span class="sd">        :type parity: str</span>
+<span class="sd">        :param timeout: 超时时间（秒），默认 5.0。</span>
+<span class="sd">        :type timeout: float</span>
+<span class="sd">        :param service: 服务实例，用于处理业务逻辑。</span>
+<span class="sd">        :type service: Any</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">port</span> <span class="o">=</span> <span class="n">port</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data_bits</span> <span class="o">=</span> <span class="n">data_bits</span>

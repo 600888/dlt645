@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>src.model.validators &mdash; dlt645 v1.4.0 文档</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
 
   
@@ -193,7 +193,12 @@
 <li class="toctree-l9"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.ErrorCode.RateNumExceeded"><code class="docutils literal notranslate"><span class="pre">ErrorCode.RateNumExceeded</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l8"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.error_messages"><code class="docutils literal notranslate"><span class="pre">error_messages</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.get_error_msg"><code class="docutils literal notranslate"><span class="pre">get_error_msg()</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.DI_LEN"><code class="docutils literal notranslate"><span class="pre">DI_LEN</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.ADDRESS_LEN"><code class="docutils literal notranslate"><span class="pre">ADDRESS_LEN</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.PASSWORD_LEN"><code class="docutils literal notranslate"><span class="pre">PASSWORD_LEN</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.OPERATOR_CODE_LEN"><code class="docutils literal notranslate"><span class="pre">OPERATOR_CODE_LEN</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.Demand"><code class="docutils literal notranslate"><span class="pre">Demand</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.EventRecord"><code class="docutils literal notranslate"><span class="pre">EventRecord</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="../../../src.model.types.html#src.model.types.dlt645_type.PasswordManager"><code class="docutils literal notranslate"><span class="pre">PasswordManager</span></code></a><ul>
@@ -226,6 +231,9 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../src.protocol.html">src.protocol package</a><ul>
 <li class="toctree-l5"><a class="reference internal" href="../../../src.protocol.html#submodules">Submodules</a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../src.protocol.html#module-src.protocol.frame">src.protocol.frame module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../../src.protocol.html#src.protocol.frame.FRAME_START_BYTE"><code class="docutils literal notranslate"><span class="pre">FRAME_START_BYTE</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../src.protocol.html#src.protocol.frame.FRAME_END_BYTE"><code class="docutils literal notranslate"><span class="pre">FRAME_END_BYTE</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../src.protocol.html#src.protocol.frame.BROADCAST_ADDR"><code class="docutils literal notranslate"><span class="pre">BROADCAST_ADDR</span></code></a></li>
 <li class="toctree-l6"><a class="reference internal" href="../../../src.protocol.html#src.protocol.frame.Frame"><code class="docutils literal notranslate"><span class="pre">Frame</span></code></a></li>
 </ul>
 </li>
@@ -502,13 +510,36 @@
            <div itemprop="articleBody">
              
   <h1>src.model.validators 源代码</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">.types.dlt645_type</span><span class="w"> </span><span class="kn">import</span> <span class="n">CtrlCode</span><span class="p">,</span> <span class="n">PASSWORD_LEN</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">设备验证模块。</span>
+
+<span class="sd">本模块提供设备地址验证功能。</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">.types.dlt645_type</span><span class="w"> </span><span class="kn">import</span> <span class="n">CtrlCode</span><span class="p">,</span> <span class="n">PASSWORD_LEN</span>
 
 
 <div class="viewcode-block" id="validate_device">
 <a class="viewcode-back" href="../../../src.model.html#src.model.validators.validate_device">[文档]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">validate_device</span><span class="p">(</span><span class="n">address</span><span class="p">:</span> <span class="nb">bytearray</span><span class="p">,</span> <span class="n">ctrl_code</span><span class="p">:</span> <span class="n">CtrlCode</span><span class="p">,</span> <span class="n">addr</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;验证设备地址&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    验证设备地址是否匹配。</span>
+
+<span class="sd">    以下情况验证通过：</span>
+<span class="sd">    1. 读/写通讯地址命令的响应帧（控制码带 0x80 应答标志）</span>
+<span class="sd">    2. 广播地址（0xAA AA AA AA AA AA）</span>
+<span class="sd">    3. 广播校时地址（0x99 99 99 99 99 99）</span>
+<span class="sd">    4. 地址与预期地址完全匹配</span>
+
+<span class="sd">    :param address: 预期的设备地址（6字节）。</span>
+<span class="sd">    :type address: bytearray</span>
+<span class="sd">    :param ctrl_code: 帧的控制码。</span>
+<span class="sd">    :type ctrl_code: CtrlCode</span>
+<span class="sd">    :param addr: 帧中的实际地址（6字节）。</span>
+<span class="sd">    :type addr: bytes</span>
+<span class="sd">    :return: 验证通过返回 True，否则返回 False。</span>
+<span class="sd">    :rtype: bool</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="p">(</span>
         <span class="n">ctrl_code</span> <span class="o">==</span> <span class="n">CtrlCode</span><span class="o">.</span><span class="n">ReadAddress</span> <span class="o">|</span> <span class="mh">0x80</span>
         <span class="ow">or</span> <span class="n">ctrl_code</span> <span class="o">==</span> <span class="n">CtrlCode</span><span class="o">.</span><span class="n">WriteAddress</span> <span class="o">|</span> <span class="mh">0x80</span>
@@ -520,6 +551,7 @@
     <span class="p">):</span>
         <span class="k">return</span> <span class="kc">True</span>
     <span class="k">return</span> <span class="n">address</span> <span class="o">==</span> <span class="n">addr</span></div>
+
 
 </pre></div>
 

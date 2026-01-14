@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>src.model.types package &mdash; dlt645 v1.4.0 文档</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
 
   
@@ -196,7 +196,12 @@
 <li class="toctree-l9"><a class="reference internal" href="#src.model.types.dlt645_type.ErrorCode.RateNumExceeded"><code class="docutils literal notranslate"><span class="pre">ErrorCode.RateNumExceeded</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l8"><a class="reference internal" href="#src.model.types.dlt645_type.error_messages"><code class="docutils literal notranslate"><span class="pre">error_messages</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="#src.model.types.dlt645_type.get_error_msg"><code class="docutils literal notranslate"><span class="pre">get_error_msg()</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="#src.model.types.dlt645_type.DI_LEN"><code class="docutils literal notranslate"><span class="pre">DI_LEN</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="#src.model.types.dlt645_type.ADDRESS_LEN"><code class="docutils literal notranslate"><span class="pre">ADDRESS_LEN</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="#src.model.types.dlt645_type.PASSWORD_LEN"><code class="docutils literal notranslate"><span class="pre">PASSWORD_LEN</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="#src.model.types.dlt645_type.OPERATOR_CODE_LEN"><code class="docutils literal notranslate"><span class="pre">OPERATOR_CODE_LEN</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="#src.model.types.dlt645_type.Demand"><code class="docutils literal notranslate"><span class="pre">Demand</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="#src.model.types.dlt645_type.EventRecord"><code class="docutils literal notranslate"><span class="pre">EventRecord</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="#src.model.types.dlt645_type.PasswordManager"><code class="docutils literal notranslate"><span class="pre">PasswordManager</span></code></a><ul>
@@ -229,6 +234,9 @@
 <li class="toctree-l4"><a class="reference internal" href="src.protocol.html">src.protocol package</a><ul>
 <li class="toctree-l5"><a class="reference internal" href="src.protocol.html#submodules">Submodules</a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.protocol.html#module-src.protocol.frame">src.protocol.frame module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="src.protocol.html#src.protocol.frame.FRAME_START_BYTE"><code class="docutils literal notranslate"><span class="pre">FRAME_START_BYTE</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="src.protocol.html#src.protocol.frame.FRAME_END_BYTE"><code class="docutils literal notranslate"><span class="pre">FRAME_END_BYTE</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="src.protocol.html#src.protocol.frame.BROADCAST_ADDR"><code class="docutils literal notranslate"><span class="pre">BROADCAST_ADDR</span></code></a></li>
 <li class="toctree-l6"><a class="reference internal" href="src.protocol.html#src.protocol.frame.Frame"><code class="docutils literal notranslate"><span class="pre">Frame</span></code></a></li>
 </ul>
 </li>
@@ -515,18 +523,78 @@
 <span id="src-model-types-data-type-module"></span><h2>src.model.types.data_type module<a class="headerlink" href="#module-src.model.types.data_type" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="src.model.types.data_type.DataItem">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.model.types.data_type.</span></span><span class="sig-name descname"><span class="pre">DataItem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">di</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_format</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">datetime.datetime(2026,</span> <span class="pre">1,</span> <span class="pre">8,</span> <span class="pre">14,</span> <span class="pre">55,</span> <span class="pre">21,</span> <span class="pre">769843)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/model/types/data_type.html#DataItem"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.model.types.data_type.DataItem" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.model.types.data_type.</span></span><span class="sig-name descname"><span class="pre">DataItem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">di</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_format</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">datetime.datetime(2026,</span> <span class="pre">1,</span> <span class="pre">14,</span> <span class="pre">11,</span> <span class="pre">43,</span> <span class="pre">44,</span> <span class="pre">248897)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/model/types/data_type.html#DataItem"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.model.types.data_type.DataItem" title="Link to this definition"></a></dt>
 <dd><p>基类：<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>数据项实体类，表示一个具体的数据项。</p>
+<dl class="field-list simple">
+<dt class="field-odd">变量<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>di</strong> -- 数据标识 (DI)，4 字节。</p></li>
+<li><p><strong>name</strong> -- 数据项名称。</p></li>
+<li><p><strong>data_format</strong> -- 数据格式字符串（如 &quot;XXXXXX.XX&quot;）。</p></li>
+<li><p><strong>value</strong> -- 数据值。</p></li>
+<li><p><strong>unit</strong> -- 数据单位。</p></li>
+<li><p><strong>update_time</strong> -- 最后更新时间戳。</p></li>
+</ul>
+</dd>
+</dl>
+<p>初始化 DataItem 实例。</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>di</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><em>int</em></a>) -- 数据标识 (DI)。</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><em>str</em></a>) -- 数据项名称。</p></li>
+<li><p><strong>data_format</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><em>str</em></a>) -- 定义数据结构的格式。</p></li>
+<li><p><strong>value</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="（在 Python v3.14）"><em>float</em></a><em>, </em><em>List</em><em>]</em><em>, </em><em>可选</em>) -- 数据项的实际值，默认为 0。</p></li>
+<li><p><strong>unit</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><em>str</em></a><em>, </em><em>可选</em>) -- 单位字符串（如 &quot;kWh&quot;），默认为空字符串。</p></li>
+<li><p><strong>update_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.datetime" title="（在 Python v3.14）"><em>datetime.datetime</em></a><em>, </em><em>可选</em>) -- 数据更新的时间戳，默认为当前时间。</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="src.model.types.data_type.DataType">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.model.types.data_type.</span></span><span class="sig-name descname"><span class="pre">DataType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Di</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">DataFormat</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/model/types/data_type.html#DataType"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.model.types.data_type.DataType" title="Link to this definition"></a></dt>
 <dd><p>基类：<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>数据类型配置类，通常从 JSON 加载。</p>
+<dl class="field-list simple">
+<dt class="field-odd">变量<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>di</strong> -- 数据标识 (DI)，整数形式。</p></li>
+<li><p><strong>name</strong> -- 数据类型名称。</p></li>
+<li><p><strong>unit</strong> -- 计量单位。</p></li>
+<li><p><strong>data_format</strong> -- 格式字符串定义。</p></li>
+</ul>
+</dd>
+</dl>
+<p>初始化 DataType 实例。</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Di</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><em>str</em></a><em>, </em><em>可选</em>) -- 数据标识字符串（十六进制），默认为空字符串。</p></li>
+<li><p><strong>Name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><em>str</em></a><em>, </em><em>可选</em>) -- 数据类型名称，默认为空字符串。</p></li>
+<li><p><strong>Unit</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><em>str</em></a><em>, </em><em>可选</em>) -- 计量单位，默认为空字符串。</p></li>
+<li><p><strong>DataFormat</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><em>str</em></a><em>, </em><em>可选</em>) -- 格式字符串，默认为空字符串。</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="src.model.types.data_type.DataType.from_dict">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/model/types/data_type.html#DataType.from_dict"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.model.types.data_type.DataType.from_dict" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>从字典创建 DataType 实例。</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="（在 Python v3.14）"><em>dict</em></a>) -- 包含 'Di', 'Name', 'Unit', 'DataFormat' 的字典。</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataType 实例。</p>
+</dd>
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#src.model.types.data_type.DataType" title="src.model.types.data_type.DataType">DataType</a></p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
@@ -534,23 +602,72 @@
 <dt class="sig sig-object py" id="src.model.types.data_type.uint32_from_string">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.model.types.data_type.</span></span><span class="sig-name descname"><span class="pre">uint32_from_string</span></span><a class="reference internal" href="_modules/src/model/types/data_type.html#uint32_from_string"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.model.types.data_type.uint32_from_string" title="Link to this definition"></a></dt>
 <dd><p>基类：<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></p>
+<p>自定义整数类型，用于处理从 JSON 字符串（包括十六进制）解析 uint32。</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="src.model.types.data_type.uint32_from_string.from_json">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/model/types/data_type.html#uint32_from_string.from_json"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.model.types.data_type.uint32_from_string.from_json" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>将输入数据解析为 uint32 整数。</p>
+<p>处理以下情况：
+- 空字符串 -&gt; 0
+- 十六进制字符串（带或不带 0x 前缀）
+- 普通整数</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>Union</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><em>int</em></a><em>]</em>) -- 待解析的输入数据。</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>解析后的整数值。</p>
+</dd>
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#src.model.types.data_type.uint32_from_string" title="src.model.types.data_type.uint32_from_string">uint32_from_string</a></p>
+</dd>
+<dt class="field-even">抛出<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="（在 Python v3.14）"><strong>ValueError</strong></a> -- 如果转换失败。</p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="src.model.types.data_type.init_data_type_from_json">
 <span class="sig-prename descclassname"><span class="pre">src.model.types.data_type.</span></span><span class="sig-name descname"><span class="pre">init_data_type_from_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/model/types/data_type.html#init_data_type_from_json"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.model.types.data_type.init_data_type_from_json" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>从 JSON 文件初始化 DataType 对象列表。</p>
+<p>读取指定的 JSON 文件，解析后返回 DataType 实例列表。</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file_path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><em>str</em></a>) -- JSON 配置文件的路径。</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>初始化后的 DataType 对象列表。</p>
+</dd>
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="（在 Python v3.14）">list</a>[<a class="reference internal" href="#src.model.types.data_type.DataType" title="src.model.types.data_type.DataType">DataType</a>]</p>
+</dd>
+<dt class="field-even">抛出<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#FileNotFoundError" title="（在 Python v3.14）"><strong>FileNotFoundError</strong></a> -- 如果 JSON 文件不存在。</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/json.html#json.JSONDecodeError" title="（在 Python v3.14）"><strong>json.JSONDecodeError</strong></a> -- 如果 JSON 文件格式无效。</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="src.model.types.data_type.DataFormat">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.model.types.data_type.</span></span><span class="sig-name descname"><span class="pre">DataFormat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/model/types/data_type.html#DataFormat"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.model.types.data_type.DataFormat" title="Link to this definition"></a></dt>
 <dd><p>基类：<a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></a></p>
-<p>An enumeration.</p>
+<p>表示各种数据格式模板的枚举。</p>
+<p>定义说明：
+- X: 十进制数字
+- Y: 年
+- M: 月
+- D: 日
+- W: 星期
+- h: 时
+- m: 分
+- s: 秒
+- N: 数字（通用）</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="src.model.types.data_type.DataFormat.XXXXXXXX">
 <span class="sig-name descname"><span class="pre">XXXXXXXX</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'XXXXXXXX'</span></em><a class="headerlink" href="#src.model.types.data_type.DataFormat.XXXXXXXX" title="Link to this definition"></a></dt>
@@ -621,11 +738,34 @@
 </section>
 <section id="module-src.model.types.dlt645_type">
 <span id="src-model-types-dlt645-type-module"></span><h2>src.model.types.dlt645_type module<a class="headerlink" href="#module-src.model.types.dlt645_type" title="Link to this heading"></a></h2>
+<p>DLT645 协议类型定义模块。</p>
+<p>本模块定义了 DLT645 协议所需的各种类型，包括：
+- 数据标识分类枚举 (DICategory)
+- 控制码枚举 (CtrlCode)
+- 错误码枚举 (ErrorCode)
+- 需量数据类 (Demand)
+- 事件记录类 (EventRecord)
+- 密码管理器类 (PasswordManager)</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="src.model.types.dlt645_type.DICategory">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.model.types.dlt645_type.</span></span><span class="sig-name descname"><span class="pre">DICategory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/model/types/dlt645_type.html#DICategory"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.model.types.dlt645_type.DICategory" title="Link to this definition"></a></dt>
 <dd><p>基类：<a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.IntEnum" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">IntEnum</span></code></a></p>
-<p>An enumeration.</p>
+<p>数据标识分类枚举。</p>
+<p>DLT645 协议中数据项按功能分为多个类别，
+数据标识 (DI) 的高字节决定了数据所属的类别。</p>
+<dl class="field-list simple">
+<dt class="field-odd">变量<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>CategoryEnergy</strong> -- 电能量数据（0x00）</p></li>
+<li><p><strong>CategoryDemand</strong> -- 需量数据（0x01）</p></li>
+<li><p><strong>CategoryVariable</strong> -- 变量数据（0x02）</p></li>
+<li><p><strong>CategoryEvent</strong> -- 事件记录数据（0x03）</p></li>
+<li><p><strong>CategoryParameter</strong> -- 参变量数据（0x04）</p></li>
+<li><p><strong>CategoryFreeze</strong> -- 冻结量数据（0x05）</p></li>
+<li><p><strong>CategoryLoad</strong> -- 负荷记录数据（0x06）</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="src.model.types.dlt645_type.DICategory.CategoryEnergy">
 <span class="sig-name descname"><span class="pre">CategoryEnergy</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#src.model.types.dlt645_type.DICategory.CategoryEnergy" title="Link to this definition"></a></dt>
@@ -667,7 +807,22 @@
 <dt class="sig sig-object py" id="src.model.types.dlt645_type.CtrlCode">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.model.types.dlt645_type.</span></span><span class="sig-name descname"><span class="pre">CtrlCode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/model/types/dlt645_type.html#CtrlCode"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.model.types.dlt645_type.CtrlCode" title="Link to this definition"></a></dt>
 <dd><p>基类：<a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.IntEnum" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">IntEnum</span></code></a></p>
-<p>An enumeration.</p>
+<p>控制码枚举。</p>
+<p>DLT645 协议中控制码用于标识帧的功能类型。</p>
+<dl class="field-list simple">
+<dt class="field-odd">变量<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>BroadcastTimeSync</strong> -- 广播校时命令（0x08）</p></li>
+<li><p><strong>ReadData</strong> -- 读数据命令（0x11）</p></li>
+<li><p><strong>ReadAddress</strong> -- 读通讯地址命令（0x13）</p></li>
+<li><p><strong>WriteData</strong> -- 写数据命令（0x14）</p></li>
+<li><p><strong>WriteAddress</strong> -- 写通讯地址命令（0x15）</p></li>
+<li><p><strong>FreezeCmd</strong> -- 冻结命令（0x16）</p></li>
+<li><p><strong>ChangeBaudRate</strong> -- 修改通信速率命令（0x17）</p></li>
+<li><p><strong>ChangePassword</strong> -- 修改密码命令（0x18）</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="src.model.types.dlt645_type.CtrlCode.BroadcastTimeSync">
 <span class="sig-name descname"><span class="pre">BroadcastTimeSync</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">8</span></em><a class="headerlink" href="#src.model.types.dlt645_type.CtrlCode.BroadcastTimeSync" title="Link to this definition"></a></dt>
@@ -714,7 +869,22 @@
 <dt class="sig sig-object py" id="src.model.types.dlt645_type.ErrorCode">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.model.types.dlt645_type.</span></span><span class="sig-name descname"><span class="pre">ErrorCode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/model/types/dlt645_type.html#ErrorCode"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.model.types.dlt645_type.ErrorCode" title="Link to this definition"></a></dt>
 <dd><p>基类：<a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.IntEnum" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">IntEnum</span></code></a></p>
-<p>An enumeration.</p>
+<p>错误码枚举。</p>
+<p>DLT645 协议中从站响应异常时返回的错误码。
+错误码采用位域方式，可以组合多个错误。</p>
+<dl class="field-list simple">
+<dt class="field-odd">变量<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>OtherError</strong> -- 其他错误（bit0）</p></li>
+<li><p><strong>RequestDataEmpty</strong> -- 无请求数据（bit1）</p></li>
+<li><p><strong>AuthFailed</strong> -- 认证失败/密码错误（bit2）</p></li>
+<li><p><strong>CommRateImmutable</strong> -- 通信速率不可改变（bit3）</p></li>
+<li><p><strong>YearZoneNumExceeded</strong> -- 年时区数超出范围（bit4）</p></li>
+<li><p><strong>DaySlotNumExceeded</strong> -- 日时段数超出范围（bit5）</p></li>
+<li><p><strong>RateNumExceeded</strong> -- 费率数超出范围（bit6）</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="src.model.types.dlt645_type.ErrorCode.OtherError">
 <span class="sig-name descname"><span class="pre">OtherError</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#src.model.types.dlt645_type.ErrorCode.OtherError" title="Link to this definition"></a></dt>
@@ -752,38 +922,131 @@
 
 </dd></dl>
 
+<dl class="py data">
+<dt class="sig sig-object py" id="src.model.types.dlt645_type.error_messages">
+<span class="sig-prename descclassname"><span class="pre">src.model.types.dlt645_type.</span></span><span class="sig-name descname"><span class="pre">error_messages</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{ErrorCode.OtherError:</span> <span class="pre">'其他错误',</span> <span class="pre">ErrorCode.RequestDataEmpty:</span> <span class="pre">'无请求数据',</span> <span class="pre">ErrorCode.AuthFailed:</span> <span class="pre">'认证失败',</span> <span class="pre">ErrorCode.CommRateImmutable:</span> <span class="pre">'通信速率不可改变',</span> <span class="pre">ErrorCode.YearZoneNumExceeded:</span> <span class="pre">'年区数超出范围',</span> <span class="pre">ErrorCode.DaySlotNumExceeded:</span> <span class="pre">'日区数超出范围',</span> <span class="pre">ErrorCode.RateNumExceeded:</span> <span class="pre">'速率数超出范围'}</span></em><a class="headerlink" href="#src.model.types.dlt645_type.error_messages" title="Link to this definition"></a></dt>
+<dd><p>错误码对应的中文错误信息映射表</p>
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="src.model.types.dlt645_type.get_error_msg">
 <span class="sig-prename descclassname"><span class="pre">src.model.types.dlt645_type.</span></span><span class="sig-name descname"><span class="pre">get_error_msg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">error_code</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/model/types/dlt645_type.html#get_error_msg"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.model.types.dlt645_type.get_error_msg" title="Link to this definition"></a></dt>
-<dd><dl class="field-list simple">
+<dd><p>根据错误码获取对应的中文错误信息。</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>error_code</strong> (<a class="reference internal" href="#src.model.types.dlt645_type.ErrorCode" title="src.model.types.dlt645_type.ErrorCode"><em>ErrorCode</em></a>) -- 错误码。</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>对应的中文错误信息，如果错误码未知则返回 &quot;未知错误码&quot;。</p>
+</dd>
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）">str</a></p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="src.model.types.dlt645_type.DI_LEN">
+<span class="sig-prename descclassname"><span class="pre">src.model.types.dlt645_type.</span></span><span class="sig-name descname"><span class="pre">DI_LEN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#src.model.types.dlt645_type.DI_LEN" title="Link to this definition"></a></dt>
+<dd><p>数据标识长度（4字节）</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="src.model.types.dlt645_type.ADDRESS_LEN">
+<span class="sig-prename descclassname"><span class="pre">src.model.types.dlt645_type.</span></span><span class="sig-name descname"><span class="pre">ADDRESS_LEN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">6</span></em><a class="headerlink" href="#src.model.types.dlt645_type.ADDRESS_LEN" title="Link to this definition"></a></dt>
+<dd><p>设备地址长度（6字节）</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="src.model.types.dlt645_type.PASSWORD_LEN">
+<span class="sig-prename descclassname"><span class="pre">src.model.types.dlt645_type.</span></span><span class="sig-name descname"><span class="pre">PASSWORD_LEN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#src.model.types.dlt645_type.PASSWORD_LEN" title="Link to this definition"></a></dt>
+<dd><p>密码长度（4字节）</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="src.model.types.dlt645_type.OPERATOR_CODE_LEN">
+<span class="sig-prename descclassname"><span class="pre">src.model.types.dlt645_type.</span></span><span class="sig-name descname"><span class="pre">OPERATOR_CODE_LEN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#src.model.types.dlt645_type.OPERATOR_CODE_LEN" title="Link to this definition"></a></dt>
+<dd><p>操作者代码长度（4字节）</p>
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="src.model.types.dlt645_type.Demand">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.model.types.dlt645_type.</span></span><span class="sig-name descname"><span class="pre">Demand</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/model/types/dlt645_type.html#Demand"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.model.types.dlt645_type.Demand" title="Link to this definition"></a></dt>
 <dd><p>基类：<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>需量数据类。</p>
+<p>用于表示最大需量及其发生时间。</p>
+<dl class="field-list simple">
+<dt class="field-odd">变量<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>value</strong> -- 需量值（单位由具体数据项定义）。</p></li>
+<li><p><strong>time</strong> -- 需量发生时间。</p></li>
+</ul>
+</dd>
+</dl>
+<p>初始化 Demand 实例。</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="（在 Python v3.14）"><em>float</em></a>) -- 需量值。</p></li>
+<li><p><strong>time</strong> (<em>datetime</em>) -- 需量发生时间。</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="src.model.types.dlt645_type.EventRecord">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.model.types.dlt645_type.</span></span><span class="sig-name descname"><span class="pre">EventRecord</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">di</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/model/types/dlt645_type.html#EventRecord"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.model.types.dlt645_type.EventRecord" title="Link to this definition"></a></dt>
 <dd><p>基类：<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>事件记录类。</p>
+<p>用于表示电表的事件记录数据。</p>
+<dl class="field-list simple">
+<dt class="field-odd">变量<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>di</strong> -- 数据标识 (DI)。</p></li>
+<li><p><strong>event</strong> -- 事件数据，可以是元组、浮点数或字符串。</p></li>
+</ul>
+</dd>
+</dl>
+<p>初始化 EventRecord 实例。</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>di</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><em>int</em></a>) -- 数据标识。</p></li>
+<li><p><strong>event</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="（在 Python v3.14）"><em>tuple</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="（在 Python v3.14）"><em>float</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><em>str</em></a>) -- 事件数据。</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="src.model.types.dlt645_type.PasswordManager">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.model.types.dlt645_type.</span></span><span class="sig-name descname"><span class="pre">PasswordManager</span></span><a class="reference internal" href="_modules/src/model/types/dlt645_type.html#PasswordManager"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.model.types.dlt645_type.PasswordManager" title="Link to this definition"></a></dt>
 <dd><p>基类：<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>密码管理器类。</p>
+<p>用于管理 DLT645 协议中的九级密码。
+密码级别从 0-8，数字越小权限越高。</p>
+<dl class="field-list simple">
+<dt class="field-odd">变量<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>_password_map</strong> -- 密码映射表，键为密码级别，值为密码字节数组。</p>
+</dd>
+</dl>
+<p>初始化 PasswordManager 实例。</p>
+<p>创建九级密码映射表，每级密码初始化为全零。</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="src.model.types.dlt645_type.PasswordManager.is_password_valid">
 <span class="sig-name descname"><span class="pre">is_password_valid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">password</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/model/types/dlt645_type.html#PasswordManager.is_password_valid"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.model.types.dlt645_type.PasswordManager.is_password_valid" title="Link to this definition"></a></dt>
-<dd><dl class="field-list simple">
+<dd><p>验证密码格式是否有效。</p>
+<p>检查密码长度是否为4字节，以及密码级别是否在有效范围内（0-8）。</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>password</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="（在 Python v3.14）"><em>bytearray</em></a>) -- 待验证的密码字节数组。</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>密码格式有效返回 True，否则返回 False。</p>
+</dd>
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -791,9 +1054,16 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="src.model.types.dlt645_type.PasswordManager.set_password">
 <span class="sig-name descname"><span class="pre">set_password</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">password</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/model/types/dlt645_type.html#PasswordManager.set_password"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.model.types.dlt645_type.PasswordManager.set_password" title="Link to this definition"></a></dt>
-<dd><dl class="field-list simple">
+<dd><p>设置指定级别的密码。</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>password</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="（在 Python v3.14）"><em>bytearray</em></a>) -- 密码字节数组，第一个字节为密码级别。</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>设置成功返回 True，失败返回 False。</p>
+</dd>
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -801,9 +1071,16 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="src.model.types.dlt645_type.PasswordManager.get_password">
 <span class="sig-name descname"><span class="pre">get_password</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/model/types/dlt645_type.html#PasswordManager.get_password"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.model.types.dlt645_type.PasswordManager.get_password" title="Link to this definition"></a></dt>
-<dd><dl class="field-list simple">
+<dd><p>获取指定级别的密码。</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>level</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><em>int</em></a>) -- 密码级别（0-8）。</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>密码字节数组，如果级别不存在则返回全零密码。</p>
+</dd>
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytearray</span></code></a></span></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="（在 Python v3.14）">bytearray</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -811,9 +1088,16 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="src.model.types.dlt645_type.PasswordManager.check_password">
 <span class="sig-name descname"><span class="pre">check_password</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">password</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/model/types/dlt645_type.html#PasswordManager.check_password"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.model.types.dlt645_type.PasswordManager.check_password" title="Link to this definition"></a></dt>
-<dd><dl class="field-list simple">
+<dd><p>验证密码是否正确。</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>password</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="（在 Python v3.14）"><em>bytearray</em></a>) -- 待验证的密码字节数组。</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>密码正确返回 True，错误返回 False。</p>
+</dd>
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -821,9 +1105,21 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="src.model.types.dlt645_type.PasswordManager.change_password">
 <span class="sig-name descname"><span class="pre">change_password</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">old_password</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_password</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/model/types/dlt645_type.html#PasswordManager.change_password"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.model.types.dlt645_type.PasswordManager.change_password" title="Link to this definition"></a></dt>
-<dd><dl class="field-list simple">
+<dd><p>修改密码。</p>
+<p>只有当旧密码正确且旧密码权限等级不低于新密码权限等级时才能修改成功。
+权限等级数字越小权限越高（0级最高，8级最低）。</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>old_password</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="（在 Python v3.14）"><em>bytearray</em></a>) -- 旧密码字节数组。</p></li>
+<li><p><strong>new_password</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="（在 Python v3.14）"><em>bytearray</em></a>) -- 新密码字节数组。</p></li>
+</ul>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>修改成功返回 True，失败返回 False。</p>
+</dd>
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）">bool</a></p>
 </dd>
 </dl>
 </dd></dl>

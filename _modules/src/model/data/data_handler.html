@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>src.model.data.data_handler &mdash; dlt645 v1.4.0 文档</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
 
   
@@ -193,7 +193,12 @@
 <li class="toctree-l9"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.ErrorCode.RateNumExceeded"><code class="docutils literal notranslate"><span class="pre">ErrorCode.RateNumExceeded</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l8"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.error_messages"><code class="docutils literal notranslate"><span class="pre">error_messages</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.get_error_msg"><code class="docutils literal notranslate"><span class="pre">get_error_msg()</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.DI_LEN"><code class="docutils literal notranslate"><span class="pre">DI_LEN</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.ADDRESS_LEN"><code class="docutils literal notranslate"><span class="pre">ADDRESS_LEN</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.PASSWORD_LEN"><code class="docutils literal notranslate"><span class="pre">PASSWORD_LEN</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.OPERATOR_CODE_LEN"><code class="docutils literal notranslate"><span class="pre">OPERATOR_CODE_LEN</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.Demand"><code class="docutils literal notranslate"><span class="pre">Demand</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.EventRecord"><code class="docutils literal notranslate"><span class="pre">EventRecord</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.PasswordManager"><code class="docutils literal notranslate"><span class="pre">PasswordManager</span></code></a><ul>
@@ -226,6 +231,9 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../../src.protocol.html">src.protocol package</a><ul>
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.protocol.html#submodules">Submodules</a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.protocol.html#module-src.protocol.frame">src.protocol.frame module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../../../src.protocol.html#src.protocol.frame.FRAME_START_BYTE"><code class="docutils literal notranslate"><span class="pre">FRAME_START_BYTE</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../../src.protocol.html#src.protocol.frame.FRAME_END_BYTE"><code class="docutils literal notranslate"><span class="pre">FRAME_END_BYTE</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../../src.protocol.html#src.protocol.frame.BROADCAST_ADDR"><code class="docutils literal notranslate"><span class="pre">BROADCAST_ADDR</span></code></a></li>
 <li class="toctree-l6"><a class="reference internal" href="../../../../src.protocol.html#src.protocol.frame.Frame"><code class="docutils literal notranslate"><span class="pre">Frame</span></code></a></li>
 </ul>
 </li>
@@ -502,7 +510,13 @@
            <div itemprop="articleBody">
              
   <h1>src.model.data.data_handler 源代码</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">List</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">数据项处理模块。</span>
+
+<span class="sd">本模块提供了数据项的获取和设置功能，用于管理 DLT645 协议中各类数据项的值。</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">List</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">...model.types.data_type</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataItem</span><span class="p">,</span> <span class="n">DataFormat</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">...model.types.dlt645_type</span><span class="w"> </span><span class="kn">import</span> <span class="n">Demand</span><span class="p">,</span> <span class="n">EventRecord</span>
@@ -513,7 +527,15 @@
 <div class="viewcode-block" id="get_data_item">
 <a class="viewcode-back" href="../../../../src.model.data.html#src.model.data.data_handler.get_data_item">[文档]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_data_item</span><span class="p">(</span><span class="n">di</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">DataItem</span> <span class="o">|</span> <span class="n">List</span><span class="p">[</span><span class="n">DataItem</span><span class="p">]]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;根据 di 获取数据项&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    根据数据标识 (DI) 获取数据项。</span>
+
+<span class="sd">    :param di: 数据标识，4字节整数。</span>
+<span class="sd">    :type di: int</span>
+<span class="sd">    :return: 对应的数据项，可能是单个 DataItem 或 DataItem 列表。</span>
+<span class="sd">             如果未找到则返回 None。</span>
+<span class="sd">    :rtype: Optional[DataItem | List[DataItem]]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">item</span> <span class="o">=</span> <span class="n">DIMap</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">di</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">item</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;未通过di </span><span class="si">{</span><span class="nb">hex</span><span class="p">(</span><span class="n">di</span><span class="p">)</span><span class="si">}</span><span class="s2"> 找到映射&quot;</span><span class="p">)</span>
@@ -525,7 +547,22 @@
 <div class="viewcode-block" id="set_data_item">
 <a class="viewcode-back" href="../../../../src.model.data.html#src.model.data.data_handler.set_data_item">[文档]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">set_data_item</span><span class="p">(</span><span class="n">di</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="n">Demand</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;设置指定 di 的数据项&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    设置指定数据标识 (DI) 的数据项值。</span>
+
+<span class="sd">    根据 DI 的类型自动处理不同的数据格式：</span>
+<span class="sd">    - 需量数据 (Demand): 验证值后直接设置</span>
+<span class="sd">    - 事件记录 (0x03xxxxxx): 批量设置事件记录值</span>
+<span class="sd">    - 参变量时段表 (0x04xxxxxx): 批量设置时段表值</span>
+<span class="sd">    - 其他数据: 验证后直接设置</span>
+
+<span class="sd">    :param di: 数据标识，4字节整数。</span>
+<span class="sd">    :type di: int</span>
+<span class="sd">    :param data: 要设置的数据值，类型取决于数据项类型。</span>
+<span class="sd">    :type data: Union[int, float, str, Demand, list, tuple]</span>
+<span class="sd">    :return: 设置成功返回 True，失败返回 False。</span>
+<span class="sd">    :rtype: bool</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">di</span> <span class="ow">in</span> <span class="n">DIMap</span><span class="p">:</span>
         <span class="n">item</span> <span class="o">=</span> <span class="n">DIMap</span><span class="p">[</span><span class="n">di</span><span class="p">]</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">Demand</span><span class="p">):</span>
@@ -559,7 +596,25 @@
 <div class="viewcode-block" id="is_value_valid">
 <a class="viewcode-back" href="../../../../src.model.data.html#src.model.data.data_handler.is_value_valid">[文档]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">is_value_valid</span><span class="p">(</span><span class="n">data_format</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;检查值是否符合指定的数据格式&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    检查值是否符合指定的数据格式。</span>
+
+<span class="sd">    根据数据格式字符串验证值的有效范围：</span>
+<span class="sd">    - XXXXXX.XX: 范围 [-799999.99, 799999.99]</span>
+<span class="sd">    - XXXX.XX: 范围 [-7999.99, 7999.99]</span>
+<span class="sd">    - XXX.XXX: 范围 [-799.999, 799.999]</span>
+<span class="sd">    - XX.XXXX: 范围 [-79.9999, 79.9999]</span>
+<span class="sd">    - XXX.X: 范围 [-799.9, 799.9]</span>
+<span class="sd">    - X.XXX: 范围 [-0.999, 0.999]</span>
+<span class="sd">    - 其他格式: 检查字符串长度或递归验证元组</span>
+
+<span class="sd">    :param data_format: 数据格式字符串。</span>
+<span class="sd">    :type data_format: str</span>
+<span class="sd">    :param value: 待验证的值。</span>
+<span class="sd">    :type value: Union[int, float, str, tuple]</span>
+<span class="sd">    :return: 值有效返回 True，无效返回 False。</span>
+<span class="sd">    :rtype: bool</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">data_format</span> <span class="o">==</span> <span class="n">DataFormat</span><span class="o">.</span><span class="n">XXXXXX_XX</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
         <span class="k">return</span> <span class="o">-</span><span class="mf">799999.99</span> <span class="o">&lt;=</span> <span class="n">value</span> <span class="o">&lt;=</span> <span class="mf">799999.99</span>
     <span class="k">elif</span> <span class="n">data_format</span> <span class="o">==</span> <span class="n">DataFormat</span><span class="o">.</span><span class="n">XXXX_XX</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
@@ -583,6 +638,7 @@
             <span class="k">return</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span></div>
+
 
 </pre></div>
 

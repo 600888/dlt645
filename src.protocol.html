@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>src.protocol package &mdash; dlt645 v1.4.0 文档</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
 
   
@@ -196,7 +196,12 @@
 <li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.ErrorCode.RateNumExceeded"><code class="docutils literal notranslate"><span class="pre">ErrorCode.RateNumExceeded</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.error_messages"><code class="docutils literal notranslate"><span class="pre">error_messages</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.get_error_msg"><code class="docutils literal notranslate"><span class="pre">get_error_msg()</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.DI_LEN"><code class="docutils literal notranslate"><span class="pre">DI_LEN</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.ADDRESS_LEN"><code class="docutils literal notranslate"><span class="pre">ADDRESS_LEN</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.PASSWORD_LEN"><code class="docutils literal notranslate"><span class="pre">PASSWORD_LEN</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.OPERATOR_CODE_LEN"><code class="docutils literal notranslate"><span class="pre">OPERATOR_CODE_LEN</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.Demand"><code class="docutils literal notranslate"><span class="pre">Demand</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.EventRecord"><code class="docutils literal notranslate"><span class="pre">EventRecord</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.PasswordManager"><code class="docutils literal notranslate"><span class="pre">PasswordManager</span></code></a><ul>
@@ -229,6 +234,9 @@
 <li class="toctree-l4 current"><a class="current reference internal" href="#">src.protocol package</a><ul>
 <li class="toctree-l5"><a class="reference internal" href="#submodules">Submodules</a></li>
 <li class="toctree-l5"><a class="reference internal" href="#module-src.protocol.frame">src.protocol.frame module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#src.protocol.frame.FRAME_START_BYTE"><code class="docutils literal notranslate"><span class="pre">FRAME_START_BYTE</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#src.protocol.frame.FRAME_END_BYTE"><code class="docutils literal notranslate"><span class="pre">FRAME_END_BYTE</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="#src.protocol.frame.BROADCAST_ADDR"><code class="docutils literal notranslate"><span class="pre">BROADCAST_ADDR</span></code></a></li>
 <li class="toctree-l6"><a class="reference internal" href="#src.protocol.frame.Frame"><code class="docutils literal notranslate"><span class="pre">Frame</span></code></a></li>
 </ul>
 </li>
@@ -512,10 +520,66 @@
 </section>
 <section id="module-src.protocol.frame">
 <span id="src-protocol-frame-module"></span><h2>src.protocol.frame module<a class="headerlink" href="#module-src.protocol.frame" title="Link to this heading"></a></h2>
+<p>DLT645 协议帧结构模块。</p>
+<p>本模块定义了 DLT645 协议帧的数据结构和相关常量。</p>
+<dl class="py data">
+<dt class="sig sig-object py" id="src.protocol.frame.FRAME_START_BYTE">
+<span class="sig-prename descclassname"><span class="pre">src.protocol.frame.</span></span><span class="sig-name descname"><span class="pre">FRAME_START_BYTE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">104</span></em><a class="headerlink" href="#src.protocol.frame.FRAME_START_BYTE" title="Link to this definition"></a></dt>
+<dd><p>帧起始字节</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="src.protocol.frame.FRAME_END_BYTE">
+<span class="sig-prename descclassname"><span class="pre">src.protocol.frame.</span></span><span class="sig-name descname"><span class="pre">FRAME_END_BYTE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">22</span></em><a class="headerlink" href="#src.protocol.frame.FRAME_END_BYTE" title="Link to this definition"></a></dt>
+<dd><p>帧结束字节</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="src.protocol.frame.BROADCAST_ADDR">
+<span class="sig-prename descclassname"><span class="pre">src.protocol.frame.</span></span><span class="sig-name descname"><span class="pre">BROADCAST_ADDR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">170</span></em><a class="headerlink" href="#src.protocol.frame.BROADCAST_ADDR" title="Link to this definition"></a></dt>
+<dd><p>广播地址</p>
+</dd></dl>
+
 <dl class="py class">
 <dt class="sig sig-object py" id="src.protocol.frame.Frame">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.protocol.frame.</span></span><span class="sig-name descname"><span class="pre">Frame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">preamble</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">bytearray(b'')</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_flag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">addr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">bytearray(b'')</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctrl_code</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_len</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">bytearray(b'')</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_sum</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_flag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/protocol/frame.html#Frame"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.protocol.frame.Frame" title="Link to this definition"></a></dt>
 <dd><p>基类：<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>DLT645 协议帧结构类。</p>
+<p>表示一个完整的 DLT645 协议数据帧。</p>
+<p>帧格式:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">前导码</span><span class="p">(</span><span class="n">FE</span><span class="p">)</span> <span class="o">|</span> <span class="n">起始符</span><span class="p">(</span><span class="mi">68</span><span class="n">H</span><span class="p">)</span> <span class="o">|</span> <span class="n">地址域</span><span class="p">(</span><span class="mi">6</span><span class="n">B</span><span class="p">)</span> <span class="o">|</span> <span class="n">起始符</span><span class="p">(</span><span class="mi">68</span><span class="n">H</span><span class="p">)</span> <span class="o">|</span> <span class="n">控制码</span><span class="p">(</span><span class="mi">1</span><span class="n">B</span><span class="p">)</span> <span class="o">|</span>
+<span class="n">数据长度</span><span class="p">(</span><span class="mi">1</span><span class="n">B</span><span class="p">)</span> <span class="o">|</span> <span class="n">数据域</span><span class="p">(</span><span class="n">NB</span><span class="p">)</span> <span class="o">|</span> <span class="n">校验和</span><span class="p">(</span><span class="mi">1</span><span class="n">B</span><span class="p">)</span> <span class="o">|</span> <span class="n">结束符</span><span class="p">(</span><span class="mi">16</span><span class="n">H</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">变量<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>preamble</strong> -- 前导字节（通常为 0xFE 0xFE 0xFE 0xFE）。</p></li>
+<li><p><strong>start_flag</strong> -- 起始标志（0x68）。</p></li>
+<li><p><strong>addr</strong> -- 地址域（6字节）。</p></li>
+<li><p><strong>ctrl_code</strong> -- 控制码。</p></li>
+<li><p><strong>data_len</strong> -- 数据域长度。</p></li>
+<li><p><strong>data</strong> -- 数据域内容（已解码）。</p></li>
+<li><p><strong>check_sum</strong> -- 校验和。</p></li>
+<li><p><strong>end_flag</strong> -- 结束标志（0x16）。</p></li>
+</ul>
+</dd>
+</dl>
+<p>初始化 Frame 实例。</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>preamble</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="（在 Python v3.14）"><em>bytearray</em></a>) -- 前导字节，默认为空。</p></li>
+<li><p><strong>start_flag</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><em>int</em></a>) -- 起始标志，默认为 0。</p></li>
+<li><p><strong>addr</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="（在 Python v3.14）"><em>bytearray</em></a>) -- 地址域，默认为空（将初始化为6个0）。</p></li>
+<li><p><strong>ctrl_code</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><em>int</em></a>) -- 控制码，默认为 0。</p></li>
+<li><p><strong>data_len</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><em>int</em></a>) -- 数据域长度，默认为 0。</p></li>
+<li><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="（在 Python v3.14）"><em>bytearray</em></a>) -- 数据域内容，默认为空。</p></li>
+<li><p><strong>check_sum</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><em>int</em></a>) -- 校验和，默认为 0。</p></li>
+<li><p><strong>end_flag</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><em>int</em></a>) -- 结束标志，默认为 0。</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 </section>
@@ -524,28 +588,33 @@
 </section>
 <section id="module-src.protocol.protocol">
 <span id="src-protocol-protocol-module"></span><h2>src.protocol.protocol module<a class="headerlink" href="#module-src.protocol.protocol" title="Link to this heading"></a></h2>
+<p>DLT645 协议实现模块。</p>
+<p>本模块实现了 DLT645 协议的核心功能，包括：
+- 数据域编码/解码（±0x33H 转换）
+- 校验和计算
+- 帧构建和解析</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="src.protocol.protocol.DLT645Protocol">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.protocol.protocol.</span></span><span class="sig-name descname"><span class="pre">DLT645Protocol</span></span><a class="reference internal" href="_modules/src/protocol/protocol.html#DLT645Protocol"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.protocol.protocol.DLT645Protocol" title="Link to this definition"></a></dt>
 <dd><p>基类：<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<p>DLT645协议实现类</p>
-<p>该类实现了DLT645协议的核心功能，包括数据编码/解码、校验和计算、
+<p>DLT645 协议实现类。</p>
+<p>该类实现了 DLT645 协议的核心功能，包括数据编码/解码、校验和计算、
 帧构建和解析等操作。所有方法均为类方法，可直接调用。</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="src.protocol.protocol.DLT645Protocol.decode_data">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">decode_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/protocol/protocol.html#DLT645Protocol.decode_data"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.protocol.protocol.DLT645Protocol.decode_data" title="Link to this definition"></a></dt>
-<dd><p>数据域解码（±33H转换）</p>
-<p>按照DLT645协议规定，对数据域进行解码处理，
-每个字节减去0x33H，并使用模256运算确保结果在0-255范围内。</p>
+<dd><p>数据域解码（-0x33H 转换）。</p>
+<p>按照 DLT645 协议规定，对数据域进行解码处理，
+每个字节减去 0x33H，并使用模 256 运算确保结果在 0-255 范围内。</p>
 <dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）"><em>bytes</em></a>) -- 需要解码的数据字节。</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>解码后的原始数据。</p>
+</dd>
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code></a></span></p>
-</dd>
-</dl>
-<dl class="simple">
-<dt>Args:</dt><dd><p>data: 需要解码的数据字节</p>
-</dd>
-<dt>Returns:</dt><dd><p>bytes: 解码后的原始数据</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）">bytes</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -553,18 +622,18 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="src.protocol.protocol.DLT645Protocol.calculate_checksum">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">calculate_checksum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/protocol/protocol.html#DLT645Protocol.calculate_checksum"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.protocol.protocol.DLT645Protocol.calculate_checksum" title="Link to this definition"></a></dt>
-<dd><p>校验和计算（模256求和）</p>
-<p>按照DLT645协议规定，计算数据的校验和，
-对所有字节进行累加，然后对结果取模256。</p>
+<dd><p>校验和计算（模 256 求和）。</p>
+<p>按照 DLT645 协议规定，计算数据的校验和，
+对所有字节进行累加，然后对结果取模 256。</p>
 <dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）"><em>bytes</em></a>) -- 需要计算校验和的数据字节。</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>计算得到的校验和值（0-255 范围）。</p>
+</dd>
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span></p>
-</dd>
-</dl>
-<dl class="simple">
-<dt>Args:</dt><dd><p>data: 需要计算校验和的数据字节</p>
-</dd>
-<dt>Returns:</dt><dd><p>int: 计算得到的校验和值（0-255范围）</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -572,18 +641,18 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="src.protocol.protocol.DLT645Protocol.encode_data">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">encode_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/protocol/protocol.html#DLT645Protocol.encode_data"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.protocol.protocol.DLT645Protocol.encode_data" title="Link to this definition"></a></dt>
-<dd><p>数据域编码（+33H转换）</p>
-<p>按照DLT645协议规定，对数据域进行编码处理，
-每个字节加上0x33H，并使用模256运算确保结果在0-255范围内。</p>
+<dd><p>数据域编码（+0x33H 转换）。</p>
+<p>按照 DLT645 协议规定，对数据域进行编码处理，
+每个字节加上 0x33H，并使用模 256 运算确保结果在 0-255 范围内。</p>
 <dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）"><em>bytes</em></a>) -- 需要编码的原始数据字节。</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>编码后的数据。</p>
+</dd>
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code></a></span></p>
-</dd>
-</dl>
-<dl class="simple">
-<dt>Args:</dt><dd><p>data: 需要编码的原始数据字节</p>
-</dd>
-<dt>Returns:</dt><dd><p>bytes: 编码后的数据</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）">bytes</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -591,22 +660,25 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="src.protocol.protocol.DLT645Protocol.build_frame">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">build_frame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">addr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctrl_code</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/protocol/protocol.html#DLT645Protocol.build_frame"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.protocol.protocol.DLT645Protocol.build_frame" title="Link to this definition"></a></dt>
-<dd><p>帧构建（支持广播和单播）</p>
-<p>按照DLT645协议规定，构建完整的协议帧，包括前导字节、
+<dd><p>构建 DLT645 协议帧。</p>
+<p>按照 DLT645 协议规定，构建完整的协议帧，包括前导字节、
 地址域、控制码、数据域、校验和和结束标志。</p>
 <dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>addr</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）"><em>bytes</em></a>) -- 设备地址（6字节）。</p></li>
+<li><p><strong>ctrl_code</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><em>int</em></a>) -- 控制码。</p></li>
+<li><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）"><em>bytes</em></a>) -- 原始数据域（未编码）。</p></li>
+</ul>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>完整的 DLT645 协议帧。</p>
+</dd>
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytearray</span></code></a></span></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="（在 Python v3.14）">bytearray</a></p>
 </dd>
-</dl>
-<dl class="simple">
-<dt>Args:</dt><dd><p>addr: 设备地址，6字节
-ctrl_code: 控制码
-data: 原始数据域</p>
-</dd>
-<dt>Returns:</dt><dd><p>bytearray: 完整的DLT645协议帧</p>
-</dd>
-<dt>Raises:</dt><dd><p>ValueError: 当地址长度不为6字节时抛出</p>
+<dt class="field-even">抛出<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="（在 Python v3.14）"><strong>ValueError</strong></a> -- 当地址长度不为6字节时抛出。</p>
 </dd>
 </dl>
 </dd></dl>
@@ -614,20 +686,21 @@ data: 原始数据域</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="src.protocol.protocol.DLT645Protocol.deserialize">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">deserialize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raw</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/protocol/protocol.html#DLT645Protocol.deserialize"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.protocol.protocol.DLT645Protocol.deserialize" title="Link to this definition"></a></dt>
-<dd><p>将字节切片反序列化为 Frame 结构体</p>
-<p>从原始字节数据中解析出DLT645协议帧。如果无法找到完整的帧，
+<dd><p>将字节数据反序列化为 Frame 对象。</p>
+<p>从原始字节数据中解析出 DLT645 协议帧。如果无法找到完整的帧，
 则抛出异常。</p>
 <dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>raw</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）"><em>bytes</em></a>) -- 输入的原始字节数据。</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>解析出的 Frame 对象。</p>
+</dd>
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="（在 Python v3.14）"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference internal" href="#src.protocol.frame.Frame" title="src.protocol.frame.Frame"><code class="xref py py-class docutils literal notranslate"><span class="pre">Frame</span></code></a>]</span></p>
+<dd class="field-odd"><p>Optional[<a class="reference internal" href="#src.protocol.frame.Frame" title="src.protocol.frame.Frame">Frame</a>]</p>
 </dd>
-</dl>
-<dl class="simple">
-<dt>Args:</dt><dd><p>raw: 输入的原始字节数据</p>
-</dd>
-<dt>Returns:</dt><dd><p>Optional[Frame]: 解析出的Frame对象，如果解析失败返回None</p>
-</dd>
-<dt>Raises:</dt><dd><p>Exception: 当无法找到完整帧时抛出</p>
+<dt class="field-even">抛出<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="（在 Python v3.14）"><strong>Exception</strong></a> -- 当无法找到完整帧时抛出。</p>
 </dd>
 </dl>
 </dd></dl>
@@ -635,19 +708,19 @@ data: 原始数据域</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="src.protocol.protocol.DLT645Protocol.deserialize_with_remaining">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">deserialize_with_remaining</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raw</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/protocol/protocol.html#DLT645Protocol.deserialize_with_remaining"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.protocol.protocol.DLT645Protocol.deserialize_with_remaining" title="Link to this definition"></a></dt>
-<dd><p>将字节切片反序列化为 Frame 结构体，并返回未解析的剩余数据</p>
-<p>从原始字节数据中解析出DLT645协议帧，并返回未解析的剩余数据。
-如果数据不完整或无法解析，返回(原始数据, None)。</p>
+<dd><p>将字节数据反序列化为 Frame 对象，并返回未解析的剩余数据。</p>
+<p>从原始字节数据中解析出 DLT645 协议帧，并返回未解析的剩余数据。
+如果数据不完整或无法解析，返回 (原始数据, None)。</p>
 <dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>raw</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）"><em>bytes</em></a>) -- 输入的原始字节数据。</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>元组 (未解析的剩余数据, 解析出的帧)。
+如果数据不完整或无法解析，返回 (原始数据, None)。</p>
+</dd>
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="（在 Python v3.14）"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference internal" href="#src.protocol.frame.Frame" title="src.protocol.frame.Frame"><code class="xref py py-class docutils literal notranslate"><span class="pre">Frame</span></code></a>]]</span></p>
-</dd>
-</dl>
-<dl class="simple">
-<dt>Args:</dt><dd><p>raw: 输入的原始字节数据</p>
-</dd>
-<dt>Returns:</dt><dd><p>tuple[bytes, Optional[Frame]]: (未解析的剩余数据, 解析出的帧)
-如果数据不完整或无法解析，返回(原始数据, None)</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="（在 Python v3.14）">tuple</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）">bytes</a>, Optional[<a class="reference internal" href="#src.protocol.frame.Frame" title="src.protocol.frame.Frame">Frame</a>]]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -655,19 +728,20 @@ data: 原始数据域</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="src.protocol.protocol.DLT645Protocol.serialize">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">serialize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/protocol/protocol.html#DLT645Protocol.serialize"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.protocol.protocol.DLT645Protocol.serialize" title="Link to this definition"></a></dt>
-<dd><p>将 Frame 结构体序列化为字节切片</p>
-<p>按照DLT645协议规定，将Frame对象序列化为完整的协议帧字节。</p>
+<dd><p>将 Frame 对象序列化为字节数据。</p>
+<p>按照 DLT645 协议规定，将 Frame 对象序列化为完整的协议帧字节。</p>
 <dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>frame</strong> (<a class="reference internal" href="#src.protocol.frame.Frame" title="src.protocol.frame.Frame"><em>Frame</em></a>) -- 需要序列化的 Frame 对象。</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>序列化后的协议帧字节。</p>
+</dd>
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="（在 Python v3.14）"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code></a>]</span></p>
+<dd class="field-odd"><p>Optional[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）">bytes</a>]</p>
 </dd>
-</dl>
-<dl class="simple">
-<dt>Args:</dt><dd><p>frame: 需要序列化的Frame对象</p>
-</dd>
-<dt>Returns:</dt><dd><p>Optional[bytes]: 序列化后的协议帧字节，如果失败返回None</p>
-</dd>
-<dt>Raises:</dt><dd><p>Exception: 当起始或结束标志无效时抛出</p>
+<dt class="field-even">抛出<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="（在 Python v3.14）"><strong>Exception</strong></a> -- 当起始或结束标志无效时抛出。</p>
 </dd>
 </dl>
 </dd></dl>
