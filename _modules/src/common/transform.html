@@ -528,8 +528,7 @@
 <div class="viewcode-block" id="pad_with_zeros">
 <a class="viewcode-back" href="../../../src.common.html#src.common.transform.pad_with_zeros">[文档]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">pad_with_zeros</span><span class="p">(</span><span class="n">length</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    根据指定长度生成补零字符串。</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;根据指定长度生成补零字符串。</span>
 
 <span class="sd">    :param length: 需要生成的零的个数。</span>
 <span class="sd">    :type length: int</span>
@@ -543,8 +542,7 @@
 <div class="viewcode-block" id="bytes_to_int">
 <a class="viewcode-back" href="../../../src.common.html#src.common.transform.bytes_to_int">[文档]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">bytes_to_int</span><span class="p">(</span><span class="n">byte_array</span><span class="p">:</span> <span class="nb">bytearray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    将字节数组转换为无符号整数。</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;将字节数组转换为无符号整数。</span>
 
 <span class="sd">    使用小端序进行转换，如果字节数组长度不足4字节，</span>
 <span class="sd">    会在右侧补零至4字节。</span>
@@ -564,8 +562,7 @@
 <div class="viewcode-block" id="bytes_to_float">
 <a class="viewcode-back" href="../../../src.common.html#src.common.transform.bytes_to_float">[文档]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">bytes_to_float</span><span class="p">(</span><span class="n">byte_array</span><span class="p">:</span> <span class="nb">bytearray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    将字节数组转换为浮点数。</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;将字节数组转换为浮点数。</span>
 
 <span class="sd">    使用小端序进行转换，如果字节数组长度不足4字节，</span>
 <span class="sd">    会在右侧补零至4字节。</span>
@@ -585,8 +582,7 @@
 <div class="viewcode-block" id="bytes_to_spaced_hex">
 <a class="viewcode-back" href="../../../src.common.html#src.common.transform.bytes_to_spaced_hex">[文档]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">bytes_to_spaced_hex</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">bytearray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    将字节数组转换为空格分隔的十六进制字符串。</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;将字节数组转换为空格分隔的十六进制字符串。</span>
 
 <span class="sd">    每两个十六进制字符用空格分隔，便于阅读和调试。</span>
 <span class="sd">    例如: bytearray([0x68, 0xAA]) -&gt; &quot;68 aa&quot;</span>
@@ -609,8 +605,7 @@
 <div class="viewcode-block" id="bcd_to_string">
 <a class="viewcode-back" href="../../../src.common.html#src.common.transform.bcd_to_string">[文档]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">bcd_to_string</span><span class="p">(</span><span class="n">bcd</span><span class="p">:</span> <span class="nb">bytearray</span><span class="p">,</span> <span class="n">endian</span><span class="o">=</span><span class="s2">&quot;big&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    将 BCD 码字节数组转换为数字字符串。</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;将 BCD 码字节数组转换为数字字符串。</span>
 
 <span class="sd">    BCD（Binary-Coded Decimal）码是一种用4位二进制数表示十进制数字的编码方式。</span>
 <span class="sd">    每个字节包含两个 BCD 数字（高4位和低4位）。</span>
@@ -638,8 +633,7 @@
 <div class="viewcode-block" id="parse_format">
 <a class="viewcode-back" href="../../../src.common.html#src.common.transform.parse_format">[文档]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">parse_format</span><span class="p">(</span><span class="n">format_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    解析数据格式字符串，返回小数位数和总位数。</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;解析数据格式字符串，返回小数位数和总位数。</span>
 
 <span class="sd">    格式字符串示例：</span>
 <span class="sd">    - &quot;XXXXXX.XX&quot; -&gt; (2, 8)  表示8位数字，2位小数</span>
@@ -666,8 +660,7 @@
 <div class="viewcode-block" id="round_float">
 <a class="viewcode-back" href="../../../src.common.html#src.common.transform.round_float">[文档]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">round_float</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">decimal_places</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    将浮点数四舍五入到指定的小数位数。</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;将浮点数四舍五入到指定的小数位数。</span>
 
 <span class="sd">    :param value: 待四舍五入的浮点数。</span>
 <span class="sd">    :type value: float</span>
@@ -684,8 +677,7 @@
 <div class="viewcode-block" id="format_float">
 <a class="viewcode-back" href="../../../src.common.html#src.common.transform.format_float">[文档]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">format_float</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">decimal_places</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">total_digits</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    格式化浮点数为固定长度字符串（补零对齐）。</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;格式化浮点数为固定长度字符串（补零对齐）。</span>
 
 <span class="sd">    :param value: 待格式化的浮点数。</span>
 <span class="sd">    :type value: float</span>
@@ -704,8 +696,7 @@
 <div class="viewcode-block" id="string_to_bcd">
 <a class="viewcode-back" href="../../../src.common.html#src.common.transform.string_to_bcd">[文档]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">string_to_bcd</span><span class="p">(</span><span class="n">digits</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">endian</span><span class="o">=</span><span class="s2">&quot;big&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytearray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    将数字字符串转换为 BCD 码字节数组。</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;将数字字符串转换为 BCD 码字节数组。</span>
 
 <span class="sd">    如果数字字符串长度为奇数，会在前面补零使其变为偶数长度。</span>
 
@@ -735,8 +726,7 @@
 <div class="viewcode-block" id="bcd_to_value">
 <a class="viewcode-back" href="../../../src.common.html#src.common.transform.bcd_to_value">[文档]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">bcd_to_value</span><span class="p">(</span><span class="n">bcd</span><span class="p">:</span> <span class="nb">bytearray</span><span class="p">,</span> <span class="n">format_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">endian</span><span class="o">=</span><span class="s2">&quot;big&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    将 BCD 码字节数组转换为数值。</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;将 BCD 码字节数组转换为数值。</span>
 
 <span class="sd">    根据格式字符串决定返回类型：</span>
 <span class="sd">    - 如果格式字符串不包含小数点，返回数字字符串</span>
@@ -763,8 +753,7 @@
 <div class="viewcode-block" id="float_to_bcd">
 <a class="viewcode-back" href="../../../src.common.html#src.common.transform.float_to_bcd">[文档]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">float_to_bcd</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">format_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">endian</span><span class="o">=</span><span class="s2">&quot;big&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytearray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    将浮点数转换为 BCD 码字节数组。</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;将浮点数转换为 BCD 码字节数组。</span>
 
 <span class="sd">    支持正负数转换，负数会在最高位设置符号位（0x80）。</span>
 
@@ -824,8 +813,7 @@
 <div class="viewcode-block" id="bcd_to_float">
 <a class="viewcode-back" href="../../../src.common.html#src.common.transform.bcd_to_float">[文档]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">bcd_to_float</span><span class="p">(</span><span class="n">bcd</span><span class="p">,</span> <span class="n">format_str</span><span class="p">,</span> <span class="n">endian</span><span class="o">=</span><span class="s2">&quot;big&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    将 BCD 码字节数组转换为浮点数。</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;将 BCD 码字节数组转换为浮点数。</span>
 
 <span class="sd">    支持带符号位的 BCD 码转换，最高位为 0x80 时表示负数。</span>
 
@@ -880,8 +868,7 @@
 <div class="viewcode-block" id="datetime_to_bcd">
 <a class="viewcode-back" href="../../../src.common.html#src.common.transform.datetime_to_bcd">[文档]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">datetime_to_bcd</span><span class="p">(</span><span class="n">t</span><span class="p">:</span> <span class="n">datetime</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytearray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    将 datetime 对象转换为 BCD 码字节数组（小端序）。</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;将 datetime 对象转换为 BCD 码字节数组（小端序）。</span>
 
 <span class="sd">    输出格式为：分时日月年（小端序），共5字节。</span>
 <span class="sd">    年份只取后两位（如 2025 -&gt; 25）。</span>
@@ -915,8 +902,7 @@
 <div class="viewcode-block" id="bcd_to_byte">
 <a class="viewcode-back" href="../../../src.common.html#src.common.transform.bcd_to_byte">[文档]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">bcd_to_byte</span><span class="p">(</span><span class="n">b</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    将单个 BCD 码字节转换为对应的十进制整数。</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;将单个 BCD 码字节转换为对应的十进制整数。</span>
 
 <span class="sd">    例如：0x25 -&gt; 25</span>
 
@@ -932,8 +918,7 @@
 <div class="viewcode-block" id="bcd_to_time">
 <a class="viewcode-back" href="../../../src.common.html#src.common.transform.bcd_to_time">[文档]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">bcd_to_time</span><span class="p">(</span><span class="n">bcd</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bytearray</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">datetime</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    将 BCD 码字节数组转换为 datetime 对象。</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;将 BCD 码字节数组转换为 datetime 对象。</span>
 
 <span class="sd">    输入格式为：年月日时分（大端序），共5字节。</span>
 <span class="sd">    年份假设为21世纪（如 25 -&gt; 2025）。</span>
@@ -961,8 +946,7 @@
 <div class="viewcode-block" id="uint8_to_bcd">
 <a class="viewcode-back" href="../../../src.common.html#src.common.transform.uint8_to_bcd">[文档]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">uint8_to_bcd</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    将 0-99 范围内的整数转换为 BCD 码。</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;将 0-99 范围内的整数转换为 BCD 码。</span>
 
 <span class="sd">    例如：25 -&gt; 0x25</span>
 
@@ -981,8 +965,7 @@
 <div class="viewcode-block" id="reverse_bytes">
 <a class="viewcode-back" href="../../../src.common.html#src.common.transform.reverse_bytes">[文档]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">reverse_bytes</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bytearray</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bytearray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    反转字节数组的顺序。</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;反转字节数组的顺序。</span>
 
 <span class="sd">    用于大小端序之间的转换。</span>
 

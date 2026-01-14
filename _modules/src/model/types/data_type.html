@@ -521,8 +521,7 @@
 <div class="viewcode-block" id="DataItem">
 <a class="viewcode-back" href="../../../../src.model.types.html#src.DataItem">[文档]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">DataItem</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    数据项实体类，表示一个具体的数据项。</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;数据项实体类，表示一个具体的数据项。</span>
 
 <span class="sd">    :ivar di: 数据标识 (DI)，4 字节。</span>
 <span class="sd">    :ivar name: 数据项名称。</span>
@@ -541,8 +540,7 @@
         <span class="n">unit</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
         <span class="n">update_time</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span>
     <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        初始化 DataItem 实例。</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;初始化 DataItem 实例。</span>
 
 <span class="sd">        :param di: 数据标识 (DI)。</span>
 <span class="sd">        :type di: int</span>
@@ -565,8 +563,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">update_time</span> <span class="o">=</span> <span class="n">update_time</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        返回 DataItem 的字符串表示。</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;返回 DataItem 的字符串表示。</span>
 
 <span class="sd">        :return: 字符串表示。</span>
 <span class="sd">        :rtype: str</span>
@@ -581,8 +578,7 @@
 <div class="viewcode-block" id="DataType">
 <a class="viewcode-back" href="../../../../src.model.types.html#src.DataType">[文档]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">DataType</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    数据类型配置类，通常从 JSON 加载。</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;数据类型配置类，通常从 JSON 加载。</span>
 
 <span class="sd">    :ivar di: 数据标识 (DI)，整数形式。</span>
 <span class="sd">    :ivar name: 数据类型名称。</span>
@@ -591,8 +587,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Di</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">Name</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">Unit</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">DataFormat</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        初始化 DataType 实例。</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;初始化 DataType 实例。</span>
 
 <span class="sd">        :param Di: 数据标识字符串（十六进制），默认为空字符串。</span>
 <span class="sd">        :type Di: str, 可选</span>
@@ -612,8 +607,7 @@
 <a class="viewcode-back" href="../../../../src.model.types.html#src.DataType.from_dict">[文档]</a>
     <span class="nd">@classmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        从字典创建 DataType 实例。</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;从字典创建 DataType 实例。</span>
 
 <span class="sd">        :param data: 包含 &#39;Di&#39;, &#39;Name&#39;, &#39;Unit&#39;, &#39;DataFormat&#39; 的字典。</span>
 <span class="sd">        :type data: dict</span>
@@ -628,16 +622,13 @@
 <div class="viewcode-block" id="uint32_from_string">
 <a class="viewcode-back" href="../../../../src.model.types.html#src.uint32_from_string">[文档]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">uint32_from_string</span><span class="p">(</span><span class="nb">int</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    自定义整数类型，用于处理从 JSON 字符串（包括十六进制）解析 uint32。</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;自定义整数类型，用于处理从 JSON 字符串（包括十六进制）解析 uint32。&quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="uint32_from_string.from_json">
 <a class="viewcode-back" href="../../../../src.model.types.html#src.uint32_from_string.from_json">[文档]</a>
     <span class="nd">@classmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">from_json</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        将输入数据解析为 uint32 整数。</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;将输入数据解析为 uint32 整数。</span>
 
 <span class="sd">        处理以下情况：</span>
 <span class="sd">        - 空字符串 -&gt; 0</span>
@@ -665,8 +656,7 @@
 <div class="viewcode-block" id="init_data_type_from_json">
 <a class="viewcode-back" href="../../../../src.model.types.html#src.init_data_type_from_json">[文档]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">init_data_type_from_json</span><span class="p">(</span><span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    从 JSON 文件初始化 DataType 对象列表。</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;从 JSON 文件初始化 DataType 对象列表。</span>
 
 <span class="sd">    读取指定的 JSON 文件，解析后返回 DataType 实例列表。</span>
 
@@ -698,8 +688,7 @@
 <div class="viewcode-block" id="DataFormat">
 <a class="viewcode-back" href="../../../../src.model.types.html#src.DataFormat">[文档]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">DataFormat</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    表示各种数据格式模板的枚举。</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;表示各种数据格式模板的枚举。</span>
 
 <span class="sd">    定义说明：</span>
 <span class="sd">    - X: 十进制数字</span>

@@ -701,45 +701,63 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="src.MeterServerService.new_tcp_server">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">new_tcp_server</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ip</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/serversvc/server_service.html#MeterServerService.new_tcp_server"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterServerService.new_tcp_server" title="Link to this definition"></a></dt>
-<dd><p>创建 TCP 服务器
-:type ip: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>
-:param ip: IP 地址
-:type port: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>
-:param port: 端口
-:type timeout: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>
-:param timeout: 超时时间
-:rtype: <span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService" title="src.service.serversvc.server_service.MeterServerService"><code class="xref py py-class docutils literal notranslate"><span class="pre">MeterServerService</span></code></a></span>
-:return:</p>
+<dd><p>创建 TCP 服务器</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ip</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) -- IP 地址</p></li>
+<li><p><strong>port</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) -- 端口</p></li>
+<li><p><strong>timeout</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) -- 超时时间</p></li>
+</ul>
+</dd>
+<dt class="field-even">返回类型<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService" title="src.service.serversvc.server_service.MeterServerService"><code class="xref py py-class docutils literal notranslate"><span class="pre">MeterServerService</span></code></a></span></p>
+</dd>
+<dt class="field-odd">返回<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.MeterServerService.new_rtu_server">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">new_rtu_server</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">port</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_bits</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop_bits</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">baud_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parity</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/serversvc/server_service.html#MeterServerService.new_rtu_server"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterServerService.new_rtu_server" title="Link to this definition"></a></dt>
-<dd><p>创建 RTU 服务器
-:type port: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>
-:param port: 端口
-:type data_bits: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>
-:param data_bits: 数据位
-:type stop_bits: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>
-:param stop_bits: 停止位
-:type baud_rate: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>
-:param baud_rate: 波特率
-:type parity: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>
-:param parity: 校验位
-:type timeout: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>
-:param timeout: 超时时间
-:rtype: <span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService" title="src.service.serversvc.server_service.MeterServerService"><code class="xref py py-class docutils literal notranslate"><span class="pre">MeterServerService</span></code></a></span>
-:return:</p>
+<dd><p>创建 RTU 服务器</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>port</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) -- 端口</p></li>
+<li><p><strong>data_bits</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) -- 数据位</p></li>
+<li><p><strong>stop_bits</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) -- 停止位</p></li>
+<li><p><strong>baud_rate</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) -- 波特率</p></li>
+<li><p><strong>parity</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) -- 校验位</p></li>
+<li><p><strong>timeout</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) -- 超时时间</p></li>
+</ul>
+</dd>
+<dt class="field-even">返回类型<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService" title="src.service.serversvc.server_service.MeterServerService"><code class="xref py py-class docutils literal notranslate"><span class="pre">MeterServerService</span></code></a></span></p>
+</dd>
+<dt class="field-odd">返回<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.MeterServerService.new_meter_server_service">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">new_meter_server_service</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">server</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/serversvc/server_service.html#MeterServerService.new_meter_server_service"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterServerService.new_meter_server_service" title="Link to this definition"></a></dt>
-<dd><p>创建新的MeterServerService实例
-:type server: <span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<a class="reference internal" href="src.transport.server.html#src.transport.server.tcp_server.TcpServer" title="src.transport.server.tcp_server.TcpServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">TcpServer</span></code></a>, <a class="reference internal" href="src.transport.server.html#src.transport.server.rtu_server.RtuServer" title="src.transport.server.rtu_server.RtuServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">RtuServer</span></code></a>]</span>
-:param server: 服务器实例（TCP或RTU）
-:rtype: <span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService" title="src.service.serversvc.server_service.MeterServerService"><code class="xref py py-class docutils literal notranslate"><span class="pre">MeterServerService</span></code></a></span>
-:return: MeterServerService实例</p>
+<dd><p>创建新的MeterServerService实例</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>server</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<a class="reference internal" href="src.transport.server.html#src.transport.server.tcp_server.TcpServer" title="src.transport.server.tcp_server.TcpServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">TcpServer</span></code></a>, <a class="reference internal" href="src.transport.server.html#src.transport.server.rtu_server.RtuServer" title="src.transport.server.rtu_server.RtuServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">RtuServer</span></code></a>]</span>) -- 服务器实例（TCP或RTU）</p>
+</dd>
+<dt class="field-even">返回类型<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService" title="src.service.serversvc.server_service.MeterServerService"><code class="xref py py-class docutils literal notranslate"><span class="pre">MeterServerService</span></code></a></span></p>
+</dd>
+<dt class="field-odd">返回<span class="colon">:</span></dt>
+<dd class="field-odd"><p>MeterServerService实例</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -750,99 +768,163 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="src.MeterServerService.set_address">
 <span class="sig-name descname"><span class="pre">set_address</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">address</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/serversvc/server_service.html#MeterServerService.set_address"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterServerService.set_address" title="Link to this definition"></a></dt>
-<dd><p>写通讯地址
-:type address: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>
-:param address:
-:return:</p>
+<dd><p>写通讯地址</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>address</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>)</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.MeterServerService.set_password">
 <span class="sig-name descname"><span class="pre">set_password</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">password</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/serversvc/server_service.html#MeterServerService.set_password"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterServerService.set_password" title="Link to this definition"></a></dt>
-<dd><p>写密码
-:type password: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>
-:param password:
-:rtype: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="（在 Python v3.14）"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>
-:return:</p>
+<dd><p>写密码</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>password</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>)</p>
+</dd>
+<dt class="field-even">返回类型<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="（在 Python v3.14）"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+<dt class="field-odd">返回<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.MeterServerService.set_00">
 <span class="sig-name descname"><span class="pre">set_00</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">di</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/serversvc/server_service.html#MeterServerService.set_00"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterServerService.set_00" title="Link to this definition"></a></dt>
-<dd><p>写电能量
-:type di: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>
-:param di: 数据项
-:type value: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>
-:param value: 值
-:rtype: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>
-:return:</p>
+<dd><p>写电能量</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>di</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) -- 数据项</p></li>
+<li><p><strong>value</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) -- 值</p></li>
+</ul>
+</dd>
+<dt class="field-even">返回类型<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
+</dd>
+<dt class="field-odd">返回<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.MeterServerService.set_01">
 <span class="sig-name descname"><span class="pre">set_01</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">di</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">demand</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/serversvc/server_service.html#MeterServerService.set_01"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterServerService.set_01" title="Link to this definition"></a></dt>
-<dd><p>写最大需量及发生时间
-:type di: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>
-:param di: 数据项
-:type demand: <span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.Demand" title="src.model.types.dlt645_type.Demand"><code class="xref py py-class docutils literal notranslate"><span class="pre">Demand</span></code></a></span>
-:param demand: 值
-:rtype: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>
-:return:</p>
+<dd><p>写最大需量及发生时间</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>di</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) -- 数据项</p></li>
+<li><p><strong>demand</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.Demand" title="src.model.types.dlt645_type.Demand"><code class="xref py py-class docutils literal notranslate"><span class="pre">Demand</span></code></a></span>) -- 值</p></li>
+</ul>
+</dd>
+<dt class="field-even">返回类型<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
+</dd>
+<dt class="field-odd">返回<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.MeterServerService.set_02">
 <span class="sig-name descname"><span class="pre">set_02</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">di</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/serversvc/server_service.html#MeterServerService.set_02"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterServerService.set_02" title="Link to this definition"></a></dt>
-<dd><p>写变量
-:type di: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>
-:param di: 数据项
-:type value: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>
-:param value: 值
-:rtype: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>
-:return:</p>
+<dd><p>写变量</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>di</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) -- 数据项</p></li>
+<li><p><strong>value</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) -- 值</p></li>
+</ul>
+</dd>
+<dt class="field-even">返回类型<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
+</dd>
+<dt class="field-odd">返回<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.MeterServerService.set_03">
 <span class="sig-name descname"><span class="pre">set_03</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">di</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/serversvc/server_service.html#MeterServerService.set_03"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterServerService.set_03" title="Link to this definition"></a></dt>
-<dd><p>写事件记录
-:type di: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>
-:param di: 数据项
-:type value: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]]</span>
-:param value: 值
-:rtype: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>
-:return:</p>
+<dd><p>写事件记录</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>di</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) -- 数据项</p></li>
+<li><p><strong>value</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]]</span>) -- 值</p></li>
+</ul>
+</dd>
+<dt class="field-even">返回类型<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
+</dd>
+<dt class="field-odd">返回<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.MeterServerService.set_04">
 <span class="sig-name descname"><span class="pre">set_04</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">di</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/serversvc/server_service.html#MeterServerService.set_04"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterServerService.set_04" title="Link to this definition"></a></dt>
-<dd><p>写参变量
-:type di: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>
-:param di: 数据项
-:type value: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a></span>
-:param value: 值
-:rtype: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>
-:return:</p>
+<dd><p>写参变量</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>di</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) -- 数据项</p></li>
+<li><p><strong>value</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a></span>) -- 值</p></li>
+</ul>
+</dd>
+<dt class="field-even">返回类型<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
+</dd>
+<dt class="field-odd">返回<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.MeterServerService.get_data_item">
 <span class="sig-name descname"><span class="pre">get_data_item</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">di</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/serversvc/server_service.html#MeterServerService.get_data_item"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterServerService.get_data_item" title="Link to this definition"></a></dt>
-<dd><p>获取数据项
-:type di: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>
-:param di: 数据项
-:rtype: <span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="（在 Python v3.14）"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference internal" href="src.model.types.html#src.model.types.data_type.DataItem" title="src.model.types.data_type.DataItem"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataItem</span></code></a>]</span>
-:return:</p>
+<dd><p>获取数据项</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>di</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) -- 数据项</p>
+</dd>
+<dt class="field-even">返回类型<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="（在 Python v3.14）"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference internal" href="src.model.types.html#src.model.types.data_type.DataItem" title="src.model.types.data_type.DataItem"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataItem</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">返回<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.MeterServerService.handle_request">
 <span class="sig-name descname"><span class="pre">handle_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/serversvc/server_service.html#MeterServerService.handle_request"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterServerService.handle_request" title="Link to this definition"></a></dt>
-<dd><p>处理读数据请求
-:type frame: 
-:param frame:
-:return:</p>
+<dd><p>处理读数据请求</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>frame</strong></p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -1309,7 +1391,7 @@ None: 超时或失败时返回</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="src.DataItem">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.</span></span><span class="sig-name descname"><span class="pre">DataItem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">di</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_format</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">datetime.datetime(2026,</span> <span class="pre">1,</span> <span class="pre">14,</span> <span class="pre">11,</span> <span class="pre">55,</span> <span class="pre">32,</span> <span class="pre">4002)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/model/types/data_type.html#DataItem"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DataItem" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.</span></span><span class="sig-name descname"><span class="pre">DataItem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">di</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_format</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">datetime.datetime(2026,</span> <span class="pre">1,</span> <span class="pre">14,</span> <span class="pre">12,</span> <span class="pre">4,</span> <span class="pre">45,</span> <span class="pre">410490)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/model/types/data_type.html#DataItem"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DataItem" title="Link to this definition"></a></dt>
 <dd><p>基类：<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>数据项实体类，表示一个具体的数据项。</p>
 <dl class="field-list simple">

@@ -509,8 +509,7 @@
            <div itemprop="articleBody">
              
   <h1>src.service.clientsvc.client_service 源代码</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">DLT645 客户端服务模块。</span>
+<span></span><span class="sd">&quot;&quot;&quot;DLT645 客户端服务模块。</span>
 
 <span class="sd">本模块实现了 DLT645 协议的客户端业务服务功能，包括：</span>
 <span class="sd">- 电能数据读取</span>
@@ -560,8 +559,7 @@
 <div class="viewcode-block" id="MeterClientService">
 <a class="viewcode-back" href="../../../../src.service.clientsvc.html#src.MeterClientService">[文档]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">MeterClientService</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    电表客户端服务类。</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;电表客户端服务类。</span>
 
 <span class="sd">    用于与 DLT645 电表设备进行通信，提供数据读写等业务功能。</span>
 
@@ -572,8 +570,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">TcpClient</span><span class="p">,</span> <span class="n">RtuClient</span><span class="p">]):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        初始化电表客户端服务。</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;初始化电表客户端服务。</span>
 
 <span class="sd">        :param client: 通信客户端实例（TcpClient 或 RtuClient）。</span>
 <span class="sd">        :type client: Union[TcpClient, RtuClient]</span>

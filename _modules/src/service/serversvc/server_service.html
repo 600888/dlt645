@@ -509,8 +509,7 @@
            <div itemprop="articleBody">
              
   <h1>src.service.serversvc.server_service 源代码</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">DLT645 服务端服务模块。</span>
+<span></span><span class="sd">&quot;&quot;&quot;DLT645 服务端服务模块。</span>
 
 <span class="sd">本模块实现了 DLT645 协议的服务端业务服务功能，包括：</span>
 <span class="sd">- 处理客户端数据读取请求</span>
@@ -554,8 +553,7 @@
 <div class="viewcode-block" id="MeterServerService">
 <a class="viewcode-back" href="../../../../src.service.serversvc.html#src.MeterServerService">[文档]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">MeterServerService</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    电表服务端服务类。</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;电表服务端服务类。</span>
 
 <span class="sd">    用于模拟 DLT645 电表设备，响应客户端的数据读写请求。</span>
 
@@ -572,8 +570,7 @@
         <span class="n">address</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bytearray</span><span class="p">]</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">([</span><span class="mh">0x00</span><span class="p">,</span> <span class="mh">0x00</span><span class="p">,</span> <span class="mh">0x00</span><span class="p">,</span> <span class="mh">0x00</span><span class="p">,</span> <span class="mh">0x00</span><span class="p">,</span> <span class="mh">0x00</span><span class="p">]),</span>
         <span class="n">password_manager</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">PasswordManager</span><span class="p">]</span> <span class="o">=</span> <span class="n">PasswordManager</span><span class="p">(),</span>
     <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        初始化电表服务端服务。</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;初始化电表服务端服务。</span>
 
 <span class="sd">        :param server: 通信服务器实例（TcpServer 或 RtuServer）。</span>
 <span class="sd">        :type server: Union[TcpServer, RtuServer]</span>
@@ -594,8 +591,8 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">new_tcp_server</span><span class="p">(</span>
         <span class="bp">cls</span><span class="p">,</span> <span class="n">ip</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">port</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">timeout</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">5.0</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;MeterServerService&quot;</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        创建 TCP 服务器</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;创建 TCP 服务器</span>
+
 <span class="sd">        :param ip: IP 地址</span>
 <span class="sd">        :param port: 端口</span>
 <span class="sd">        :param timeout: 超时时间</span>
@@ -619,8 +616,8 @@
         <span class="n">parity</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">timeout</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;MeterServerService&quot;</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        创建 RTU 服务器</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;创建 RTU 服务器</span>
+
 <span class="sd">        :param port: 端口</span>
 <span class="sd">        :param data_bits: 数据位</span>
 <span class="sd">        :param stop_bits: 停止位</span>
@@ -641,8 +638,8 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">new_meter_server_service</span><span class="p">(</span>
         <span class="bp">cls</span><span class="p">,</span> <span class="n">server</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">TcpServer</span><span class="p">,</span> <span class="n">RtuServer</span><span class="p">]</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;MeterServerService&quot;</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        创建新的MeterServerService实例</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;创建新的MeterServerService实例</span>
+
 <span class="sd">        :param server: 服务器实例（TCP或RTU）</span>
 <span class="sd">        :return: MeterServerService实例</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -663,8 +660,8 @@
 <div class="viewcode-block" id="MeterServerService.set_address">
 <a class="viewcode-back" href="../../../../src.service.serversvc.html#src.MeterServerService.set_address">[文档]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">set_address</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">address</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        写通讯地址</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;写通讯地址</span>
+
 <span class="sd">        :param address:</span>
 <span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -677,8 +674,8 @@
 <div class="viewcode-block" id="MeterServerService.set_password">
 <a class="viewcode-back" href="../../../../src.service.serversvc.html#src.MeterServerService.set_password">[文档]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">set_password</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">password</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        写密码</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;写密码</span>
+
 <span class="sd">        :param password:</span>
 <span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -690,8 +687,8 @@
 <div class="viewcode-block" id="MeterServerService.set_00">
 <a class="viewcode-back" href="../../../../src.service.serversvc.html#src.MeterServerService.set_00">[文档]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">set_00</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">di</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        写电能量</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;写电能量</span>
+
 <span class="sd">        :param di: 数据项</span>
 <span class="sd">        :param value: 值</span>
 <span class="sd">        :return:</span>
@@ -705,8 +702,8 @@
 <div class="viewcode-block" id="MeterServerService.set_01">
 <a class="viewcode-back" href="../../../../src.service.serversvc.html#src.MeterServerService.set_01">[文档]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">set_01</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">di</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">demand</span><span class="p">:</span> <span class="n">Demand</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        写最大需量及发生时间</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;写最大需量及发生时间</span>
+
 <span class="sd">        :param di: 数据项</span>
 <span class="sd">        :param demand: 值</span>
 <span class="sd">        :return:</span>
@@ -720,8 +717,8 @@
 <div class="viewcode-block" id="MeterServerService.set_02">
 <a class="viewcode-back" href="../../../../src.service.serversvc.html#src.MeterServerService.set_02">[文档]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">set_02</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">di</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        写变量</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;写变量</span>
+
 <span class="sd">        :param di: 数据项</span>
 <span class="sd">        :param value: 值</span>
 <span class="sd">        :return:</span>
@@ -741,8 +738,8 @@
 <div class="viewcode-block" id="MeterServerService.set_03">
 <a class="viewcode-back" href="../../../../src.service.serversvc.html#src.MeterServerService.set_03">[文档]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">set_03</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">di</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        写事件记录</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;写事件记录</span>
+
 <span class="sd">        :param di: 数据项</span>
 <span class="sd">        :param value: 值</span>
 <span class="sd">        :return:</span>
@@ -761,8 +758,8 @@
 <div class="viewcode-block" id="MeterServerService.set_04">
 <a class="viewcode-back" href="../../../../src.service.serversvc.html#src.MeterServerService.set_04">[文档]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">set_04</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">di</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        写参变量</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;写参变量</span>
+
 <span class="sd">        :param di: 数据项</span>
 <span class="sd">        :param value: 值</span>
 <span class="sd">        :return:</span>
@@ -781,8 +778,8 @@
 <div class="viewcode-block" id="MeterServerService.get_data_item">
 <a class="viewcode-back" href="../../../../src.service.serversvc.html#src.MeterServerService.get_data_item">[文档]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_data_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">di</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">DataItem</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        获取数据项</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;获取数据项</span>
+
 <span class="sd">        :param di: 数据项</span>
 <span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -792,8 +789,8 @@
 <div class="viewcode-block" id="MeterServerService.handle_request">
 <a class="viewcode-back" href="../../../../src.service.serversvc.html#src.MeterServerService.handle_request">[文档]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">handle_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        处理读数据请求</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;处理读数据请求</span>
+
 <span class="sd">        :param frame:</span>
 <span class="sd">        :return:</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1057,8 +1054,8 @@
 
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_build_error_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame</span><span class="p">,</span> <span class="n">error_code</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        构建异常响应帧</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;构建异常响应帧</span>
+
 <span class="sd">        :param frame: 原始请求帧</span>
 <span class="sd">        :param error_code: 错误码</span>
 <span class="sd">        :return: 异常响应帧</span>

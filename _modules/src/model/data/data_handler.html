@@ -510,8 +510,7 @@
            <div itemprop="articleBody">
              
   <h1>src.model.data.data_handler 源代码</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">数据项处理模块。</span>
+<span></span><span class="sd">&quot;&quot;&quot;数据项处理模块。</span>
 
 <span class="sd">本模块提供了数据项的获取和设置功能，用于管理 DLT645 协议中各类数据项的值。</span>
 <span class="sd">&quot;&quot;&quot;</span>
@@ -527,8 +526,7 @@
 <div class="viewcode-block" id="get_data_item">
 <a class="viewcode-back" href="../../../../src.model.data.html#src.model.data.data_handler.get_data_item">[文档]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_data_item</span><span class="p">(</span><span class="n">di</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">DataItem</span> <span class="o">|</span> <span class="n">List</span><span class="p">[</span><span class="n">DataItem</span><span class="p">]]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    根据数据标识 (DI) 获取数据项。</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;根据数据标识 (DI) 获取数据项。</span>
 
 <span class="sd">    :param di: 数据标识，4字节整数。</span>
 <span class="sd">    :type di: int</span>
@@ -547,8 +545,7 @@
 <div class="viewcode-block" id="set_data_item">
 <a class="viewcode-back" href="../../../../src.model.data.html#src.model.data.data_handler.set_data_item">[文档]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">set_data_item</span><span class="p">(</span><span class="n">di</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="n">Demand</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    设置指定数据标识 (DI) 的数据项值。</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;设置指定数据标识 (DI) 的数据项值。</span>
 
 <span class="sd">    根据 DI 的类型自动处理不同的数据格式：</span>
 <span class="sd">    - 需量数据 (Demand): 验证值后直接设置</span>
@@ -596,8 +593,7 @@
 <div class="viewcode-block" id="is_value_valid">
 <a class="viewcode-back" href="../../../../src.model.data.html#src.model.data.data_handler.is_value_valid">[文档]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">is_value_valid</span><span class="p">(</span><span class="n">data_format</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    检查值是否符合指定的数据格式。</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;检查值是否符合指定的数据格式。</span>
 
 <span class="sd">    根据数据格式字符串验证值的有效范围：</span>
 <span class="sd">    - XXXXXX.XX: 范围 [-799999.99, 799999.99]</span>
