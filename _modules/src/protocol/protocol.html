@@ -538,8 +538,7 @@
 <a class="viewcode-back" href="../../../src.protocol.html#src.DLT645Protocol.decode_data">[文档]</a>
     <span class="nd">@classmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">decode_data</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        数据域解码（-0x33H 转换）。</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;数据域解码（-0x33H 转换）。</span>
 
 <span class="sd">        按照 DLT645 协议规定，对数据域进行解码处理，</span>
 <span class="sd">        每个字节减去 0x33H，并使用模 256 运算确保结果在 0-255 范围内。</span>
@@ -559,8 +558,7 @@
 <a class="viewcode-back" href="../../../src.protocol.html#src.DLT645Protocol.calculate_checksum">[文档]</a>
     <span class="nd">@classmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">calculate_checksum</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        校验和计算（模 256 求和）。</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;校验和计算（模 256 求和）。</span>
 
 <span class="sd">        按照 DLT645 协议规定，计算数据的校验和，</span>
 <span class="sd">        对所有字节进行累加，然后对结果取模 256。</span>
@@ -577,8 +575,7 @@
 <a class="viewcode-back" href="../../../src.protocol.html#src.DLT645Protocol.encode_data">[文档]</a>
     <span class="nd">@classmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">encode_data</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        数据域编码（+0x33H 转换）。</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;数据域编码（+0x33H 转换）。</span>
 
 <span class="sd">        按照 DLT645 协议规定，对数据域进行编码处理，</span>
 <span class="sd">        每个字节加上 0x33H，并使用模 256 运算确保结果在 0-255 范围内。</span>
@@ -600,8 +597,7 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">build_frame</span><span class="p">(</span>
         <span class="bp">cls</span><span class="p">,</span> <span class="n">addr</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">ctrl_code</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytearray</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        构建 DLT645 协议帧。</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;构建 DLT645 协议帧。</span>
 
 <span class="sd">        按照 DLT645 协议规定，构建完整的协议帧，包括前导字节、</span>
 <span class="sd">        地址域、控制码、数据域、校验和和结束标志。</span>
@@ -645,8 +641,7 @@
 <a class="viewcode-back" href="../../../src.protocol.html#src.DLT645Protocol.deserialize">[文档]</a>
     <span class="nd">@classmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">deserialize</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">raw</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Frame</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        将字节数据反序列化为 Frame 对象。</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;将字节数据反序列化为 Frame 对象。</span>
 
 <span class="sd">        从原始字节数据中解析出 DLT645 协议帧。如果无法找到完整的帧，</span>
 <span class="sd">        则抛出异常。</span>
@@ -667,8 +662,7 @@
 <a class="viewcode-back" href="../../../src.protocol.html#src.DLT645Protocol.deserialize_with_remaining">[文档]</a>
     <span class="nd">@classmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">deserialize_with_remaining</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">raw</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Frame</span><span class="p">]]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        将字节数据反序列化为 Frame 对象，并返回未解析的剩余数据。</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;将字节数据反序列化为 Frame 对象，并返回未解析的剩余数据。</span>
 
 <span class="sd">        从原始字节数据中解析出 DLT645 协议帧，并返回未解析的剩余数据。</span>
 <span class="sd">        如果数据不完整或无法解析，返回 (原始数据, None)。</span>
@@ -752,8 +746,7 @@
 <a class="viewcode-back" href="../../../src.protocol.html#src.DLT645Protocol.serialize">[文档]</a>
     <span class="nd">@classmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">serialize</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">frame</span><span class="p">:</span> <span class="n">Frame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        将 Frame 对象序列化为字节数据。</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;将 Frame 对象序列化为字节数据。</span>
 
 <span class="sd">        按照 DLT645 协议规定，将 Frame 对象序列化为完整的协议帧字节。</span>
 

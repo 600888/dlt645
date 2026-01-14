@@ -509,8 +509,7 @@
            <div itemprop="articleBody">
              
   <h1>src.protocol.frame 源代码</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">DLT645 协议帧结构模块。</span>
+<span></span><span class="sd">&quot;&quot;&quot;DLT645 协议帧结构模块。</span>
 
 <span class="sd">本模块定义了 DLT645 协议帧的数据结构和相关常量。</span>
 <span class="sd">&quot;&quot;&quot;</span>
@@ -528,8 +527,7 @@
 <div class="viewcode-block" id="Frame">
 <a class="viewcode-back" href="../../../src.protocol.html#src.protocol.frame.Frame">[文档]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Frame</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    DLT645 协议帧结构类。</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;DLT645 协议帧结构类。</span>
 
 <span class="sd">    表示一个完整的 DLT645 协议数据帧。</span>
 
@@ -559,8 +557,7 @@
         <span class="n">check_sum</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
         <span class="n">end_flag</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
     <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        初始化 Frame 实例。</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;初始化 Frame 实例。</span>
 
 <span class="sd">        :param preamble: 前导字节，默认为空。</span>
 <span class="sd">        :type preamble: bytearray</span>
@@ -589,8 +586,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">end_flag</span> <span class="o">=</span> <span class="n">end_flag</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        返回 Frame 的字符串表示。</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;返回 Frame 的字符串表示。</span>
 
 <span class="sd">        :return: 格式化的帧信息字符串。</span>
 <span class="sd">        :rtype: str</span>
