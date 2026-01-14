@@ -1,3 +1,9 @@
+"""
+RTU 服务器模块。
+
+本模块实现了 DLT645 协议的 RTU（串口）服务器功能。
+"""
+
 from typing import Optional, Any
 import serial
 import threading
@@ -9,6 +15,22 @@ from ...transport.server.log import log
 
 
 class RtuServer:
+    """
+    RTU 服务器类，用于与 DLT645 客户端进行串口通信。
+
+    该类实现了 RTU（Remote Terminal Unit）服务器功能，
+    支持与 DLT645 协议客户端进行串口通信。
+
+    :ivar port: 串口名称。
+    :ivar data_bits: 数据位。
+    :ivar stop_bits: 停止位。
+    :ivar baud_rate: 波特率。
+    :ivar parity: 校验位。
+    :ivar timeout: 超时时间（秒）。
+    :ivar service: 服务实例，用于处理业务逻辑。
+    :ivar conn: 串口连接对象。
+    """
+
     def __init__(
         self,
         port: str,
@@ -19,16 +41,23 @@ class RtuServer:
         timeout: float = 5.0,
         service=None,
     ):
-        """初始化RTU服务器
-        
-        Args:
-            port: 串口端口名（如 '/dev/ttyUSB0'）
-            data_bits: 数据位（默认8位）
-            stop_bits: 停止位（默认1位）
-            baud_rate: 波特率（默认9600）
-            parity: 校验位（默认无校验）
-            timeout: 超时时间（默认5秒）
-            service: 服务实例，用于处理业务逻辑
+        """
+        初始化 RTU 服务器。
+
+        :param port: 串口端口名（如 '/dev/ttyUSB0'）。
+        :type port: str
+        :param data_bits: 数据位，默认 8。
+        :type data_bits: int
+        :param stop_bits: 停止位，默认 1。
+        :type stop_bits: int
+        :param baud_rate: 波特率，默认 9600。
+        :type baud_rate: int
+        :param parity: 校验位，默认无校验。
+        :type parity: str
+        :param timeout: 超时时间（秒），默认 5.0。
+        :type timeout: float
+        :param service: 服务实例，用于处理业务逻辑。
+        :type service: Any
         """
         self.port = port
         self.data_bits = data_bits

@@ -1,3 +1,9 @@
+"""
+RTU 客户端模块。
+
+本模块实现了 DLT645 协议的 RTU（串口）客户端功能。
+"""
+
 import time
 import serial
 from typing import Optional
@@ -8,11 +14,21 @@ from ...protocol.protocol import DLT645Protocol
 
 
 class RtuClient:
-    """RTU客户端类，用于与DLT645设备进行串口通信
-    
-    该类实现了RTU（Remote Terminal Unit）客户端功能，支持与DLT645协议设备进行通信。
-    提供了连接管理、数据发送和接收等功能。
     """
+    RTU 客户端类，用于与 DLT645 设备进行串口通信。
+
+    该类实现了 RTU（Remote Terminal Unit）客户端功能，
+    支持与 DLT645 协议设备进行串口通信。
+
+    :ivar port: 串口名称。
+    :ivar baud_rate: 波特率。
+    :ivar data_bits: 数据位。
+    :ivar stop_bits: 停止位。
+    :ivar parity: 校验位。
+    :ivar timeout: 超时时间（秒）。
+    :ivar conn: 串口连接对象。
+    """
+
     def __init__(
         self,
         port: str = "",
@@ -22,15 +38,21 @@ class RtuClient:
         parity: str = serial.PARITY_NONE,
         timeout: float = 1.0,
     ):
-        """初始化RTU客户端
-        
-        Args:
-            port: 串口名称（如"COM1"或"/dev/ttyUSB0"）
-            baud_rate: 波特率，默认9600
-            data_bits: 数据位，默认8
-            stop_bits: 停止位，默认1
-            parity: 校验位，默认无校验（serial.PARITY_NONE）
-            timeout: 超时时间（秒），默认1.0
+        """
+        初始化 RTU 客户端。
+
+        :param port: 串口名称（如 "COM1" 或 "/dev/ttyUSB0"）。
+        :type port: str
+        :param baud_rate: 波特率，默认 9600。
+        :type baud_rate: int
+        :param data_bits: 数据位，默认 8。
+        :type data_bits: int
+        :param stop_bits: 停止位，默认 1。
+        :type stop_bits: int
+        :param parity: 校验位，默认无校验。
+        :type parity: str
+        :param timeout: 超时时间（秒），默认 1.0。
+        :type timeout: float
         """
         self.port = port
         self.baud_rate = baud_rate

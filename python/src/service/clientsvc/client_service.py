@@ -1,3 +1,16 @@
+"""
+DLT645 客户端服务模块。
+
+本模块实现了 DLT645 协议的客户端业务服务功能，包括：
+- 电能数据读取
+- 需量数据读取
+- 变量数据读取
+- 事件记录读取
+- 参变量读写
+- 通讯地址读写
+- 密码管理
+"""
+
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
 import time
@@ -34,7 +47,24 @@ from ...transport.client.tcp_client import TcpClient
 
 
 class MeterClientService:
+    """
+    电表客户端服务类。
+
+    用于与 DLT645 电表设备进行通信，提供数据读写等业务功能。
+
+    :ivar address: 设备地址（6字节）。
+    :ivar password_manager: 密码管理器。
+    :ivar operation_code: 操作码（4字节）。
+    :ivar client: 通信客户端（TCP 或 RTU）。
+    """
+
     def __init__(self, client: Union[TcpClient, RtuClient]):
+        """
+        初始化电表客户端服务。
+
+        :param client: 通信客户端实例（TcpClient 或 RtuClient）。
+        :type client: Union[TcpClient, RtuClient]
+        """
         self.address = bytearray(6)  # 6字节地址
         self.password_manager: PasswordManager = PasswordManager()  # 4字节密码
         self.operation_code = bytearray(4)  # 4字节操作码

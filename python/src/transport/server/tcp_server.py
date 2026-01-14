@@ -1,3 +1,9 @@
+"""
+TCP 服务器模块。
+
+本模块实现了 DLT645 协议的 TCP 服务器功能。
+"""
+
 import socket
 import threading
 import time
@@ -8,14 +14,28 @@ from ...transport.server.log import log
 
 
 class TcpServer:
+    """
+    TCP 服务器类，用于与 DLT645 客户端进行 TCP 通信。
+
+    :ivar ip: 服务器 IP 地址。
+    :ivar port: 服务器端口号。
+    :ivar timeout: 连接超时时间（秒）。
+    :ivar ln: 监听套接字。
+    :ivar service: 服务实例，用于处理业务逻辑。
+    """
+
     def __init__(self, ip: str, port: int, timeout: float, service):
-        """初始化TCP服务器
-        
-        Args:
-            ip: 服务器IP地址（如 '0.0.0.0'）
-            port: 服务器端口号（如 8080）
-            timeout: 连接超时时间（秒）
-            service: 服务实例，用于处理业务逻辑
+        """
+        初始化 TCP 服务器。
+
+        :param ip: 服务器 IP 地址（如 '0.0.0.0'）。
+        :type ip: str
+        :param port: 服务器端口号。
+        :type port: int
+        :param timeout: 连接超时时间（秒）。
+        :type timeout: float
+        :param service: 服务实例，用于处理业务逻辑。
+        :type service: Any
         """
         self.ip = ip
         self.port = port

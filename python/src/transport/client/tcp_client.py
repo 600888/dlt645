@@ -1,3 +1,9 @@
+"""
+TCP 客户端模块。
+
+本模块实现了 DLT645 协议的 TCP 客户端功能。
+"""
+
 import socket
 import time
 from typing import Optional, Any
@@ -8,13 +14,25 @@ from ...transport.client.log import log
 
 
 class TcpClient:
+    """
+    TCP 客户端类，用于与 DLT645 设备进行 TCP 通信。
+
+    :ivar ip: 服务器 IP 地址。
+    :ivar port: 服务器端口号。
+    :ivar timeout: 连接超时时间（秒）。
+    :ivar conn: socket 连接对象。
+    """
+
     def __init__(self, ip: str = "", port: int = 0, timeout: float = 5.0):
-        """初始化TCP客户端
-        
-        Args:
-            ip: 服务器IP地址（如 '0.0.0.0'）
-            port: 服务器端口号（如 8080）
-            timeout: 连接超时时间（秒）
+        """
+        初始化 TCP 客户端。
+
+        :param ip: 服务器 IP 地址（如 '0.0.0.0'）。
+        :type ip: str
+        :param port: 服务器端口号。
+        :type port: int
+        :param timeout: 连接超时时间（秒），默认 5.0。
+        :type timeout: float
         """
         self.ip = ip
         self.port = port

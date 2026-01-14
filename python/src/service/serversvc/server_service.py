@@ -1,3 +1,13 @@
+"""
+DLT645 服务端服务模块。
+
+本模块实现了 DLT645 协议的服务端业务服务功能，包括：
+- 处理客户端数据读取请求
+- 处理客户端数据写入请求
+- 通讯地址管理
+- 密码验证和管理
+"""
+
 import struct
 from typing import Optional, Union, List
 
@@ -31,12 +41,34 @@ from ...transport.server.tcp_server import TcpServer
 
 
 class MeterServerService:
+    """
+    电表服务端服务类。
+
+    用于模拟 DLT645 电表设备，响应客户端的数据读写请求。
+
+    :ivar server: 通信服务器（TCP 或 RTU）。
+    :ivar address: 设备地址（6字节）。
+    :ivar password_manager: 密码管理器。
+    :ivar clear_meter_event_records: 电表清零事件记录列表。
+    :ivar event_records: 事件记录列表。
+    """
+
     def __init__(
         self,
         server: Union[TcpServer, RtuServer],
         address: Optional[bytearray] = bytearray([0x00, 0x00, 0x00, 0x00, 0x00, 0x00]),
         password_manager: Optional[PasswordManager] = PasswordManager(),
     ):
+        """
+        初始化电表服务端服务。
+
+        :param server: 通信服务器实例（TcpServer 或 RtuServer）。
+        :type server: Union[TcpServer, RtuServer]
+        :param address: 设备地址，默认为全零。
+        :type address: Optional[bytearray]
+        :param password_manager: 密码管理器，默认创建新实例。
+        :type password_manager: Optional[PasswordManager]
+        """
         self.server = server
         self.address = address
         self.password_manager = password_manager
