@@ -10,8 +10,8 @@ import unittest
 import sys
 import os
 
-# 添加src目录到Python路径
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), "."))
+# 添加python目录到Python路径（test的上一级目录）
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
 try:
     from src.service.serversvc.server_service import MeterServerService
