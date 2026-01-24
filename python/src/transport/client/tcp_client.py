@@ -8,6 +8,7 @@ import time
 from typing import Optional, Any
 
 from ...common.transform import bytes_to_spaced_hex
+from ...common.message_capture import MessageCapture
 from ...protocol.protocol import DLT645Protocol
 from ...transport.client.log import log
 
@@ -35,6 +36,8 @@ class TcpClient:
         self.port = port
         self.timeout = timeout
         self.conn: Optional[socket.socket] = None
+        # 报文捕获管理器
+        self._message_capture: Optional[MessageCapture] = None
 
     def connect(self) -> bool:
         """连接到服务器"""
@@ -105,6 +108,11 @@ class TcpClient:
                 try:
                     self.conn.sendall(data)
                     log.info(f"TX: {bytes_to_spaced_hex(data)}")
+                    
+                    # 捕获发送的报文
+                    current_tx_id: Optional[str] = None
+                    if self._message_capture:
+                        current_tx_id = self._message_capture.capture_tx(data)
                 except socket.timeout:
                     raise TimeoutError(f"Write timeout after {write_timeout}s")
 
@@ -130,6 +138,9 @@ class TcpClient:
                                     log.debug(
                                         f"Successfully received complete response: {bytes_to_spaced_hex(data_buffer)}"
                                     )
+                                    # 捕获接收的报文并与发送配对
+                                    if self._message_capture:
+                                        self._message_capture.capture_rx(bytes(data_buffer), current_tx_id)
                                     # 恢复原始超时设置
                                     self.conn.settimeout(original_timeout)
                                     return data_buffer

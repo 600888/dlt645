@@ -46,6 +46,7 @@ class CtrlCode(IntEnum):
     DLT645 协议中控制码用于标识帧的功能类型。
 
     :cvar BroadcastTimeSync: 广播校时命令（0x08）
+    :cvar ClearDemand: 需量清零命令（0x10）
     :cvar ReadData: 读数据命令（0x11）
     :cvar ReadAddress: 读通讯地址命令（0x13）
     :cvar WriteData: 写数据命令（0x14）
@@ -56,6 +57,7 @@ class CtrlCode(IntEnum):
     """
 
     BroadcastTimeSync = 0x08  # 广播校时
+    ClearDemand = 0x10  # 需量清零
     ReadData = 0x11  # 读数据
     ReadAddress = 0x13  # 读通讯地址
     WriteData = 0x14  # 写数据

@@ -43,6 +43,9 @@ from ...model.data import data_handler as data
 from ...service.clientsvc.log import log
 from ...transport.client.rtu_client import RtuClient
 from ...transport.client.tcp_client import TcpClient
+from ...common.message_capture import MessageCapture
+from ...common.message_types import MessageRecord, MessagePair
+from typing import List
 
 
 class MeterClientService:
@@ -448,3 +451,88 @@ class MeterClientService:
         except Exception as e:
             log.error(f"处理响应帧时出错: {e}")
             raise
+
+    # ==================== 报文捕获方法 ====================
+
+    def enable_message_capture(self, queue_size: int = 100) -> None:
+        """启用报文捕获功能。
+
+        :param queue_size: 报文队列大小，默认100
+        :type queue_size: int
+        """
+        if self.client._message_capture is None:
+            self.client._message_capture = MessageCapture(enabled=True, queue_size=queue_size)
+        else:
+            self.client._message_capture.enable()
+            self.client._message_capture.set_queue_size(queue_size)
+        log.info(f"报文捕获已启用，队列大小: {queue_size}")
+
+    def disable_message_capture(self) -> None:
+        """禁用报文捕获功能。"""
+        if self.client._message_capture:
+            self.client._message_capture.disable()
+        log.info("报文捕获已禁用")
+
+    def get_captured_messages(self, count: int = 0) -> List[MessageRecord]:
+        """获取捕获的报文列表。
+
+        :param count: 要获取的数量，0表示全部
+        :type count: int
+        :return: 报文列表
+        :rtype: List[MessageRecord]
+        """
+        if self.client._message_capture:
+            return self.client._message_capture.get_all_messages(count)
+        return []
+
+    def get_captured_tx_messages(self, count: int = 0) -> List[MessageRecord]:
+        """获取捕获的发送报文列表。
+
+        :param count: 要获取的数量，0表示全部
+        :type count: int
+        :return: 发送报文列表
+        :rtype: List[MessageRecord]
+        """
+        if self.client._message_capture:
+            return self.client._message_capture.get_tx_messages(count)
+        return []
+
+    def get_captured_rx_messages(self, count: int = 0) -> List[MessageRecord]:
+        """获取捕获的接收报文列表。
+
+        :param count: 要获取的数量，0表示全部
+        :type count: int
+        :return: 接收报文列表
+        :rtype: List[MessageRecord]
+        """
+        if self.client._message_capture:
+            return self.client._message_capture.get_rx_messages(count)
+        return []
+
+    def get_captured_pairs(self, count: int = 0) -> List[MessagePair]:
+        """获取捕获的TX/RX配对列表。
+
+        :param count: 要获取的数量，0表示全部
+        :type count: int
+        :return: 配对列表
+        :rtype: List[MessagePair]
+        """
+        if self.client._message_capture:
+            return self.client._message_capture.get_pairs(count)
+        return []
+
+    def clear_captured_messages(self) -> None:
+        """清空所有捕获的报文。"""
+        if self.client._message_capture:
+            self.client._message_capture.clear()
+        log.info("捕获的报文已清空")
+
+    def get_message_capture_stats(self) -> dict:
+        """获取报文捕获统计信息。
+
+        :return: 统计信息字典
+        :rtype: dict
+        """
+        if self.client._message_capture:
+            return self.client._message_capture.get_stats()
+        return {"enabled": False}

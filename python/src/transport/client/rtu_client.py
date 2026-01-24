@@ -7,6 +7,7 @@ import time
 import serial
 from typing import Optional
 from ...common.transform import bytes_to_spaced_hex
+from ...common.message_capture import MessageCapture
 from ...transport.client.log import log
 from ...protocol.frame import FRAME_START_BYTE, FRAME_END_BYTE
 from ...protocol.protocol import DLT645Protocol
@@ -58,6 +59,8 @@ class RtuClient:
         self.parity = parity
         self.timeout = timeout
         self.conn: Optional[serial.Serial] = None
+        # 报文捕获管理器
+        self._message_capture: Optional[MessageCapture] = None
 
     def connect(self) -> bool:
         """连接到串口
@@ -172,6 +175,11 @@ class RtuClient:
 
                 log.info(f"TX: {bytes_to_spaced_hex(data)}")
 
+                # 捕获发送的报文
+                current_tx_id: Optional[str] = None
+                if self._message_capture:
+                    current_tx_id = self._message_capture.capture_tx(data)
+
                 # 初始化数据缓冲区和接收状态
                 data_buffer = bytearray()
                 max_buffer_size = 1024  # 增加缓冲区大小以处理较大的数据
@@ -199,6 +207,9 @@ class RtuClient:
                                 log.info(
                                     f"RX: Successfully parsed frame, buffer size after parsing: {len(remaining_data)}"
                                 )
+                                # 捕获接收的报文并与发送配对
+                                if self._message_capture:
+                                    self._message_capture.capture_rx(bytes(data_buffer), current_tx_id)
                                 return bytes(data_buffer)
                             else:
                                 # 更新缓冲区为未解析的剩余数据

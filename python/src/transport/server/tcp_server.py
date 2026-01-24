@@ -6,8 +6,10 @@
 import socket
 import threading
 import time
+from typing import Optional
 
 from ...common.transform import bytes_to_spaced_hex
+from ...common.message_capture import MessageCapture
 from ...protocol.protocol import DLT645Protocol
 from ...transport.server.log import log
 
@@ -46,6 +48,8 @@ class TcpServer:
         self._connections = []
         # 用于保护连接列表的锁
         self._connections_lock = threading.Lock()
+        # 报文捕获管理器
+        self._message_capture: Optional[MessageCapture] = None
 
     def start(self):
         """启动TCP服务器（非阻塞，在后台线程中运行）"""
@@ -175,6 +179,11 @@ class TcpServer:
                     # 将新接收的数据添加到缓冲区
                     data_buffer.extend(buf)
                     log.info(f"RX: {bytes_to_spaced_hex(buf)} (len:{len(data_buffer)})")
+                    
+                    # 捕获接收的报文
+                    current_tx_id: Optional[str] = None
+                    if self._message_capture:
+                        current_tx_id = self._message_capture.capture_rx_for_server(buf)
 
                     # 尝试解析缓冲区中的数据
                     try:
@@ -203,6 +212,9 @@ class TcpServer:
                                         log.info(
                                             f"TX: {bytes_to_spaced_hex(resp)} (len:{len(resp)})"
                                         )
+                                        # 捕获发送的报文并与接收配对
+                                        if self._message_capture:
+                                            self._message_capture.capture_tx_for_server(resp, current_tx_id)
                                     except Exception as e:
                                         log.error(f"Error writing response: {e}")
                             except Exception as e:

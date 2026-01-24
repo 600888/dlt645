@@ -5,6 +5,7 @@
 - 客户端和服务端功能
 - 电能表数据读写操作
 - 电能量、最大需量、变量数据类型支持
+- 实时报文捕获功能
 """
 
 __version__ = "1.0.0"
@@ -27,6 +28,10 @@ from .transport.server.tcp_server import TcpServer
 from .transport.server.rtu_server import RtuServer
 from .transport.client.tcp_client import TcpClient
 from .transport.client.rtu_client import RtuClient
+
+# 导入报文捕获模块
+from .common.message_types import MessageRecord, MessagePair
+from .common.message_capture import MessageCapture, MessageQueue
 
 # 导出所有公共接口
 __all__ = [
@@ -53,4 +58,10 @@ __all__ = [
     "RtuServer",
     "TcpClient",
     "RtuClient",
+    
+    # 报文捕获
+    "MessageRecord",
+    "MessagePair",
+    "MessageCapture",
+    "MessageQueue",
 ]

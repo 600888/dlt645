@@ -37,6 +37,9 @@ from ...model.data import data_handler as data
 from ...service.serversvc.log import log
 from ...transport.server.rtu_server import RtuServer
 from ...transport.server.tcp_server import TcpServer
+from ...common.message_capture import MessageCapture
+from ...common.message_types import MessageRecord, MessagePair
+from typing import List
 
 
 class MeterServerService:
@@ -490,6 +493,46 @@ class MeterServerService:
                 return DLT645Protocol.build_frame(
                     bytes(self.address), frame.ctrl_code | 0x80, res_data
                 )
+            elif frame.ctrl_code == CtrlCode.ClearDemand:
+                log.debug(f"收到需量清零请求: {bytes_to_spaced_hex(frame.data)}")
+                # 解析数据标识为 32 位无符号整数
+                data_id = struct.unpack("<I", frame.data[:DI_LEN])[0]
+                data_item = get_data_item(data_id)
+                if data_item is None:
+                    log.error(f"数据项未找到: {data_id}")
+                    return self._build_error_response(
+                        frame, error_code=ErrorCode.RequestDataEmpty
+                    )
+
+                # 提取密码
+                password = frame.data[DI_LEN : DI_LEN + PASSWORD_LEN]
+                if not self.password_manager.check_password(password):
+                    log.error(f"密码错误: {bytes_to_spaced_hex(password)}")
+                    return self._build_error_response(
+                        frame, error_code=ErrorCode.AuthFailed
+                    )
+
+                # 提取操作者代码
+                operator_code = frame.data[
+                    DI_LEN + PASSWORD_LEN : DI_LEN + PASSWORD_LEN + OPERATOR_CODE_LEN
+                ]
+
+                # 执行需量清零：将需量值设为0，时间设为当前时间
+                from datetime import datetime
+                cleared_demand = Demand(0.0, datetime.now())
+                if not set_data_item(data_id, cleared_demand):
+                    log.error(f"需量清零失败: {data_id}")
+                    return self._build_error_response(
+                        frame, error_code=ErrorCode.OtherError
+                    )
+
+                log.info(f"需量清零成功: DI={hex(data_id)}, 操作者代码={bytes_to_spaced_hex(operator_code)}")
+
+                # 构建响应帧
+                res_data = bytearray()
+                return DLT645Protocol.build_frame(
+                    frame.addr, frame.ctrl_code | 0x80, res_data
+                )
             else:
                 log.error(f"未知的控制码: {hex(frame.ctrl_code)}")
                 return self._build_error_response(
@@ -516,3 +559,88 @@ class MeterServerService:
         return DLT645Protocol.build_frame(  # D7=1, D6=1表示异常响应, C=1100
             frame.addr, frame.ctrl_code | 0xC0, error_data
         )
+
+    # ==================== 报文捕获方法 ====================
+
+    def enable_message_capture(self, queue_size: int = 100) -> None:
+        """启用报文捕获功能。
+
+        :param queue_size: 报文队列大小，默认100
+        :type queue_size: int
+        """
+        if self.server._message_capture is None:
+            self.server._message_capture = MessageCapture(enabled=True, queue_size=queue_size)
+        else:
+            self.server._message_capture.enable()
+            self.server._message_capture.set_queue_size(queue_size)
+        log.info(f"报文捕获已启用，队列大小: {queue_size}")
+
+    def disable_message_capture(self) -> None:
+        """禁用报文捕获功能。"""
+        if self.server._message_capture:
+            self.server._message_capture.disable()
+        log.info("报文捕获已禁用")
+
+    def get_captured_messages(self, count: int = 0) -> List[MessageRecord]:
+        """获取捕获的报文列表。
+
+        :param count: 要获取的数量，0表示全部
+        :type count: int
+        :return: 报文列表
+        :rtype: List[MessageRecord]
+        """
+        if self.server._message_capture:
+            return self.server._message_capture.get_all_messages(count)
+        return []
+
+    def get_captured_tx_messages(self, count: int = 0) -> List[MessageRecord]:
+        """获取捕获的发送报文列表。
+
+        :param count: 要获取的数量，0表示全部
+        :type count: int
+        :return: 发送报文列表
+        :rtype: List[MessageRecord]
+        """
+        if self.server._message_capture:
+            return self.server._message_capture.get_tx_messages(count)
+        return []
+
+    def get_captured_rx_messages(self, count: int = 0) -> List[MessageRecord]:
+        """获取捕获的接收报文列表。
+
+        :param count: 要获取的数量，0表示全部
+        :type count: int
+        :return: 接收报文列表
+        :rtype: List[MessageRecord]
+        """
+        if self.server._message_capture:
+            return self.server._message_capture.get_rx_messages(count)
+        return []
+
+    def get_captured_pairs(self, count: int = 0) -> List[MessagePair]:
+        """获取捕获的TX/RX配对列表。
+
+        :param count: 要获取的数量，0表示全部
+        :type count: int
+        :return: 配对列表
+        :rtype: List[MessagePair]
+        """
+        if self.server._message_capture:
+            return self.server._message_capture.get_pairs(count)
+        return []
+
+    def clear_captured_messages(self) -> None:
+        """清空所有捕获的报文。"""
+        if self.server._message_capture:
+            self.server._message_capture.clear()
+        log.info("捕获的报文已清空")
+
+    def get_message_capture_stats(self) -> dict:
+        """获取报文捕获统计信息。
+
+        :return: 统计信息字典
+        :rtype: dict
+        """
+        if self.server._message_capture:
+            return self.server._message_capture.get_stats()
+        return {"enabled": False}

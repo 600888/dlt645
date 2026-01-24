@@ -1,5 +1,4 @@
-"""
-RTU 服务器模块。
+"""RTU 服务器模块。
 
 本模块实现了 DLT645 协议的 RTU（串口）服务器功能。
 """
@@ -10,13 +9,13 @@ import threading
 import time
 
 from ...common.transform import bytes_to_spaced_hex
+from ...common.message_capture import MessageCapture
 from ...protocol.protocol import DLT645Protocol
 from ...transport.server.log import log
 
 
 class RtuServer:
-    """
-    RTU 服务器类，用于与 DLT645 客户端进行串口通信。
+    """RTU 服务器类，用于与 DLT645 客户端进行串口通信。
 
     该类实现了 RTU（Remote Terminal Unit）服务器功能，
     支持与 DLT645 协议客户端进行串口通信。
@@ -41,8 +40,7 @@ class RtuServer:
         timeout: float = 5.0,
         service=None,
     ):
-        """
-        初始化 RTU 服务器。
+        """初始化 RTU 服务器。
 
         :param port: 串口端口名（如 '/dev/ttyUSB0'）。
         :type port: str
@@ -70,6 +68,8 @@ class RtuServer:
         self._server_thread = None
         self._running = False
         self._stop_event = threading.Event()
+        # 报文捕获管理器
+        self._message_capture: Optional[MessageCapture] = None
 
     def start(self) -> bool:
         """启动RTU服务器（非阻塞，在后台线程中运行）"""
@@ -214,6 +214,11 @@ class RtuServer:
                         # 更新最后收到数据的时间
                         last_data_time = time.time()
 
+                        # 捕获接收的报文
+                        current_tx_id: Optional[str] = None
+                        if self._message_capture:
+                            current_tx_id = self._message_capture.capture_rx_for_server(data)
+
                         # 尝试解析缓冲区中的数据
                         try:
                             # 尝试从缓冲区中提取完整的帧
@@ -241,6 +246,9 @@ class RtuServer:
                                             log.info(
                                                 f"TX: {bytes_to_spaced_hex(resp)} ({bytes_written} bytes)"
                                             )
+                                            # 捕获发送的报文并与接收配对
+                                            if self._message_capture:
+                                                self._message_capture.capture_tx_for_server(resp, current_tx_id)
                                         except Exception as e:
                                             log.error(f"Error writing response: {e}")
                                 except Exception as e:
