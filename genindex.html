@@ -52,9 +52,6 @@
 <li class="toctree-l5"><a class="reference internal" href="src.common.html#module-src.common.base_log">src.common.base_log module</a><ul>
 <li class="toctree-l6"><a class="reference internal" href="src.common.html#src.common.base_log.Log"><code class="docutils literal notranslate"><span class="pre">Log</span></code></a><ul>
 <li class="toctree-l7"><a class="reference internal" href="src.common.html#src.common.base_log.Log.set_logger"><code class="docutils literal notranslate"><span class="pre">Log.set_logger()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="src.common.html#src.common.base_log.Log.set_log_enable"><code class="docutils literal notranslate"><span class="pre">Log.set_log_enable()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="src.common.html#src.common.base_log.Log.set_log_level"><code class="docutils literal notranslate"><span class="pre">Log.set_log_level()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="src.common.html#src.common.base_log.Log.set_config"><code class="docutils literal notranslate"><span class="pre">Log.set_config()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="src.common.html#src.common.base_log.Log.debug"><code class="docutils literal notranslate"><span class="pre">Log.debug()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="src.common.html#src.common.base_log.Log.info"><code class="docutils literal notranslate"><span class="pre">Log.info()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="src.common.html#src.common.base_log.Log.warning"><code class="docutils literal notranslate"><span class="pre">Log.warning()</span></code></a></li>
@@ -174,6 +171,7 @@
 </li>
 <li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.CtrlCode"><code class="docutils literal notranslate"><span class="pre">CtrlCode</span></code></a><ul>
 <li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.CtrlCode.BroadcastTimeSync"><code class="docutils literal notranslate"><span class="pre">CtrlCode.BroadcastTimeSync</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.CtrlCode.ClearDemand"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ClearDemand</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.CtrlCode.ReadData"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ReadData</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.CtrlCode.ReadAddress"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ReadAddress</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.CtrlCode.WriteData"><code class="docutils literal notranslate"><span class="pre">CtrlCode.WriteData</span></code></a></li>
@@ -277,6 +275,14 @@
 <li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.write_address"><code class="docutils literal notranslate"><span class="pre">MeterClientService.write_address()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.send_and_handle_request"><code class="docutils literal notranslate"><span class="pre">MeterClientService.send_and_handle_request()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.handle_response"><code class="docutils literal notranslate"><span class="pre">MeterClientService.handle_response()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.enable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterClientService.enable_message_capture()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.disable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterClientService.disable_message_capture()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.get_captured_messages"><code class="docutils literal notranslate"><span class="pre">MeterClientService.get_captured_messages()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.get_captured_tx_messages"><code class="docutils literal notranslate"><span class="pre">MeterClientService.get_captured_tx_messages()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.get_captured_rx_messages"><code class="docutils literal notranslate"><span class="pre">MeterClientService.get_captured_rx_messages()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.get_captured_pairs"><code class="docutils literal notranslate"><span class="pre">MeterClientService.get_captured_pairs()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.clear_captured_messages"><code class="docutils literal notranslate"><span class="pre">MeterClientService.clear_captured_messages()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.get_message_capture_stats"><code class="docutils literal notranslate"><span class="pre">MeterClientService.get_message_capture_stats()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -303,6 +309,14 @@
 <li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.set_04"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_04()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.get_data_item"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_data_item()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.handle_request"><code class="docutils literal notranslate"><span class="pre">MeterServerService.handle_request()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.enable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterServerService.enable_message_capture()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.disable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterServerService.disable_message_capture()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.get_captured_messages"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_captured_messages()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.get_captured_tx_messages"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_captured_tx_messages()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.get_captured_rx_messages"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_captured_rx_messages()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.get_captured_pairs"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_captured_pairs()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.clear_captured_messages"><code class="docutils literal notranslate"><span class="pre">MeterServerService.clear_captured_messages()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.get_message_capture_stats"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_message_capture_stats()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -389,6 +403,14 @@
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterServerService.set_04"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_04()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterServerService.get_data_item"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_data_item()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterServerService.handle_request"><code class="docutils literal notranslate"><span class="pre">MeterServerService.handle_request()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterServerService.enable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterServerService.enable_message_capture()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterServerService.disable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterServerService.disable_message_capture()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterServerService.get_captured_messages"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_captured_messages()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterServerService.get_captured_tx_messages"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_captured_tx_messages()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterServerService.get_captured_rx_messages"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_captured_rx_messages()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterServerService.get_captured_pairs"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_captured_pairs()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterServerService.clear_captured_messages"><code class="docutils literal notranslate"><span class="pre">MeterServerService.clear_captured_messages()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterServerService.get_message_capture_stats"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_message_capture_stats()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l4"><a class="reference internal" href="src.html#src.MeterClientService"><code class="docutils literal notranslate"><span class="pre">MeterClientService</span></code></a><ul>
@@ -409,6 +431,14 @@
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.write_address"><code class="docutils literal notranslate"><span class="pre">MeterClientService.write_address()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.send_and_handle_request"><code class="docutils literal notranslate"><span class="pre">MeterClientService.send_and_handle_request()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.handle_response"><code class="docutils literal notranslate"><span class="pre">MeterClientService.handle_response()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.enable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterClientService.enable_message_capture()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.disable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterClientService.disable_message_capture()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.get_captured_messages"><code class="docutils literal notranslate"><span class="pre">MeterClientService.get_captured_messages()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.get_captured_tx_messages"><code class="docutils literal notranslate"><span class="pre">MeterClientService.get_captured_tx_messages()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.get_captured_rx_messages"><code class="docutils literal notranslate"><span class="pre">MeterClientService.get_captured_rx_messages()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.get_captured_pairs"><code class="docutils literal notranslate"><span class="pre">MeterClientService.get_captured_pairs()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.clear_captured_messages"><code class="docutils literal notranslate"><span class="pre">MeterClientService.clear_captured_messages()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.get_message_capture_stats"><code class="docutils literal notranslate"><span class="pre">MeterClientService.get_message_capture_stats()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l4"><a class="reference internal" href="src.html#src.DLT645Protocol"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol</span></code></a><ul>
@@ -423,6 +453,7 @@
 </li>
 <li class="toctree-l4"><a class="reference internal" href="src.html#src.CtrlCode"><code class="docutils literal notranslate"><span class="pre">CtrlCode</span></code></a><ul>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.CtrlCode.BroadcastTimeSync"><code class="docutils literal notranslate"><span class="pre">CtrlCode.BroadcastTimeSync</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.CtrlCode.ClearDemand"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ClearDemand</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.CtrlCode.ReadData"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ReadData</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.CtrlCode.ReadAddress"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ReadAddress</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.CtrlCode.WriteData"><code class="docutils literal notranslate"><span class="pre">CtrlCode.WriteData</span></code></a></li>
@@ -476,6 +507,57 @@
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.RtuClient.send_request"><code class="docutils literal notranslate"><span class="pre">RtuClient.send_request()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l4"><a class="reference internal" href="src.html#src.MessageRecord"><code class="docutils literal notranslate"><span class="pre">MessageRecord</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MessageRecord.direction"><code class="docutils literal notranslate"><span class="pre">MessageRecord.direction</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MessageRecord.data"><code class="docutils literal notranslate"><span class="pre">MessageRecord.data</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MessageRecord.id"><code class="docutils literal notranslate"><span class="pre">MessageRecord.id</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MessageRecord.timestamp"><code class="docutils literal notranslate"><span class="pre">MessageRecord.timestamp</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MessageRecord.hex_string"><code class="docutils literal notranslate"><span class="pre">MessageRecord.hex_string</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MessageRecord.pair_id"><code class="docutils literal notranslate"><span class="pre">MessageRecord.pair_id</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MessageRecord.formatted_time"><code class="docutils literal notranslate"><span class="pre">MessageRecord.formatted_time</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MessageRecord.to_dict"><code class="docutils literal notranslate"><span class="pre">MessageRecord.to_dict()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="src.html#src.MessagePair"><code class="docutils literal notranslate"><span class="pre">MessagePair</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MessagePair.id"><code class="docutils literal notranslate"><span class="pre">MessagePair.id</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MessagePair.tx"><code class="docutils literal notranslate"><span class="pre">MessagePair.tx</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MessagePair.rx"><code class="docutils literal notranslate"><span class="pre">MessagePair.rx</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MessagePair.round_trip_time"><code class="docutils literal notranslate"><span class="pre">MessagePair.round_trip_time</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MessagePair.set_tx"><code class="docutils literal notranslate"><span class="pre">MessagePair.set_tx()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MessagePair.set_rx"><code class="docutils literal notranslate"><span class="pre">MessagePair.set_rx()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MessagePair.is_complete"><code class="docutils literal notranslate"><span class="pre">MessagePair.is_complete()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MessagePair.tx_time"><code class="docutils literal notranslate"><span class="pre">MessagePair.tx_time</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MessagePair.rx_time"><code class="docutils literal notranslate"><span class="pre">MessagePair.rx_time</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MessagePair.to_dict"><code class="docutils literal notranslate"><span class="pre">MessagePair.to_dict()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="src.html#src.MessageCapture"><code class="docutils literal notranslate"><span class="pre">MessageCapture</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MessageCapture.enabled"><code class="docutils literal notranslate"><span class="pre">MessageCapture.enabled</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MessageCapture.queue_size"><code class="docutils literal notranslate"><span class="pre">MessageCapture.queue_size</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MessageCapture.enable"><code class="docutils literal notranslate"><span class="pre">MessageCapture.enable()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MessageCapture.disable"><code class="docutils literal notranslate"><span class="pre">MessageCapture.disable()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MessageCapture.set_queue_size"><code class="docutils literal notranslate"><span class="pre">MessageCapture.set_queue_size()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MessageCapture.capture_tx"><code class="docutils literal notranslate"><span class="pre">MessageCapture.capture_tx()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MessageCapture.capture_rx"><code class="docutils literal notranslate"><span class="pre">MessageCapture.capture_rx()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MessageCapture.capture_rx_for_server"><code class="docutils literal notranslate"><span class="pre">MessageCapture.capture_rx_for_server()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MessageCapture.capture_tx_for_server"><code class="docutils literal notranslate"><span class="pre">MessageCapture.capture_tx_for_server()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MessageCapture.get_tx_messages"><code class="docutils literal notranslate"><span class="pre">MessageCapture.get_tx_messages()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MessageCapture.get_rx_messages"><code class="docutils literal notranslate"><span class="pre">MessageCapture.get_rx_messages()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MessageCapture.get_pairs"><code class="docutils literal notranslate"><span class="pre">MessageCapture.get_pairs()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MessageCapture.get_all_messages"><code class="docutils literal notranslate"><span class="pre">MessageCapture.get_all_messages()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MessageCapture.clear"><code class="docutils literal notranslate"><span class="pre">MessageCapture.clear()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MessageCapture.get_stats"><code class="docutils literal notranslate"><span class="pre">MessageCapture.get_stats()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="src.html#src.MessageQueue"><code class="docutils literal notranslate"><span class="pre">MessageQueue</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MessageQueue.maxlen"><code class="docutils literal notranslate"><span class="pre">MessageQueue.maxlen</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MessageQueue.append"><code class="docutils literal notranslate"><span class="pre">MessageQueue.append()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MessageQueue.get_all"><code class="docutils literal notranslate"><span class="pre">MessageQueue.get_all()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MessageQueue.get_recent"><code class="docutils literal notranslate"><span class="pre">MessageQueue.get_recent()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MessageQueue.clear"><code class="docutils literal notranslate"><span class="pre">MessageQueue.clear()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MessageQueue.resize"><code class="docutils literal notranslate"><span class="pre">MessageQueue.resize()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -525,6 +607,7 @@
  | <a href="#N"><strong>N</strong></a>
  | <a href="#O"><strong>O</strong></a>
  | <a href="#P"><strong>P</strong></a>
+ | <a href="#Q"><strong>Q</strong></a>
  | <a href="#R"><strong>R</strong></a>
  | <a href="#S"><strong>S</strong></a>
  | <a href="#T"><strong>T</strong></a>
@@ -542,6 +625,8 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="src.html#src.MessageQueue.append">append() （src.MessageQueue 方法）</a>
+</li>
       <li><a href="src.model.types.html#src.model.types.dlt645_type.ErrorCode.AuthFailed">AuthFailed（src.model.types.dlt645_type.ErrorCode 属性）</a>
 </li>
   </ul></td>
@@ -588,6 +673,14 @@
 </li>
       <li><a href="src.protocol.html#src.protocol.protocol.DLT645Protocol.calculate_checksum">calculate_checksum()（src.protocol.protocol.DLT645Protocol 类方法）</a>
 </li>
+      <li><a href="src.html#src.MessageCapture.capture_rx">capture_rx() （src.MessageCapture 方法）</a>
+</li>
+      <li><a href="src.html#src.MessageCapture.capture_rx_for_server">capture_rx_for_server() （src.MessageCapture 方法）</a>
+</li>
+      <li><a href="src.html#src.MessageCapture.capture_tx">capture_tx() （src.MessageCapture 方法）</a>
+</li>
+      <li><a href="src.html#src.MessageCapture.capture_tx_for_server">capture_tx_for_server() （src.MessageCapture 方法）</a>
+</li>
       <li><a href="src.model.types.html#src.model.types.dlt645_type.DICategory.CategoryDemand">CategoryDemand（src.model.types.dlt645_type.DICategory 属性）</a>
 </li>
       <li><a href="src.model.types.html#src.model.types.dlt645_type.DICategory.CategoryEnergy">CategoryEnergy（src.model.types.dlt645_type.DICategory 属性）</a>
@@ -608,17 +701,33 @@
 </li>
       <li><a href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.change_password">change_password() （src.service.clientsvc.client_service.MeterClientService 方法）</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="src.html#src.CtrlCode.ChangeBaudRate">ChangeBaudRate（src.CtrlCode 属性）</a>
 </li>
       <li><a href="src.model.types.html#src.model.types.dlt645_type.CtrlCode.ChangeBaudRate">ChangeBaudRate（src.model.types.dlt645_type.CtrlCode 属性）</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="src.html#src.CtrlCode.ChangePassword">ChangePassword（src.CtrlCode 属性）</a>
 </li>
       <li><a href="src.model.types.html#src.model.types.dlt645_type.CtrlCode.ChangePassword">ChangePassword（src.model.types.dlt645_type.CtrlCode 属性）</a>
 </li>
       <li><a href="src.model.types.html#src.model.types.dlt645_type.PasswordManager.check_password">check_password() （src.model.types.dlt645_type.PasswordManager 方法）</a>
+</li>
+      <li><a href="src.html#src.MessageCapture.clear">clear() （src.MessageCapture 方法）</a>
+</li>
+      <li><a href="src.html#src.MessageQueue.clear">clear() （src.MessageQueue 方法）</a>
+</li>
+      <li><a href="src.html#src.MeterClientService.clear_captured_messages">clear_captured_messages() （src.MeterClientService 方法）</a>
+</li>
+      <li><a href="src.html#src.MeterServerService.clear_captured_messages">clear_captured_messages() （src.MeterServerService 方法）</a>
+</li>
+      <li><a href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.clear_captured_messages">clear_captured_messages() （src.service.clientsvc.client_service.MeterClientService 方法）</a>
+</li>
+      <li><a href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.clear_captured_messages">clear_captured_messages() （src.service.serversvc.server_service.MeterServerService 方法）</a>
+</li>
+      <li><a href="src.html#src.CtrlCode.ClearDemand">ClearDemand（src.CtrlCode 属性）</a>
+</li>
+      <li><a href="src.model.types.html#src.model.types.dlt645_type.CtrlCode.ClearDemand">ClearDemand（src.model.types.dlt645_type.CtrlCode 属性）</a>
 </li>
       <li><a href="src.model.types.html#src.model.types.dlt645_type.ErrorCode.CommRateImmutable">CommRateImmutable（src.model.types.dlt645_type.ErrorCode 属性）</a>
 </li>
@@ -652,6 +761,8 @@
 </li>
       <li><a href="src.model.types.html#src.model.types.data_type.DataType">DataType（src.model.types.data_type 中的类）</a>
 </li>
+      <li><a href="src.html#src.MessageRecord.data">data（src.MessageRecord 属性）</a>
+</li>
       <li><a href="src.common.html#src.common.transform.datetime_to_bcd">datetime_to_bcd()（在 src.common.transform 模块中）</a>
 </li>
       <li><a href="src.model.types.html#src.model.types.dlt645_type.ErrorCode.DaySlotNumExceeded">DaySlotNumExceeded（src.model.types.dlt645_type.ErrorCode 属性）</a>
@@ -666,12 +777,12 @@
 </li>
       <li><a href="src.model.types.html#src.model.types.dlt645_type.Demand">Demand（src.model.types.dlt645_type 中的类）</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="src.html#src.DLT645Protocol.deserialize">deserialize()（src.DLT645Protocol 类方法）</a>
 </li>
       <li><a href="src.protocol.html#src.protocol.protocol.DLT645Protocol.deserialize">deserialize()（src.protocol.protocol.DLT645Protocol 类方法）</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="src.html#src.DLT645Protocol.deserialize_with_remaining">deserialize_with_remaining()（src.DLT645Protocol 类方法）</a>
 </li>
       <li><a href="src.protocol.html#src.protocol.protocol.DLT645Protocol.deserialize_with_remaining">deserialize_with_remaining()（src.protocol.protocol.DLT645Protocol 类方法）</a>
@@ -679,6 +790,18 @@
       <li><a href="src.model.types.html#src.model.types.dlt645_type.DI_LEN">DI_LEN()（在 src.model.types.dlt645_type 模块中）</a>
 </li>
       <li><a href="src.model.types.html#src.model.types.dlt645_type.DICategory">DICategory（src.model.types.dlt645_type 中的类）</a>
+</li>
+      <li><a href="src.html#src.MessageRecord.direction">direction（src.MessageRecord 属性）</a>
+</li>
+      <li><a href="src.html#src.MessageCapture.disable">disable() （src.MessageCapture 方法）</a>
+</li>
+      <li><a href="src.html#src.MeterClientService.disable_message_capture">disable_message_capture() （src.MeterClientService 方法）</a>
+</li>
+      <li><a href="src.html#src.MeterServerService.disable_message_capture">disable_message_capture() （src.MeterServerService 方法）</a>
+</li>
+      <li><a href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.disable_message_capture">disable_message_capture() （src.service.clientsvc.client_service.MeterClientService 方法）</a>
+</li>
+      <li><a href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.disable_message_capture">disable_message_capture() （src.service.serversvc.server_service.MeterServerService 方法）</a>
 </li>
       <li><a href="src.html#src.RtuClient.disconnect">disconnect() （src.RtuClient 方法）</a>
 </li>
@@ -698,14 +821,26 @@
 <h2 id="E">E</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="src.html#src.MessageCapture.enable">enable() （src.MessageCapture 方法）</a>
+</li>
+      <li><a href="src.html#src.MeterClientService.enable_message_capture">enable_message_capture() （src.MeterClientService 方法）</a>
+</li>
+      <li><a href="src.html#src.MeterServerService.enable_message_capture">enable_message_capture() （src.MeterServerService 方法）</a>
+</li>
+      <li><a href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.enable_message_capture">enable_message_capture() （src.service.clientsvc.client_service.MeterClientService 方法）</a>
+</li>
+      <li><a href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.enable_message_capture">enable_message_capture() （src.service.serversvc.server_service.MeterServerService 方法）</a>
+</li>
+      <li><a href="src.html#src.MessageCapture.enabled">enabled（src.MessageCapture 属性）</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="src.html#src.DLT645Protocol.encode_data">encode_data()（src.DLT645Protocol 类方法）</a>
 </li>
       <li><a href="src.protocol.html#src.protocol.protocol.DLT645Protocol.encode_data">encode_data()（src.protocol.protocol.DLT645Protocol 类方法）</a>
 </li>
       <li><a href="src.common.html#src.common.base_log.Log.error">error() （src.common.base_log.Log 方法）</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="src.model.types.html#src.model.types.dlt645_type.error_messages">error_messages()（在 src.model.types.dlt645_type 模块中）</a>
 </li>
       <li><a href="src.model.types.html#src.model.types.dlt645_type.ErrorCode">ErrorCode（src.model.types.dlt645_type 中的类）</a>
@@ -723,6 +858,8 @@
       <li><a href="src.common.html#src.common.transform.float_to_bcd">float_to_bcd()（在 src.common.transform 模块中）</a>
 </li>
       <li><a href="src.common.html#src.common.transform.format_float">format_float()（在 src.common.transform 模块中）</a>
+</li>
+      <li><a href="src.html#src.MessageRecord.formatted_time">formatted_time（src.MessageRecord 属性）</a>
 </li>
       <li><a href="src.protocol.html#src.protocol.frame.FRAME_END_BYTE">FRAME_END_BYTE()（在 src.protocol.frame 模块中）</a>
 </li>
@@ -746,21 +883,75 @@
 <h2 id="G">G</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="src.html#src.MessageQueue.get_all">get_all() （src.MessageQueue 方法）</a>
+</li>
+      <li><a href="src.html#src.MessageCapture.get_all_messages">get_all_messages() （src.MessageCapture 方法）</a>
+</li>
+      <li><a href="src.html#src.MeterClientService.get_captured_messages">get_captured_messages() （src.MeterClientService 方法）</a>
+</li>
+      <li><a href="src.html#src.MeterServerService.get_captured_messages">get_captured_messages() （src.MeterServerService 方法）</a>
+</li>
+      <li><a href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.get_captured_messages">get_captured_messages() （src.service.clientsvc.client_service.MeterClientService 方法）</a>
+</li>
+      <li><a href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.get_captured_messages">get_captured_messages() （src.service.serversvc.server_service.MeterServerService 方法）</a>
+</li>
+      <li><a href="src.html#src.MeterClientService.get_captured_pairs">get_captured_pairs() （src.MeterClientService 方法）</a>
+</li>
+      <li><a href="src.html#src.MeterServerService.get_captured_pairs">get_captured_pairs() （src.MeterServerService 方法）</a>
+</li>
+      <li><a href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.get_captured_pairs">get_captured_pairs() （src.service.clientsvc.client_service.MeterClientService 方法）</a>
+</li>
+      <li><a href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.get_captured_pairs">get_captured_pairs() （src.service.serversvc.server_service.MeterServerService 方法）</a>
+</li>
+      <li><a href="src.html#src.MeterClientService.get_captured_rx_messages">get_captured_rx_messages() （src.MeterClientService 方法）</a>
+</li>
+      <li><a href="src.html#src.MeterServerService.get_captured_rx_messages">get_captured_rx_messages() （src.MeterServerService 方法）</a>
+</li>
+      <li><a href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.get_captured_rx_messages">get_captured_rx_messages() （src.service.clientsvc.client_service.MeterClientService 方法）</a>
+</li>
+      <li><a href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.get_captured_rx_messages">get_captured_rx_messages() （src.service.serversvc.server_service.MeterServerService 方法）</a>
+</li>
+      <li><a href="src.html#src.MeterClientService.get_captured_tx_messages">get_captured_tx_messages() （src.MeterClientService 方法）</a>
+</li>
+      <li><a href="src.html#src.MeterServerService.get_captured_tx_messages">get_captured_tx_messages() （src.MeterServerService 方法）</a>
+</li>
+      <li><a href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.get_captured_tx_messages">get_captured_tx_messages() （src.service.clientsvc.client_service.MeterClientService 方法）</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.get_captured_tx_messages">get_captured_tx_messages() （src.service.serversvc.server_service.MeterServerService 方法）</a>
+</li>
       <li><a href="src.html#src.MeterServerService.get_data_item">get_data_item() （src.MeterServerService 方法）</a>
 </li>
       <li><a href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.get_data_item">get_data_item() （src.service.serversvc.server_service.MeterServerService 方法）</a>
 </li>
       <li><a href="src.model.data.html#src.model.data.data_handler.get_data_item">get_data_item()（在 src.model.data.data_handler 模块中）</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="src.model.types.html#src.model.types.dlt645_type.get_error_msg">get_error_msg()（在 src.model.types.dlt645_type 模块中）</a>
 </li>
+      <li><a href="src.html#src.MeterClientService.get_message_capture_stats">get_message_capture_stats() （src.MeterClientService 方法）</a>
+</li>
+      <li><a href="src.html#src.MeterServerService.get_message_capture_stats">get_message_capture_stats() （src.MeterServerService 方法）</a>
+</li>
+      <li><a href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.get_message_capture_stats">get_message_capture_stats() （src.service.clientsvc.client_service.MeterClientService 方法）</a>
+</li>
+      <li><a href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.get_message_capture_stats">get_message_capture_stats() （src.service.serversvc.server_service.MeterServerService 方法）</a>
+</li>
+      <li><a href="src.html#src.MessageCapture.get_pairs">get_pairs() （src.MessageCapture 方法）</a>
+</li>
       <li><a href="src.model.types.html#src.model.types.dlt645_type.PasswordManager.get_password">get_password() （src.model.types.dlt645_type.PasswordManager 方法）</a>
+</li>
+      <li><a href="src.html#src.MessageQueue.get_recent">get_recent() （src.MessageQueue 方法）</a>
+</li>
+      <li><a href="src.html#src.MessageCapture.get_rx_messages">get_rx_messages() （src.MessageCapture 方法）</a>
+</li>
+      <li><a href="src.html#src.MessageCapture.get_stats">get_stats() （src.MessageCapture 方法）</a>
 </li>
       <li><a href="src.html#src.MeterClientService.get_time">get_time() （src.MeterClientService 方法）</a>
 </li>
       <li><a href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.get_time">get_time() （src.service.clientsvc.client_service.MeterClientService 方法）</a>
+</li>
+      <li><a href="src.html#src.MessageCapture.get_tx_messages">get_tx_messages() （src.MessageCapture 方法）</a>
 </li>
   </ul></td>
 </tr></table>
@@ -786,6 +977,8 @@
 </li>
       <li><a href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.handle_response">handle_response() （src.service.clientsvc.client_service.MeterClientService 方法）</a>
 </li>
+      <li><a href="src.html#src.MessageRecord.hex_string">hex_string（src.MessageRecord 属性）</a>
+</li>
       <li><a href="src.html#src.DataFormat.hhmmss">hhmmss（src.DataFormat 属性）</a>
 </li>
       <li><a href="src.model.types.html#src.model.types.data_type.DataFormat.hhmmss">hhmmss（src.model.types.data_type.DataFormat 属性）</a>
@@ -796,6 +989,10 @@
 <h2 id="I">I</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="src.html#src.MessagePair.id">id（src.MessagePair 属性）</a>
+</li>
+      <li><a href="src.html#src.MessageRecord.id">id（src.MessageRecord 属性）</a>
+</li>
       <li><a href="src.common.html#src.common.base_log.Log.info">info() （src.common.base_log.Log 方法）</a>
 </li>
       <li><a href="src.model.html#src.model.init">init()（在 src.model 模块中）</a>
@@ -808,11 +1005,13 @@
 </li>
       <li><a href="src.model.data.define.html#src.model.data.define.event_record_def.init_event_record_def">init_event_record_def()（在 src.model.data.define.event_record_def 模块中）</a>
 </li>
-      <li><a href="src.model.data.define.html#src.model.data.define.parameter_def.init_parameter_def">init_parameter_def()（在 src.model.data.define.parameter_def 模块中）</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="src.model.data.define.html#src.model.data.define.parameter_def.init_parameter_def">init_parameter_def()（在 src.model.data.define.parameter_def 模块中）</a>
+</li>
       <li><a href="src.model.data.define.html#src.model.data.define.variable_def.init_variable_def">init_variable_def()（在 src.model.data.define.variable_def 模块中）</a>
+</li>
+      <li><a href="src.html#src.MessagePair.is_complete">is_complete() （src.MessagePair 方法）</a>
 </li>
       <li><a href="src.model.types.html#src.model.types.dlt645_type.PasswordManager.is_password_valid">is_password_valid() （src.model.types.dlt645_type.PasswordManager 方法）</a>
 </li>
@@ -840,6 +1039,16 @@
 <h2 id="M">M</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="src.html#src.MessageQueue.maxlen">maxlen（src.MessageQueue 属性）</a>
+</li>
+      <li><a href="src.html#src.MessageCapture">MessageCapture（src 中的类）</a>
+</li>
+      <li><a href="src.html#src.MessagePair">MessagePair（src 中的类）</a>
+</li>
+      <li><a href="src.html#src.MessageQueue">MessageQueue（src 中的类）</a>
+</li>
+      <li><a href="src.html#src.MessageRecord">MessageRecord（src 中的类）</a>
+</li>
       <li><a href="src.html#src.MeterClientService">MeterClientService（src 中的类）</a>
 </li>
       <li><a href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService">MeterClientService（src.service.clientsvc.client_service 中的类）</a>
@@ -995,13 +1204,23 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="src.common.html#src.common.transform.pad_with_zeros">pad_with_zeros()（在 src.common.transform 模块中）</a>
 </li>
-      <li><a href="src.common.html#src.common.transform.parse_format">parse_format()（在 src.common.transform 模块中）</a>
+      <li><a href="src.html#src.MessageRecord.pair_id">pair_id（src.MessageRecord 属性）</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="src.common.html#src.common.transform.parse_format">parse_format()（在 src.common.transform 模块中）</a>
+</li>
       <li><a href="src.model.types.html#src.model.types.dlt645_type.PASSWORD_LEN">PASSWORD_LEN()（在 src.model.types.dlt645_type 模块中）</a>
 </li>
       <li><a href="src.model.types.html#src.model.types.dlt645_type.PasswordManager">PasswordManager（src.model.types.dlt645_type 中的类）</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="Q">Q</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="src.html#src.MessageCapture.queue_size">queue_size（src.MessageCapture 属性）</a>
 </li>
   </ul></td>
 </tr></table>
@@ -1033,12 +1252,12 @@
 </li>
       <li><a href="src.html#src.MeterClientService.read_address">read_address() （src.MeterClientService 方法）</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.read_address">read_address() （src.service.clientsvc.client_service.MeterClientService 方法）</a>
 </li>
       <li><a href="src.html#src.CtrlCode.ReadAddress">ReadAddress（src.CtrlCode 属性）</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="src.model.types.html#src.model.types.dlt645_type.CtrlCode.ReadAddress">ReadAddress（src.model.types.dlt645_type.CtrlCode 属性）</a>
 </li>
       <li><a href="src.html#src.CtrlCode.ReadData">ReadData（src.CtrlCode 属性）</a>
@@ -1047,9 +1266,13 @@
 </li>
       <li><a href="src.model.types.html#src.model.types.dlt645_type.ErrorCode.RequestDataEmpty">RequestDataEmpty（src.model.types.dlt645_type.ErrorCode 属性）</a>
 </li>
+      <li><a href="src.html#src.MessageQueue.resize">resize() （src.MessageQueue 方法）</a>
+</li>
       <li><a href="src.common.html#src.common.transform.reverse_bytes">reverse_bytes()（在 src.common.transform 模块中）</a>
 </li>
       <li><a href="src.common.html#src.common.transform.round_float">round_float()（在 src.common.transform 模块中）</a>
+</li>
+      <li><a href="src.html#src.MessagePair.round_trip_time">round_trip_time（src.MessagePair 属性）</a>
 </li>
       <li><a href="src.html#src.RtuClient">RtuClient（src 中的类）</a>
 </li>
@@ -1058,6 +1281,10 @@
       <li><a href="src.html#src.RtuServer">RtuServer（src 中的类）</a>
 </li>
       <li><a href="src.transport.server.html#src.transport.server.rtu_server.RtuServer">RtuServer（src.transport.server.rtu_server 中的类）</a>
+</li>
+      <li><a href="src.html#src.MessagePair.rx_time">rx_time（src.MessagePair 属性）</a>
+</li>
+      <li><a href="src.html#src.MessagePair.rx">rx（src.MessagePair 属性）</a>
 </li>
   </ul></td>
 </tr></table>
@@ -1109,13 +1336,7 @@
 </li>
       <li><a href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.set_address">set_address() （src.service.serversvc.server_service.MeterServerService 方法）</a>
 </li>
-      <li><a href="src.common.html#src.common.base_log.Log.set_config">set_config() （src.common.base_log.Log 方法）</a>
-</li>
       <li><a href="src.model.data.html#src.model.data.data_handler.set_data_item">set_data_item()（在 src.model.data.data_handler 模块中）</a>
-</li>
-      <li><a href="src.common.html#src.common.base_log.Log.set_log_enable">set_log_enable() （src.common.base_log.Log 方法）</a>
-</li>
-      <li><a href="src.common.html#src.common.base_log.Log.set_log_level">set_log_level() （src.common.base_log.Log 方法）</a>
 </li>
       <li><a href="src.common.html#src.common.base_log.Log.set_logger">set_logger()（src.common.base_log.Log 静态方法）</a>
 </li>
@@ -1129,9 +1350,15 @@
 </li>
       <li><a href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.set_password">set_password() （src.service.serversvc.server_service.MeterServerService 方法）</a>
 </li>
+      <li><a href="src.html#src.MessageCapture.set_queue_size">set_queue_size() （src.MessageCapture 方法）</a>
+</li>
+      <li><a href="src.html#src.MessagePair.set_rx">set_rx() （src.MessagePair 方法）</a>
+</li>
       <li><a href="src.html#src.MeterServerService.set_time">set_time() （src.MeterServerService 方法）</a>
 </li>
       <li><a href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.set_time">set_time() （src.service.serversvc.server_service.MeterServerService 方法）</a>
+</li>
+      <li><a href="src.html#src.MessagePair.set_tx">set_tx() （src.MessagePair 方法）</a>
 </li>
       <li>
     src
@@ -1436,11 +1663,21 @@
 </li>
       <li><a href="src.transport.client.html#src.transport.client.tcp_client.TcpClient">TcpClient（src.transport.client.tcp_client 中的类）</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="src.html#src.TcpServer">TcpServer（src 中的类）</a>
 </li>
       <li><a href="src.transport.server.html#src.transport.server.tcp_server.TcpServer">TcpServer（src.transport.server.tcp_server 中的类）</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="src.html#src.MessageRecord.timestamp">timestamp（src.MessageRecord 属性）</a>
+</li>
+      <li><a href="src.html#src.MessagePair.to_dict">to_dict() （src.MessagePair 方法）</a>
+</li>
+      <li><a href="src.html#src.MessageRecord.to_dict">to_dict() （src.MessageRecord 方法）</a>
+</li>
+      <li><a href="src.html#src.MessagePair.tx_time">tx_time（src.MessagePair 属性）</a>
+</li>
+      <li><a href="src.html#src.MessagePair.tx">tx（src.MessagePair 属性）</a>
 </li>
   </ul></td>
 </tr></table>

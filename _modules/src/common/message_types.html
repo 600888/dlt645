@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>src.protocol.protocol &mdash; dlt645 v1.4.0 文档</title>
+  <title>src.common.message_types &mdash; dlt645 v1.4.0 文档</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
@@ -581,7 +581,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../../index.html">模块代码</a></li>
-      <li class="breadcrumb-item active">src.protocol.protocol</li>
+      <li class="breadcrumb-item active">src.common.message_types</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -590,282 +590,216 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <h1>src.protocol.protocol 源代码</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;DLT645 协议实现模块。</span>
+  <h1>src.common.message_types 源代码</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;报文捕获数据类型模块。</span>
 
-<span class="sd">本模块实现了 DLT645 协议的核心功能，包括：</span>
-<span class="sd">- 数据域编码/解码（±0x33H 转换）</span>
-<span class="sd">- 校验和计算</span>
-<span class="sd">- 帧构建和解析</span>
+<span class="sd">本模块定义了用于实时报文捕获的数据结构：</span>
+<span class="sd">- MessageRecord: 单条报文记录</span>
+<span class="sd">- MessagePair: TX/RX配对记录</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
+<span class="kn">import</span><span class="w"> </span><span class="nn">uuid</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">.frame</span><span class="w"> </span><span class="kn">import</span> <span class="n">FRAME_START_BYTE</span><span class="p">,</span> <span class="n">FRAME_END_BYTE</span><span class="p">,</span> <span class="n">Frame</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">.log</span><span class="w"> </span><span class="kn">import</span> <span class="n">log</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.transform</span><span class="w"> </span><span class="kn">import</span> <span class="n">bytes_to_spaced_hex</span>
 
 
-<div class="viewcode-block" id="DLT645Protocol">
-<a class="viewcode-back" href="../../../src.protocol.html#src.DLT645Protocol">[文档]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">DLT645Protocol</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;DLT645 协议实现类。</span>
+<div class="viewcode-block" id="MessageRecord">
+<a class="viewcode-back" href="../../../src.html#src.MessageRecord">[文档]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">MessageRecord</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;单条报文记录。</span>
 
-<span class="sd">    该类实现了 DLT645 协议的核心功能，包括数据编码/解码、校验和计算、</span>
-<span class="sd">    帧构建和解析等操作。所有方法均为类方法，可直接调用。</span>
+<span class="sd">    用于存储发送或接收的单条报文数据。</span>
+
+<span class="sd">    :ivar id: 唯一标识符 (UUID)</span>
+<span class="sd">    :ivar direction: 报文方向，&quot;TX&quot;（发送）或 &quot;RX&quot;（接收）</span>
+<span class="sd">    :ivar data: 原始报文数据</span>
+<span class="sd">    :ivar timestamp: 时间戳（秒，带小数部分）</span>
+<span class="sd">    :ivar hex_string: 十六进制字符串表示</span>
+<span class="sd">    :ivar pair_id: 配对的报文ID，用于TX/RX关联</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="DLT645Protocol.decode_data">
-<a class="viewcode-back" href="../../../src.protocol.html#src.DLT645Protocol.decode_data">[文档]</a>
-    <span class="nd">@classmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">decode_data</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;数据域解码（-0x33H 转换）。</span>
+    <span class="n">direction</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">()))</span>
+    <span class="n">timestamp</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">)</span>
+    <span class="n">hex_string</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="n">pair_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 
-<span class="sd">        按照 DLT645 协议规定，对数据域进行解码处理，</span>
-<span class="sd">        每个字节减去 0x33H，并使用模 256 运算确保结果在 0-255 范围内。</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;初始化后处理，自动生成hex_string。&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">hex_string</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">hex_string</span> <span class="o">=</span> <span class="n">bytes_to_spaced_hex</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
 
-<span class="sd">        :param data: 需要解码的数据字节。</span>
-<span class="sd">        :type data: bytes</span>
-<span class="sd">        :return: 解码后的原始数据。</span>
-<span class="sd">        :rtype: bytes</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="p">:</span>
-            <span class="k">return</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span>
-        <span class="c1"># 使用模256运算确保结果在0-255范围内，防止出现负数</span>
-        <span class="k">return</span> <span class="nb">bytes</span><span class="p">([(</span><span class="n">b</span> <span class="o">-</span> <span class="mh">0x33</span><span class="p">)</span> <span class="o">%</span> <span class="mi">256</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">data</span><span class="p">])</span></div>
-
-
-<div class="viewcode-block" id="DLT645Protocol.calculate_checksum">
-<a class="viewcode-back" href="../../../src.protocol.html#src.DLT645Protocol.calculate_checksum">[文档]</a>
-    <span class="nd">@classmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">calculate_checksum</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;校验和计算（模 256 求和）。</span>
-
-<span class="sd">        按照 DLT645 协议规定，计算数据的校验和，</span>
-<span class="sd">        对所有字节进行累加，然后对结果取模 256。</span>
-
-<span class="sd">        :param data: 需要计算校验和的数据字节。</span>
-<span class="sd">        :type data: bytes</span>
-<span class="sd">        :return: 计算得到的校验和值（0-255 范围）。</span>
-<span class="sd">        :rtype: int</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">%</span> <span class="mi">256</span></div>
-
-
-<div class="viewcode-block" id="DLT645Protocol.encode_data">
-<a class="viewcode-back" href="../../../src.protocol.html#src.DLT645Protocol.encode_data">[文档]</a>
-    <span class="nd">@classmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">encode_data</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;数据域编码（+0x33H 转换）。</span>
-
-<span class="sd">        按照 DLT645 协议规定，对数据域进行编码处理，</span>
-<span class="sd">        每个字节加上 0x33H，并使用模 256 运算确保结果在 0-255 范围内。</span>
-
-<span class="sd">        :param data: 需要编码的原始数据字节。</span>
-<span class="sd">        :type data: bytes</span>
-<span class="sd">        :return: 编码后的数据。</span>
-<span class="sd">        :rtype: bytes</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="p">:</span>
-            <span class="k">return</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span>
-        <span class="c1"># 使用模256运算确保结果在0-255范围内，防止溢出</span>
-        <span class="k">return</span> <span class="nb">bytes</span><span class="p">([(</span><span class="n">b</span> <span class="o">+</span> <span class="mh">0x33</span><span class="p">)</span> <span class="o">%</span> <span class="mi">256</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">data</span><span class="p">])</span></div>
-
-
-<div class="viewcode-block" id="DLT645Protocol.build_frame">
-<a class="viewcode-back" href="../../../src.protocol.html#src.DLT645Protocol.build_frame">[文档]</a>
-    <span class="nd">@classmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">build_frame</span><span class="p">(</span>
-        <span class="bp">cls</span><span class="p">,</span> <span class="n">addr</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">ctrl_code</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytearray</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;构建 DLT645 协议帧。</span>
-
-<span class="sd">        按照 DLT645 协议规定，构建完整的协议帧，包括前导字节、</span>
-<span class="sd">        地址域、控制码、数据域、校验和和结束标志。</span>
-
-<span class="sd">        :param addr: 设备地址（6字节）。</span>
-<span class="sd">        :type addr: bytes</span>
-<span class="sd">        :param ctrl_code: 控制码。</span>
-<span class="sd">        :type ctrl_code: int</span>
-<span class="sd">        :param data: 原始数据域（未编码）。</span>
-<span class="sd">        :type data: bytes</span>
-<span class="sd">        :return: 完整的 DLT645 协议帧。</span>
-<span class="sd">        :rtype: bytearray</span>
-<span class="sd">        :raises ValueError: 当地址长度不为6字节时抛出。</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">addr</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">6</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;地址长度必须为6字节&quot;</span><span class="p">)</span>
-
-        <span class="n">buf</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">buf</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">FRAME_START_BYTE</span><span class="p">)</span>
-        <span class="n">buf</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">addr</span><span class="p">)</span>
-        <span class="n">buf</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">FRAME_START_BYTE</span><span class="p">)</span>
-        <span class="n">buf</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ctrl_code</span><span class="p">)</span>
-
-        <span class="c1"># 数据域编码</span>
-        <span class="n">encoded_data</span> <span class="o">=</span> <span class="n">DLT645Protocol</span><span class="o">.</span><span class="n">encode_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-        <span class="n">buf</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">encoded_data</span><span class="p">))</span>
-        <span class="n">buf</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">encoded_data</span><span class="p">)</span>
-
-        <span class="c1"># 计算校验和</span>
-        <span class="n">check_sum</span> <span class="o">=</span> <span class="n">DLT645Protocol</span><span class="o">.</span><span class="n">calculate_checksum</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">buf</span><span class="p">))</span>
-        <span class="n">buf</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">check_sum</span><span class="p">)</span>
-        <span class="n">buf</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">FRAME_END_BYTE</span><span class="p">)</span>
-
-        <span class="c1"># 前导字节添加</span>
-        <span class="n">preamble</span> <span class="o">=</span> <span class="p">[</span><span class="mh">0xFE</span><span class="p">,</span> <span class="mh">0xFE</span><span class="p">,</span> <span class="mh">0xFE</span><span class="p">,</span> <span class="mh">0xFE</span><span class="p">]</span>
-        <span class="n">buf</span> <span class="o">=</span> <span class="n">preamble</span> <span class="o">+</span> <span class="n">buf</span>
-        <span class="k">return</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="DLT645Protocol.deserialize">
-<a class="viewcode-back" href="../../../src.protocol.html#src.DLT645Protocol.deserialize">[文档]</a>
-    <span class="nd">@classmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">deserialize</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">raw</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Frame</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;将字节数据反序列化为 Frame 对象。</span>
-
-<span class="sd">        从原始字节数据中解析出 DLT645 协议帧。如果无法找到完整的帧，</span>
-<span class="sd">        则抛出异常。</span>
-
-<span class="sd">        :param raw: 输入的原始字节数据。</span>
-<span class="sd">        :type raw: bytes</span>
-<span class="sd">        :return: 解析出的 Frame 对象。</span>
-<span class="sd">        :rtype: Optional[Frame]</span>
-<span class="sd">        :raises Exception: 当无法找到完整帧时抛出。</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">remaining</span><span class="p">,</span> <span class="n">frame</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">deserialize_with_remaining</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">frame</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;No complete frame found&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">frame</span></div>
-
-
-<div class="viewcode-block" id="DLT645Protocol.deserialize_with_remaining">
-<a class="viewcode-back" href="../../../src.protocol.html#src.DLT645Protocol.deserialize_with_remaining">[文档]</a>
-    <span class="nd">@classmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">deserialize_with_remaining</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">raw</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Frame</span><span class="p">]]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;将字节数据反序列化为 Frame 对象，并返回未解析的剩余数据。</span>
-
-<span class="sd">        从原始字节数据中解析出 DLT645 协议帧，并返回未解析的剩余数据。</span>
-<span class="sd">        如果数据不完整或无法解析，返回 (原始数据, None)。</span>
-
-<span class="sd">        :param raw: 输入的原始字节数据。</span>
-<span class="sd">        :type raw: bytes</span>
-<span class="sd">        :return: 元组 (未解析的剩余数据, 解析出的帧)。</span>
-<span class="sd">                 如果数据不完整或无法解析，返回 (原始数据, None)。</span>
-<span class="sd">        :rtype: tuple[bytes, Optional[Frame]]</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># 基础校验 - 不完整的数据不会抛出异常，而是返回None</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">12</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">raw</span><span class="p">,</span> <span class="kc">None</span>
-
-        <span class="c1"># 帧边界检查（需考虑前导FE）</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">start_idx</span> <span class="o">=</span> <span class="n">raw</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">FRAME_START_BYTE</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-            <span class="c1"># 未找到起始标志，返回原始数据</span>
-            <span class="k">return</span> <span class="n">raw</span><span class="p">,</span> <span class="kc">None</span>
-
-        <span class="c1"># 检查是否有足够的数据解析基本帧结构</span>
-        <span class="k">if</span> <span class="n">start_idx</span> <span class="o">+</span> <span class="mi">10</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">raw</span><span class="p">):</span>
-            <span class="c1"># 数据不完整，返回原始数据</span>
-            <span class="k">return</span> <span class="n">raw</span><span class="p">,</span> <span class="kc">None</span>
-
-        <span class="k">if</span> <span class="n">start_idx</span> <span class="o">+</span> <span class="mi">7</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span> <span class="ow">or</span> <span class="n">raw</span><span class="p">[</span><span class="n">start_idx</span> <span class="o">+</span> <span class="mi">7</span><span class="p">]</span> <span class="o">!=</span> <span class="n">FRAME_START_BYTE</span><span class="p">:</span>
-            <span class="c1"># 缺少第二个起始标志，可能是数据不完整或损坏</span>
-            <span class="c1"># 跳过当前起始标志，尝试查找下一个</span>
-            <span class="k">return</span> <span class="n">raw</span><span class="p">[</span><span class="n">start_idx</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:],</span> <span class="kc">None</span>
-
-        <span class="c1"># 构建帧结构</span>
-        <span class="n">frame</span> <span class="o">=</span> <span class="n">Frame</span><span class="p">()</span>
-        <span class="n">frame</span><span class="o">.</span><span class="n">start_flag</span> <span class="o">=</span> <span class="n">raw</span><span class="p">[</span><span class="n">start_idx</span><span class="p">]</span>
-        <span class="n">frame</span><span class="o">.</span><span class="n">addr</span> <span class="o">=</span> <span class="n">raw</span><span class="p">[</span><span class="n">start_idx</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:</span> <span class="n">start_idx</span> <span class="o">+</span> <span class="mi">7</span><span class="p">]</span>
-        <span class="n">frame</span><span class="o">.</span><span class="n">ctrl_code</span> <span class="o">=</span> <span class="n">raw</span><span class="p">[</span><span class="n">start_idx</span> <span class="o">+</span> <span class="mi">8</span><span class="p">]</span>
-        <span class="n">frame</span><span class="o">.</span><span class="n">data_len</span> <span class="o">=</span> <span class="n">raw</span><span class="p">[</span><span class="n">start_idx</span> <span class="o">+</span> <span class="mi">9</span><span class="p">]</span>
-
-        <span class="c1"># 数据域提取（严格按协议1.2.5节处理）</span>
-        <span class="n">data_start</span> <span class="o">=</span> <span class="n">start_idx</span> <span class="o">+</span> <span class="mi">10</span>
-        <span class="n">data_end</span> <span class="o">=</span> <span class="n">data_start</span> <span class="o">+</span> <span class="n">frame</span><span class="o">.</span><span class="n">data_len</span>
-
-        <span class="c1"># 检查是否有足够的数据解析完整帧</span>
-        <span class="k">if</span> <span class="n">data_end</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">raw</span><span class="p">):</span>  <span class="c1"># 至少需要校验和和结束符</span>
-            <span class="c1"># 数据不完整，返回原始数据</span>
-            <span class="k">return</span> <span class="n">raw</span><span class="p">,</span> <span class="kc">None</span>
-
-        <span class="c1"># 数据域解码（需处理加33H/减33H）</span>
-        <span class="n">frame</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">DLT645Protocol</span><span class="o">.</span><span class="n">decode_data</span><span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="n">data_start</span><span class="p">:</span><span class="n">data_end</span><span class="p">])</span>
-
-        <span class="c1"># 校验和验证（从第一个68H到校验码前）</span>
-        <span class="n">checksum_start</span> <span class="o">=</span> <span class="n">start_idx</span>
-        <span class="n">checksum_end</span> <span class="o">=</span> <span class="n">data_end</span>
-
-        <span class="n">calculated_sum</span> <span class="o">=</span> <span class="n">DLT645Protocol</span><span class="o">.</span><span class="n">calculate_checksum</span><span class="p">(</span>
-            <span class="n">raw</span><span class="p">[</span><span class="n">checksum_start</span><span class="p">:</span><span class="n">checksum_end</span><span class="p">]</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;自定义字符串表示，显示格式化时间。&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;MessageRecord(direction=&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">direction</span><span class="si">}</span><span class="s2">&#39;, &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;time=&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">formatted_time</span><span class="si">}</span><span class="s2">&#39;, &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;hex=&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">hex_string</span><span class="si">}</span><span class="s2">&#39;)&quot;</span>
         <span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">calculated_sum</span> <span class="o">!=</span> <span class="n">raw</span><span class="p">[</span><span class="n">checksum_end</span><span class="p">]:</span>
-            <span class="c1"># 校验和错误，跳过当前起始标志，尝试查找下一个</span>
-            <span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Checksum error, skipping frame starting at index </span><span class="si">{</span><span class="n">start_idx</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">raw</span><span class="p">[</span><span class="n">start_idx</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:],</span> <span class="kc">None</span>
-        <span class="n">frame</span><span class="o">.</span><span class="n">checksum</span> <span class="o">=</span> <span class="n">raw</span><span class="p">[</span><span class="n">checksum_end</span><span class="p">]</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">formatted_time</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;获取格式化的时间字符串（年-月-日 时:分:秒.毫秒）。</span>
 
-        <span class="c1"># 结束符验证</span>
-        <span class="k">if</span> <span class="n">raw</span><span class="p">[</span><span class="n">checksum_end</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="n">FRAME_END_BYTE</span><span class="p">:</span>
-            <span class="c1"># 结束符错误，跳过当前起始标志，尝试查找下一个</span>
-            <span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;End flag error, skipping frame starting at index </span><span class="si">{</span><span class="n">start_idx</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">raw</span><span class="p">[</span><span class="n">start_idx</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:],</span> <span class="kc">None</span>
-        <span class="n">frame</span><span class="o">.</span><span class="n">end_flag</span> <span class="o">=</span> <span class="n">raw</span><span class="p">[</span><span class="n">checksum_end</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
-
-        <span class="c1"># 解析成功，计算剩余数据</span>
-        <span class="n">remaining_data</span> <span class="o">=</span> <span class="n">raw</span><span class="p">[</span><span class="n">checksum_end</span> <span class="o">+</span> <span class="mi">2</span> <span class="p">:]</span>
-
-        <span class="c1"># 转换为带缩进的JSON</span>
-        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;frame: </span><span class="si">{</span><span class="n">frame</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">remaining_data</span><span class="p">,</span> <span class="n">frame</span></div>
-
-
-<div class="viewcode-block" id="DLT645Protocol.serialize">
-<a class="viewcode-back" href="../../../src.protocol.html#src.DLT645Protocol.serialize">[文档]</a>
-    <span class="nd">@classmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">serialize</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">frame</span><span class="p">:</span> <span class="n">Frame</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bytes</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;将 Frame 对象序列化为字节数据。</span>
-
-<span class="sd">        按照 DLT645 协议规定，将 Frame 对象序列化为完整的协议帧字节。</span>
-
-<span class="sd">        :param frame: 需要序列化的 Frame 对象。</span>
-<span class="sd">        :type frame: Frame</span>
-<span class="sd">        :return: 序列化后的协议帧字节。</span>
-<span class="sd">        :rtype: Optional[bytes]</span>
-<span class="sd">        :raises Exception: 当起始或结束标志无效时抛出。</span>
+<span class="sd">        :return: 格式化的时间字符串</span>
+<span class="sd">        :rtype: str</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">frame</span><span class="o">.</span><span class="n">start_flag</span> <span class="o">!=</span> <span class="n">FRAME_START_BYTE</span> <span class="ow">or</span> <span class="n">frame</span><span class="o">.</span><span class="n">end_flag</span> <span class="o">!=</span> <span class="n">FRAME_END_BYTE</span><span class="p">:</span>
-            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;invalid start or end flag: </span><span class="si">{</span><span class="n">frame</span><span class="o">.</span><span class="n">start_flag</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">frame</span><span class="o">.</span><span class="n">end_flag</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;invalid start or end flag: </span><span class="si">{</span><span class="n">frame</span><span class="o">.</span><span class="n">start_flag</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">frame</span><span class="o">.</span><span class="n">end_flag</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">dt</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">dt</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">&quot;</span><span class="p">)[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span>  <span class="c1"># 截取到毫秒</span>
+
+<div class="viewcode-block" id="MessageRecord.to_dict">
+<a class="viewcode-back" href="../../../src.html#src.MessageRecord.to_dict">[文档]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;转换为字典格式。</span>
+
+<span class="sd">        :return: 包含所有字段的字典</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+            <span class="s2">&quot;direction&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span><span class="p">,</span>
+            <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;timestamp&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span><span class="p">,</span>
+            <span class="s2">&quot;time&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">formatted_time</span><span class="p">,</span>
+            <span class="s2">&quot;hex_string&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">hex_string</span><span class="p">,</span>
+            <span class="s2">&quot;pair_id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">pair_id</span><span class="p">,</span>
+        <span class="p">}</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="MessagePair">
+<a class="viewcode-back" href="../../../src.html#src.MessagePair">[文档]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">MessagePair</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;TX/RX配对记录。</span>
+
+<span class="sd">    用于将发送报文和接收报文配对，便于分析请求-响应对。</span>
+
+<span class="sd">    :ivar id: 配对ID</span>
+<span class="sd">    :ivar tx: 发送报文记录</span>
+<span class="sd">    :ivar rx: 接收报文记录</span>
+<span class="sd">    :ivar round_trip_time: 往返时间（秒）</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">()))</span>
+    <span class="n">tx</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">MessageRecord</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="n">rx</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">MessageRecord</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="n">round_trip_time</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;初始化后处理，自动计算往返时间。&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_round_trip_time</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;自定义字符串表示，按时间顺序显示（先收到的在前）。&quot;&quot;&quot;</span>
+        <span class="n">rtt_ms</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">round_trip_time</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">1000</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">ms&quot;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">round_trip_time</span> <span class="k">else</span> <span class="s2">&quot;N/A&quot;</span>
+        <span class="n">tx_hex</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tx</span><span class="o">.</span><span class="n">hex_string</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tx</span> <span class="k">else</span> <span class="s2">&quot;N/A&quot;</span>
+        <span class="n">rx_hex</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rx</span><span class="o">.</span><span class="n">hex_string</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">rx</span> <span class="k">else</span> <span class="s2">&quot;N/A&quot;</span>
+        
+        <span class="c1"># 判断是服务端模式（RX先于TX）还是客户端模式（TX先于RX）</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tx</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">rx</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">rx</span><span class="o">.</span><span class="n">timestamp</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">tx</span><span class="o">.</span><span class="n">timestamp</span><span class="p">:</span>
+            <span class="c1"># 服务端模式：先RX（请求），后TX（响应）</span>
+            <span class="k">return</span> <span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;MessagePair(</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;  RX[</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">rx_time</span><span class="si">}</span><span class="s2">]: </span><span class="si">{</span><span class="n">rx_hex</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;  TX[</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">tx_time</span><span class="si">}</span><span class="s2">]: </span><span class="si">{</span><span class="n">tx_hex</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;  RTT: </span><span class="si">{</span><span class="n">rtt_ms</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;)&quot;</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># 客户端模式：先TX（请求），后RX（响应）</span>
+            <span class="k">return</span> <span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;MessagePair(</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;  TX[</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">tx_time</span><span class="si">}</span><span class="s2">]: </span><span class="si">{</span><span class="n">tx_hex</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;  RX[</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">rx_time</span><span class="si">}</span><span class="s2">]: </span><span class="si">{</span><span class="n">rx_hex</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;  RTT: </span><span class="si">{</span><span class="n">rtt_ms</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;)&quot;</span>
             <span class="p">)</span>
 
-        <span class="n">buf</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="c1"># 写入前导字节</span>
-        <span class="n">buf</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">frame</span><span class="o">.</span><span class="n">preamble</span><span class="p">)</span>
-        <span class="c1"># 写入起始符</span>
-        <span class="n">buf</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">frame</span><span class="o">.</span><span class="n">start_flag</span><span class="p">)</span>
-        <span class="c1"># 写入地址</span>
-        <span class="n">buf</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">frame</span><span class="o">.</span><span class="n">addr</span><span class="p">)</span>
-        <span class="c1"># 写入第二个起始符</span>
-        <span class="n">buf</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">frame</span><span class="o">.</span><span class="n">start_flag</span><span class="p">)</span>
-        <span class="c1"># 写入控制码</span>
-        <span class="n">buf</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">frame</span><span class="o">.</span><span class="n">ctrl_code</span><span class="p">)</span>
-        <span class="c1"># 数据域编码</span>
-        <span class="n">encoded_data</span> <span class="o">=</span> <span class="n">DLT645Protocol</span><span class="o">.</span><span class="n">encode_data</span><span class="p">(</span><span class="n">frame</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
-        <span class="c1"># 写入数据长度</span>
-        <span class="n">buf</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">encoded_data</span><span class="p">))</span>
-        <span class="c1"># 写入编码后的数据</span>
-        <span class="n">buf</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">encoded_data</span><span class="p">)</span>
-        <span class="c1"># 计算并写入校验和</span>
-        <span class="n">check_sum</span> <span class="o">=</span> <span class="n">DLT645Protocol</span><span class="o">.</span><span class="n">calculate_checksum</span><span class="p">(</span><span class="nb">bytearray</span><span class="p">(</span><span class="n">buf</span><span class="p">))</span>
-        <span class="n">buf</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">check_sum</span><span class="p">)</span>
-        <span class="c1"># 写入结束符</span>
-        <span class="n">buf</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">frame</span><span class="o">.</span><span class="n">end_flag</span><span class="p">)</span>
+<div class="viewcode-block" id="MessagePair.set_tx">
+<a class="viewcode-back" href="../../../src.html#src.MessagePair.set_tx">[文档]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_tx</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">record</span><span class="p">:</span> <span class="n">MessageRecord</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;设置发送报文。</span>
 
-        <span class="k">return</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span></div>
+<span class="sd">        :param record: 发送报文记录</span>
+<span class="sd">        :type record: MessageRecord</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tx</span> <span class="o">=</span> <span class="n">record</span>
+        <span class="n">record</span><span class="o">.</span><span class="n">pair_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_round_trip_time</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="MessagePair.set_rx">
+<a class="viewcode-back" href="../../../src.html#src.MessagePair.set_rx">[文档]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_rx</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">record</span><span class="p">:</span> <span class="n">MessageRecord</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;设置接收报文。</span>
+
+<span class="sd">        :param record: 接收报文记录</span>
+<span class="sd">        :type record: MessageRecord</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rx</span> <span class="o">=</span> <span class="n">record</span>
+        <span class="n">record</span><span class="o">.</span><span class="n">pair_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_round_trip_time</span><span class="p">()</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_update_round_trip_time</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;更新往返时间（始终为正值）。&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tx</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">rx</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">round_trip_time</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tx</span><span class="o">.</span><span class="n">timestamp</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">rx</span><span class="o">.</span><span class="n">timestamp</span><span class="p">)</span>
+
+<div class="viewcode-block" id="MessagePair.is_complete">
+<a class="viewcode-back" href="../../../src.html#src.MessagePair.is_complete">[文档]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_complete</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;检查配对是否完整（有TX和RX）。</span>
+
+<span class="sd">        :return: 配对是否完整</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tx</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">rx</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span></div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">tx_time</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;获取发送报文的格式化时间。</span>
+
+<span class="sd">        :return: 格式化的发送时间，如果没有TX则返回None</span>
+<span class="sd">        :rtype: Optional[str]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">tx</span><span class="o">.</span><span class="n">formatted_time</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tx</span> <span class="k">else</span> <span class="kc">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">rx_time</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;获取接收报文的格式化时间。</span>
+
+<span class="sd">        :return: 格式化的接收时间，如果没有RX则返回None</span>
+<span class="sd">        :rtype: Optional[str]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rx</span><span class="o">.</span><span class="n">formatted_time</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">rx</span> <span class="k">else</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="MessagePair.to_dict">
+<a class="viewcode-back" href="../../../src.html#src.MessagePair.to_dict">[文档]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;转换为字典格式。</span>
+
+<span class="sd">        :return: 包含所有字段的字典</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+            <span class="s2">&quot;tx&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">tx</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tx</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="s2">&quot;rx&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">rx</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">rx</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="s2">&quot;tx_time&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">tx_time</span><span class="p">,</span>
+            <span class="s2">&quot;rx_time&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">rx_time</span><span class="p">,</span>
+            <span class="s2">&quot;round_trip_time&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">round_trip_time</span><span class="p">,</span>
+            <span class="s2">&quot;is_complete&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_complete</span><span class="p">(),</span>
+        <span class="p">}</span></div>
 </div>
 
 </pre></div>

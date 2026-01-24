@@ -55,9 +55,6 @@
 <li class="toctree-l5"><a class="reference internal" href="src.common.html#module-src.common.base_log">src.common.base_log module</a><ul>
 <li class="toctree-l6"><a class="reference internal" href="src.common.html#src.common.base_log.Log"><code class="docutils literal notranslate"><span class="pre">Log</span></code></a><ul>
 <li class="toctree-l7"><a class="reference internal" href="src.common.html#src.common.base_log.Log.set_logger"><code class="docutils literal notranslate"><span class="pre">Log.set_logger()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="src.common.html#src.common.base_log.Log.set_log_enable"><code class="docutils literal notranslate"><span class="pre">Log.set_log_enable()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="src.common.html#src.common.base_log.Log.set_log_level"><code class="docutils literal notranslate"><span class="pre">Log.set_log_level()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="src.common.html#src.common.base_log.Log.set_config"><code class="docutils literal notranslate"><span class="pre">Log.set_config()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="src.common.html#src.common.base_log.Log.debug"><code class="docutils literal notranslate"><span class="pre">Log.debug()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="src.common.html#src.common.base_log.Log.info"><code class="docutils literal notranslate"><span class="pre">Log.info()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="src.common.html#src.common.base_log.Log.warning"><code class="docutils literal notranslate"><span class="pre">Log.warning()</span></code></a></li>
@@ -177,6 +174,7 @@
 </li>
 <li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.CtrlCode"><code class="docutils literal notranslate"><span class="pre">CtrlCode</span></code></a><ul>
 <li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.CtrlCode.BroadcastTimeSync"><code class="docutils literal notranslate"><span class="pre">CtrlCode.BroadcastTimeSync</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.CtrlCode.ClearDemand"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ClearDemand</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.CtrlCode.ReadData"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ReadData</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.CtrlCode.ReadAddress"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ReadAddress</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.CtrlCode.WriteData"><code class="docutils literal notranslate"><span class="pre">CtrlCode.WriteData</span></code></a></li>
@@ -280,6 +278,14 @@
 <li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.write_address"><code class="docutils literal notranslate"><span class="pre">MeterClientService.write_address()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.send_and_handle_request"><code class="docutils literal notranslate"><span class="pre">MeterClientService.send_and_handle_request()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.handle_response"><code class="docutils literal notranslate"><span class="pre">MeterClientService.handle_response()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.enable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterClientService.enable_message_capture()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.disable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterClientService.disable_message_capture()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.get_captured_messages"><code class="docutils literal notranslate"><span class="pre">MeterClientService.get_captured_messages()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.get_captured_tx_messages"><code class="docutils literal notranslate"><span class="pre">MeterClientService.get_captured_tx_messages()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.get_captured_rx_messages"><code class="docutils literal notranslate"><span class="pre">MeterClientService.get_captured_rx_messages()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.get_captured_pairs"><code class="docutils literal notranslate"><span class="pre">MeterClientService.get_captured_pairs()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.clear_captured_messages"><code class="docutils literal notranslate"><span class="pre">MeterClientService.clear_captured_messages()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.get_message_capture_stats"><code class="docutils literal notranslate"><span class="pre">MeterClientService.get_message_capture_stats()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -306,6 +312,14 @@
 <li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.set_04"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_04()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.get_data_item"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_data_item()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.handle_request"><code class="docutils literal notranslate"><span class="pre">MeterServerService.handle_request()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.enable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterServerService.enable_message_capture()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.disable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterServerService.disable_message_capture()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.get_captured_messages"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_captured_messages()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.get_captured_tx_messages"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_captured_tx_messages()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.get_captured_rx_messages"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_captured_rx_messages()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.get_captured_pairs"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_captured_pairs()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.clear_captured_messages"><code class="docutils literal notranslate"><span class="pre">MeterServerService.clear_captured_messages()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.get_message_capture_stats"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_message_capture_stats()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -392,6 +406,14 @@
 <li class="toctree-l5"><a class="reference internal" href="#src.MeterServerService.set_04"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_04()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="#src.MeterServerService.get_data_item"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_data_item()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="#src.MeterServerService.handle_request"><code class="docutils literal notranslate"><span class="pre">MeterServerService.handle_request()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MeterServerService.enable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterServerService.enable_message_capture()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MeterServerService.disable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterServerService.disable_message_capture()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MeterServerService.get_captured_messages"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_captured_messages()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MeterServerService.get_captured_tx_messages"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_captured_tx_messages()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MeterServerService.get_captured_rx_messages"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_captured_rx_messages()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MeterServerService.get_captured_pairs"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_captured_pairs()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MeterServerService.clear_captured_messages"><code class="docutils literal notranslate"><span class="pre">MeterServerService.clear_captured_messages()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MeterServerService.get_message_capture_stats"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_message_capture_stats()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l4"><a class="reference internal" href="#src.MeterClientService"><code class="docutils literal notranslate"><span class="pre">MeterClientService</span></code></a><ul>
@@ -412,6 +434,14 @@
 <li class="toctree-l5"><a class="reference internal" href="#src.MeterClientService.write_address"><code class="docutils literal notranslate"><span class="pre">MeterClientService.write_address()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="#src.MeterClientService.send_and_handle_request"><code class="docutils literal notranslate"><span class="pre">MeterClientService.send_and_handle_request()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="#src.MeterClientService.handle_response"><code class="docutils literal notranslate"><span class="pre">MeterClientService.handle_response()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MeterClientService.enable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterClientService.enable_message_capture()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MeterClientService.disable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterClientService.disable_message_capture()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MeterClientService.get_captured_messages"><code class="docutils literal notranslate"><span class="pre">MeterClientService.get_captured_messages()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MeterClientService.get_captured_tx_messages"><code class="docutils literal notranslate"><span class="pre">MeterClientService.get_captured_tx_messages()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MeterClientService.get_captured_rx_messages"><code class="docutils literal notranslate"><span class="pre">MeterClientService.get_captured_rx_messages()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MeterClientService.get_captured_pairs"><code class="docutils literal notranslate"><span class="pre">MeterClientService.get_captured_pairs()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MeterClientService.clear_captured_messages"><code class="docutils literal notranslate"><span class="pre">MeterClientService.clear_captured_messages()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MeterClientService.get_message_capture_stats"><code class="docutils literal notranslate"><span class="pre">MeterClientService.get_message_capture_stats()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l4"><a class="reference internal" href="#src.DLT645Protocol"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol</span></code></a><ul>
@@ -426,6 +456,7 @@
 </li>
 <li class="toctree-l4"><a class="reference internal" href="#src.CtrlCode"><code class="docutils literal notranslate"><span class="pre">CtrlCode</span></code></a><ul>
 <li class="toctree-l5"><a class="reference internal" href="#src.CtrlCode.BroadcastTimeSync"><code class="docutils literal notranslate"><span class="pre">CtrlCode.BroadcastTimeSync</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.CtrlCode.ClearDemand"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ClearDemand</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="#src.CtrlCode.ReadData"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ReadData</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="#src.CtrlCode.ReadAddress"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ReadAddress</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="#src.CtrlCode.WriteData"><code class="docutils literal notranslate"><span class="pre">CtrlCode.WriteData</span></code></a></li>
@@ -479,6 +510,57 @@
 <li class="toctree-l5"><a class="reference internal" href="#src.RtuClient.send_request"><code class="docutils literal notranslate"><span class="pre">RtuClient.send_request()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l4"><a class="reference internal" href="#src.MessageRecord"><code class="docutils literal notranslate"><span class="pre">MessageRecord</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#src.MessageRecord.direction"><code class="docutils literal notranslate"><span class="pre">MessageRecord.direction</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MessageRecord.data"><code class="docutils literal notranslate"><span class="pre">MessageRecord.data</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MessageRecord.id"><code class="docutils literal notranslate"><span class="pre">MessageRecord.id</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MessageRecord.timestamp"><code class="docutils literal notranslate"><span class="pre">MessageRecord.timestamp</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MessageRecord.hex_string"><code class="docutils literal notranslate"><span class="pre">MessageRecord.hex_string</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MessageRecord.pair_id"><code class="docutils literal notranslate"><span class="pre">MessageRecord.pair_id</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MessageRecord.formatted_time"><code class="docutils literal notranslate"><span class="pre">MessageRecord.formatted_time</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MessageRecord.to_dict"><code class="docutils literal notranslate"><span class="pre">MessageRecord.to_dict()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#src.MessagePair"><code class="docutils literal notranslate"><span class="pre">MessagePair</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#src.MessagePair.id"><code class="docutils literal notranslate"><span class="pre">MessagePair.id</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MessagePair.tx"><code class="docutils literal notranslate"><span class="pre">MessagePair.tx</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MessagePair.rx"><code class="docutils literal notranslate"><span class="pre">MessagePair.rx</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MessagePair.round_trip_time"><code class="docutils literal notranslate"><span class="pre">MessagePair.round_trip_time</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MessagePair.set_tx"><code class="docutils literal notranslate"><span class="pre">MessagePair.set_tx()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MessagePair.set_rx"><code class="docutils literal notranslate"><span class="pre">MessagePair.set_rx()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MessagePair.is_complete"><code class="docutils literal notranslate"><span class="pre">MessagePair.is_complete()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MessagePair.tx_time"><code class="docutils literal notranslate"><span class="pre">MessagePair.tx_time</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MessagePair.rx_time"><code class="docutils literal notranslate"><span class="pre">MessagePair.rx_time</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MessagePair.to_dict"><code class="docutils literal notranslate"><span class="pre">MessagePair.to_dict()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#src.MessageCapture"><code class="docutils literal notranslate"><span class="pre">MessageCapture</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#src.MessageCapture.enabled"><code class="docutils literal notranslate"><span class="pre">MessageCapture.enabled</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MessageCapture.queue_size"><code class="docutils literal notranslate"><span class="pre">MessageCapture.queue_size</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MessageCapture.enable"><code class="docutils literal notranslate"><span class="pre">MessageCapture.enable()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MessageCapture.disable"><code class="docutils literal notranslate"><span class="pre">MessageCapture.disable()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MessageCapture.set_queue_size"><code class="docutils literal notranslate"><span class="pre">MessageCapture.set_queue_size()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MessageCapture.capture_tx"><code class="docutils literal notranslate"><span class="pre">MessageCapture.capture_tx()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MessageCapture.capture_rx"><code class="docutils literal notranslate"><span class="pre">MessageCapture.capture_rx()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MessageCapture.capture_rx_for_server"><code class="docutils literal notranslate"><span class="pre">MessageCapture.capture_rx_for_server()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MessageCapture.capture_tx_for_server"><code class="docutils literal notranslate"><span class="pre">MessageCapture.capture_tx_for_server()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MessageCapture.get_tx_messages"><code class="docutils literal notranslate"><span class="pre">MessageCapture.get_tx_messages()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MessageCapture.get_rx_messages"><code class="docutils literal notranslate"><span class="pre">MessageCapture.get_rx_messages()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MessageCapture.get_pairs"><code class="docutils literal notranslate"><span class="pre">MessageCapture.get_pairs()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MessageCapture.get_all_messages"><code class="docutils literal notranslate"><span class="pre">MessageCapture.get_all_messages()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MessageCapture.clear"><code class="docutils literal notranslate"><span class="pre">MessageCapture.clear()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MessageCapture.get_stats"><code class="docutils literal notranslate"><span class="pre">MessageCapture.get_stats()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#src.MessageQueue"><code class="docutils literal notranslate"><span class="pre">MessageQueue</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#src.MessageQueue.maxlen"><code class="docutils literal notranslate"><span class="pre">MessageQueue.maxlen</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MessageQueue.append"><code class="docutils literal notranslate"><span class="pre">MessageQueue.append()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MessageQueue.get_all"><code class="docutils literal notranslate"><span class="pre">MessageQueue.get_all()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MessageQueue.get_recent"><code class="docutils literal notranslate"><span class="pre">MessageQueue.get_recent()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MessageQueue.clear"><code class="docutils literal notranslate"><span class="pre">MessageQueue.clear()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MessageQueue.resize"><code class="docutils literal notranslate"><span class="pre">MessageQueue.resize()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -523,9 +605,6 @@
 <li class="toctree-l2"><a class="reference internal" href="src.common.html#module-src.common.base_log">src.common.base_log module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="src.common.html#src.common.base_log.Log"><code class="docutils literal notranslate"><span class="pre">Log</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="src.common.html#src.common.base_log.Log.set_logger"><code class="docutils literal notranslate"><span class="pre">Log.set_logger()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="src.common.html#src.common.base_log.Log.set_log_enable"><code class="docutils literal notranslate"><span class="pre">Log.set_log_enable()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="src.common.html#src.common.base_log.Log.set_log_level"><code class="docutils literal notranslate"><span class="pre">Log.set_log_level()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="src.common.html#src.common.base_log.Log.set_config"><code class="docutils literal notranslate"><span class="pre">Log.set_config()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="src.common.html#src.common.base_log.Log.debug"><code class="docutils literal notranslate"><span class="pre">Log.debug()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="src.common.html#src.common.base_log.Log.info"><code class="docutils literal notranslate"><span class="pre">Log.info()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="src.common.html#src.common.base_log.Log.warning"><code class="docutils literal notranslate"><span class="pre">Log.warning()</span></code></a></li>
@@ -670,7 +749,8 @@
 - TCP和RTU通信方式
 - 客户端和服务端功能
 - 电能表数据读写操作
-- 电能量、最大需量、变量数据类型支持</p>
+- 电能量、最大需量、变量数据类型支持
+- 实时报文捕获功能</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="src.MeterServerService">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.</span></span><span class="sig-name descname"><span class="pre">MeterServerService</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">server</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">address=bytearray(b'\\x00\\x00\\x00\\x00\\x00\\x00')</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password_manager=&lt;src.model.types.dlt645_type.PasswordManager</span> <span class="pre">object&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/serversvc/server_service.html#MeterServerService"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterServerService" title="Link to this definition"></a></dt>
@@ -927,6 +1007,124 @@
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MeterServerService.enable_message_capture">
+<span class="sig-name descname"><span class="pre">enable_message_capture</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">queue_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/serversvc/server_service.html#MeterServerService.enable_message_capture"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterServerService.enable_message_capture" title="Link to this definition"></a></dt>
+<dd><p>启用报文捕获功能。</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>queue_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><em>int</em></a>) -- 报文队列大小，默认100</p>
+</dd>
+<dt class="field-even">返回类型<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="（在 Python v3.14）"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MeterServerService.disable_message_capture">
+<span class="sig-name descname"><span class="pre">disable_message_capture</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/serversvc/server_service.html#MeterServerService.disable_message_capture"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterServerService.disable_message_capture" title="Link to this definition"></a></dt>
+<dd><p>禁用报文捕获功能。</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="（在 Python v3.14）"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MeterServerService.get_captured_messages">
+<span class="sig-name descname"><span class="pre">get_captured_messages</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/serversvc/server_service.html#MeterServerService.get_captured_messages"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterServerService.get_captured_messages" title="Link to this definition"></a></dt>
+<dd><p>获取捕获的报文列表。</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>count</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><em>int</em></a>) -- 要获取的数量，0表示全部</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>报文列表</p>
+</dd>
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[<a class="reference internal" href="#src.MessageRecord" title="src.MessageRecord">MessageRecord</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MeterServerService.get_captured_tx_messages">
+<span class="sig-name descname"><span class="pre">get_captured_tx_messages</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/serversvc/server_service.html#MeterServerService.get_captured_tx_messages"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterServerService.get_captured_tx_messages" title="Link to this definition"></a></dt>
+<dd><p>获取捕获的发送报文列表。</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>count</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><em>int</em></a>) -- 要获取的数量，0表示全部</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>发送报文列表</p>
+</dd>
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[<a class="reference internal" href="#src.MessageRecord" title="src.MessageRecord">MessageRecord</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MeterServerService.get_captured_rx_messages">
+<span class="sig-name descname"><span class="pre">get_captured_rx_messages</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/serversvc/server_service.html#MeterServerService.get_captured_rx_messages"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterServerService.get_captured_rx_messages" title="Link to this definition"></a></dt>
+<dd><p>获取捕获的接收报文列表。</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>count</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><em>int</em></a>) -- 要获取的数量，0表示全部</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>接收报文列表</p>
+</dd>
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[<a class="reference internal" href="#src.MessageRecord" title="src.MessageRecord">MessageRecord</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MeterServerService.get_captured_pairs">
+<span class="sig-name descname"><span class="pre">get_captured_pairs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/serversvc/server_service.html#MeterServerService.get_captured_pairs"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterServerService.get_captured_pairs" title="Link to this definition"></a></dt>
+<dd><p>获取捕获的TX/RX配对列表。</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>count</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><em>int</em></a>) -- 要获取的数量，0表示全部</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>配对列表</p>
+</dd>
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[<a class="reference internal" href="#src.MessagePair" title="src.MessagePair">MessagePair</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MeterServerService.clear_captured_messages">
+<span class="sig-name descname"><span class="pre">clear_captured_messages</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/serversvc/server_service.html#MeterServerService.clear_captured_messages"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterServerService.clear_captured_messages" title="Link to this definition"></a></dt>
+<dd><p>清空所有捕获的报文。</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="（在 Python v3.14）"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MeterServerService.get_message_capture_stats">
+<span class="sig-name descname"><span class="pre">get_message_capture_stats</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/serversvc/server_service.html#MeterServerService.get_message_capture_stats"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterServerService.get_message_capture_stats" title="Link to this definition"></a></dt>
+<dd><p>获取报文捕获统计信息。</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回<span class="colon">:</span></dt>
+<dd class="field-odd"><p>统计信息字典</p>
+</dd>
+<dt class="field-even">返回类型<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="（在 Python v3.14）">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -1145,6 +1343,124 @@ None: 超时或失败时返回</p>
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MeterClientService.enable_message_capture">
+<span class="sig-name descname"><span class="pre">enable_message_capture</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">queue_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/clientsvc/client_service.html#MeterClientService.enable_message_capture"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterClientService.enable_message_capture" title="Link to this definition"></a></dt>
+<dd><p>启用报文捕获功能。</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>queue_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><em>int</em></a>) -- 报文队列大小，默认100</p>
+</dd>
+<dt class="field-even">返回类型<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="（在 Python v3.14）"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MeterClientService.disable_message_capture">
+<span class="sig-name descname"><span class="pre">disable_message_capture</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/clientsvc/client_service.html#MeterClientService.disable_message_capture"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterClientService.disable_message_capture" title="Link to this definition"></a></dt>
+<dd><p>禁用报文捕获功能。</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="（在 Python v3.14）"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MeterClientService.get_captured_messages">
+<span class="sig-name descname"><span class="pre">get_captured_messages</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/clientsvc/client_service.html#MeterClientService.get_captured_messages"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterClientService.get_captured_messages" title="Link to this definition"></a></dt>
+<dd><p>获取捕获的报文列表。</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>count</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><em>int</em></a>) -- 要获取的数量，0表示全部</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>报文列表</p>
+</dd>
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[<a class="reference internal" href="#src.MessageRecord" title="src.MessageRecord">MessageRecord</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MeterClientService.get_captured_tx_messages">
+<span class="sig-name descname"><span class="pre">get_captured_tx_messages</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/clientsvc/client_service.html#MeterClientService.get_captured_tx_messages"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterClientService.get_captured_tx_messages" title="Link to this definition"></a></dt>
+<dd><p>获取捕获的发送报文列表。</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>count</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><em>int</em></a>) -- 要获取的数量，0表示全部</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>发送报文列表</p>
+</dd>
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[<a class="reference internal" href="#src.MessageRecord" title="src.MessageRecord">MessageRecord</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MeterClientService.get_captured_rx_messages">
+<span class="sig-name descname"><span class="pre">get_captured_rx_messages</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/clientsvc/client_service.html#MeterClientService.get_captured_rx_messages"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterClientService.get_captured_rx_messages" title="Link to this definition"></a></dt>
+<dd><p>获取捕获的接收报文列表。</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>count</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><em>int</em></a>) -- 要获取的数量，0表示全部</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>接收报文列表</p>
+</dd>
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[<a class="reference internal" href="#src.MessageRecord" title="src.MessageRecord">MessageRecord</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MeterClientService.get_captured_pairs">
+<span class="sig-name descname"><span class="pre">get_captured_pairs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/clientsvc/client_service.html#MeterClientService.get_captured_pairs"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterClientService.get_captured_pairs" title="Link to this definition"></a></dt>
+<dd><p>获取捕获的TX/RX配对列表。</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>count</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><em>int</em></a>) -- 要获取的数量，0表示全部</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>配对列表</p>
+</dd>
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[<a class="reference internal" href="#src.MessagePair" title="src.MessagePair">MessagePair</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MeterClientService.clear_captured_messages">
+<span class="sig-name descname"><span class="pre">clear_captured_messages</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/clientsvc/client_service.html#MeterClientService.clear_captured_messages"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterClientService.clear_captured_messages" title="Link to this definition"></a></dt>
+<dd><p>清空所有捕获的报文。</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="（在 Python v3.14）"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MeterClientService.get_message_capture_stats">
+<span class="sig-name descname"><span class="pre">get_message_capture_stats</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/clientsvc/client_service.html#MeterClientService.get_message_capture_stats"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterClientService.get_message_capture_stats" title="Link to this definition"></a></dt>
+<dd><p>获取报文捕获统计信息。</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回<span class="colon">:</span></dt>
+<dd class="field-odd"><p>统计信息字典</p>
+</dd>
+<dt class="field-even">返回类型<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="（在 Python v3.14）">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -1312,6 +1628,7 @@ None: 超时或失败时返回</p>
 <dt class="field-odd">变量<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>BroadcastTimeSync</strong> -- 广播校时命令（0x08）</p></li>
+<li><p><strong>ClearDemand</strong> -- 需量清零命令（0x10）</p></li>
 <li><p><strong>ReadData</strong> -- 读数据命令（0x11）</p></li>
 <li><p><strong>ReadAddress</strong> -- 读通讯地址命令（0x13）</p></li>
 <li><p><strong>WriteData</strong> -- 写数据命令（0x14）</p></li>
@@ -1325,6 +1642,11 @@ None: 超时或失败时返回</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="src.CtrlCode.BroadcastTimeSync">
 <span class="sig-name descname"><span class="pre">BroadcastTimeSync</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">8</span></em><a class="headerlink" href="#src.CtrlCode.BroadcastTimeSync" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.CtrlCode.ClearDemand">
+<span class="sig-name descname"><span class="pre">ClearDemand</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">16</span></em><a class="headerlink" href="#src.CtrlCode.ClearDemand" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -1391,7 +1713,7 @@ None: 超时或失败时返回</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="src.DataItem">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.</span></span><span class="sig-name descname"><span class="pre">DataItem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">di</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_format</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">datetime.datetime(2026,</span> <span class="pre">1,</span> <span class="pre">14,</span> <span class="pre">12,</span> <span class="pre">4,</span> <span class="pre">45,</span> <span class="pre">410490)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/model/types/data_type.html#DataItem"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DataItem" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.</span></span><span class="sig-name descname"><span class="pre">DataItem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">di</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_format</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">datetime.datetime(2026,</span> <span class="pre">1,</span> <span class="pre">24,</span> <span class="pre">16,</span> <span class="pre">7,</span> <span class="pre">20,</span> <span class="pre">91620)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/model/types/data_type.html#DataItem"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DataItem" title="Link to this definition"></a></dt>
 <dd><p>基类：<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>数据项实体类，表示一个具体的数据项。</p>
 <dl class="field-list simple">
@@ -1793,6 +2115,545 @@ retries: 失败重试次数，默认1次</p>
 </dd>
 <dt>Returns:</dt><dd><p>bytes: 成功接收的响应数据
 None: 失败时返回</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.MessageRecord">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.</span></span><span class="sig-name descname"><span class="pre">MessageRecord</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">direction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timestamp=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hex_string=''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pair_id=None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/common/message_types.html#MessageRecord"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MessageRecord" title="Link to this definition"></a></dt>
+<dd><p>基类：<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>单条报文记录。</p>
+<p>用于存储发送或接收的单条报文数据。</p>
+<dl class="field-list simple">
+<dt class="field-odd">变量<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> -- 唯一标识符 (UUID)</p></li>
+<li><p><strong>direction</strong> -- 报文方向，&quot;TX&quot;（发送）或 &quot;RX&quot;（接收）</p></li>
+<li><p><strong>data</strong> -- 原始报文数据</p></li>
+<li><p><strong>timestamp</strong> -- 时间戳（秒，带小数部分）</p></li>
+<li><p><strong>hex_string</strong> -- 十六进制字符串表示</p></li>
+<li><p><strong>pair_id</strong> -- 配对的报文ID，用于TX/RX关联</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.MessageRecord.direction">
+<span class="sig-name descname"><span class="pre">direction</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></em><a class="headerlink" href="#src.MessageRecord.direction" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.MessageRecord.data">
+<span class="sig-name descname"><span class="pre">data</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code></a></em><a class="headerlink" href="#src.MessageRecord.data" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.MessageRecord.id">
+<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></em><a class="headerlink" href="#src.MessageRecord.id" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.MessageRecord.timestamp">
+<span class="sig-name descname"><span class="pre">timestamp</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></em><a class="headerlink" href="#src.MessageRecord.timestamp" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.MessageRecord.hex_string">
+<span class="sig-name descname"><span class="pre">hex_string</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">''</span></em><a class="headerlink" href="#src.MessageRecord.hex_string" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.MessageRecord.pair_id">
+<span class="sig-name descname"><span class="pre">pair_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="（在 Python v3.14）"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a><span class="pre">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#src.MessageRecord.pair_id" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.MessageRecord.formatted_time">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">formatted_time</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><span class="pre">str</span></a></em><a class="headerlink" href="#src.MessageRecord.formatted_time" title="Link to this definition"></a></dt>
+<dd><p>获取格式化的时间字符串（年-月-日 时:分:秒.毫秒）。</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回<span class="colon">:</span></dt>
+<dd class="field-odd"><p>格式化的时间字符串</p>
+</dd>
+<dt class="field-even">返回类型<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MessageRecord.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/common/message_types.html#MessageRecord.to_dict"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MessageRecord.to_dict" title="Link to this definition"></a></dt>
+<dd><p>转换为字典格式。</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回<span class="colon">:</span></dt>
+<dd class="field-odd"><p>包含所有字段的字典</p>
+</dd>
+<dt class="field-even">返回类型<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="（在 Python v3.14）">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.MessagePair">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.</span></span><span class="sig-name descname"><span class="pre">MessagePair</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id=&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tx=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rx=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">round_trip_time=None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/common/message_types.html#MessagePair"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MessagePair" title="Link to this definition"></a></dt>
+<dd><p>基类：<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>TX/RX配对记录。</p>
+<p>用于将发送报文和接收报文配对，便于分析请求-响应对。</p>
+<dl class="field-list simple">
+<dt class="field-odd">变量<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> -- 配对ID</p></li>
+<li><p><strong>tx</strong> -- 发送报文记录</p></li>
+<li><p><strong>rx</strong> -- 接收报文记录</p></li>
+<li><p><strong>round_trip_time</strong> -- 往返时间（秒）</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.MessagePair.id">
+<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></em><a class="headerlink" href="#src.MessagePair.id" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.MessagePair.tx">
+<span class="sig-name descname"><span class="pre">tx</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="（在 Python v3.14）"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a><span class="pre">[</span><a class="reference internal" href="#src.MessageRecord" title="src.common.message_types.MessageRecord"><code class="xref py py-class docutils literal notranslate"><span class="pre">MessageRecord</span></code></a><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#src.MessagePair.tx" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.MessagePair.rx">
+<span class="sig-name descname"><span class="pre">rx</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="（在 Python v3.14）"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a><span class="pre">[</span><a class="reference internal" href="#src.MessageRecord" title="src.common.message_types.MessageRecord"><code class="xref py py-class docutils literal notranslate"><span class="pre">MessageRecord</span></code></a><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#src.MessagePair.rx" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.MessagePair.round_trip_time">
+<span class="sig-name descname"><span class="pre">round_trip_time</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="（在 Python v3.14）"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a><span class="pre">[</span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a><span class="pre">]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#src.MessagePair.round_trip_time" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MessagePair.set_tx">
+<span class="sig-name descname"><span class="pre">set_tx</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">record</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/common/message_types.html#MessagePair.set_tx"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MessagePair.set_tx" title="Link to this definition"></a></dt>
+<dd><p>设置发送报文。</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>record</strong> (<a class="reference internal" href="#src.MessageRecord" title="src.MessageRecord"><em>MessageRecord</em></a>) -- 发送报文记录</p>
+</dd>
+<dt class="field-even">返回类型<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="（在 Python v3.14）"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MessagePair.set_rx">
+<span class="sig-name descname"><span class="pre">set_rx</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">record</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/common/message_types.html#MessagePair.set_rx"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MessagePair.set_rx" title="Link to this definition"></a></dt>
+<dd><p>设置接收报文。</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>record</strong> (<a class="reference internal" href="#src.MessageRecord" title="src.MessageRecord"><em>MessageRecord</em></a>) -- 接收报文记录</p>
+</dd>
+<dt class="field-even">返回类型<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="（在 Python v3.14）"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MessagePair.is_complete">
+<span class="sig-name descname"><span class="pre">is_complete</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/common/message_types.html#MessagePair.is_complete"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MessagePair.is_complete" title="Link to this definition"></a></dt>
+<dd><p>检查配对是否完整（有TX和RX）。</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回<span class="colon">:</span></dt>
+<dd class="field-odd"><p>配对是否完整</p>
+</dd>
+<dt class="field-even">返回类型<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.MessagePair.tx_time">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">tx_time</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="（在 Python v3.14）"><span class="pre">None</span></a></em><a class="headerlink" href="#src.MessagePair.tx_time" title="Link to this definition"></a></dt>
+<dd><p>获取发送报文的格式化时间。</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回<span class="colon">:</span></dt>
+<dd class="field-odd"><p>格式化的发送时间，如果没有TX则返回None</p>
+</dd>
+<dt class="field-even">返回类型<span class="colon">:</span></dt>
+<dd class="field-even"><p>Optional[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）">str</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.MessagePair.rx_time">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">rx_time</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="（在 Python v3.14）"><span class="pre">None</span></a></em><a class="headerlink" href="#src.MessagePair.rx_time" title="Link to this definition"></a></dt>
+<dd><p>获取接收报文的格式化时间。</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回<span class="colon">:</span></dt>
+<dd class="field-odd"><p>格式化的接收时间，如果没有RX则返回None</p>
+</dd>
+<dt class="field-even">返回类型<span class="colon">:</span></dt>
+<dd class="field-even"><p>Optional[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）">str</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MessagePair.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/common/message_types.html#MessagePair.to_dict"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MessagePair.to_dict" title="Link to this definition"></a></dt>
+<dd><p>转换为字典格式。</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回<span class="colon">:</span></dt>
+<dd class="field-odd"><p>包含所有字段的字典</p>
+</dd>
+<dt class="field-even">返回类型<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="（在 Python v3.14）">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.MessageCapture">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.</span></span><span class="sig-name descname"><span class="pre">MessageCapture</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">enabled</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">queue_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/common/message_capture.html#MessageCapture"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MessageCapture" title="Link to this definition"></a></dt>
+<dd><p>基类：<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>报文捕获管理器。</p>
+<p>管理TX和RX报文的捕获、配对和存储。
+默认禁用，需要显式调用enable()启用。</p>
+<dl class="field-list simple">
+<dt class="field-odd">变量<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>_enabled</strong> -- 是否启用捕获</p></li>
+<li><p><strong>_queue_size</strong> -- 队列大小</p></li>
+<li><p><strong>_tx_queue</strong> -- 发送报文队列</p></li>
+<li><p><strong>_rx_queue</strong> -- 接收报文队列</p></li>
+<li><p><strong>_pairs</strong> -- 配对队列</p></li>
+<li><p><strong>_pending_pairs</strong> -- 等待配对的记录（TX等待RX）</p></li>
+</ul>
+</dd>
+</dl>
+<p>初始化报文捕获管理器。</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>enabled</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><em>bool</em></a>) -- 是否启用捕获，默认False</p></li>
+<li><p><strong>queue_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><em>int</em></a>) -- 队列大小，默认100</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="src.MessageCapture.enabled">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">enabled</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><span class="pre">bool</span></a></em><a class="headerlink" href="#src.MessageCapture.enabled" title="Link to this definition"></a></dt>
+<dd><p>获取启用状态。</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="src.MessageCapture.queue_size">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">queue_size</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><span class="pre">int</span></a></em><a class="headerlink" href="#src.MessageCapture.queue_size" title="Link to this definition"></a></dt>
+<dd><p>获取队列大小。</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MessageCapture.enable">
+<span class="sig-name descname"><span class="pre">enable</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/common/message_capture.html#MessageCapture.enable"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MessageCapture.enable" title="Link to this definition"></a></dt>
+<dd><p>启用报文捕获。</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="（在 Python v3.14）"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MessageCapture.disable">
+<span class="sig-name descname"><span class="pre">disable</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/common/message_capture.html#MessageCapture.disable"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MessageCapture.disable" title="Link to this definition"></a></dt>
+<dd><p>禁用报文捕获。</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="（在 Python v3.14）"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MessageCapture.set_queue_size">
+<span class="sig-name descname"><span class="pre">set_queue_size</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/common/message_capture.html#MessageCapture.set_queue_size"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MessageCapture.set_queue_size" title="Link to this definition"></a></dt>
+<dd><p>设置队列大小。</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><em>int</em></a>) -- 新的队列大小</p>
+</dd>
+<dt class="field-even">返回类型<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="（在 Python v3.14）"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MessageCapture.capture_tx">
+<span class="sig-name descname"><span class="pre">capture_tx</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/common/message_capture.html#MessageCapture.capture_tx"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MessageCapture.capture_tx" title="Link to this definition"></a></dt>
+<dd><p>捕获发送报文。</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）"><em>bytes</em></a>) -- 发送的原始数据</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>事务ID，用于后续配对RX</p>
+</dd>
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Optional[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）">str</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MessageCapture.capture_rx">
+<span class="sig-name descname"><span class="pre">capture_rx</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tx_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/common/message_capture.html#MessageCapture.capture_rx"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MessageCapture.capture_rx" title="Link to this definition"></a></dt>
+<dd><p>捕获接收报文。</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）"><em>bytes</em></a>) -- 接收的原始数据</p></li>
+<li><p><strong>tx_id</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><em>str</em></a><em>]</em>) -- 对应的TX事务ID，用于配对</p></li>
+</ul>
+</dd>
+<dt class="field-even">返回类型<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="（在 Python v3.14）"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MessageCapture.capture_rx_for_server">
+<span class="sig-name descname"><span class="pre">capture_rx_for_server</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/common/message_capture.html#MessageCapture.capture_rx_for_server"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MessageCapture.capture_rx_for_server" title="Link to this definition"></a></dt>
+<dd><p>捕获服务器端接收报文（作为请求）。</p>
+<p>对于服务器端，RX是请求，TX是响应。
+创建配对并返回事务ID，用于后续配对TX响应。</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）"><em>bytes</em></a>) -- 接收的原始数据</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>事务ID，用于后续配对TX</p>
+</dd>
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Optional[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）">str</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MessageCapture.capture_tx_for_server">
+<span class="sig-name descname"><span class="pre">capture_tx_for_server</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rx_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/common/message_capture.html#MessageCapture.capture_tx_for_server"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MessageCapture.capture_tx_for_server" title="Link to this definition"></a></dt>
+<dd><p>捕获服务器端发送报文（作为响应）。</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）"><em>bytes</em></a>) -- 发送的原始数据</p></li>
+<li><p><strong>rx_id</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><em>str</em></a><em>]</em>) -- 对应的RX事务ID，用于配对</p></li>
+</ul>
+</dd>
+<dt class="field-even">返回类型<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="（在 Python v3.14）"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MessageCapture.get_tx_messages">
+<span class="sig-name descname"><span class="pre">get_tx_messages</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/common/message_capture.html#MessageCapture.get_tx_messages"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MessageCapture.get_tx_messages" title="Link to this definition"></a></dt>
+<dd><p>获取发送报文列表。</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>count</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><em>int</em></a>) -- 要获取的数量，0表示全部</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>发送报文列表</p>
+</dd>
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[<a class="reference internal" href="#src.MessageRecord" title="src.MessageRecord">MessageRecord</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MessageCapture.get_rx_messages">
+<span class="sig-name descname"><span class="pre">get_rx_messages</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/common/message_capture.html#MessageCapture.get_rx_messages"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MessageCapture.get_rx_messages" title="Link to this definition"></a></dt>
+<dd><p>获取接收报文列表。</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>count</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><em>int</em></a>) -- 要获取的数量，0表示全部</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>接收报文列表</p>
+</dd>
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[<a class="reference internal" href="#src.MessageRecord" title="src.MessageRecord">MessageRecord</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MessageCapture.get_pairs">
+<span class="sig-name descname"><span class="pre">get_pairs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/common/message_capture.html#MessageCapture.get_pairs"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MessageCapture.get_pairs" title="Link to this definition"></a></dt>
+<dd><p>获取配对列表。</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>count</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><em>int</em></a>) -- 要获取的数量，0表示全部</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>配对列表</p>
+</dd>
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[<a class="reference internal" href="#src.MessagePair" title="src.MessagePair">MessagePair</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MessageCapture.get_all_messages">
+<span class="sig-name descname"><span class="pre">get_all_messages</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/common/message_capture.html#MessageCapture.get_all_messages"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MessageCapture.get_all_messages" title="Link to this definition"></a></dt>
+<dd><p>获取所有报文（TX和RX），按时间排序。</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>count</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><em>int</em></a>) -- 要获取的数量，0表示全部</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>所有报文列表</p>
+</dd>
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[<a class="reference internal" href="#src.MessageRecord" title="src.MessageRecord">MessageRecord</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MessageCapture.clear">
+<span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/common/message_capture.html#MessageCapture.clear"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MessageCapture.clear" title="Link to this definition"></a></dt>
+<dd><p>清空所有捕获的报文。</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="（在 Python v3.14）"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MessageCapture.get_stats">
+<span class="sig-name descname"><span class="pre">get_stats</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/common/message_capture.html#MessageCapture.get_stats"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MessageCapture.get_stats" title="Link to this definition"></a></dt>
+<dd><p>获取捕获统计信息。</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回<span class="colon">:</span></dt>
+<dd class="field-odd"><p>统计信息字典</p>
+</dd>
+<dt class="field-even">返回类型<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="（在 Python v3.14）">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.MessageQueue">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.</span></span><span class="sig-name descname"><span class="pre">MessageQueue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">maxlen</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/common/message_capture.html#MessageQueue"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MessageQueue" title="Link to this definition"></a></dt>
+<dd><p>基类：<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>线程安全的报文队列。</p>
+<p>使用deque实现固定大小的循环队列，当队列满时自动丢弃最旧的记录。</p>
+<dl class="field-list simple">
+<dt class="field-odd">变量<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>_queue</strong> -- 内部队列</p></li>
+<li><p><strong>_lock</strong> -- 线程锁</p></li>
+</ul>
+</dd>
+</dl>
+<p>初始化报文队列。</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>maxlen</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><em>int</em></a>) -- 队列最大长度，默认100</p>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="src.MessageQueue.maxlen">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">maxlen</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><span class="pre">int</span></a></em><a class="headerlink" href="#src.MessageQueue.maxlen" title="Link to this definition"></a></dt>
+<dd><p>获取队列最大长度。</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MessageQueue.append">
+<span class="sig-name descname"><span class="pre">append</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">record</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/common/message_capture.html#MessageQueue.append"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MessageQueue.append" title="Link to this definition"></a></dt>
+<dd><p>添加记录到队列。</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>record</strong> -- 要添加的记录（MessageRecord或MessagePair）</p>
+</dd>
+<dt class="field-even">返回类型<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="（在 Python v3.14）"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MessageQueue.get_all">
+<span class="sig-name descname"><span class="pre">get_all</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/common/message_capture.html#MessageQueue.get_all"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MessageQueue.get_all" title="Link to this definition"></a></dt>
+<dd><p>获取所有记录。</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回<span class="colon">:</span></dt>
+<dd class="field-odd"><p>所有记录的列表副本</p>
+</dd>
+<dt class="field-even">返回类型<span class="colon">:</span></dt>
+<dd class="field-even"><p>List</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MessageQueue.get_recent">
+<span class="sig-name descname"><span class="pre">get_recent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">count</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/common/message_capture.html#MessageQueue.get_recent"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MessageQueue.get_recent" title="Link to this definition"></a></dt>
+<dd><p>获取最近的N条记录。</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>count</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><em>int</em></a>) -- 要获取的记录数量</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>最近的记录列表</p>
+</dd>
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MessageQueue.clear">
+<span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/common/message_capture.html#MessageQueue.clear"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MessageQueue.clear" title="Link to this definition"></a></dt>
+<dd><p>清空队列。</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="（在 Python v3.14）"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MessageQueue.resize">
+<span class="sig-name descname"><span class="pre">resize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_maxlen</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/common/message_capture.html#MessageQueue.resize"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MessageQueue.resize" title="Link to this definition"></a></dt>
+<dd><p>调整队列大小。</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>new_maxlen</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><em>int</em></a>) -- 新的最大长度</p>
+</dd>
+<dt class="field-even">返回类型<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="（在 Python v3.14）"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>

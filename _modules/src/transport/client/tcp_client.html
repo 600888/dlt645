@@ -52,9 +52,6 @@
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.common.html#module-src.common.base_log">src.common.base_log module</a><ul>
 <li class="toctree-l6"><a class="reference internal" href="../../../../src.common.html#src.common.base_log.Log"><code class="docutils literal notranslate"><span class="pre">Log</span></code></a><ul>
 <li class="toctree-l7"><a class="reference internal" href="../../../../src.common.html#src.common.base_log.Log.set_logger"><code class="docutils literal notranslate"><span class="pre">Log.set_logger()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="../../../../src.common.html#src.common.base_log.Log.set_log_enable"><code class="docutils literal notranslate"><span class="pre">Log.set_log_enable()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="../../../../src.common.html#src.common.base_log.Log.set_log_level"><code class="docutils literal notranslate"><span class="pre">Log.set_log_level()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="../../../../src.common.html#src.common.base_log.Log.set_config"><code class="docutils literal notranslate"><span class="pre">Log.set_config()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="../../../../src.common.html#src.common.base_log.Log.debug"><code class="docutils literal notranslate"><span class="pre">Log.debug()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="../../../../src.common.html#src.common.base_log.Log.info"><code class="docutils literal notranslate"><span class="pre">Log.info()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="../../../../src.common.html#src.common.base_log.Log.warning"><code class="docutils literal notranslate"><span class="pre">Log.warning()</span></code></a></li>
@@ -174,6 +171,7 @@
 </li>
 <li class="toctree-l8"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.CtrlCode"><code class="docutils literal notranslate"><span class="pre">CtrlCode</span></code></a><ul>
 <li class="toctree-l9"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.CtrlCode.BroadcastTimeSync"><code class="docutils literal notranslate"><span class="pre">CtrlCode.BroadcastTimeSync</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.CtrlCode.ClearDemand"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ClearDemand</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.CtrlCode.ReadData"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ReadData</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.CtrlCode.ReadAddress"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ReadAddress</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.CtrlCode.WriteData"><code class="docutils literal notranslate"><span class="pre">CtrlCode.WriteData</span></code></a></li>
@@ -277,6 +275,14 @@
 <li class="toctree-l9"><a class="reference internal" href="../../../../src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.write_address"><code class="docutils literal notranslate"><span class="pre">MeterClientService.write_address()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="../../../../src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.send_and_handle_request"><code class="docutils literal notranslate"><span class="pre">MeterClientService.send_and_handle_request()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="../../../../src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.handle_response"><code class="docutils literal notranslate"><span class="pre">MeterClientService.handle_response()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../../src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.enable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterClientService.enable_message_capture()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../../src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.disable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterClientService.disable_message_capture()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../../src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.get_captured_messages"><code class="docutils literal notranslate"><span class="pre">MeterClientService.get_captured_messages()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../../src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.get_captured_tx_messages"><code class="docutils literal notranslate"><span class="pre">MeterClientService.get_captured_tx_messages()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../../src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.get_captured_rx_messages"><code class="docutils literal notranslate"><span class="pre">MeterClientService.get_captured_rx_messages()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../../src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.get_captured_pairs"><code class="docutils literal notranslate"><span class="pre">MeterClientService.get_captured_pairs()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../../src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.clear_captured_messages"><code class="docutils literal notranslate"><span class="pre">MeterClientService.clear_captured_messages()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../../src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.get_message_capture_stats"><code class="docutils literal notranslate"><span class="pre">MeterClientService.get_message_capture_stats()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -303,6 +309,14 @@
 <li class="toctree-l9"><a class="reference internal" href="../../../../src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.set_04"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_04()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="../../../../src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.get_data_item"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_data_item()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="../../../../src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.handle_request"><code class="docutils literal notranslate"><span class="pre">MeterServerService.handle_request()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../../src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.enable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterServerService.enable_message_capture()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../../src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.disable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterServerService.disable_message_capture()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../../src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.get_captured_messages"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_captured_messages()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../../src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.get_captured_tx_messages"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_captured_tx_messages()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../../src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.get_captured_rx_messages"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_captured_rx_messages()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../../src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.get_captured_pairs"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_captured_pairs()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../../src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.clear_captured_messages"><code class="docutils literal notranslate"><span class="pre">MeterServerService.clear_captured_messages()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../../src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.get_message_capture_stats"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_message_capture_stats()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -389,6 +403,14 @@
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MeterServerService.set_04"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_04()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MeterServerService.get_data_item"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_data_item()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MeterServerService.handle_request"><code class="docutils literal notranslate"><span class="pre">MeterServerService.handle_request()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MeterServerService.enable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterServerService.enable_message_capture()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MeterServerService.disable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterServerService.disable_message_capture()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MeterServerService.get_captured_messages"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_captured_messages()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MeterServerService.get_captured_tx_messages"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_captured_tx_messages()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MeterServerService.get_captured_rx_messages"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_captured_rx_messages()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MeterServerService.get_captured_pairs"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_captured_pairs()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MeterServerService.clear_captured_messages"><code class="docutils literal notranslate"><span class="pre">MeterServerService.clear_captured_messages()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MeterServerService.get_message_capture_stats"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_message_capture_stats()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../src.html#src.MeterClientService"><code class="docutils literal notranslate"><span class="pre">MeterClientService</span></code></a><ul>
@@ -409,6 +431,14 @@
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MeterClientService.write_address"><code class="docutils literal notranslate"><span class="pre">MeterClientService.write_address()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MeterClientService.send_and_handle_request"><code class="docutils literal notranslate"><span class="pre">MeterClientService.send_and_handle_request()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MeterClientService.handle_response"><code class="docutils literal notranslate"><span class="pre">MeterClientService.handle_response()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MeterClientService.enable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterClientService.enable_message_capture()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MeterClientService.disable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterClientService.disable_message_capture()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MeterClientService.get_captured_messages"><code class="docutils literal notranslate"><span class="pre">MeterClientService.get_captured_messages()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MeterClientService.get_captured_tx_messages"><code class="docutils literal notranslate"><span class="pre">MeterClientService.get_captured_tx_messages()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MeterClientService.get_captured_rx_messages"><code class="docutils literal notranslate"><span class="pre">MeterClientService.get_captured_rx_messages()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MeterClientService.get_captured_pairs"><code class="docutils literal notranslate"><span class="pre">MeterClientService.get_captured_pairs()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MeterClientService.clear_captured_messages"><code class="docutils literal notranslate"><span class="pre">MeterClientService.clear_captured_messages()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MeterClientService.get_message_capture_stats"><code class="docutils literal notranslate"><span class="pre">MeterClientService.get_message_capture_stats()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../src.html#src.DLT645Protocol"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol</span></code></a><ul>
@@ -423,6 +453,7 @@
 </li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../src.html#src.CtrlCode"><code class="docutils literal notranslate"><span class="pre">CtrlCode</span></code></a><ul>
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.CtrlCode.BroadcastTimeSync"><code class="docutils literal notranslate"><span class="pre">CtrlCode.BroadcastTimeSync</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.CtrlCode.ClearDemand"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ClearDemand</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.CtrlCode.ReadData"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ReadData</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.CtrlCode.ReadAddress"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ReadAddress</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.CtrlCode.WriteData"><code class="docutils literal notranslate"><span class="pre">CtrlCode.WriteData</span></code></a></li>
@@ -476,6 +507,57 @@
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.RtuClient.send_request"><code class="docutils literal notranslate"><span class="pre">RtuClient.send_request()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../src.html#src.MessageRecord"><code class="docutils literal notranslate"><span class="pre">MessageRecord</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MessageRecord.direction"><code class="docutils literal notranslate"><span class="pre">MessageRecord.direction</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MessageRecord.data"><code class="docutils literal notranslate"><span class="pre">MessageRecord.data</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MessageRecord.id"><code class="docutils literal notranslate"><span class="pre">MessageRecord.id</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MessageRecord.timestamp"><code class="docutils literal notranslate"><span class="pre">MessageRecord.timestamp</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MessageRecord.hex_string"><code class="docutils literal notranslate"><span class="pre">MessageRecord.hex_string</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MessageRecord.pair_id"><code class="docutils literal notranslate"><span class="pre">MessageRecord.pair_id</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MessageRecord.formatted_time"><code class="docutils literal notranslate"><span class="pre">MessageRecord.formatted_time</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MessageRecord.to_dict"><code class="docutils literal notranslate"><span class="pre">MessageRecord.to_dict()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../src.html#src.MessagePair"><code class="docutils literal notranslate"><span class="pre">MessagePair</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MessagePair.id"><code class="docutils literal notranslate"><span class="pre">MessagePair.id</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MessagePair.tx"><code class="docutils literal notranslate"><span class="pre">MessagePair.tx</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MessagePair.rx"><code class="docutils literal notranslate"><span class="pre">MessagePair.rx</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MessagePair.round_trip_time"><code class="docutils literal notranslate"><span class="pre">MessagePair.round_trip_time</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MessagePair.set_tx"><code class="docutils literal notranslate"><span class="pre">MessagePair.set_tx()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MessagePair.set_rx"><code class="docutils literal notranslate"><span class="pre">MessagePair.set_rx()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MessagePair.is_complete"><code class="docutils literal notranslate"><span class="pre">MessagePair.is_complete()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MessagePair.tx_time"><code class="docutils literal notranslate"><span class="pre">MessagePair.tx_time</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MessagePair.rx_time"><code class="docutils literal notranslate"><span class="pre">MessagePair.rx_time</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MessagePair.to_dict"><code class="docutils literal notranslate"><span class="pre">MessagePair.to_dict()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../src.html#src.MessageCapture"><code class="docutils literal notranslate"><span class="pre">MessageCapture</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MessageCapture.enabled"><code class="docutils literal notranslate"><span class="pre">MessageCapture.enabled</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MessageCapture.queue_size"><code class="docutils literal notranslate"><span class="pre">MessageCapture.queue_size</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MessageCapture.enable"><code class="docutils literal notranslate"><span class="pre">MessageCapture.enable()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MessageCapture.disable"><code class="docutils literal notranslate"><span class="pre">MessageCapture.disable()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MessageCapture.set_queue_size"><code class="docutils literal notranslate"><span class="pre">MessageCapture.set_queue_size()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MessageCapture.capture_tx"><code class="docutils literal notranslate"><span class="pre">MessageCapture.capture_tx()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MessageCapture.capture_rx"><code class="docutils literal notranslate"><span class="pre">MessageCapture.capture_rx()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MessageCapture.capture_rx_for_server"><code class="docutils literal notranslate"><span class="pre">MessageCapture.capture_rx_for_server()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MessageCapture.capture_tx_for_server"><code class="docutils literal notranslate"><span class="pre">MessageCapture.capture_tx_for_server()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MessageCapture.get_tx_messages"><code class="docutils literal notranslate"><span class="pre">MessageCapture.get_tx_messages()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MessageCapture.get_rx_messages"><code class="docutils literal notranslate"><span class="pre">MessageCapture.get_rx_messages()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MessageCapture.get_pairs"><code class="docutils literal notranslate"><span class="pre">MessageCapture.get_pairs()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MessageCapture.get_all_messages"><code class="docutils literal notranslate"><span class="pre">MessageCapture.get_all_messages()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MessageCapture.clear"><code class="docutils literal notranslate"><span class="pre">MessageCapture.clear()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MessageCapture.get_stats"><code class="docutils literal notranslate"><span class="pre">MessageCapture.get_stats()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../src.html#src.MessageQueue"><code class="docutils literal notranslate"><span class="pre">MessageQueue</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MessageQueue.maxlen"><code class="docutils literal notranslate"><span class="pre">MessageQueue.maxlen</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MessageQueue.append"><code class="docutils literal notranslate"><span class="pre">MessageQueue.append()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MessageQueue.get_all"><code class="docutils literal notranslate"><span class="pre">MessageQueue.get_all()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MessageQueue.get_recent"><code class="docutils literal notranslate"><span class="pre">MessageQueue.get_recent()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MessageQueue.clear"><code class="docutils literal notranslate"><span class="pre">MessageQueue.clear()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MessageQueue.resize"><code class="docutils literal notranslate"><span class="pre">MessageQueue.resize()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -519,6 +601,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Any</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">...common.transform</span><span class="w"> </span><span class="kn">import</span> <span class="n">bytes_to_spaced_hex</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">...common.message_capture</span><span class="w"> </span><span class="kn">import</span> <span class="n">MessageCapture</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">...protocol.protocol</span><span class="w"> </span><span class="kn">import</span> <span class="n">DLT645Protocol</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">...transport.client.log</span><span class="w"> </span><span class="kn">import</span> <span class="n">log</span>
 
@@ -548,6 +631,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">port</span> <span class="o">=</span> <span class="n">port</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="n">timeout</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1"># 报文捕获管理器</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_message_capture</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">MessageCapture</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
 <div class="viewcode-block" id="TcpClient.connect">
 <a class="viewcode-back" href="../../../../src.transport.client.html#src.TcpClient.connect">[文档]</a>
@@ -626,6 +711,11 @@
                 <span class="k">try</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
                     <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;TX: </span><span class="si">{</span><span class="n">bytes_to_spaced_hex</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    
+                    <span class="c1"># 捕获发送的报文</span>
+                    <span class="n">current_tx_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_message_capture</span><span class="p">:</span>
+                        <span class="n">current_tx_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_message_capture</span><span class="o">.</span><span class="n">capture_tx</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
                 <span class="k">except</span> <span class="n">socket</span><span class="o">.</span><span class="n">timeout</span><span class="p">:</span>
                     <span class="k">raise</span> <span class="ne">TimeoutError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Write timeout after </span><span class="si">{</span><span class="n">write_timeout</span><span class="si">}</span><span class="s2">s&quot;</span><span class="p">)</span>
 
@@ -651,6 +741,9 @@
                                     <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
                                         <span class="sa">f</span><span class="s2">&quot;Successfully received complete response: </span><span class="si">{</span><span class="n">bytes_to_spaced_hex</span><span class="p">(</span><span class="n">data_buffer</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
                                     <span class="p">)</span>
+                                    <span class="c1"># 捕获接收的报文并与发送配对</span>
+                                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_message_capture</span><span class="p">:</span>
+                                        <span class="bp">self</span><span class="o">.</span><span class="n">_message_capture</span><span class="o">.</span><span class="n">capture_rx</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">data_buffer</span><span class="p">),</span> <span class="n">current_tx_id</span><span class="p">)</span>
                                     <span class="c1"># 恢复原始超时设置</span>
                                     <span class="bp">self</span><span class="o">.</span><span class="n">conn</span><span class="o">.</span><span class="n">settimeout</span><span class="p">(</span><span class="n">original_timeout</span><span class="p">)</span>
                                     <span class="k">return</span> <span class="n">data_buffer</span>
