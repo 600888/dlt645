@@ -11,7 +11,9 @@ import sys
 import os
 
 # 添加python目录到Python路径（test的上一级目录）
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
+# 使用 abspath 确保在任何执行环境下都能正确解析路径
+python_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+sys.path.insert(0, python_dir)
 
 try:
     from src.service.serversvc.server_service import MeterServerService
