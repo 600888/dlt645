@@ -3,8 +3,7 @@ import json
 from loguru import logger
 import os
 import sys
-from typing import Any, Dict, Optional, Union
-from src.common.env import log_path
+from typing import Optional, Union
 
 LOG_COLORS = {
     "DEBUG": "\033[1;36m",  # CYAN
