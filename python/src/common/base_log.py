@@ -31,9 +31,12 @@ class Log:
         compression: Optional[str] = None,  # 新增压缩功能
         is_backtrace: bool = True,
     ):
-        # 移除 loguru 默认的 stderr handler，避免日志重复打印
+        # 只移除 loguru 默认的 stderr handler (ID 0)，避免删除其他模块已添加的 handlers
         if not Log._default_handler_removed:
-            logger.remove()
+            try:
+                logger.remove(0)  # 只移除默认 handler
+            except ValueError:
+                pass  # 默认 handler 可能已被移除
             Log._default_handler_removed = True
 
         self.is_backtrace = is_backtrace
@@ -56,7 +59,7 @@ class Log:
             colorize=colorful,
             backtrace=True,
             enqueue=True,
-            filter=lambda record: record["extra"]["task"] == filename,
+            filter=lambda record: record["extra"].get("task") == filename,
         )
 
         # 文件输出配置
@@ -70,7 +73,7 @@ class Log:
             retention=f"{backup_count} days",
             compression=compression,
             enqueue=True,
-            filter=lambda record: record["extra"]["task"] == filename,
+            filter=lambda record: record["extra"].get("task") == filename,
         )
 
     def _formatter(self, record):
