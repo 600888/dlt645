@@ -4,6 +4,9 @@
 """
 
 from typing import List
+import struct
+from ..model.data.define import DIMap
+from ..model.types.dlt645_type import CtrlCode, ErrorCode, get_error_msg
 
 #: 帧起始字节
 FRAME_START_BYTE = 0x68
@@ -84,3 +87,123 @@ class Frame:
             f"data_len={self.data_len}, data={[hex(x) for x in self.data]}, "
             f"check_sum=0x{self.check_sum:02X}, end_flag=0x{self.end_flag:02X})"
         )
+
+    @property
+    def description(self) -> str:
+        """获取帧的描述信息。
+
+        解析控制码和数据标识，返回易读的操作描述。
+
+        :return: 描述字符串。
+        :rtype: str
+        """
+        try:
+            # 检查是否为错误响应 (最高两位为 11)
+            if (self.ctrl_code & 0xC0) == 0xC0:
+                original_ctrl = self.ctrl_code & 0x1F
+                err_code_val = self.data[0] if self.data else 0
+                err_msg = []
+                for err in ErrorCode:
+                    if err_code_val & err.value:
+                        err_msg.append(get_error_msg(err))
+                err_str = " | ".join(err_msg) if err_msg else f"未知错误(0x{err_code_val:02X})"
+                
+                op_name = "未知操作"
+                if original_ctrl == CtrlCode.ReadData:
+                    op_name = "读取数据"
+                elif original_ctrl == CtrlCode.ReadAddress:
+                    op_name = "读取通信地址"
+                elif original_ctrl == CtrlCode.WriteData:
+                    op_name = "写入数据"
+                elif original_ctrl == CtrlCode.WriteAddress:
+                    op_name = "写入通信地址"
+                elif original_ctrl == CtrlCode.FreezeCmd:
+                    op_name = "冻结命令"
+                elif original_ctrl == CtrlCode.ChangeBaudRate:
+                    op_name = "修改波特率"
+                elif original_ctrl == CtrlCode.ChangePassword:
+                    op_name = "修改密码"
+                elif original_ctrl == CtrlCode.ClearDemand:
+                    op_name = "需量清零"
+                
+                return f"{op_name}失败响应: {err_str}"
+
+            is_response = (self.ctrl_code & 0x80) == 0x80
+            func_code = self.ctrl_code & 0x7F  # 去除响应标志
+
+            if func_code == CtrlCode.BroadcastTimeSync:
+                return "广播校时"
+            
+            elif func_code == CtrlCode.ReadData:
+                if len(self.data) < 4:
+                    return "读取数据(数据长度不足)"
+                
+                # 提取 DI (前4字节)
+                di_bytes = self.data[:4]
+                # DLT645 DI 是小端序存储
+                di_val = struct.unpack("<I", di_bytes)[0]
+                
+                # 查找数据项定义
+                item = DIMap.get(di_val)
+                name = item.name if item else "未知数据项"
+                
+                if is_response:
+                    return f"读取{name}响应(DI={di_val:08X})"
+                else:
+                    return f"读取{name}(DI={di_val:08X})"
+
+            elif func_code == CtrlCode.ReadAddress:
+                if is_response:
+                    addr_str = "".join([f"{b:02X}" for b in reversed(self.data[:6])])
+                    return f"读取通信地址响应: {addr_str}"
+                return "读取通信地址"
+
+            elif func_code == CtrlCode.WriteData:
+                if len(self.data) < 4:
+                    return "写入数据(数据长度不足)"
+                
+                di_bytes = self.data[:4]
+                di_val = struct.unpack("<I", di_bytes)[0]
+                
+                item = DIMap.get(di_val)
+                name = item.name if item else "未知数据项"
+                
+                if is_response:
+                    return f"写入{name}响应(DI={di_val:08X})"
+                else:
+                    return f"写入{name}(DI={di_val:08X})"
+
+            elif func_code == CtrlCode.WriteAddress:
+                if is_response:
+                    return "写入通信地址响应"
+                return "写入通信地址"
+            
+            elif func_code == CtrlCode.FreezeCmd:
+                if len(self.data) < 4:
+                     return "冻结命令(数据长度不足)"
+                
+                di_bytes = self.data[:4]
+                di_val = struct.unpack("<I", di_bytes)[0]
+                if is_response:
+                     return f"冻结命令响应(DI={di_val:08X})"
+                return f"冻结命令(DI={di_val:08X})"
+
+            elif func_code == CtrlCode.ChangeBaudRate:
+                 if is_response:
+                    return "修改通信速率响应"
+                 return "修改通信速率"
+            
+            elif func_code == CtrlCode.ChangePassword:
+                if is_response:
+                    return "修改密码响应"
+                return "修改密码"
+            
+            elif func_code == CtrlCode.ClearDemand:
+                if is_response:
+                    return "需量清零响应"
+                return "需量清零"
+
+            return f"未知控制码(0x{self.ctrl_code:02X})"
+
+        except Exception as e:
+            return f"解析描述失败: {str(e)}"

@@ -20,6 +20,7 @@ if __name__ == "__main__":
         print(f"通讯地址: {address_data.value}")
     else:
         print("读取通讯地址失败")
+        sys.exit(1)
 
     # 设置设备地址
     client_svc.set_address(address_data.value)

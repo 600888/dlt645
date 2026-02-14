@@ -138,5 +138,55 @@ class Log:
     def critical(self, *args, **kwargs):
         self.logger.critical(*args, **kwargs)
 
+    def set_config(
+        self,
+        filename: Optional[str] = None,
+        cmdlevel: str = "DEBUG",
+        filelevel: str = "INFO",
+        backup_count: int = 7,
+        limit: Union[int, str] = "20 MB",
+        when: Optional[str] = None,
+        colorful: bool = True,
+        compression: Optional[str] = None,
+    ):
+        """动态修改日志配置"""
+        # 移除旧的handler
+        self.logger.remove()
+        
+        # 重新添加handler
+        if filename is None:
+            filename = getattr(sys.modules["__main__"], "__file__", "log.py")
+            filename = os.path.basename(filename.replace(".py", ".log"))
+
+        # 确保日志目录存在
+        log_dir = os.path.abspath(os.path.dirname(filename))
+        if not os.path.exists(log_dir):
+            os.makedirs(log_dir)
+
+        # 控制台输出配置
+        self.logger.add(
+            sys.stderr,
+            level=cmdlevel,
+            format=self._formatter,
+            colorize=colorful,
+            backtrace=True,
+            enqueue=True,
+            filter=lambda record: record["extra"].get("task") == filename,
+        )
+
+        # 文件输出配置
+        rotation_config = self._get_rotation_config(when, limit)
+        self.logger.add(
+            filename,
+            level=filelevel,
+            format=self._formatter,
+            backtrace=True,
+            rotation=rotation_config,
+            retention=f"{backup_count} days",
+            compression=compression,
+            enqueue=True,
+            filter=lambda record: record["extra"].get("task") == filename,
+        )
+
     def exception(self, *args, **kwargs):
         self.logger.exception(*args, **kwargs)
