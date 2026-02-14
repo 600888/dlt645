@@ -57,6 +57,7 @@
 <li class="toctree-l7"><a class="reference internal" href="../../../src.common.html#src.common.base_log.Log.warning"><code class="docutils literal notranslate"><span class="pre">Log.warning()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="../../../src.common.html#src.common.base_log.Log.error"><code class="docutils literal notranslate"><span class="pre">Log.error()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="../../../src.common.html#src.common.base_log.Log.critical"><code class="docutils literal notranslate"><span class="pre">Log.critical()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../src.common.html#src.common.base_log.Log.set_config"><code class="docutils literal notranslate"><span class="pre">Log.set_config()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="../../../src.common.html#src.common.base_log.Log.exception"><code class="docutils literal notranslate"><span class="pre">Log.exception()</span></code></a></li>
 </ul>
 </li>
@@ -232,7 +233,10 @@
 <li class="toctree-l6"><a class="reference internal" href="../../../src.protocol.html#src.protocol.frame.FRAME_START_BYTE"><code class="docutils literal notranslate"><span class="pre">FRAME_START_BYTE</span></code></a></li>
 <li class="toctree-l6"><a class="reference internal" href="../../../src.protocol.html#src.protocol.frame.FRAME_END_BYTE"><code class="docutils literal notranslate"><span class="pre">FRAME_END_BYTE</span></code></a></li>
 <li class="toctree-l6"><a class="reference internal" href="../../../src.protocol.html#src.protocol.frame.BROADCAST_ADDR"><code class="docutils literal notranslate"><span class="pre">BROADCAST_ADDR</span></code></a></li>
-<li class="toctree-l6"><a class="reference internal" href="../../../src.protocol.html#src.protocol.frame.Frame"><code class="docutils literal notranslate"><span class="pre">Frame</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../src.protocol.html#src.protocol.frame.Frame"><code class="docutils literal notranslate"><span class="pre">Frame</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="../../../src.protocol.html#src.protocol.frame.Frame.description"><code class="docutils literal notranslate"><span class="pre">Frame.description</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l5"><a class="reference internal" href="../../../src.protocol.html#module-src.protocol.log">src.protocol.log module</a></li>
@@ -597,6 +601,9 @@
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">struct</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..model.data.define</span><span class="w"> </span><span class="kn">import</span> <span class="n">DIMap</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..model.types.dlt645_type</span><span class="w"> </span><span class="kn">import</span> <span class="n">CtrlCode</span><span class="p">,</span> <span class="n">ErrorCode</span><span class="p">,</span> <span class="n">get_error_msg</span>
 
 <span class="c1">#: 帧起始字节</span>
 <span class="n">FRAME_START_BYTE</span> <span class="o">=</span> <span class="mh">0x68</span>
@@ -678,7 +685,127 @@
             <span class="sa">f</span><span class="s2">&quot;addr=</span><span class="si">{</span><span class="p">[</span><span class="nb">hex</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">addr</span><span class="p">]</span><span class="si">}</span><span class="s2">, ctrl_code=0x</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">ctrl_code</span><span class="si">:</span><span class="s2">02X</span><span class="si">}</span><span class="s2">, &quot;</span>
             <span class="sa">f</span><span class="s2">&quot;data_len=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">data_len</span><span class="si">}</span><span class="s2">, data=</span><span class="si">{</span><span class="p">[</span><span class="nb">hex</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">]</span><span class="si">}</span><span class="s2">, &quot;</span>
             <span class="sa">f</span><span class="s2">&quot;check_sum=0x</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">check_sum</span><span class="si">:</span><span class="s2">02X</span><span class="si">}</span><span class="s2">, end_flag=0x</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">end_flag</span><span class="si">:</span><span class="s2">02X</span><span class="si">}</span><span class="s2">)&quot;</span>
-        <span class="p">)</span></div>
+        <span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">description</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;获取帧的描述信息。</span>
+
+<span class="sd">        解析控制码和数据标识，返回易读的操作描述。</span>
+
+<span class="sd">        :return: 描述字符串。</span>
+<span class="sd">        :rtype: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># 检查是否为错误响应 (最高两位为 11)</span>
+            <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ctrl_code</span> <span class="o">&amp;</span> <span class="mh">0xC0</span><span class="p">)</span> <span class="o">==</span> <span class="mh">0xC0</span><span class="p">:</span>
+                <span class="n">original_ctrl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ctrl_code</span> <span class="o">&amp;</span> <span class="mh">0x1F</span>
+                <span class="n">err_code_val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="k">else</span> <span class="mi">0</span>
+                <span class="n">err_msg</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">err</span> <span class="ow">in</span> <span class="n">ErrorCode</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">err_code_val</span> <span class="o">&amp;</span> <span class="n">err</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
+                        <span class="n">err_msg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">get_error_msg</span><span class="p">(</span><span class="n">err</span><span class="p">))</span>
+                <span class="n">err_str</span> <span class="o">=</span> <span class="s2">&quot; | &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">err_msg</span><span class="p">)</span> <span class="k">if</span> <span class="n">err_msg</span> <span class="k">else</span> <span class="sa">f</span><span class="s2">&quot;未知错误(0x</span><span class="si">{</span><span class="n">err_code_val</span><span class="si">:</span><span class="s2">02X</span><span class="si">}</span><span class="s2">)&quot;</span>
+                
+                <span class="n">op_name</span> <span class="o">=</span> <span class="s2">&quot;未知操作&quot;</span>
+                <span class="k">if</span> <span class="n">original_ctrl</span> <span class="o">==</span> <span class="n">CtrlCode</span><span class="o">.</span><span class="n">ReadData</span><span class="p">:</span>
+                    <span class="n">op_name</span> <span class="o">=</span> <span class="s2">&quot;读取数据&quot;</span>
+                <span class="k">elif</span> <span class="n">original_ctrl</span> <span class="o">==</span> <span class="n">CtrlCode</span><span class="o">.</span><span class="n">ReadAddress</span><span class="p">:</span>
+                    <span class="n">op_name</span> <span class="o">=</span> <span class="s2">&quot;读取通信地址&quot;</span>
+                <span class="k">elif</span> <span class="n">original_ctrl</span> <span class="o">==</span> <span class="n">CtrlCode</span><span class="o">.</span><span class="n">WriteData</span><span class="p">:</span>
+                    <span class="n">op_name</span> <span class="o">=</span> <span class="s2">&quot;写入数据&quot;</span>
+                <span class="k">elif</span> <span class="n">original_ctrl</span> <span class="o">==</span> <span class="n">CtrlCode</span><span class="o">.</span><span class="n">WriteAddress</span><span class="p">:</span>
+                    <span class="n">op_name</span> <span class="o">=</span> <span class="s2">&quot;写入通信地址&quot;</span>
+                <span class="k">elif</span> <span class="n">original_ctrl</span> <span class="o">==</span> <span class="n">CtrlCode</span><span class="o">.</span><span class="n">FreezeCmd</span><span class="p">:</span>
+                    <span class="n">op_name</span> <span class="o">=</span> <span class="s2">&quot;冻结命令&quot;</span>
+                <span class="k">elif</span> <span class="n">original_ctrl</span> <span class="o">==</span> <span class="n">CtrlCode</span><span class="o">.</span><span class="n">ChangeBaudRate</span><span class="p">:</span>
+                    <span class="n">op_name</span> <span class="o">=</span> <span class="s2">&quot;修改波特率&quot;</span>
+                <span class="k">elif</span> <span class="n">original_ctrl</span> <span class="o">==</span> <span class="n">CtrlCode</span><span class="o">.</span><span class="n">ChangePassword</span><span class="p">:</span>
+                    <span class="n">op_name</span> <span class="o">=</span> <span class="s2">&quot;修改密码&quot;</span>
+                <span class="k">elif</span> <span class="n">original_ctrl</span> <span class="o">==</span> <span class="n">CtrlCode</span><span class="o">.</span><span class="n">ClearDemand</span><span class="p">:</span>
+                    <span class="n">op_name</span> <span class="o">=</span> <span class="s2">&quot;需量清零&quot;</span>
+                
+                <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">op_name</span><span class="si">}</span><span class="s2">失败响应: </span><span class="si">{</span><span class="n">err_str</span><span class="si">}</span><span class="s2">&quot;</span>
+
+            <span class="n">is_response</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ctrl_code</span> <span class="o">&amp;</span> <span class="mh">0x80</span><span class="p">)</span> <span class="o">==</span> <span class="mh">0x80</span>
+            <span class="n">func_code</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ctrl_code</span> <span class="o">&amp;</span> <span class="mh">0x7F</span>  <span class="c1"># 去除响应标志</span>
+
+            <span class="k">if</span> <span class="n">func_code</span> <span class="o">==</span> <span class="n">CtrlCode</span><span class="o">.</span><span class="n">BroadcastTimeSync</span><span class="p">:</span>
+                <span class="k">return</span> <span class="s2">&quot;广播校时&quot;</span>
+            
+            <span class="k">elif</span> <span class="n">func_code</span> <span class="o">==</span> <span class="n">CtrlCode</span><span class="o">.</span><span class="n">ReadData</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="s2">&quot;读取数据(数据长度不足)&quot;</span>
+                
+                <span class="c1"># 提取 DI (前4字节)</span>
+                <span class="n">di_bytes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span>
+                <span class="c1"># DLT645 DI 是小端序存储</span>
+                <span class="n">di_val</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;&lt;I&quot;</span><span class="p">,</span> <span class="n">di_bytes</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                
+                <span class="c1"># 查找数据项定义</span>
+                <span class="n">item</span> <span class="o">=</span> <span class="n">DIMap</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">di_val</span><span class="p">)</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">name</span> <span class="k">if</span> <span class="n">item</span> <span class="k">else</span> <span class="s2">&quot;未知数据项&quot;</span>
+                
+                <span class="k">if</span> <span class="n">is_response</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;读取</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">响应(DI=</span><span class="si">{</span><span class="n">di_val</span><span class="si">:</span><span class="s2">08X</span><span class="si">}</span><span class="s2">)&quot;</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;读取</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">(DI=</span><span class="si">{</span><span class="n">di_val</span><span class="si">:</span><span class="s2">08X</span><span class="si">}</span><span class="s2">)&quot;</span>
+
+            <span class="k">elif</span> <span class="n">func_code</span> <span class="o">==</span> <span class="n">CtrlCode</span><span class="o">.</span><span class="n">ReadAddress</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">is_response</span><span class="p">:</span>
+                    <span class="n">addr_str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">b</span><span class="si">:</span><span class="s2">02X</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[:</span><span class="mi">6</span><span class="p">])])</span>
+                    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;读取通信地址响应: </span><span class="si">{</span><span class="n">addr_str</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="k">return</span> <span class="s2">&quot;读取通信地址&quot;</span>
+
+            <span class="k">elif</span> <span class="n">func_code</span> <span class="o">==</span> <span class="n">CtrlCode</span><span class="o">.</span><span class="n">WriteData</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="s2">&quot;写入数据(数据长度不足)&quot;</span>
+                
+                <span class="n">di_bytes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span>
+                <span class="n">di_val</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;&lt;I&quot;</span><span class="p">,</span> <span class="n">di_bytes</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                
+                <span class="n">item</span> <span class="o">=</span> <span class="n">DIMap</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">di_val</span><span class="p">)</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">name</span> <span class="k">if</span> <span class="n">item</span> <span class="k">else</span> <span class="s2">&quot;未知数据项&quot;</span>
+                
+                <span class="k">if</span> <span class="n">is_response</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;写入</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">响应(DI=</span><span class="si">{</span><span class="n">di_val</span><span class="si">:</span><span class="s2">08X</span><span class="si">}</span><span class="s2">)&quot;</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;写入</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">(DI=</span><span class="si">{</span><span class="n">di_val</span><span class="si">:</span><span class="s2">08X</span><span class="si">}</span><span class="s2">)&quot;</span>
+
+            <span class="k">elif</span> <span class="n">func_code</span> <span class="o">==</span> <span class="n">CtrlCode</span><span class="o">.</span><span class="n">WriteAddress</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">is_response</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="s2">&quot;写入通信地址响应&quot;</span>
+                <span class="k">return</span> <span class="s2">&quot;写入通信地址&quot;</span>
+            
+            <span class="k">elif</span> <span class="n">func_code</span> <span class="o">==</span> <span class="n">CtrlCode</span><span class="o">.</span><span class="n">FreezeCmd</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">:</span>
+                     <span class="k">return</span> <span class="s2">&quot;冻结命令(数据长度不足)&quot;</span>
+                
+                <span class="n">di_bytes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span>
+                <span class="n">di_val</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;&lt;I&quot;</span><span class="p">,</span> <span class="n">di_bytes</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">is_response</span><span class="p">:</span>
+                     <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;冻结命令响应(DI=</span><span class="si">{</span><span class="n">di_val</span><span class="si">:</span><span class="s2">08X</span><span class="si">}</span><span class="s2">)&quot;</span>
+                <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;冻结命令(DI=</span><span class="si">{</span><span class="n">di_val</span><span class="si">:</span><span class="s2">08X</span><span class="si">}</span><span class="s2">)&quot;</span>
+
+            <span class="k">elif</span> <span class="n">func_code</span> <span class="o">==</span> <span class="n">CtrlCode</span><span class="o">.</span><span class="n">ChangeBaudRate</span><span class="p">:</span>
+                 <span class="k">if</span> <span class="n">is_response</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="s2">&quot;修改通信速率响应&quot;</span>
+                 <span class="k">return</span> <span class="s2">&quot;修改通信速率&quot;</span>
+            
+            <span class="k">elif</span> <span class="n">func_code</span> <span class="o">==</span> <span class="n">CtrlCode</span><span class="o">.</span><span class="n">ChangePassword</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">is_response</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="s2">&quot;修改密码响应&quot;</span>
+                <span class="k">return</span> <span class="s2">&quot;修改密码&quot;</span>
+            
+            <span class="k">elif</span> <span class="n">func_code</span> <span class="o">==</span> <span class="n">CtrlCode</span><span class="o">.</span><span class="n">ClearDemand</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">is_response</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="s2">&quot;需量清零响应&quot;</span>
+                <span class="k">return</span> <span class="s2">&quot;需量清零&quot;</span>
+
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;未知控制码(0x</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">ctrl_code</span><span class="si">:</span><span class="s2">02X</span><span class="si">}</span><span class="s2">)&quot;</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;解析描述失败: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span></div>
 
 </pre></div>
 
