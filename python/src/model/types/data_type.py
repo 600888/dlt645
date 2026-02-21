@@ -2,7 +2,6 @@ from ast import List
 from enum import Enum
 from typing import Union
 import datetime
-import json
 from ...model.log import log
 
 
@@ -61,7 +60,7 @@ class DataItem:
 
 
 class DataType:
-    """数据类型配置类，通常从 JSON 加载。
+    """数据类型配置类。
 
     :ivar di: 数据标识 (DI)，整数形式。
     :ivar name: 数据类型名称。
@@ -99,7 +98,7 @@ class DataType:
 
 
 class uint32_from_string(int):
-    """自定义整数类型，用于处理从 JSON 字符串（包括十六进制）解析 uint32。"""
+    """自定义整数类型，用于处理从字符串（包括十六进制）解析 uint32。"""
 
     @classmethod
     def from_json(cls, data):
@@ -126,33 +125,15 @@ class uint32_from_string(int):
         return cls(data)
 
 
-def init_data_type_from_json(file_path: str):
-    """从 JSON 文件初始化 DataType 对象列表。
+def init_data_type_from_list(data_list):
+    """从 Python 数据列表初始化 DataType 对象列表。
 
-    读取指定的 JSON 文件，解析后返回 DataType 实例列表。
-
-    :param file_path: JSON 配置文件的路径。
-    :type file_path: str
+    :param data_list: 包含字典的可迭代对象，每个字典包含 DataType 的字段。
+    :type data_list: Iterable[dict]
     :return: 初始化后的 DataType 对象列表。
     :rtype: list[DataType]
-    :raises FileNotFoundError: 如果 JSON 文件不存在。
-    :raises json.JSONDecodeError: 如果 JSON 文件格式无效。
     """
-    try:
-        # 读取 JSON 文件
-        with open(file_path, "r", encoding="utf-8") as f:
-            json_data = json.load(f)
-
-        # 解析 JSON 到列表
-        data_types = [DataType.from_dict(item) for item in json_data]
-        # log.debug(f"初始化 {file_path} 完成，共加载 {len(data_types)} 种数据类型")
-        return data_types
-    except FileNotFoundError as e:
-        log.error(f"读取文件失败: {e}")
-        raise
-    except json.JSONDecodeError as e:
-        log.error(f"解析 JSON 失败: {e}")
-        raise
+    return [DataType.from_dict(item) for item in data_list]
 
 
 class DataFormat(Enum):
