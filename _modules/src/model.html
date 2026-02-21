@@ -140,7 +140,7 @@
 <li class="toctree-l9"><a class="reference internal" href="../../src.model.types.html#src.model.types.data_type.uint32_from_string.from_json"><code class="docutils literal notranslate"><span class="pre">uint32_from_string.from_json()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l8"><a class="reference internal" href="../../src.model.types.html#src.model.types.data_type.init_data_type_from_json"><code class="docutils literal notranslate"><span class="pre">init_data_type_from_json()</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="../../src.model.types.html#src.model.types.data_type.init_data_type_from_list"><code class="docutils literal notranslate"><span class="pre">init_data_type_from_list()</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="../../src.model.types.html#src.model.types.data_type.DataFormat"><code class="docutils literal notranslate"><span class="pre">DataFormat</span></code></a><ul>
 <li class="toctree-l9"><a class="reference internal" href="../../src.model.types.html#src.model.types.data_type.DataFormat.XXXXXXXX"><code class="docutils literal notranslate"><span class="pre">DataFormat.XXXXXXXX</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="../../src.model.types.html#src.model.types.data_type.DataFormat.XXXXXX_XX"><code class="docutils literal notranslate"><span class="pre">DataFormat.XXXXXX_XX</span></code></a></li>
@@ -596,15 +596,18 @@
              
   <h1>src.model 源代码</h1><div class="highlight"><pre>
 <span></span><span class="c1"># 初始化数据类型</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">..common.env</span><span class="w"> </span><span class="kn">import</span> <span class="n">conf_path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..config.energy_types</span><span class="w"> </span><span class="kn">import</span> <span class="n">ENERGY_TYPES</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..config.demand_types</span><span class="w"> </span><span class="kn">import</span> <span class="n">DEMAND_TYPES</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..config.variable_types</span><span class="w"> </span><span class="kn">import</span> <span class="n">VARIABLE_TYPES</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..config.parameter_types</span><span class="w"> </span><span class="kn">import</span> <span class="n">PARAMETER_TYPES</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..config.event_record_types</span><span class="w"> </span><span class="kn">import</span> <span class="n">EVENT_RECORD_TYPES</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..model.data.define.demand_def</span><span class="w"> </span><span class="kn">import</span> <span class="n">init_demand_def</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..model.data.define.energy_def</span><span class="w"> </span><span class="kn">import</span> <span class="n">init_energy_def</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..model.data.define.variable_def</span><span class="w"> </span><span class="kn">import</span> <span class="n">init_variable_def</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..model.data.define.parameter_def</span><span class="w"> </span><span class="kn">import</span> <span class="n">init_parameter_def</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..model.data.define.event_record_def</span><span class="w"> </span><span class="kn">import</span> <span class="n">init_event_record_def</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">..model.types.data_type</span><span class="w"> </span><span class="kn">import</span> <span class="n">init_data_type_from_json</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..model.types.data_type</span><span class="w"> </span><span class="kn">import</span> <span class="n">init_data_type_from_list</span>
 
 <span class="n">EnergyTypes</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">DemandTypes</span> <span class="o">=</span> <span class="p">[]</span>
@@ -617,17 +620,11 @@
 <a class="viewcode-back" href="../../src.model.html#src.model.init">[文档]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">init</span><span class="p">():</span>
     <span class="k">global</span> <span class="n">EnergyTypes</span><span class="p">,</span> <span class="n">DemandTypes</span><span class="p">,</span> <span class="n">VariableTypes</span><span class="p">,</span> <span class="n">ParaMeterTypes</span><span class="p">,</span> <span class="n">EventRecordTypes</span>
-    <span class="n">EnergyTypes</span> <span class="o">=</span> <span class="n">init_data_type_from_json</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">conf_path</span><span class="p">,</span> <span class="s2">&quot;energy_types.json&quot;</span><span class="p">))</span>
-    <span class="n">DemandTypes</span> <span class="o">=</span> <span class="n">init_data_type_from_json</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">conf_path</span><span class="p">,</span> <span class="s2">&quot;demand_types.json&quot;</span><span class="p">))</span>
-    <span class="n">VariableTypes</span> <span class="o">=</span> <span class="n">init_data_type_from_json</span><span class="p">(</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">conf_path</span><span class="p">,</span> <span class="s2">&quot;variable_types.json&quot;</span><span class="p">)</span>
-    <span class="p">)</span>
-    <span class="n">ParaMeterTypes</span> <span class="o">=</span> <span class="n">init_data_type_from_json</span><span class="p">(</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">conf_path</span><span class="p">,</span> <span class="s2">&quot;parameter_types.json&quot;</span><span class="p">)</span>
-    <span class="p">)</span>
-    <span class="n">EventRecordTypes</span> <span class="o">=</span> <span class="n">init_data_type_from_json</span><span class="p">(</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">conf_path</span><span class="p">,</span> <span class="s2">&quot;event_record_types.json&quot;</span><span class="p">)</span>
-    <span class="p">)</span>
+    <span class="n">EnergyTypes</span> <span class="o">=</span> <span class="n">init_data_type_from_list</span><span class="p">(</span><span class="n">ENERGY_TYPES</span><span class="p">)</span>
+    <span class="n">DemandTypes</span> <span class="o">=</span> <span class="n">init_data_type_from_list</span><span class="p">(</span><span class="n">DEMAND_TYPES</span><span class="p">)</span>
+    <span class="n">VariableTypes</span> <span class="o">=</span> <span class="n">init_data_type_from_list</span><span class="p">(</span><span class="n">VARIABLE_TYPES</span><span class="p">)</span>
+    <span class="n">ParaMeterTypes</span> <span class="o">=</span> <span class="n">init_data_type_from_list</span><span class="p">(</span><span class="n">PARAMETER_TYPES</span><span class="p">)</span>
+    <span class="n">EventRecordTypes</span> <span class="o">=</span> <span class="n">init_data_type_from_list</span><span class="p">(</span><span class="n">EVENT_RECORD_TYPES</span><span class="p">)</span>
 
     <span class="n">init_energy_def</span><span class="p">(</span><span class="n">EnergyTypes</span><span class="p">)</span>
     <span class="n">init_demand_def</span><span class="p">(</span><span class="n">DemandTypes</span><span class="p">)</span>

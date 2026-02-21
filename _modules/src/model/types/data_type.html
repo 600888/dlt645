@@ -140,7 +140,7 @@
 <li class="toctree-l9"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.data_type.uint32_from_string.from_json"><code class="docutils literal notranslate"><span class="pre">uint32_from_string.from_json()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l8"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.data_type.init_data_type_from_json"><code class="docutils literal notranslate"><span class="pre">init_data_type_from_json()</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.data_type.init_data_type_from_list"><code class="docutils literal notranslate"><span class="pre">init_data_type_from_list()</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.data_type.DataFormat"><code class="docutils literal notranslate"><span class="pre">DataFormat</span></code></a><ul>
 <li class="toctree-l9"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.data_type.DataFormat.XXXXXXXX"><code class="docutils literal notranslate"><span class="pre">DataFormat.XXXXXXXX</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.data_type.DataFormat.XXXXXX_XX"><code class="docutils literal notranslate"><span class="pre">DataFormat.XXXXXX_XX</span></code></a></li>
@@ -600,7 +600,6 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Union</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">datetime</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">...model.log</span><span class="w"> </span><span class="kn">import</span> <span class="n">log</span>
 
 
@@ -664,7 +663,7 @@
 <div class="viewcode-block" id="DataType">
 <a class="viewcode-back" href="../../../../src.model.types.html#src.DataType">[文档]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">DataType</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;数据类型配置类，通常从 JSON 加载。</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;数据类型配置类。</span>
 
 <span class="sd">    :ivar di: 数据标识 (DI)，整数形式。</span>
 <span class="sd">    :ivar name: 数据类型名称。</span>
@@ -708,7 +707,7 @@
 <div class="viewcode-block" id="uint32_from_string">
 <a class="viewcode-back" href="../../../../src.model.types.html#src.uint32_from_string">[文档]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">uint32_from_string</span><span class="p">(</span><span class="nb">int</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;自定义整数类型，用于处理从 JSON 字符串（包括十六进制）解析 uint32。&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;自定义整数类型，用于处理从字符串（包括十六进制）解析 uint32。&quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="uint32_from_string.from_json">
 <a class="viewcode-back" href="../../../../src.model.types.html#src.uint32_from_string.from_json">[文档]</a>
@@ -739,35 +738,17 @@
 
 
 
-<div class="viewcode-block" id="init_data_type_from_json">
-<a class="viewcode-back" href="../../../../src.model.types.html#src.init_data_type_from_json">[文档]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">init_data_type_from_json</span><span class="p">(</span><span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;从 JSON 文件初始化 DataType 对象列表。</span>
+<div class="viewcode-block" id="init_data_type_from_list">
+<a class="viewcode-back" href="../../../../src.model.types.html#src.init_data_type_from_list">[文档]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">init_data_type_from_list</span><span class="p">(</span><span class="n">data_list</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;从 Python 数据列表初始化 DataType 对象列表。</span>
 
-<span class="sd">    读取指定的 JSON 文件，解析后返回 DataType 实例列表。</span>
-
-<span class="sd">    :param file_path: JSON 配置文件的路径。</span>
-<span class="sd">    :type file_path: str</span>
+<span class="sd">    :param data_list: 包含字典的可迭代对象，每个字典包含 DataType 的字段。</span>
+<span class="sd">    :type data_list: Iterable[dict]</span>
 <span class="sd">    :return: 初始化后的 DataType 对象列表。</span>
 <span class="sd">    :rtype: list[DataType]</span>
-<span class="sd">    :raises FileNotFoundError: 如果 JSON 文件不存在。</span>
-<span class="sd">    :raises json.JSONDecodeError: 如果 JSON 文件格式无效。</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="c1"># 读取 JSON 文件</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-            <span class="n">json_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-
-        <span class="c1"># 解析 JSON 到列表</span>
-        <span class="n">data_types</span> <span class="o">=</span> <span class="p">[</span><span class="n">DataType</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">json_data</span><span class="p">]</span>
-        <span class="c1"># log.debug(f&quot;初始化 {file_path} 完成，共加载 {len(data_types)} 种数据类型&quot;)</span>
-        <span class="k">return</span> <span class="n">data_types</span>
-    <span class="k">except</span> <span class="ne">FileNotFoundError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;读取文件失败: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="k">raise</span>
-    <span class="k">except</span> <span class="n">json</span><span class="o">.</span><span class="n">JSONDecodeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;解析 JSON 失败: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="k">raise</span></div>
+    <span class="k">return</span> <span class="p">[</span><span class="n">DataType</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">data_list</span><span class="p">]</span></div>
 
 
 
