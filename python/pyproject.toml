@@ -41,7 +41,7 @@ dev = [
 Homepage = "https://gitee.com/chen-dongyu123/dlt645"
 Repository = "https://gitee.com/chen-dongyu123/dlt645"
 Issues = "https://gitee.com/chen-dongyu123/dlt645/issues"
-Changelog = "https://gitee.com/chen-dongyu123/dlt645/tree/master/python/CHANGELOG.md"
+Changelog = "https://gitee.com/chen-dongyu123/dlt645/blob/main/python/CHANGELOG.md"
 Documentation = "https://gitee.com/chen-dongyu123/dlt645/wiki"
 
 [tool.setuptools]
