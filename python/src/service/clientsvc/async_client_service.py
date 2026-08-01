@@ -4,9 +4,20 @@ import inspect
 from datetime import datetime
 from typing import Any, Optional, Union
 
-from ...common.transform import bytes_to_spaced_hex, uint8_to_bcd
+from ...common.transform import (
+    bcd_to_string,
+    bytes_to_spaced_hex,
+    string_to_bcd,
+    uint8_to_bcd,
+)
+from ...model.data import data_handler as data
 from ...model.types.data_type import DataFormat, DataItem
-from ...model.types.dlt645_type import BroadcastAddr, CtrlCode, PasswordManager
+from ...model.types.dlt645_type import (
+    ADDRESS_LEN,
+    BroadcastAddr,
+    CtrlCode,
+    PasswordManager,
+)
 from ...protocol.protocol import DLT645Protocol
 from ...service.clientsvc.client_service import MeterClientService
 from ...service.clientsvc.log import log
@@ -28,6 +39,7 @@ class AsyncMeterClientService(MeterClientService):
         self.password_manager = PasswordManager()
         self.operation_code = bytearray(4)
         self.client = client
+        self.data_map = data.clone_data_map()
 
     @classmethod
     def new_tcp_client(
@@ -98,8 +110,24 @@ class AsyncMeterClientService(MeterClientService):
     async def read_address(self) -> Optional[DataItem]:
         return await self._resolve_parent_result(super().read_address())
 
-    async def write_address(self, new_address: bytes) -> Optional[DataItem]:
-        return await self._resolve_parent_result(super().write_address(new_address))
+    async def write_address(
+        self, new_address: Union[str, bytes, bytearray]
+    ) -> Optional[DataItem]:
+        encoded = (
+            string_to_bcd(new_address)
+            if isinstance(new_address, str)
+            else bytearray(new_address)
+        )
+        if len(encoded) != ADDRESS_LEN:
+            return None
+        frame_bytes = DLT645Protocol.build_frame(
+            self.address, CtrlCode.WriteAddress, encoded
+        )
+        result = await self.send_and_handle_request(frame_bytes)
+        if result is not None:
+            self.address = bytearray(encoded)
+            result.value = bcd_to_string(encoded)
+        return result
 
     async def broadcast_time_sync(self, dt: Optional[datetime] = None) -> bool:
         return bool(await self._resolve_parent_result(super().broadcast_time_sync(dt)))
@@ -188,10 +216,14 @@ class AsyncMeterClientService(MeterClientService):
             log.error(f"异步请求处理失败: {exc}")
             return None
 
-    async def __aenter__(self):
+    close = disconnect
+
+    async def __aenter__(self) -> "AsyncMeterClientService":
         if not await self.connect():
             raise ConnectionError("无法建立异步 DLT645 客户端连接")
         return self
 
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(
+        self, exc_type: Any, exc_val: Any, exc_tb: Any
+    ) -> None:
         await self.disconnect()

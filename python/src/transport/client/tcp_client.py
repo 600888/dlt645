@@ -1,248 +1,200 @@
-"""TCP 客户端模块。
-
-本模块实现了 DLT645 协议的 TCP 客户端功能。
-"""
+"""同步 DL/T 645 TCP 客户端。"""
 
 import socket
+import threading
 import time
-from typing import Optional
+from typing import Any, Optional
 
-from ...common.transform import bytes_to_spaced_hex
 from ...common.message_capture import MessageCapture
+from ...common.transform import bytes_to_spaced_hex
 from ...protocol.protocol import DLT645Protocol
 from ...transport.client.log import log
 
 
 class TcpClient:
-    """TCP 客户端类，用于与 DLT645 设备进行 TCP 通信。
+    """支持分片响应、总超时和串行请求的 TCP 客户端。"""
 
-    :ivar ip: 服务器 IP 地址。
-    :ivar port: 服务器端口号。
-    :ivar timeout: 连接超时时间（秒）。
-    :ivar conn: socket 连接对象。
-    """
+    MAX_BUFFER_SIZE = 4096
 
-    def __init__(self, ip: str = "", port: int = 0, timeout: float = 5.0):
-        """初始化 TCP 客户端。
-
-        :param ip: 服务器 IP 地址（如 '0.0.0.0'）。
-        :type ip: str
-        :param port: 服务器端口号。
-        :type port: int
-        :param timeout: 连接超时时间（秒），默认 5.0。
-        :type timeout: float
-        """
+    def __init__(self, ip: str = "", port: int = 0, timeout: float = 5.0) -> None:
         self.ip = ip
         self.port = port
         self.timeout = timeout
         self.conn: Optional[socket.socket] = None
-        # 报文捕获管理器
+        self._request_lock = threading.Lock()
+        self._read_buffer = bytearray()
         self._message_capture: Optional[MessageCapture] = None
 
     def connect(self) -> bool:
-        """连接到服务器"""
-        address = f"{self.ip}:{self.port}"
-        try:
-            self.conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            self.conn.settimeout(self.timeout)
-            self.conn.connect((self.ip, self.port))
-            log.info(f"成功连接到服务器 {address}")
+        """建立连接；已有有效连接时直接复用。"""
+        if self.conn is not None and self.conn.fileno() >= 0:
             return True
-        except Exception as e:
-            log.error(f"连接服务器失败: {e}")
+        candidate: Optional[socket.socket] = None
+        try:
+            candidate = socket.create_connection((self.ip, self.port), self.timeout)
+            candidate.settimeout(self.timeout)
+            self.conn = candidate
+            self._read_buffer.clear()
+            log.info(f"Connected to {self.ip}:{self.port}")
+            return True
+        except OSError as exc:
+            if candidate is not None:
+                candidate.close()
+            self.conn = None
+            log.error(f"Failed to connect to {self.ip}:{self.port}: {exc}")
             return False
 
     def disconnect(self) -> bool:
-        """断开与服务器的连接"""
-        if self.conn is not None:
-            try:
-                self.conn.close()
-                self.conn = None
-                log.info("已断开与服务器的连接")
-                return True
-            except Exception as e:
-                log.error(f"断开连接失败: {e}")
-                return False
-        return True
-
-    def send_request(
-        self,
-        data: bytes,
-        write_timeout: float = 2.0,
-        read_timeout: float = 5.0,
-        total_timeout: float = 10.0,
-        min_response_len: int = 1,
-        retries: int = 1,
-    ) -> Optional[bytes]:
-        """增强版TCP请求-响应（支持超时控制和分片数据处理）
-
-        Args:
-            data: 要发送的请求数据
-            write_timeout: 数据写入超时(秒)
-            read_timeout: 单次recv操作的超时(秒)
-            total_timeout: 整个请求-响应的总超时(秒)
-            min_response_len: 最小有效响应长度
-            retries: 失败重试次数
-
-        Returns:
-            bytes: 成功接收的响应数据
-            None: 超时或失败时返回      
-        """
-        if self.conn is None:
-            log.error("Not connected to server")
-            return None
-
-        original_timeout = self.conn.gettimeout()  # 保存原始超时设置
-        data_buffer = bytearray()
-
-        for attempt in range(retries + 1):
-            try:
-                # 0. 初始化计时器和缓冲区
-                start_time = time.time()
-                data_buffer.clear()
-
-                # 1. 设置socket超时（影响后续所有操作）
-                self.conn.settimeout(read_timeout)
-
-                # 2. 带超时的数据写入
-                try:
-                    self.conn.sendall(data)
-                    log.info(f"TX: {bytes_to_spaced_hex(data)}")
-                    
-                    # 捕获发送的报文
-                    current_tx_id: Optional[str] = None
-                    if self._message_capture:
-                        current_tx_id = self._message_capture.capture_tx(data)
-                except socket.timeout:
-                    raise TimeoutError(f"Write timeout after {write_timeout}s")
-
-                # 3. 接收数据（带总超时控制和分片处理）
-                while (time.time() - start_time) < total_timeout:
-                    try:
-                        # 读取数据到缓冲区
-                        chunk = self.conn.recv(1024)  # 增加缓冲区大小
-                        if chunk:
-                            data_buffer.extend(chunk)
-                            log.info(
-                                f"RX: {bytes_to_spaced_hex(chunk)} (buffer size: {len(data_buffer)})"
-                            )
-
-                            # 尝试解析缓冲区中的数据
-                            try:
-                                remaining_data, frame = (
-                                    DLT645Protocol.deserialize_with_remaining(
-                                        bytes(data_buffer)
-                                    )
-                                )
-                                if frame is not None:
-                                    log.debug(
-                                        f"Successfully received complete response: {bytes_to_spaced_hex(data_buffer)}"
-                                    )
-                                    # 捕获接收的报文并与发送配对
-                                    if self._message_capture:
-                                        self._message_capture.capture_rx(bytes(data_buffer), current_tx_id)
-                                    # 恢复原始超时设置
-                                    self.conn.settimeout(original_timeout)
-                                    return data_buffer
-                            except Exception as parse_error:
-                                log.warning(
-                                    f"Parse error (might be incomplete data): {parse_error}"
-                                )
-                                # 继续等待更多数据
-                                continue
-                        else:  # 空数据表示连接关闭
-                            log.warning("Connection closed by peer")
-                            break
-                    except socket.timeout:
-                        # 单次recv超时，检查总超时
-                        if (time.time() - start_time) >= total_timeout:
-                            log.warning(f"Total timeout reached after {total_timeout}s")
-                            break
-                        # 继续等待更多数据
-                        continue
-
-                # 超时或中断处理
-                if len(data_buffer) >= min_response_len:
-                    log.warning(
-                        f"Incomplete response ({len(data_buffer)} bytes): {bytes_to_spaced_hex(data_buffer)}"
-                    )
-                else:
-                    log.error(f"No valid response within {total_timeout}s")
-
-            except TimeoutError as e:
-                log.error(str(e))
-            except Exception as e:
-                log.error(f"Attempt {attempt} failed: {type(e).__name__}: {str(e)}")
-
-            # 非最后一次尝试时延迟重试
-            if attempt < retries:
-                log.info(f"Retrying ({attempt+1}/{retries})...")
-                time.sleep(0.5 * (attempt + 1))  # 指数退避
-                # 重连逻辑（如果连接已断开）
-                if not self._ensure_connection():
-                    continue
-
-        # 恢复原始超时设置
-        self.conn.settimeout(original_timeout)
-        return None
-
-    def send_only(self, data: bytes, timeout: float = 2.0) -> bool:
-        """只发送数据，不等待响应。
-
-        用于广播命令（如广播校时、广播冻结），从站不应答。
-
-        :param data: 要发送的请求数据。
-        :type data: bytes
-        :param timeout: 数据写入超时(秒)。
-        :type timeout: float
-        :return: 发送成功返回 True，失败返回 False。
-        :rtype: bool
-        """
-        if self.conn is None:
-            log.error("Not connected to server")
-            return False
-
+        """关闭连接；重复调用是幂等的。"""
+        conn, self.conn = self.conn, None
+        self._read_buffer.clear()
+        if conn is None:
+            return True
         try:
-            ok = self._safe_sendall(data, timeout)
-            if ok:
-                log.info(f"TX (no response expected): {bytes_to_spaced_hex(data)}")
-                # 捕获发送的报文
-                if self._message_capture:
-                    self._message_capture.capture_tx(data)
-            return ok
-        except Exception as e:
-            log.error(f"send_only failed: {type(e).__name__}: {str(e)}")
+            try:
+                conn.shutdown(socket.SHUT_RDWR)
+            except OSError:
+                pass
+            conn.close()
+            return True
+        except OSError as exc:
+            log.error(f"Failed to close TCP connection: {exc}")
             return False
 
     def _ensure_connection(self) -> bool:
-        """确保连接有效（用于重试时重新连接）"""
-        if self.conn is None:
+        conn = self.conn
+        if conn is None or conn.fileno() < 0:
             return self.connect()
-
-        # 简单检查连接是否仍有效
         try:
-            self.conn.getsockopt(socket.SOL_SOCKET, socket.SO_ERROR)
+            if conn.getsockopt(socket.SOL_SOCKET, socket.SO_ERROR) != 0:
+                raise OSError("socket has a pending error")
             return True
         except OSError:
             self.disconnect()
             return self.connect()
 
-    def _safe_sendall(self, data: bytes, timeout: float) -> bool:
-        """带超时的sendall实现"""
-        self.conn.settimeout(timeout)
-        try:
-            self.conn.sendall(data)
-            return True
-        except socket.timeout:
-            return False
-        finally:
-            self.conn.settimeout(self.timeout)  # 恢复原始超时
+    def _take_complete_frame(self) -> Optional[bytes]:
+        while self._read_buffer:
+            original = bytes(self._read_buffer)
+            remaining, frame = DLT645Protocol.deserialize_with_remaining(original)
+            if frame is not None:
+                consumed = len(original) - len(remaining)
+                response = original[:consumed]
+                self._read_buffer = bytearray(remaining)
+                return response
+            if remaining != original:
+                self._read_buffer = bytearray(remaining)
+                continue
+            return None
+        return None
 
-    def __enter__(self):
-        """上下文管理器入口"""
-        self.connect()
+    def send_request(
+        self,
+        data: bytes,
+        write_timeout: Optional[float] = None,
+        read_timeout: Optional[float] = None,
+        total_timeout: Optional[float] = None,
+        min_response_len: int = 1,
+        retries: int = 1,
+    ) -> Optional[bytes]:
+        """发送请求并返回一个经过校验的完整响应帧。"""
+        effective_write_timeout = self.timeout if write_timeout is None else write_timeout
+        effective_read_timeout = self.timeout if read_timeout is None else read_timeout
+        effective_total_timeout = self.timeout if total_timeout is None else total_timeout
+        if min(
+            effective_write_timeout,
+            effective_read_timeout,
+            effective_total_timeout,
+        ) <= 0:
+            raise ValueError("timeout must be greater than zero")
+        if retries < 0:
+            raise ValueError("retries cannot be negative")
+        with self._request_lock:
+            for attempt in range(retries + 1):
+                if not self._ensure_connection():
+                    if attempt < retries:
+                        time.sleep(0.5 * (attempt + 1))
+                    continue
+
+                conn = self.conn
+                assert conn is not None
+                original_timeout = conn.gettimeout()
+                tx_id: Optional[str] = None
+                self._read_buffer.clear()
+                try:
+                    conn.settimeout(effective_write_timeout)
+                    conn.sendall(data)
+                    log.info(f"TX: {bytes_to_spaced_hex(data)}")
+                    if self._message_capture:
+                        tx_id = self._message_capture.capture_tx(data)
+
+                    deadline = time.monotonic() + effective_total_timeout
+                    while True:
+                        response = self._take_complete_frame()
+                        if response is not None:
+                            log.info(f"RX: {bytes_to_spaced_hex(response)}")
+                            if self._message_capture:
+                                self._message_capture.capture_rx(response, tx_id)
+                            return response
+
+                        remaining_time = deadline - time.monotonic()
+                        if remaining_time <= 0:
+                            break
+                        conn.settimeout(min(effective_read_timeout, remaining_time))
+                        try:
+                            chunk = conn.recv(1024)
+                        except socket.timeout:
+                            continue
+                        if not chunk:
+                            raise ConnectionError("server closed the connection")
+                        self._read_buffer.extend(chunk)
+                        if len(self._read_buffer) > self.MAX_BUFFER_SIZE:
+                            raise ValueError("TCP receive buffer exceeded 4096 bytes")
+
+                    if len(self._read_buffer) >= min_response_len:
+                        log.warning("TCP response timed out with an incomplete frame")
+                    else:
+                        log.error(
+                            f"No valid response within {effective_total_timeout}s"
+                        )
+                except (ConnectionError, OSError, ValueError) as exc:
+                    log.error(f"TCP request attempt {attempt + 1} failed: {exc}")
+                    self.disconnect()
+                finally:
+                    if self.conn is conn:
+                        conn.settimeout(original_timeout)
+
+                if attempt < retries:
+                    time.sleep(0.5 * (attempt + 1))
+            return None
+
+    def send_only(self, data: bytes, timeout: float = 2.0) -> bool:
+        """只发送数据，不等待响应。"""
+        with self._request_lock:
+            if not self._ensure_connection():
+                return False
+            conn = self.conn
+            assert conn is not None
+            original_timeout = conn.gettimeout()
+            try:
+                conn.settimeout(timeout)
+                conn.sendall(data)
+                log.info(f"TX (no response expected): {bytes_to_spaced_hex(data)}")
+                if self._message_capture:
+                    self._message_capture.capture_tx(data)
+                return True
+            except OSError as exc:
+                log.error(f"TCP send failed: {exc}")
+                self.disconnect()
+                return False
+            finally:
+                if self.conn is conn:
+                    conn.settimeout(original_timeout)
+
+    def __enter__(self) -> "TcpClient":
+        if not self.connect():
+            raise ConnectionError(f"无法连接 {self.ip}:{self.port}")
         return self
 
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        """上下文管理器退出"""
+    def __exit__(self, exc_type: Any, exc_val: Any, exc_tb: Any) -> None:
         self.disconnect()

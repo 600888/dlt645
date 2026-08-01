@@ -1,6 +1,5 @@
-from ast import List
 from enum import Enum
-from typing import Union
+from typing import List, Optional, Union
 import datetime
 
 
@@ -22,7 +21,7 @@ class DataItem:
         data_format: str,
         value: Union[str, float, List] = 0,
         unit: str = "",
-        update_time: datetime.datetime = datetime.datetime.now(),
+        update_time: Optional[datetime.datetime] = None,
     ):
         """初始化 DataItem 实例。
 
@@ -44,7 +43,7 @@ class DataItem:
         self.data_format = data_format
         self.value = value
         self.unit = unit
-        self.update_time = update_time
+        self.update_time = update_time or datetime.datetime.now()
 
     def __repr__(self):
         """返回 DataItem 的字符串表示。

@@ -117,13 +117,19 @@ extend-exclude = '''
 python_version = "3.10"
 explicit_package_bases = true
 follow_imports = "skip"
-# 先对边界清晰的新模块建立严格基线；后续重构阶段逐步扩展到全部业务模块。
+# 对协议核心、传输边界和公共数据结构启用严格类型检查。
 files = [
     "src/common/env.py",
     "src/common/message_types.py",
     "src/model/validators.py",
+    "src/protocol/frame.py",
+    "src/protocol/protocol.py",
+    "src/transport/client/tcp_client.py",
+    "src/transport/client/rtu_client.py",
     "src/transport/client/async_tcp_client.py",
     "src/transport/client/async_rtu_client.py",
+    "src/transport/server/tcp_server.py",
+    "src/transport/server/rtu_server.py",
     "src/transport/server/async_tcp_server.py",
     "src/transport/server/async_rtu_server.py",
 ]

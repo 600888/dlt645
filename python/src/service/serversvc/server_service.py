@@ -9,7 +9,7 @@
 
 import struct
 from datetime import datetime
-from typing import Optional, Union, List
+from typing import Any, List, Optional, Union
 
 from ...common.transform import (
     bytes_to_spaced_hex,
@@ -20,7 +20,7 @@ from ...common.transform import (
     bcd_to_string,
     bcd_to_byte,
 )
-from ...model.data.data_handler import set_data_item, get_data_item
+from ...model.data.data_handler import clone_data_map, get_data_item, set_data_item
 from ...model.types.data_type import DataItem
 from ...model.validators import validate_device
 from ...model.types.dlt645_type import (
@@ -59,8 +59,8 @@ class MeterServerService:
     def __init__(
         self,
         server: Union[TcpServer, RtuServer],
-        address: Optional[bytearray] = bytearray([0x00, 0x00, 0x00, 0x00, 0x00, 0x00]),
-        password_manager: Optional[PasswordManager] = PasswordManager(),
+        address: Optional[bytearray] = None,
+        password_manager: Optional[PasswordManager] = None,
     ):
         """初始化电表服务端服务。
 
@@ -72,8 +72,9 @@ class MeterServerService:
         :type password_manager: Optional[PasswordManager]
         """
         self.server = server
-        self.address = address
-        self.password_manager = password_manager
+        self.address = bytearray(address if address is not None else bytes(6))
+        self.password_manager = password_manager or PasswordManager()
+        self.data_map = clone_data_map()
         self.clear_meter_event_records = []  # 记录电表清零事件
         self.event_records = []  # 记录事件
         # 当前表内时钟（广播校时后更新）
@@ -166,26 +167,29 @@ class MeterServerService:
         except ValueError as e:
             log.error(f"广播校时时间无效: {e}")
 
-    def set_address(self, address: str):
+    def set_address(self, address: Union[str, bytes, bytearray]) -> bool:
         """写通讯地址
 
         :param address:
         :return:
         """
-        address = string_to_bcd(address)
-        if len(address) != ADDRESS_LEN:
+        encoded = string_to_bcd(address) if isinstance(address, str) else bytearray(address)
+        if len(encoded) != ADDRESS_LEN:
             raise ValueError("invalid address length")
-        self.address = address
+        self.address = bytearray(encoded)
+        return True
 
-    def set_password(self, password: str) -> None:
+    def set_password(self, password: str) -> bool:
         """写密码
 
         :param password:
         :return:
         """
         password = string_to_bcd(password)
-        self.password_manager.set_password(password)
+        if not self.password_manager.set_password(password):
+            return False
         log.info(f"设置密码: {bytes_to_spaced_hex(password)}")
+        return True
 
     def set_00(self, di: int, value: float) -> bool:
         """写电能量
@@ -194,7 +198,7 @@ class MeterServerService:
         :param value: 值
         :return:
         """
-        ok = set_data_item(di, value)
+        ok = set_data_item(di, value, self.data_map)
         if not ok:
             log.error("写电能量失败")
         return ok
@@ -206,7 +210,7 @@ class MeterServerService:
         :param demand: 值
         :return:
         """
-        ok = set_data_item(di, demand)
+        ok = set_data_item(di, demand, self.data_map)
         if not ok:
             log.error("写最大需量及发生时间失败")
         return ok
@@ -218,12 +222,12 @@ class MeterServerService:
         :param value: 值
         :return:
         """
-        data_item = get_data_item(di)
+        data_item = get_data_item(di, self.data_map)
         if data_item is None:
             log.error("获取变量数据项失败")
             return False
 
-        ok = set_data_item(di, value)
+        ok = set_data_item(di, value, self.data_map)
         if not ok:
             log.error("写变量失败")
             return False
@@ -236,12 +240,12 @@ class MeterServerService:
         :param value: 值
         :return:
         """
-        data_item = get_data_item(di)
+        data_item = get_data_item(di, self.data_map)
         if data_item is None:
             log.error("获取事件记录数据项失败")
             return False
 
-        if not set_data_item(di, value):
+        if not set_data_item(di, value, self.data_map):
             log.error("写事件记录失败")
             return False
         return True
@@ -253,12 +257,12 @@ class MeterServerService:
         :param value: 值
         :return:
         """
-        data_item = get_data_item(di)
+        data_item = get_data_item(di, self.data_map)
         if data_item is None:
             log.error("获取参变量数据项失败")
             return False
 
-        if not set_data_item(di, value):
+        if not set_data_item(di, value, self.data_map):
             log.error("写参变量失败")
             return False
         return True
@@ -269,7 +273,7 @@ class MeterServerService:
         :param di: 数据项
         :return:
         """
-        return get_data_item(di)
+        return get_data_item(di, self.data_map)
 
     def _check_password_with_level(self, password: bytearray, max_level: int) -> bool:
         """校验密码是否匹配且权限级别满足要求。
@@ -295,9 +299,7 @@ class MeterServerService:
         发生时间、冻结量、事件记录、负荷记录等累计数据；
         运行变量（0x02 当前电压/电流/功率等瞬时量）不属于清零范围。
         """
-        from ...model.data.define import DIMap
-
-        for di, item in DIMap.items():
+        for di, item in self.data_map.items():
             di3 = (di >> 24) & 0xFF  # DI 高字节为数据分类
             if di3 not in (0x00, 0x01, 0x05):  # 电能/需量/冻结量
                 continue
@@ -319,9 +321,7 @@ class MeterServerService:
         :param di: 数据标识，FFFFFFFF 表示事件总清零。
         :type di: int
         """
-        from ...model.data.define import DIMap
-
-        for d, item in DIMap.items():
+        for d, item in self.data_map.items():
             di3 = (d >> 24) & 0xFF
             if di3 != 0x03:  # 事件记录
                 continue
@@ -354,10 +354,8 @@ class MeterServerService:
         :param operator_code: 操作者代码（4字节）。
         :type operator_code: bytearray
         """
-        from ...model.data.define import DIMap
-
         # 事件清零总次数（0x03300200）加 1
-        total = DIMap.get(0x03300200)
+        total = self.data_map.get(0x03300200)
         if total is not None:
             if isinstance(total, list):
                 total = total[0]
@@ -367,7 +365,7 @@ class MeterServerService:
             except (ValueError, TypeError):
                 log.warning("事件清零总次数解析失败，跳过")
         # 上1次事件清零记录（0x03300201）：更新发生时刻与操作者代码
-        record = DIMap.get(0x03300201)
+        record = self.data_map.get(0x03300201)
         if isinstance(record, list):
             for item in record:
                 if "发生时刻" in item.name:
@@ -434,7 +432,7 @@ class MeterServerService:
                     res_data = bytearray(8)
                     # 解析数据标识为 32 位无符号整数
                     data_id = struct.unpack("<I", frame.data[:DI_LEN])[0]
-                    data_item = get_data_item(data_id)
+                    data_item = get_data_item(data_id, self.data_map)
                     if data_item is None:
                         log.error(f"数据项未找到: {data_id}")
                         return self._build_error_response(
@@ -452,7 +450,7 @@ class MeterServerService:
                     res_data = bytearray(12)
                     # 解析数据标识为 32 位无符号整数
                     data_id = struct.unpack("<I", frame.data[:DI_LEN])[0]
-                    data_item = get_data_item(data_id)
+                    data_item = get_data_item(data_id, self.data_map)
                     if data_item is None:
                         log.error(f"数据项未找到: {data_id}")
                         return self._build_error_response(
@@ -473,7 +471,7 @@ class MeterServerService:
                 elif di3 == 0x02:  # 读变量
                     # 解析数据标识为 32 位无符号整数
                     data_id = struct.unpack("<I", frame.data[:DI_LEN])[0]
-                    data_item = get_data_item(data_id)
+                    data_item = get_data_item(data_id, self.data_map)
                     if data_item is None:
                         log.error(f"数据项未找到: {data_id}")
                         return self._build_error_response(
@@ -497,7 +495,9 @@ class MeterServerService:
                 elif di3 == 0x03:  # 读事件记录
                     # 解析数据标识为 32 位无符号整数
                     data_id = struct.unpack("<I", frame.data[:DI_LEN])[0]
-                    data_item: Optional[List[DataItem]] = get_data_item(data_id)
+                    data_item: Optional[List[DataItem]] = get_data_item(
+                        data_id, self.data_map
+                    )
                     if data_item is None:
                         log.error(f"数据项未找到: {data_id}")
                         return self._build_error_response(
@@ -524,7 +524,7 @@ class MeterServerService:
                 elif di3 == 0x04:  # 读参变量
                     # 解析数据标识为 32 位无符号整数
                     data_id = struct.unpack("<I", frame.data[:DI_LEN])[0]
-                    data_item = get_data_item(data_id)
+                    data_item = get_data_item(data_id, self.data_map)
                     if data_item is None:
                         log.error(f"数据项未找到: {data_id}")
                         return self._build_error_response(
@@ -581,7 +581,7 @@ class MeterServerService:
                 log.debug(f"收到写数据请求: {bytes_to_spaced_hex(frame.data)}")
                 # 解析数据标识为 32 位无符号整数
                 data_id = struct.unpack("<I", frame.data[:DI_LEN])[0]
-                data_item = get_data_item(data_id)
+                data_item = get_data_item(data_id, self.data_map)
                 if data_item is None:
                     log.error(f"数据项未找到: {data_id}")
                     return self._build_error_response(
@@ -613,7 +613,7 @@ class MeterServerService:
                 ]
                 # 解析数据
                 value = bcd_to_value(data, data_item.data_format, "little")
-                if not set_data_item(data_id, value):
+                if not set_data_item(data_id, value, self.data_map):
                     log.error(f"设置数据项 {data_id} 失败")
                     return self._build_error_response(
                         frame, error_code=ErrorCode.OtherError
@@ -671,7 +671,7 @@ class MeterServerService:
                     return self._build_error_response(
                         frame, error_code=ErrorCode.OtherError
                     )
-                data_item = get_data_item(data_id)
+                data_item = get_data_item(data_id, self.data_map)
                 if data_item is None:
                     log.error(f"数据项未找到: {data_id}")
                     return self._build_error_response(
@@ -688,7 +688,7 @@ class MeterServerService:
 
                 # 执行需量清零：将需量值设为0，时间设为当前时间
                 cleared_demand = Demand(0.0, datetime.now())
-                if not set_data_item(data_id, cleared_demand):
+                if not set_data_item(data_id, cleared_demand, self.data_map):
                     log.error(f"需量清零失败: {data_id}")
                     return self._build_error_response(
                         frame, error_code=ErrorCode.OtherError
@@ -789,6 +789,24 @@ class MeterServerService:
         return DLT645Protocol.build_frame(  # D7=1, D6=1表示异常响应, C=1100
             frame.addr, frame.ctrl_code | 0xC0, error_data
         )
+
+    def start(self) -> bool:
+        """启动底层服务端。"""
+        return bool(self.server.start())
+
+    def stop(self) -> bool:
+        """停止底层服务端。"""
+        return bool(self.server.stop())
+
+    close = stop
+
+    def __enter__(self) -> "MeterServerService":
+        if not self.start():
+            raise OSError("无法启动 DLT645 服务端")
+        return self
+
+    def __exit__(self, exc_type: Any, exc_val: Any, exc_tb: Any) -> None:
+        self.stop()
 
     # ==================== 报文捕获方法 ====================
 

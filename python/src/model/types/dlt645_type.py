@@ -265,7 +265,7 @@ class PasswordManager:
         if not self.is_password_valid(password):
             return False
         level = password[0]
-        self._password_map[level] = password
+        self._password_map[level] = bytearray(password)
         log.debug(f"设置密码成功，级别：{level}, 密码：{bytes_to_spaced_hex(password)}")
         return True
 
@@ -277,7 +277,7 @@ class PasswordManager:
         :return: 密码字节数组，如果级别不存在则返回全零密码。
         :rtype: bytearray
         """
-        return self._password_map.get(level, bytearray(PASSWORD_LEN))
+        return bytearray(self._password_map.get(level, bytearray(PASSWORD_LEN)))
 
     def check_password(self, password: bytearray) -> bool:
         """验证密码是否正确。
@@ -308,11 +308,13 @@ class PasswordManager:
         log.debug(
             f"尝试修改密码，旧密码：{bytes_to_spaced_hex(old_password)}, 新密码：{bytes_to_spaced_hex(new_password)}"
         )
+        if not self.is_password_valid(old_password) or not self.is_password_valid(
+            new_password
+        ):
+            return False
         # 新密码权限
         new_level = new_password[0]
         old_level = old_password[0]
-        if not self.is_password_valid(new_password):
-            return False
 
         if old_password != self.get_password(old_level):
             log.error(f"旧密码错误，旧密码：{bytes_to_spaced_hex(old_password)}")

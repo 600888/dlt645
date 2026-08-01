@@ -4,6 +4,7 @@
 """
 
 import struct
+from typing import Optional
 from ..model.data.define import DIMap
 from ..model.types.dlt645_type import CtrlCode, ErrorCode, get_error_msg
 
@@ -37,12 +38,12 @@ class Frame:
 
     def __init__(
         self,
-        preamble: bytearray = bytearray(),
+        preamble: Optional[bytes] = None,
         start_flag: int = 0,
-        addr: bytearray = bytearray(),
+        addr: Optional[bytes] = None,
         ctrl_code: int = 0,
         data_len: int = 0,
-        data: bytearray = bytearray(),
+        data: Optional[bytes] = None,
         check_sum: int = 0,
         end_flag: int = 0,
     ):
@@ -65,16 +66,16 @@ class Frame:
         :param end_flag: 结束标志，默认为 0。
         :type end_flag: int
         """
-        self.preamble = preamble if preamble is not None else bytearray()
+        self.preamble = bytearray(preamble or b"")
         self.start_flag = start_flag
-        self.addr = addr if addr is not None else bytearray([0] * 6)
+        self.addr = bytearray(addr if addr is not None else bytes(6))
         self.ctrl_code = ctrl_code
         self.data_len = data_len
-        self.data = data if data is not None else bytearray()
+        self.data = bytearray(data or b"")
         self.check_sum = check_sum
         self.end_flag = end_flag
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """返回 Frame 的字符串表示。
 
         :return: 格式化的帧信息字符串。

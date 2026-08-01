@@ -10,10 +10,9 @@
 - 密码管理
 """
 
-from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
 import struct
-from typing import Optional, Union
+from typing import Any, List, Optional, Union
 
 from ...common.transform import (
     bcd_to_float,
@@ -49,7 +48,6 @@ from ...transport.client.rtu_client import RtuClient
 from ...transport.client.tcp_client import TcpClient
 from ...common.message_capture import MessageCapture
 from ...common.message_types import MessageRecord, MessagePair
-from typing import List
 
 
 class MeterClientService:
@@ -73,12 +71,12 @@ class MeterClientService:
         self.password_manager: PasswordManager = PasswordManager()  # 4字节密码
         self.operation_code = bytearray(4)  # 4字节操作码
         self.client = client
-        self._executor = ThreadPoolExecutor(max_workers=1)  # 用于超时控制
+        self.data_map = data.clone_data_map()
 
     @classmethod
     def new_tcp_client(
         cls, ip: str, port: int, timeout: float = 30.0
-    ) -> Optional["MeterClientService"]:
+    ) -> "MeterClientService":
         """创建TCP客户端"""
         tcp_client = TcpClient(ip=ip, port=port, timeout=timeout)
 
@@ -94,7 +92,7 @@ class MeterClientService:
         stopbits: int,
         parity: str,
         timeout: float,
-    ) -> Optional["MeterClientService"]:
+    ) -> "MeterClientService":
         """创建RTU客户端"""
         rtu_client = RtuClient(
             port=port,
@@ -111,7 +109,7 @@ class MeterClientService:
     @classmethod
     def new_meter_client_service(
         cls, client: Union[TcpClient, RtuClient]
-    ) -> Optional["MeterClientService"]:
+    ) -> "MeterClientService":
         """创建新的MeterService实例"""
         service = cls(client)
         return service
@@ -136,7 +134,8 @@ class MeterClientService:
     def set_password(self, password: str) -> bool:
         """设置设备密码, 修改数据的命令会带上密码发送出去"""
         password = string_to_bcd(password)
-        self.password_manager.set_password(password)
+        if not self.password_manager.set_password(password):
+            return False
         log.info(f"设置客户端密码: {bytes_to_spaced_hex(password)}")
         return True
 
@@ -216,20 +215,31 @@ class MeterClientService:
         # 读取通讯地址需要使用特殊的广播地址0xAAAAAAAAAAAA
         broadcast_address = bytearray([0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA])
         frame_bytes = DLT645Protocol.build_frame(
-            broadcast_address, CtrlCode.ReadAddress, None
+            broadcast_address, CtrlCode.ReadAddress, b""
         )
         return self.send_and_handle_request(frame_bytes)
 
-    def write_address(self, new_address: bytes) -> Optional[DataItem]:
+    def write_address(
+        self, new_address: Union[str, bytes, bytearray]
+    ) -> Optional[DataItem]:
         """写通讯地址"""
-        if len(new_address) != ADDRESS_LEN:
+        encoded = (
+            string_to_bcd(new_address)
+            if isinstance(new_address, str)
+            else bytearray(new_address)
+        )
+        if len(encoded) != ADDRESS_LEN:
             log.error("无效的新地址长度")
             return None
 
         frame_bytes = DLT645Protocol.build_frame(
-            self.address, CtrlCode.WriteAddress, new_address
+            self.address, CtrlCode.WriteAddress, encoded
         )
-        return self.send_and_handle_request(frame_bytes)
+        result = self.send_and_handle_request(frame_bytes)
+        if result is not None:
+            self.address = bytearray(encoded)
+            result.value = bcd_to_string(encoded)
+        return result
 
     def broadcast_time_sync(self, dt: Optional[datetime] = None) -> bool:
         """广播校时命令（C=08H，数据域YYMMDDhhmmss）。
@@ -540,7 +550,7 @@ class MeterClientService:
 
                 if di3 == 0x00:  # 读取电能响应
                     log.debug(f"读取电能响应: {bytes_to_spaced_hex(frame.data)}")
-                    data_item = data.get_data_item(bytes_to_int(di))
+                    data_item = data.get_data_item(bytes_to_int(di), self.data_map)
                     if not data_item:
                         log.error("获取电能数据项失败")
                         return None
@@ -553,7 +563,7 @@ class MeterClientService:
                     log.debug(
                         f"读取最大需量及发生时间响应: {bytes_to_spaced_hex(frame.data)}"
                     )
-                    data_item = data.get_data_item(bytes_to_int(di))
+                    data_item = data.get_data_item(bytes_to_int(di), self.data_map)
                     if not data_item:
                         log.error("获取最大需量数据项失败")
                         return None
@@ -570,7 +580,7 @@ class MeterClientService:
                     return data_item
 
                 elif di3 == 0x02:
-                    data_item = data.get_data_item(bytes_to_int(di))
+                    data_item = data.get_data_item(bytes_to_int(di), self.data_map)
                     if not data_item:
                         log.error("获取变量数据项失败")
                         return None
@@ -580,7 +590,7 @@ class MeterClientService:
                     return data_item
                 elif di3 == 0x03:
                     log.debug(f"读取事件记录响应: {bytes_to_spaced_hex(frame.data)}")
-                    data_item = data.get_data_item(bytes_to_int(di))
+                    data_item = data.get_data_item(bytes_to_int(di), self.data_map)
                     if not data_item:
                         log.error("获取事件记录数据项失败")
                         return None
@@ -606,7 +616,7 @@ class MeterClientService:
                     return data_item
                 elif di3 == 0x04:  # 读参变量响应
                     log.debug(f"读取参变量响应: {bytes_to_spaced_hex(frame.data)}")
-                    data_item = data.get_data_item(bytes_to_int(di))
+                    data_item = data.get_data_item(bytes_to_int(di), self.data_map)
                     if not data_item:
                         log.error("获取参变量数据项失败")
                         return None
@@ -724,6 +734,24 @@ class MeterClientService:
         except Exception as e:
             log.error(f"处理响应帧时出错: {e}")
             raise
+
+    def connect(self) -> bool:
+        """建立底层连接。"""
+        return self.client.connect()
+
+    def disconnect(self) -> bool:
+        """关闭底层连接。"""
+        return self.client.disconnect()
+
+    close = disconnect
+
+    def __enter__(self) -> "MeterClientService":
+        if not self.connect():
+            raise ConnectionError("无法建立 DLT645 客户端连接")
+        return self
+
+    def __exit__(self, exc_type: Any, exc_val: Any, exc_tb: Any) -> None:
+        self.disconnect()
 
     # ==================== 报文捕获方法 ====================
 

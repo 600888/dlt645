@@ -1,9 +1,8 @@
 """DLT645 异步服务端业务服务。"""
 
+from typing import Any
+
 from ...service.serversvc.server_service import MeterServerService
-from ...model.types.dlt645_type import ADDRESS_LEN, CtrlCode, ErrorCode, PasswordManager
-from ...model.validators import validate_device
-from ...protocol.protocol import DLT645Protocol
 from ...transport.server.async_rtu_server import AsyncRtuServer
 from ...transport.server.async_tcp_server import AsyncTcpServer
 
@@ -11,26 +10,8 @@ from ...transport.server.async_tcp_server import AsyncTcpServer
 class AsyncMeterServerService(MeterServerService):
     """复用现有命令处理逻辑、使用异步传输层的电表服务。"""
 
-    def __init__(self, server):
-        # 避免沿用同步类构造函数中的可变默认参数，同时不修改同步实现。
-        super().__init__(
-            server,
-            address=bytearray([0x00] * 6),
-            password_manager=PasswordManager(),
-        )
-
-    def handle_request(self, frame):
-        """处理请求，并修正异步写地址路径中的字节地址赋值。"""
-        if frame.ctrl_code != CtrlCode.WriteAddress:
-            return super().handle_request(frame)
-        if not validate_device(self.address, frame.ctrl_code, frame.addr):
-            return self._build_error_response(frame, ErrorCode.OtherError)
-        if len(frame.data) < ADDRESS_LEN:
-            return self._build_error_response(frame, ErrorCode.RequestDataEmpty)
-        self.address = bytearray(frame.data[:ADDRESS_LEN])
-        return DLT645Protocol.build_frame(
-            bytes(self.address), frame.ctrl_code | 0x80, b""
-        )
+    def __init__(self, server: Any) -> None:
+        super().__init__(server)
 
     @classmethod
     def new_tcp_server(
@@ -73,10 +54,14 @@ class AsyncMeterServerService(MeterServerService):
     async def stop(self) -> bool:
         return await self.server.stop()
 
-    async def __aenter__(self):
+    close = stop
+
+    async def __aenter__(self) -> "AsyncMeterServerService":
         if not await self.start():
             raise OSError("无法启动异步 DLT645 服务端")
         return self
 
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(
+        self, exc_type: Any, exc_val: Any, exc_tb: Any
+    ) -> None:
         await self.stop()

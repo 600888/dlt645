@@ -90,13 +90,24 @@ class AsyncTcpClient:
     async def send_request(
         self,
         data: bytes,
-        write_timeout: float = 2.0,
-        read_timeout: float = 5.0,
-        total_timeout: float = 10.0,
+        write_timeout: Optional[float] = None,
+        read_timeout: Optional[float] = None,
+        total_timeout: Optional[float] = None,
         min_response_len: int = 1,
         retries: int = 1,
     ) -> Optional[bytes]:
         """发送请求并异步等待一个完整响应帧。"""
+        effective_write_timeout = self.timeout if write_timeout is None else write_timeout
+        effective_read_timeout = self.timeout if read_timeout is None else read_timeout
+        effective_total_timeout = self.timeout if total_timeout is None else total_timeout
+        if min(
+            effective_write_timeout,
+            effective_read_timeout,
+            effective_total_timeout,
+        ) <= 0:
+            raise ValueError("timeout must be greater than zero")
+        if retries < 0:
+            raise ValueError("retries cannot be negative")
         async with self._request_lock:
             for attempt in range(retries + 1):
                 if not await self._ensure_connection():
@@ -109,13 +120,15 @@ class AsyncTcpClient:
                     assert self.writer is not None
                     assert self.reader is not None
                     self.writer.write(data)
-                    await asyncio.wait_for(self.writer.drain(), write_timeout)
+                    await asyncio.wait_for(
+                        self.writer.drain(), effective_write_timeout
+                    )
                     log.info(f"TX: {bytes_to_spaced_hex(data)}")
                     if self._message_capture:
                         current_tx_id = self._message_capture.capture_tx(data)
 
                     loop = asyncio.get_running_loop()
-                    deadline = loop.time() + total_timeout
+                    deadline = loop.time() + effective_total_timeout
                     while True:
                         response = self._take_complete_frame()
                         if response is not None:
@@ -132,7 +145,7 @@ class AsyncTcpClient:
                         try:
                             chunk = await asyncio.wait_for(
                                 self.reader.read(1024),
-                                min(read_timeout, remaining_time),
+                                min(effective_read_timeout, remaining_time),
                             )
                         except asyncio.TimeoutError:
                             # 单次读取超时不等于整个请求超时，继续等到总期限。
@@ -147,7 +160,9 @@ class AsyncTcpClient:
                     if len(self._read_buffer) >= min_response_len:
                         log.warning("异步 TCP 响应不完整")
                     else:
-                        log.error(f"异步 TCP 请求在 {total_timeout}s 内无响应")
+                        log.error(
+                            f"异步 TCP 请求在 {effective_total_timeout}s 内无响应"
+                        )
                 except asyncio.CancelledError:
                     raise
                 except (OSError, ConnectionError, asyncio.TimeoutError) as exc:

@@ -118,6 +118,8 @@ class AsyncRtuClient:
         return None
 
     async def send_request(self, data: bytes, retries: int = 1) -> Optional[bytes]:
+        if retries < 0:
+            raise ValueError("retries cannot be negative")
         async with self._request_lock:
             for attempt in range(retries + 1):
                 if not await self._ensure_connection():
@@ -135,6 +137,8 @@ class AsyncRtuClient:
                     if self._message_capture:
                         current_tx_id = self._message_capture.capture_tx(data)
 
+                    loop = asyncio.get_running_loop()
+                    deadline = loop.time() + self.timeout
                     while True:
                         response = self._take_complete_frame()
                         if response is not None:
@@ -144,8 +148,11 @@ class AsyncRtuClient:
                                     response, current_tx_id
                                 )
                             return response
+                        remaining_time = deadline - loop.time()
+                        if remaining_time <= 0:
+                            raise asyncio.TimeoutError
                         chunk = await asyncio.wait_for(
-                            self.reader.read(256), self.timeout
+                            self.reader.read(256), remaining_time
                         )
                         if not chunk:
                             raise ConnectionError("串口流已关闭")
