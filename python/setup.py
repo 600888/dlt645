@@ -37,6 +37,9 @@ setup(
     
     # 可选依赖
     extras_require={
+        "async": [
+            "pyserial-asyncio>=0.6",
+        ],
         "dev": [
             "pytest>=6.0",
             "pytest-cov>=2.0",

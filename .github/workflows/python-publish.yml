@@ -54,7 +54,7 @@ jobs:
 
       - name: Run tests
         run: |
-          uv run python -m unittest test.test_basic test.test_new_commands test.test_log_control test.test_logging_config
+          uv run python -m unittest test.test_basic test.test_new_commands test.test_log_control test.test_logging_config test.test_async
 
       - name: Show derived version
         run: |

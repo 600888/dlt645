@@ -29,6 +29,7 @@ classifiers = [
 dependencies = ["loguru>=0.7.0", "pyserial>=3.5"]
 
 [project.optional-dependencies]
+async = ["pyserial-asyncio>=0.6"]
 dev = [
     "pytest>=6.0",
     "pytest-cov>=2.0",
