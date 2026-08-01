@@ -1,7 +1,6 @@
 include README.md
 include pyproject.toml
 include setup.py
-recursive-include config *.json
 recursive-include src *.py
 recursive-include test *.py
 global-exclude *.pyc

@@ -1,3 +1,1 @@
-import sys
-
-sys.path.append("..")
+"""dlt645 测试包。"""

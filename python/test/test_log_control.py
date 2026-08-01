@@ -7,9 +7,8 @@ import sys
 
 sys.path.append("..")
 import unittest
-import time
 import os
-from src.common.base_log import Log, disable_logging
+from dlt645.common.base_log import Log, disable_logging
 
 
 class TestLogControl(unittest.TestCase):
@@ -22,7 +21,7 @@ class TestLogControl(unittest.TestCase):
 
     def tearDown(self):
         """清理全局日志状态，避免影响其他测试"""
-        from src.common import base_log
+        from dlt645.common import base_log
         with base_log._lock:
             for key in base_log._settings:
                 if key != "enabled":

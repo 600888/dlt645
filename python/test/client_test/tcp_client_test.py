@@ -1,13 +1,12 @@
 import sys
-import time
 
 sys.path.append("../..")
-from src.service.clientsvc.client_service import MeterClientService
+from dlt645.service.clientsvc.client_service import MeterClientService
 
 # 日志设置
-from src.transport.client.log import log as client_log
-from src.service.clientsvc.log import log as client_svc_log
-from src.protocol.log import log as protocol_log
+from dlt645.transport.client.log import log as client_log
+from dlt645.service.clientsvc.log import log as client_svc_log
+from dlt645.protocol.log import log as protocol_log
 
 client_log.set_config(
     filename="log/client.log",

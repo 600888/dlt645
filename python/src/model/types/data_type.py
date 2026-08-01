@@ -2,7 +2,6 @@ from ast import List
 from enum import Enum
 from typing import Union
 import datetime
-from ...model.log import log
 
 
 class DataItem:

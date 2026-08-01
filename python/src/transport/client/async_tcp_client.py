@@ -1,7 +1,7 @@
 """基于 :mod:`asyncio` 的 DLT645 TCP 客户端。"""
 
 import asyncio
-from typing import Optional
+from typing import Any, Optional
 
 from ...common.message_capture import MessageCapture
 from ...common.transform import bytes_to_spaced_hex
@@ -180,10 +180,10 @@ class AsyncTcpClient:
                 await self.disconnect()
                 return False
 
-    async def __aenter__(self):
+    async def __aenter__(self) -> "AsyncTcpClient":
         if not await self.connect():
             raise ConnectionError(f"无法连接 {self.ip}:{self.port}")
         return self
 
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type: Any, exc_val: Any, exc_tb: Any) -> None:
         await self.disconnect()

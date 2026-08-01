@@ -8,7 +8,13 @@
 - 实时报文捕获功能
 """
 
-__version__ = "1.0.0"
+from importlib.metadata import PackageNotFoundError, version
+
+try:
+    __version__ = version("dlt645")
+except PackageNotFoundError:
+    # 源码目录尚未安装时保留可预测的开发版本。
+    __version__ = "0.0.0"
 __author__ = "Chen Dongyu"
 __email__ = "1755696012@qq.com"
 

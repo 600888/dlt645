@@ -116,7 +116,7 @@ class RtuServer:
                 try:
                     self.conn.close()
                     self.conn = None
-                except:
+                except OSError:
                     pass
             log.info("RTU server stopped")
 
@@ -153,7 +153,9 @@ class RtuServer:
         """检查服务器是否正在运行"""
         return self._running
 
-    def _check_timeout(self, last_data_time: float) -> bool:
+    def _check_timeout(
+        self, last_data_time: float, data_buffer: bytearray
+    ) -> bool:
         """检查是否超时"""
         current_time = time.time()
         if current_time - last_data_time > self.timeout:
@@ -199,7 +201,9 @@ class RtuServer:
                 # 使用较短的超时，以便定期检查停止信号
                 try:
                     # 检查缓冲区超时 - 如果缓冲区有数据但超过timeout时间没有收到新数据，清空缓冲区
-                    if len(data_buffer) > 0 and self._check_timeout(last_data_time):
+                    if len(data_buffer) > 0 and self._check_timeout(
+                        last_data_time, data_buffer
+                    ):
                         data_buffer = bytearray()
                         continue
 

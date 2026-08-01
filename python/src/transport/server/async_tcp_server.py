@@ -2,7 +2,7 @@
 
 import asyncio
 import inspect
-from typing import Optional, Set
+from typing import Any, Optional, Set
 
 from ...common.message_capture import MessageCapture
 from ...common.transform import bytes_to_spaced_hex
@@ -13,7 +13,9 @@ from ...transport.server.log import log
 class AsyncTcpServer:
     """使用任务而非线程处理 TCP 连接的异步服务端。"""
 
-    def __init__(self, ip: str, port: int, timeout: float, service=None):
+    def __init__(
+        self, ip: str, port: int, timeout: float, service: Any = None
+    ) -> None:
         self.ip = ip
         self.port = port
         self.timeout = timeout
@@ -33,7 +35,7 @@ class AsyncTcpServer:
                 self.handle_connection, self.ip, self.port
             )
             self._running = True
-            sockets = self._server.sockets or []
+            sockets = list(self._server.sockets or [])
             if sockets and self.port == 0:
                 self.port = sockets[0].getsockname()[1]
             log.info(f"异步 TCP 服务端已启动 {self.ip}:{self.port}")
@@ -77,7 +79,7 @@ class AsyncTcpServer:
     def is_running(self) -> bool:
         return self._running
 
-    async def _dispatch(self, frame):
+    async def _dispatch(self, frame: Any) -> Any:
         if self.service is None:
             raise RuntimeError("异步 TCP 服务端未绑定业务服务")
         result = self.service.handle_request(frame)
@@ -162,10 +164,10 @@ class AsyncTcpServer:
                 self._client_tasks.discard(task)
             log.info(f"异步 TCP 连接已关闭: {peer}")
 
-    async def __aenter__(self):
+    async def __aenter__(self) -> "AsyncTcpServer":
         if not await self.start():
             raise OSError(f"无法监听 {self.ip}:{self.port}")
         return self
 
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type: Any, exc_val: Any, exc_tb: Any) -> None:
         await self.stop()

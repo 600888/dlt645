@@ -11,13 +11,10 @@ sys.modules['serial'] = MagicMock()
 # Ensure src is in path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from src.protocol.frame import Frame
-from src.model.types.dlt645_type import CtrlCode, ErrorCode
-from src.model import init_energy_def
-from src.model.data.define import DIMap
+from dlt645.protocol.frame import Frame
+from dlt645.model.types.dlt645_type import CtrlCode
 # We need to make sure DIMap is populated. 
 # src.model.__init__ calls init_energy_def(EnergyTypes), but we might need to trigger it.
-import src.model 
 
 class TestFrameDescription(unittest.TestCase):
     def test_read_data_request(self):

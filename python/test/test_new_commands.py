@@ -24,9 +24,9 @@ from datetime import datetime
 python_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.insert(0, python_dir)
 
-from src.service.serversvc.server_service import MeterServerService
-from src.service.clientsvc.client_service import MeterClientService
-from src.model.types.dlt645_type import Demand
+from dlt645.service.serversvc.server_service import MeterServerService
+from dlt645.service.clientsvc.client_service import MeterClientService
+from dlt645.model.types.dlt645_type import Demand
 
 
 def get_free_port() -> int:

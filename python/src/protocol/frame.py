@@ -3,7 +3,6 @@
 本模块定义了 DLT645 协议帧的数据结构和相关常量。
 """
 
-from typing import List
 import struct
 from ..model.data.define import DIMap
 from ..model.types.dlt645_type import CtrlCode, ErrorCode, get_error_msg

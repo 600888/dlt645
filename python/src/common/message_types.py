@@ -35,7 +35,7 @@ class MessageRecord:
     hex_string: str = field(default="")
     pair_id: Optional[str] = field(default=None)
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         """初始化后处理，自动生成hex_string。"""
         if not self.hex_string and self.data:
             self.hex_string = bytes_to_spaced_hex(self.data)
@@ -92,7 +92,7 @@ class MessagePair:
     rx: Optional[MessageRecord] = field(default=None)
     round_trip_time: Optional[float] = field(default=None)
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         """初始化后处理，自动计算往返时间。"""
         self._update_round_trip_time()
 

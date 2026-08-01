@@ -17,8 +17,8 @@ project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, project_root)
 
 try:
-    from src.common.message_types import MessageRecord, MessagePair
-    from src.common.message_capture import MessageQueue, MessageCapture
+    from dlt645.common.message_types import MessageRecord, MessagePair
+    from dlt645.common.message_capture import MessageQueue, MessageCapture
 except ImportError as e:
     print(f"导入模块失败: {e}")
     print("请确保在dlt645/python目录中运行此脚本")

@@ -2,19 +2,20 @@
 
 import asyncio
 import importlib.util
+import sys
 import unittest
 from datetime import datetime
 
-from src.aio import (
+from dlt645.aio import (
     AsyncMeterClientService,
     AsyncMeterServerService,
     AsyncRtuClient,
     AsyncTcpClient,
 )
-from src.common.transform import string_to_bcd
-from src.model.types.dlt645_type import Demand
-from src.protocol.protocol import DLT645Protocol
-from src.model.types.dlt645_type import CtrlCode
+from dlt645.common.transform import string_to_bcd
+from dlt645.model.types.dlt645_type import Demand
+from dlt645.protocol.protocol import DLT645Protocol
+from dlt645.model.types.dlt645_type import CtrlCode
 
 
 class TestAsyncTcpIntegration(unittest.IsolatedAsyncioTestCase):
@@ -227,8 +228,9 @@ class TestAsyncRtuTransport(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(response_frame.ctrl_code, CtrlCode.ReadData | 0x80)
 
     @unittest.skipUnless(
-        importlib.util.find_spec("serial_asyncio") is not None,
-        "未安装 pyserial-asyncio 可选依赖",
+        importlib.util.find_spec("serial_asyncio") is not None
+        and sys.platform != "win32",
+        "需要 pyserial-asyncio，且 loop:// 事件循环测试不支持 Windows",
     )
     async def test_client_loopback(self):
         client = AsyncRtuClient("loop://", timeout=1.0)

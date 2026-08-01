@@ -3,8 +3,8 @@ import time
 from datetime import datetime
 
 sys.path.append("../..")
-from src.service.serversvc.server_service import MeterServerService
-from src.model.types.dlt645_type import Demand
+from dlt645.service.serversvc.server_service import MeterServerService
+from dlt645.model.types.dlt645_type import Demand
 
 if __name__ == "__main__":
     dlt645_svc = MeterServerService.new_rtu_server(

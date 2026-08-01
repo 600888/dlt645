@@ -183,10 +183,10 @@ class AsyncRtuClient:
                 log.error(f"异步 RTU 只发送失败: {exc}")
                 return False
 
-    async def __aenter__(self):
+    async def __aenter__(self) -> "AsyncRtuClient":
         if not await self.connect():
             raise ConnectionError(f"无法打开串口 {self.port}")
         return self
 
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type: Any, exc_val: Any, exc_tb: Any) -> None:
         await self.disconnect()

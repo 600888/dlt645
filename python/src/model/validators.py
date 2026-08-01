@@ -3,7 +3,7 @@
 本模块提供设备地址验证功能。
 """
 
-from .types.dlt645_type import CtrlCode, PASSWORD_LEN
+from .types.dlt645_type import CtrlCode
 
 
 def validate_device(address: bytearray, ctrl_code: CtrlCode, addr: bytes) -> bool:

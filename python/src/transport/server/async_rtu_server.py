@@ -23,8 +23,8 @@ class AsyncRtuServer:
         baud_rate: int = 9600,
         parity: str = serial.PARITY_NONE,
         timeout: float = 5.0,
-        service=None,
-    ):
+        service: Any = None,
+    ) -> None:
         self.port = port
         self.data_bits = data_bits
         self.stop_bits = stop_bits
@@ -34,7 +34,7 @@ class AsyncRtuServer:
         self.service = service
         self.reader: Optional[asyncio.StreamReader] = None
         self.writer: Optional[Any] = None
-        self._task: Optional[asyncio.Task] = None
+        self._task: Optional[asyncio.Task[Any]] = None
         self._running = False
         self._message_capture: Optional[MessageCapture] = None
 
@@ -91,7 +91,7 @@ class AsyncRtuServer:
     def is_running(self) -> bool:
         return self._running
 
-    async def _dispatch(self, frame):
+    async def _dispatch(self, frame: Any) -> Any:
         if self.service is None:
             raise RuntimeError("异步 RTU 服务端未绑定业务服务")
         response = self.service.handle_request(frame)
@@ -156,10 +156,10 @@ class AsyncRtuServer:
         finally:
             self._running = False
 
-    async def __aenter__(self):
+    async def __aenter__(self) -> "AsyncRtuServer":
         if not await self.start():
             raise OSError(f"无法打开串口 {self.port}")
         return self
 
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type: Any, exc_val: Any, exc_tb: Any) -> None:
         await self.stop()

@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=45", "wheel", "setuptools-scm"]
+requires = ["setuptools>=77", "wheel", "setuptools-scm"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -7,8 +7,8 @@ name = "dlt645"
 dynamic = ["version"]
 description = "DLT645协议Python实现库"
 readme = "README.md"
-requires-python = ">=3.9"
-license = { text = "Apache License 2.0" }
+requires-python = ">=3.10"
+license = "Apache-2.0"
 authors = [{ name = "Chen Dongyu", email = "1755696012@qq.com" }]
 maintainers = [{ name = "Chen Dongyu", email = "1755696012@qq.com" }]
 keywords = ["dlt645", "protocol", "communication", "energy", "meter"]
@@ -18,12 +18,10 @@ classifiers = [
     "Topic :: Communications",
     "Topic :: Software Development :: Libraries :: Python Modules",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
-    "License :: OSI Approved :: Apache Software License",
     "Operating System :: OS Independent",
 ]
 dependencies = ["loguru>=0.7.0", "pyserial>=3.5"]
@@ -36,6 +34,7 @@ dev = [
     "black>=21.0",
     "flake8>=3.8",
     "mypy>=0.800",
+    "ruff>=0.6",
 ]
 
 # uv 依赖组（uv sync --group docs）
@@ -55,7 +54,22 @@ Changelog = "https://gitee.com/chen-dongyu123/dlt645/blob/main/python/CHANGELOG.
 Documentation = "https://gitee.com/chen-dongyu123/dlt645/wiki"
 
 [tool.setuptools]
-packages = ["dlt645"]
+packages = [
+    "dlt645",
+    "dlt645.common",
+    "dlt645.config",
+    "dlt645.model",
+    "dlt645.model.data",
+    "dlt645.model.data.define",
+    "dlt645.model.types",
+    "dlt645.protocol",
+    "dlt645.service",
+    "dlt645.service.clientsvc",
+    "dlt645.service.serversvc",
+    "dlt645.transport",
+    "dlt645.transport.client",
+    "dlt645.transport.server",
+]
 package-dir = { "dlt645" = "src" }
 include-package-data = true
 
@@ -66,9 +80,6 @@ fallback_version = "0.0.0"
 # pyproject.toml 位于 python/ 子目录，git 仓库根在上级目录
 root = ".."
 
-[tool.setuptools.package-data]
-"dlt645" = ["config/*.json"]
-
 [tool.pytest.ini_options]
 testpaths = ["test"]
 python_files = ["test_*.py", "*_test.py"]
@@ -78,7 +89,7 @@ addopts = [
     "-v",
     "--strict-markers",
     "--strict-config",
-    "--cov=src",
+    "--cov=dlt645",
     "--cov-report=term-missing:skip-covered",
     "--cov-report=html:htmlcov",
     "--cov-report=xml",
@@ -86,7 +97,7 @@ addopts = [
 
 [tool.black]
 line-length = 88
-target-version = ["py39", "py310", "py311", "py312", "py313"]
+target-version = ["py310", "py311", "py312", "py313"]
 include = '\.pyi?$'
 extend-exclude = '''
 /(
@@ -103,7 +114,19 @@ extend-exclude = '''
 '''
 
 [tool.mypy]
-python_version = "3.9"
+python_version = "3.10"
+explicit_package_bases = true
+follow_imports = "skip"
+# 先对边界清晰的新模块建立严格基线；后续重构阶段逐步扩展到全部业务模块。
+files = [
+    "src/common/env.py",
+    "src/common/message_types.py",
+    "src/model/validators.py",
+    "src/transport/client/async_tcp_client.py",
+    "src/transport/client/async_rtu_client.py",
+    "src/transport/server/async_tcp_server.py",
+    "src/transport/server/async_rtu_server.py",
+]
 warn_return_any = true
 warn_unused_configs = true
 disallow_untyped_defs = true
@@ -118,5 +141,12 @@ warn_unreachable = true
 strict_equality = true
 
 [[tool.mypy.overrides]]
-module = ["serial.*", "loguru.*"]
+module = ["serial.*", "serial_asyncio.*"]
 ignore_missing_imports = true
+
+[tool.ruff]
+line-length = 88
+target-version = "py310"
+
+[tool.ruff.lint.per-file-ignores]
+"test/**/*.py" = ["E402"]

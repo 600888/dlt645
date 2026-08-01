@@ -1,8 +1,7 @@
 import sys
-import time
 
 sys.path.append("../..")
-from src.service.clientsvc.client_service import MeterClientService
+from dlt645.service.clientsvc.client_service import MeterClientService
 
 if __name__ == "__main__":
     client_svc = MeterClientService.new_rtu_client("/dev/ttyV1", 9600, 8, 1, "N", 5.0)

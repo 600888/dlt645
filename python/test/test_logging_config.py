@@ -14,8 +14,8 @@ import unittest
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from src.common import base_log
-from src.common.base_log import (
+from dlt645.common import base_log
+from dlt645.common.base_log import (
     configure_logging,
     enable_logging,
     disable_logging,
@@ -59,7 +59,7 @@ class TestLoggingConfig(unittest.TestCase):
         self.assertIsNotNone(base_log._stderr_handler_id)
         self.assertGreaterEqual(len(base_log._file_handler_ids), 1)
 
-        from src.protocol.log import log as plog
+        from dlt645.protocol.log import log as plog
 
         plog.info("split file message")
         self.assertTrue(
@@ -73,7 +73,7 @@ class TestLoggingConfig(unittest.TestCase):
         configure_logging(filename=tmp, filelevel="DEBUG")
         self.assertEqual(len(base_log._file_handler_ids), 1)
 
-        from src.protocol.log import log as plog
+        from dlt645.protocol.log import log as plog
 
         plog.info("unified file message")
         self.assertTrue(
@@ -95,7 +95,7 @@ class TestLoggingConfig(unittest.TestCase):
         """关闭后完全静默且可再启用"""
         tmp = os.path.join(tempfile.mkdtemp(), "d.log")
         configure_logging(filename=tmp, filelevel="DEBUG")
-        from src.protocol.log import log as plog
+        from dlt645.protocol.log import log as plog
 
         disable_logging()
         self.assertIsNone(base_log._stderr_handler_id)

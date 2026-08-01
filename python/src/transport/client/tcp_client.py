@@ -5,7 +5,7 @@
 
 import socket
 import time
-from typing import Optional, Any
+from typing import Optional
 
 from ...common.transform import bytes_to_spaced_hex
 from ...common.message_capture import MessageCapture
@@ -223,7 +223,7 @@ class TcpClient:
         try:
             self.conn.getsockopt(socket.SOL_SOCKET, socket.SO_ERROR)
             return True
-        except:
+        except OSError:
             self.disconnect()
             return self.connect()
 

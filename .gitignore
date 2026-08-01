@@ -26,3 +26,8 @@ go/log
 .reasonix
 reasonix.toml
 
+# Python test and coverage artifacts
+.coverage
+coverage.xml
+.pytest_cache/
+htmlcov/

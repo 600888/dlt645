@@ -16,10 +16,10 @@ python_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.insert(0, python_dir)
 
 try:
-    from src.service.serversvc.server_service import MeterServerService
-    from src.service.clientsvc.client_service import MeterClientService
-    from src.protocol.protocol import DLT645Protocol
-    from src.model.types.dlt645_type import CtrlCode
+    from dlt645.service.serversvc.server_service import MeterServerService
+    from dlt645.service.clientsvc.client_service import MeterClientService
+    from dlt645.protocol.protocol import DLT645Protocol
+    from dlt645.model.types.dlt645_type import CtrlCode
 except ImportError as e:
     print(f"导入模块失败: {e}")
     print("请确保在dlt645包目录中运行此脚本")
@@ -67,12 +67,12 @@ class TestDLT645Basic(unittest.TestCase):
             server = MeterServerService.new_tcp_server("127.0.0.1", 8024, 30)
 
             # 测试设置电能量数据
-            result = server.set_00(0x00000000, 123.45)
+            server.set_00(0x00000000, 123.45)
             # 注意：由于没有实际的数据存储后端，这里可能返回False
             # 我们主要测试方法调用不会抛出异常
 
             # 测试设置变量数据
-            result = server.set_02(0x02010100, 220.0)
+            server.set_02(0x02010100, 220.0)
 
             # 测试设置地址
             server.set_address("010203040506")

@@ -12,7 +12,6 @@
 
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
-import time
 import struct
 from typing import Optional, Union
 
@@ -512,7 +511,7 @@ class MeterClientService:
                 if any(error_code == ec for ec in ErrorCode):
                     error_msg = f"设备返回异常响应: {get_error_msg(error_code)} (错误码: {error_code:02X})"
                 else:
-                    error_msg = f"设备返回异常响应: 未知错误码"
+                    error_msg = "设备返回异常响应: 未知错误码"
 
             log.error(error_msg)
             return False
@@ -635,7 +634,7 @@ class MeterClientService:
                     log.warning(f"未知数据项: {bytes_to_spaced_hex(di)}")
                     return None
             elif frame.ctrl_code == (CtrlCode.WriteData | 0x80):  # 写参变量响应
-                log.debug(f"写参变量")
+                log.debug("写参变量")
                 return None
             elif frame.ctrl_code == (CtrlCode.ReadAddress | 0x80):  # 读通讯地址响应
                 log.debug(f"读通讯地址响应: {bytes_to_spaced_hex(frame.data)}")

@@ -33,18 +33,15 @@ from ...model.types.dlt645_type import (
     ErrorCode,
     EventRecord,
     PasswordManager,
-    BaudRateCode,
     CodeToBaudRate,
     BroadcastAddr,
 )
 from ...protocol.protocol import DLT645Protocol
-from ...model.data import data_handler as data
 from ...service.serversvc.log import log
 from ...transport.server.rtu_server import RtuServer
 from ...transport.server.tcp_server import TcpServer
 from ...common.message_capture import MessageCapture
 from ...common.message_types import MessageRecord, MessagePair
-from typing import List
 
 
 class MeterServerService:
@@ -199,7 +196,7 @@ class MeterServerService:
         """
         ok = set_data_item(di, value)
         if not ok:
-            log.error(f"写电能量失败")
+            log.error("写电能量失败")
         return ok
 
     def set_01(self, di: int, demand: Demand) -> bool:
@@ -211,7 +208,7 @@ class MeterServerService:
         """
         ok = set_data_item(di, demand)
         if not ok:
-            log.error(f"写最大需量及发生时间失败")
+            log.error("写最大需量及发生时间失败")
         return ok
 
     def set_02(self, di: int, value: float) -> bool:
@@ -223,12 +220,12 @@ class MeterServerService:
         """
         data_item = get_data_item(di)
         if data_item is None:
-            log.error(f"获取变量数据项失败")
+            log.error("获取变量数据项失败")
             return False
 
         ok = set_data_item(di, value)
         if not ok:
-            log.error(f"写变量失败")
+            log.error("写变量失败")
             return False
         return ok
 
@@ -241,11 +238,11 @@ class MeterServerService:
         """
         data_item = get_data_item(di)
         if data_item is None:
-            log.error(f"获取事件记录数据项失败")
+            log.error("获取事件记录数据项失败")
             return False
 
         if not set_data_item(di, value):
-            log.error(f"写事件记录失败")
+            log.error("写事件记录失败")
             return False
         return True
 
@@ -258,11 +255,11 @@ class MeterServerService:
         """
         data_item = get_data_item(di)
         if data_item is None:
-            log.error(f"获取参变量数据项失败")
+            log.error("获取参变量数据项失败")
             return False
 
         if not set_data_item(di, value):
-            log.error(f"写参变量失败")
+            log.error("写参变量失败")
             return False
         return True
 
@@ -651,7 +648,7 @@ class MeterServerService:
                 if not self.password_manager.change_password(
                     old_password, new_password
                 ):
-                    log.error(f"修改密码失败")
+                    log.error("修改密码失败")
                     return self._build_error_response(
                         frame, error_code=ErrorCode.AuthFailed
                     )

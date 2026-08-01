@@ -116,7 +116,7 @@ class TcpServer:
             if self.ln:
                 try:
                     self.ln.close()
-                except:
+                except OSError:
                     pass
             log.info("TCP server stopped")
 

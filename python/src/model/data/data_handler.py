@@ -6,7 +6,7 @@
 from typing import Optional, Union, List
 
 from ...model.types.data_type import DataItem, DataFormat
-from ...model.types.dlt645_type import Demand, EventRecord
+from ...model.types.dlt645_type import Demand
 from ...model.log import log
 from .define import DIMap
 

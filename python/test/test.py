@@ -1,6 +1,6 @@
 import json
 
-from src.common import root_path
+from dlt645.common.env import root_path
 
 
 def fix_dataformat_key(data_list):
