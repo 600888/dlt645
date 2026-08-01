@@ -652,19 +652,23 @@
 <span class="c1"># ==================== 全局日志配置 ====================</span>
 <span class="c1"># 默认关闭日志输出：仅当 configure_logging(enabled=True) 被调用后，</span>
 <span class="c1"># 才会挂载 handler 输出日志。</span>
-<span class="c1"># None 表示&quot;未配置，使用默认值&quot;。</span>
+<span class="c1"># None 表示&quot;未配置，回退到各 Log 实例自身的参数/默认值&quot;。</span>
 <span class="n">_settings</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;enabled&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>  <span class="c1"># 默认关闭</span>
-    <span class="s2">&quot;cmdlevel&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># 控制台级别，None=DEBUG</span>
-    <span class="s2">&quot;filelevel&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># 文件级别，None=DEBUG</span>
-    <span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># 统一日志文件，None=各模块默认文件</span>
-    <span class="s2">&quot;backup_count&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># None=7</span>
-    <span class="s2">&quot;limit&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># None=&quot;20 MB&quot;</span>
-    <span class="s2">&quot;when&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># None=按大小轮转</span>
-    <span class="s2">&quot;colorful&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># None=True</span>
-    <span class="s2">&quot;compression&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># None=不压缩</span>
-    <span class="s2">&quot;is_backtrace&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># None=True</span>
+    <span class="s2">&quot;cmdlevel&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># 控制台级别</span>
+    <span class="s2">&quot;filelevel&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># 文件级别</span>
+    <span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># 统一日志文件；None=各模块默认文件</span>
+    <span class="s2">&quot;backup_count&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="s2">&quot;limit&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="s2">&quot;when&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="s2">&quot;colorful&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="s2">&quot;compression&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="s2">&quot;is_backtrace&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">}</span>
+
+<span class="c1"># 哨兵：区分&quot;未传参&quot;（保持当前配置）与&quot;显式传 None&quot;（恢复默认）</span>
+<span class="n">_UNSET</span> <span class="o">=</span> <span class="nb">object</span><span class="p">()</span>
+
 <span class="n">_lock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
 <span class="n">_loggers</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># 已创建的所有 Log 实例</span>
 
@@ -673,47 +677,89 @@
 <span class="n">_file_handler_ids</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># filename -&gt; handler id</span>
 
 
+<span class="k">def</span><span class="w"> </span><span class="nf">_is_lib_record</span><span class="p">(</span><span class="n">record</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;库日志消息标记：所有 Log 实例发出时都 bind 了字符串 task。&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">record</span><span class="p">[</span><span class="s2">&quot;extra&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;task&quot;</span><span class="p">),</span> <span class="nb">str</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_first_log</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;Log&quot;</span><span class="p">]:</span>
+    <span class="k">return</span> <span class="n">_loggers</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">_loggers</span> <span class="k">else</span> <span class="kc">None</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_instance_for_file</span><span class="p">(</span><span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;Log&quot;</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;返回使用该有效文件名的第一个实例（用于读取实例级参数）。&quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">log</span> <span class="ow">in</span> <span class="n">_loggers</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">log</span><span class="o">.</span><span class="n">_effective_filename</span><span class="p">()</span> <span class="o">==</span> <span class="n">filename</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">log</span>
+    <span class="k">return</span> <span class="kc">None</span>
+
+
 <span class="k">def</span><span class="w"> </span><span class="nf">_effective_cmdlevel</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-    <span class="k">return</span> <span class="n">_settings</span><span class="p">[</span><span class="s2">&quot;cmdlevel&quot;</span><span class="p">]</span> <span class="ow">or</span> <span class="s2">&quot;DEBUG&quot;</span>
+    <span class="k">if</span> <span class="n">_settings</span><span class="p">[</span><span class="s2">&quot;cmdlevel&quot;</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="n">_settings</span><span class="p">[</span><span class="s2">&quot;cmdlevel&quot;</span><span class="p">]</span>
+    <span class="n">lg</span> <span class="o">=</span> <span class="n">_first_log</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">lg</span><span class="o">.</span><span class="n">cmdlevel</span> <span class="k">if</span> <span class="n">lg</span> <span class="k">else</span> <span class="s2">&quot;DEBUG&quot;</span>
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">_effective_filelevel</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-    <span class="k">return</span> <span class="n">_settings</span><span class="p">[</span><span class="s2">&quot;filelevel&quot;</span><span class="p">]</span> <span class="ow">or</span> <span class="s2">&quot;DEBUG&quot;</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_effective_filelevel</span><span class="p">(</span><span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">_settings</span><span class="p">[</span><span class="s2">&quot;filelevel&quot;</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="n">_settings</span><span class="p">[</span><span class="s2">&quot;filelevel&quot;</span><span class="p">]</span>
+    <span class="n">lg</span> <span class="o">=</span> <span class="n">_instance_for_file</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">lg</span><span class="o">.</span><span class="n">filelevel</span> <span class="k">if</span> <span class="n">lg</span> <span class="k">else</span> <span class="s2">&quot;DEBUG&quot;</span>
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">_effective_backup_count</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-    <span class="k">return</span> <span class="n">_settings</span><span class="p">[</span><span class="s2">&quot;backup_count&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="n">_settings</span><span class="p">[</span><span class="s2">&quot;backup_count&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="mi">7</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_effective_backup_count</span><span class="p">(</span><span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">_settings</span><span class="p">[</span><span class="s2">&quot;backup_count&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_settings</span><span class="p">[</span><span class="s2">&quot;backup_count&quot;</span><span class="p">]</span>
+    <span class="n">lg</span> <span class="o">=</span> <span class="n">_instance_for_file</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">lg</span><span class="o">.</span><span class="n">backup_count</span> <span class="k">if</span> <span class="n">lg</span> <span class="k">else</span> <span class="mi">7</span>
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">_effective_limit</span><span class="p">():</span>
-    <span class="k">return</span> <span class="n">_settings</span><span class="p">[</span><span class="s2">&quot;limit&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="n">_settings</span><span class="p">[</span><span class="s2">&quot;limit&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;20 MB&quot;</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_effective_limit</span><span class="p">(</span><span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">_settings</span><span class="p">[</span><span class="s2">&quot;limit&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_settings</span><span class="p">[</span><span class="s2">&quot;limit&quot;</span><span class="p">]</span>
+    <span class="n">lg</span> <span class="o">=</span> <span class="n">_instance_for_file</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">lg</span><span class="o">.</span><span class="n">limit</span> <span class="k">if</span> <span class="n">lg</span> <span class="k">else</span> <span class="s2">&quot;20 MB&quot;</span>
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">_effective_when</span><span class="p">():</span>
-    <span class="k">return</span> <span class="n">_settings</span><span class="p">[</span><span class="s2">&quot;when&quot;</span><span class="p">]</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_effective_when</span><span class="p">(</span><span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">_settings</span><span class="p">[</span><span class="s2">&quot;when&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_settings</span><span class="p">[</span><span class="s2">&quot;when&quot;</span><span class="p">]</span>
+    <span class="n">lg</span> <span class="o">=</span> <span class="n">_instance_for_file</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">lg</span><span class="o">.</span><span class="n">when</span> <span class="k">if</span> <span class="n">lg</span> <span class="k">else</span> <span class="kc">None</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_effective_colorful</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-    <span class="k">return</span> <span class="n">_settings</span><span class="p">[</span><span class="s2">&quot;colorful&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="n">_settings</span><span class="p">[</span><span class="s2">&quot;colorful&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">True</span>
+    <span class="k">if</span> <span class="n">_settings</span><span class="p">[</span><span class="s2">&quot;colorful&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_settings</span><span class="p">[</span><span class="s2">&quot;colorful&quot;</span><span class="p">]</span>
+    <span class="n">lg</span> <span class="o">=</span> <span class="n">_first_log</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">lg</span><span class="o">.</span><span class="n">colorful</span> <span class="k">if</span> <span class="n">lg</span> <span class="k">else</span> <span class="kc">True</span>
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">_effective_compression</span><span class="p">():</span>
-    <span class="k">return</span> <span class="n">_settings</span><span class="p">[</span><span class="s2">&quot;compression&quot;</span><span class="p">]</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_effective_compression</span><span class="p">(</span><span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">_settings</span><span class="p">[</span><span class="s2">&quot;compression&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_settings</span><span class="p">[</span><span class="s2">&quot;compression&quot;</span><span class="p">]</span>
+    <span class="n">lg</span> <span class="o">=</span> <span class="n">_instance_for_file</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">lg</span><span class="o">.</span><span class="n">compression</span> <span class="k">if</span> <span class="n">lg</span> <span class="k">else</span> <span class="kc">None</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_effective_is_backtrace</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-    <span class="k">return</span> <span class="n">_settings</span><span class="p">[</span><span class="s2">&quot;is_backtrace&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="n">_settings</span><span class="p">[</span><span class="s2">&quot;is_backtrace&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">True</span>
+    <span class="k">if</span> <span class="n">_settings</span><span class="p">[</span><span class="s2">&quot;is_backtrace&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_settings</span><span class="p">[</span><span class="s2">&quot;is_backtrace&quot;</span><span class="p">]</span>
+    <span class="n">lg</span> <span class="o">=</span> <span class="n">_first_log</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">lg</span><span class="o">.</span><span class="n">is_backtrace</span> <span class="k">if</span> <span class="n">lg</span> <span class="k">else</span> <span class="kc">True</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_formatter</span><span class="p">(</span><span class="n">record</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;全局日志格式（模块级，避免依赖实例状态）。&quot;&quot;&quot;</span>
     <span class="c1"># 处理消息内容</span>
-    <span class="n">message</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">record</span><span class="p">[</span><span class="s2">&quot;message&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;{&quot;</span><span class="p">,</span> <span class="s2">&quot;{{&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;}&quot;</span><span class="p">,</span> <span class="s2">&quot;}}&quot;</span><span class="p">)</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="n">record</span><span class="p">[</span><span class="s2">&quot;message&quot;</span><span class="p">]</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="nb">dict</span><span class="p">,</span> <span class="nb">list</span><span class="p">)):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">message</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">ensure_ascii</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
             <span class="n">message</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">message</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;{&quot;</span><span class="p">,</span> <span class="s2">&quot;{{&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;}&quot;</span><span class="p">,</span> <span class="s2">&quot;}}&quot;</span><span class="p">)</span>
 
     <span class="c1"># 处理调用栈和颜色</span>
     <span class="k">if</span> <span class="n">_effective_is_backtrace</span><span class="p">():</span>
@@ -759,19 +805,10 @@
         <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">log_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">_sync_instance</span><span class="p">(</span><span class="n">log</span><span class="p">:</span> <span class="s2">&quot;Log&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;同步实例的 task 标记与有效文件名（统一文件名模式下需要 rebind）。&quot;&quot;&quot;</span>
-    <span class="n">fn</span> <span class="o">=</span> <span class="n">log</span><span class="o">.</span><span class="n">_effective_filename</span><span class="p">()</span>
-    <span class="k">if</span> <span class="n">log</span><span class="o">.</span><span class="n">filename</span> <span class="o">!=</span> <span class="n">fn</span><span class="p">:</span>
-        <span class="n">log</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">fn</span>
-        <span class="n">log</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logger</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="n">fn</span><span class="p">)</span>
-
-
 <span class="k">def</span><span class="w"> </span><span class="nf">_install</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;挂载全局 stderr handler 和按文件分组的文件 handler。&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;挂载全局 stderr handler 和文件 handler（按文件分组或统一文件）。&quot;&quot;&quot;</span>
     <span class="k">global</span> <span class="n">_stderr_handler_id</span>
     <span class="k">if</span> <span class="n">_stderr_handler_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">_ensure_log_dir</span><span class="p">(</span><span class="n">_settings</span><span class="p">[</span><span class="s2">&quot;filename&quot;</span><span class="p">]</span> <span class="ow">or</span> <span class="s2">&quot;.&quot;</span><span class="p">)</span>
         <span class="n">_stderr_handler_id</span> <span class="o">=</span> <span class="n">logger</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
             <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span>
             <span class="n">level</span><span class="o">=</span><span class="n">_effective_cmdlevel</span><span class="p">(),</span>
@@ -779,25 +816,43 @@
             <span class="n">colorize</span><span class="o">=</span><span class="n">_effective_colorful</span><span class="p">(),</span>
             <span class="n">backtrace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="n">enqueue</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="nb">filter</span><span class="o">=</span><span class="n">_is_lib_record</span><span class="p">,</span>  <span class="c1"># 只输出库日志</span>
         <span class="p">)</span>
 
-    <span class="k">for</span> <span class="n">log</span> <span class="ow">in</span> <span class="n">_loggers</span><span class="p">:</span>
-        <span class="n">_sync_instance</span><span class="p">(</span><span class="n">log</span><span class="p">)</span>
-        <span class="n">fn</span> <span class="o">=</span> <span class="n">log</span><span class="o">.</span><span class="n">filename</span>
-        <span class="k">if</span> <span class="n">fn</span> <span class="ow">in</span> <span class="n">_file_handler_ids</span><span class="p">:</span>
-            <span class="k">continue</span>
-        <span class="n">_ensure_log_dir</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
-        <span class="n">_file_handler_ids</span><span class="p">[</span><span class="n">fn</span><span class="p">]</span> <span class="o">=</span> <span class="n">logger</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
-            <span class="n">fn</span><span class="p">,</span>
-            <span class="n">level</span><span class="o">=</span><span class="n">_effective_filelevel</span><span class="p">(),</span>
-            <span class="nb">format</span><span class="o">=</span><span class="n">_formatter</span><span class="p">,</span>
-            <span class="n">backtrace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-            <span class="n">rotation</span><span class="o">=</span><span class="n">_get_rotation_config</span><span class="p">(</span><span class="n">_effective_when</span><span class="p">(),</span> <span class="n">_effective_limit</span><span class="p">()),</span>
-            <span class="n">retention</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">_effective_backup_count</span><span class="p">()</span><span class="si">}</span><span class="s2"> days&quot;</span><span class="p">,</span>
-            <span class="n">compression</span><span class="o">=</span><span class="n">_effective_compression</span><span class="p">(),</span>
-            <span class="n">enqueue</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-            <span class="nb">filter</span><span class="o">=</span><span class="k">lambda</span> <span class="n">record</span><span class="p">,</span> <span class="n">_fn</span><span class="o">=</span><span class="n">fn</span><span class="p">:</span> <span class="n">record</span><span class="p">[</span><span class="s2">&quot;extra&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;task&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="n">_fn</span><span class="p">,</span>
-        <span class="p">)</span>
+    <span class="n">unified</span> <span class="o">=</span> <span class="n">_settings</span><span class="p">[</span><span class="s2">&quot;filename&quot;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">unified</span><span class="p">:</span>
+        <span class="c1"># 统一文件模式：所有库日志写入同一文件</span>
+        <span class="k">if</span> <span class="n">unified</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_file_handler_ids</span><span class="p">:</span>
+            <span class="n">_ensure_log_dir</span><span class="p">(</span><span class="n">unified</span><span class="p">)</span>
+            <span class="n">_file_handler_ids</span><span class="p">[</span><span class="n">unified</span><span class="p">]</span> <span class="o">=</span> <span class="n">logger</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+                <span class="n">unified</span><span class="p">,</span>
+                <span class="n">level</span><span class="o">=</span><span class="n">_effective_filelevel</span><span class="p">(</span><span class="n">unified</span><span class="p">),</span>
+                <span class="nb">format</span><span class="o">=</span><span class="n">_formatter</span><span class="p">,</span>
+                <span class="n">backtrace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">rotation</span><span class="o">=</span><span class="n">_get_rotation_config</span><span class="p">(</span><span class="n">_effective_when</span><span class="p">(</span><span class="n">unified</span><span class="p">),</span> <span class="n">_effective_limit</span><span class="p">(</span><span class="n">unified</span><span class="p">)),</span>
+                <span class="n">retention</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">_effective_backup_count</span><span class="p">(</span><span class="n">unified</span><span class="p">)</span><span class="si">}</span><span class="s2"> days&quot;</span><span class="p">,</span>
+                <span class="n">compression</span><span class="o">=</span><span class="n">_effective_compression</span><span class="p">(</span><span class="n">unified</span><span class="p">),</span>
+                <span class="n">enqueue</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="nb">filter</span><span class="o">=</span><span class="n">_is_lib_record</span><span class="p">,</span>
+            <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># 分文件模式：按各实例默认文件分组</span>
+        <span class="k">for</span> <span class="n">log</span> <span class="ow">in</span> <span class="n">_loggers</span><span class="p">:</span>
+            <span class="n">fn</span> <span class="o">=</span> <span class="n">log</span><span class="o">.</span><span class="n">_effective_filename</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">fn</span> <span class="ow">in</span> <span class="n">_file_handler_ids</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">_ensure_log_dir</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+            <span class="n">_file_handler_ids</span><span class="p">[</span><span class="n">fn</span><span class="p">]</span> <span class="o">=</span> <span class="n">logger</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+                <span class="n">fn</span><span class="p">,</span>
+                <span class="n">level</span><span class="o">=</span><span class="n">_effective_filelevel</span><span class="p">(</span><span class="n">fn</span><span class="p">),</span>
+                <span class="nb">format</span><span class="o">=</span><span class="n">_formatter</span><span class="p">,</span>
+                <span class="n">backtrace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">rotation</span><span class="o">=</span><span class="n">_get_rotation_config</span><span class="p">(</span><span class="n">_effective_when</span><span class="p">(</span><span class="n">fn</span><span class="p">),</span> <span class="n">_effective_limit</span><span class="p">(</span><span class="n">fn</span><span class="p">)),</span>
+                <span class="n">retention</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">_effective_backup_count</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span><span class="si">}</span><span class="s2"> days&quot;</span><span class="p">,</span>
+                <span class="n">compression</span><span class="o">=</span><span class="n">_effective_compression</span><span class="p">(</span><span class="n">fn</span><span class="p">),</span>
+                <span class="n">enqueue</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="nb">filter</span><span class="o">=</span><span class="k">lambda</span> <span class="n">record</span><span class="p">,</span> <span class="n">_fn</span><span class="o">=</span><span class="n">fn</span><span class="p">:</span> <span class="n">record</span><span class="p">[</span><span class="s2">&quot;extra&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;task&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="n">_fn</span><span class="p">,</span>
+            <span class="p">)</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_uninstall</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -822,6 +877,10 @@
 
 <span class="sd">    默认不输出任何日志（不挂载 handler）；通过模块级函数</span>
 <span class="sd">    :func:`configure_logging` 启用并配置日志。</span>
+
+<span class="sd">    注意：为保证默认静默，本类在首次创建时会移除 loguru 的默认</span>
+<span class="sd">    stderr handler（ID 0）。若宿主应用依赖 loguru 默认 handler，</span>
+<span class="sd">    请在导入本库后自行添加所需的 handler。</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># 静态标记：确保只移除一次默认 handler</span>
@@ -847,14 +906,14 @@
                 <span class="k">pass</span>  <span class="c1"># 默认 handler 可能已被移除</span>
             <span class="n">Log</span><span class="o">.</span><span class="n">_default_handler_removed</span> <span class="o">=</span> <span class="kc">True</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logger</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="n">filename</span><span class="p">)</span>
-        <span class="c1"># 设置日志文件路径</span>
+        <span class="c1"># 规范化文件名（task 标记与 self.filename 保持一致）</span>
         <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">filename</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="s2">&quot;__main__&quot;</span><span class="p">],</span> <span class="s2">&quot;__file__&quot;</span><span class="p">,</span> <span class="s2">&quot;log.py&quot;</span><span class="p">)</span>
             <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">filename</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.py&quot;</span><span class="p">,</span> <span class="s2">&quot;.log&quot;</span><span class="p">))</span>
-
-        <span class="c1"># 实例自身的日志参数（在全局未配置时作为默认值）</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logger</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">task</span><span class="o">=</span><span class="n">filename</span><span class="p">)</span>
+
+        <span class="c1"># 实例自身的日志参数（全局未配置时作为回退值）</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cmdlevel</span> <span class="o">=</span> <span class="n">cmdlevel</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">filelevel</span> <span class="o">=</span> <span class="n">filelevel</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">backup_count</span> <span class="o">=</span> <span class="n">backup_count</span>
@@ -872,7 +931,7 @@
                 <span class="n">_install</span><span class="p">()</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_effective_filename</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;实际使用的日志文件名（全局配置优先）。&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;实际使用的日志文件名（全局统一文件名优先，不修改实例默认值）。&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">_settings</span><span class="p">[</span><span class="s2">&quot;filename&quot;</span><span class="p">]:</span>
             <span class="k">return</span> <span class="n">_settings</span><span class="p">[</span><span class="s2">&quot;filename&quot;</span><span class="p">]</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span>
@@ -890,7 +949,7 @@
         <span class="n">colorful</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
         <span class="n">compression</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;动态修改本实例的日志配置。</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;动态修改本实例的日志配置（作为全局未配置时的默认值）。</span>
 
 <span class="sd">        仅当全局日志已启用时立即生效；否则下次启用时生效。</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -905,7 +964,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">colorful</span> <span class="o">=</span> <span class="n">colorful</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">compression</span> <span class="o">=</span> <span class="n">compression</span>
 
-        <span class="c1"># 重建全局 handler（filename 可能变化导致文件分组改变）</span>
+        <span class="c1"># 重建全局 handler（filename 变化可能改变文件分组）</span>
         <span class="k">with</span> <span class="n">_lock</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">_settings</span><span class="p">[</span><span class="s2">&quot;enabled&quot;</span><span class="p">]:</span>
                 <span class="n">_uninstall</span><span class="p">()</span>
@@ -1021,7 +1080,7 @@
     <span class="n">enabled</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">cmdlevel</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">filelevel</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">filename</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">filename</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">object</span><span class="p">]</span> <span class="o">=</span> <span class="n">_UNSET</span><span class="p">,</span>
     <span class="n">backup_count</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">limit</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">when</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -1036,13 +1095,13 @@
 <span class="sd">    :param enabled: True 启用日志输出，False 关闭（移除所有日志 handler）。</span>
 <span class="sd">    :type enabled: bool</span>
 <span class="sd">    :param cmdlevel: 控制台日志级别（如 &quot;DEBUG&quot;/&quot;INFO&quot;/&quot;WARNING&quot;/&quot;ERROR&quot;）。</span>
-<span class="sd">        None 表示使用默认级别 DEBUG。</span>
+<span class="sd">        None 表示回退到各模块默认级别。</span>
 <span class="sd">    :type cmdlevel: Optional[str]</span>
-<span class="sd">    :param filelevel: 文件日志级别。None 表示使用默认级别 DEBUG。</span>
+<span class="sd">    :param filelevel: 文件日志级别。None 表示回退到各模块默认级别。</span>
 <span class="sd">    :type filelevel: Optional[str]</span>
 <span class="sd">    :param filename: 统一日志文件路径；指定后所有模块日志输出到该文件。</span>
-<span class="sd">        None 表示各模块保持各自的日志文件（data.log/protocol.log 等）。</span>
-<span class="sd">    :type filename: Optional[str]</span>
+<span class="sd">        传 None 恢复&quot;各模块各自文件&quot;；不传（默认）保持当前配置。</span>
+<span class="sd">    :type filename: Union[str, None, object]</span>
 <span class="sd">    :param backup_count: 日志文件保留数量（天）。</span>
 <span class="sd">    :type backup_count: Optional[int]</span>
 <span class="sd">    :param limit: 单文件大小限制（如 &quot;10 MB&quot;）。</span>
@@ -1066,10 +1125,12 @@
 <span class="sd">        # 所有日志统一写入指定文件</span>
 <span class="sd">        configure_logging(filename=&quot;logs/meter.log&quot;)</span>
 
+<span class="sd">        # 恢复各模块各自文件</span>
+<span class="sd">        configure_logging(filename=None)</span>
+
 <span class="sd">        # 关闭日志</span>
 <span class="sd">        configure_logging(enabled=False)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">global</span> <span class="n">_settings</span>
     <span class="k">with</span> <span class="n">_lock</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">enabled</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">_settings</span><span class="p">[</span><span class="s2">&quot;enabled&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">enabled</span>
@@ -1077,7 +1138,7 @@
             <span class="n">_settings</span><span class="p">[</span><span class="s2">&quot;cmdlevel&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cmdlevel</span>
         <span class="k">if</span> <span class="n">filelevel</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">_settings</span><span class="p">[</span><span class="s2">&quot;filelevel&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">filelevel</span>
-        <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">_UNSET</span><span class="p">:</span>  <span class="c1"># 显式传 filename 或 None 都生效</span>
             <span class="n">_settings</span><span class="p">[</span><span class="s2">&quot;filename&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">filename</span>
         <span class="k">if</span> <span class="n">backup_count</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">_settings</span><span class="p">[</span><span class="s2">&quot;backup_count&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">backup_count</span>
