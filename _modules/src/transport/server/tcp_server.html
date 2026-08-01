@@ -754,7 +754,7 @@
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ln</span><span class="p">:</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">ln</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-                <span class="k">except</span><span class="p">:</span>
+                <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
                     <span class="k">pass</span>
             <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;TCP server stopped&quot;</span><span class="p">)</span>
 

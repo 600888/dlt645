@@ -666,18 +666,15 @@
     <span class="n">ErrorCode</span><span class="p">,</span>
     <span class="n">EventRecord</span><span class="p">,</span>
     <span class="n">PasswordManager</span><span class="p">,</span>
-    <span class="n">BaudRateCode</span><span class="p">,</span>
     <span class="n">CodeToBaudRate</span><span class="p">,</span>
     <span class="n">BroadcastAddr</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">...protocol.protocol</span><span class="w"> </span><span class="kn">import</span> <span class="n">DLT645Protocol</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">...model.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">data_handler</span> <span class="k">as</span> <span class="n">data</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">...service.serversvc.log</span><span class="w"> </span><span class="kn">import</span> <span class="n">log</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">...transport.server.rtu_server</span><span class="w"> </span><span class="kn">import</span> <span class="n">RtuServer</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">...transport.server.tcp_server</span><span class="w"> </span><span class="kn">import</span> <span class="n">TcpServer</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">...common.message_capture</span><span class="w"> </span><span class="kn">import</span> <span class="n">MessageCapture</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">...common.message_types</span><span class="w"> </span><span class="kn">import</span> <span class="n">MessageRecord</span><span class="p">,</span> <span class="n">MessagePair</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span>
 
 
 <div class="viewcode-block" id="MeterServerService">
@@ -854,7 +851,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">ok</span> <span class="o">=</span> <span class="n">set_data_item</span><span class="p">(</span><span class="n">di</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">ok</span><span class="p">:</span>
-            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;写电能量失败&quot;</span><span class="p">)</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;写电能量失败&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">ok</span></div>
 
 
@@ -869,7 +866,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">ok</span> <span class="o">=</span> <span class="n">set_data_item</span><span class="p">(</span><span class="n">di</span><span class="p">,</span> <span class="n">demand</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">ok</span><span class="p">:</span>
-            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;写最大需量及发生时间失败&quot;</span><span class="p">)</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;写最大需量及发生时间失败&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">ok</span></div>
 
 
@@ -884,12 +881,12 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data_item</span> <span class="o">=</span> <span class="n">get_data_item</span><span class="p">(</span><span class="n">di</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">data_item</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;获取变量数据项失败&quot;</span><span class="p">)</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;获取变量数据项失败&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">False</span>
 
         <span class="n">ok</span> <span class="o">=</span> <span class="n">set_data_item</span><span class="p">(</span><span class="n">di</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">ok</span><span class="p">:</span>
-            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;写变量失败&quot;</span><span class="p">)</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;写变量失败&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">False</span>
         <span class="k">return</span> <span class="n">ok</span></div>
 
@@ -905,11 +902,11 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data_item</span> <span class="o">=</span> <span class="n">get_data_item</span><span class="p">(</span><span class="n">di</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">data_item</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;获取事件记录数据项失败&quot;</span><span class="p">)</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;获取事件记录数据项失败&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">False</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">set_data_item</span><span class="p">(</span><span class="n">di</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;写事件记录失败&quot;</span><span class="p">)</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;写事件记录失败&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">False</span>
         <span class="k">return</span> <span class="kc">True</span></div>
 
@@ -925,11 +922,11 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data_item</span> <span class="o">=</span> <span class="n">get_data_item</span><span class="p">(</span><span class="n">di</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">data_item</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;获取参变量数据项失败&quot;</span><span class="p">)</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;获取参变量数据项失败&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">False</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="n">set_data_item</span><span class="p">(</span><span class="n">di</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;写参变量失败&quot;</span><span class="p">)</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;写参变量失败&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">False</span>
         <span class="k">return</span> <span class="kc">True</span></div>
 
@@ -1324,7 +1321,7 @@
                 <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">password_manager</span><span class="o">.</span><span class="n">change_password</span><span class="p">(</span>
                     <span class="n">old_password</span><span class="p">,</span> <span class="n">new_password</span>
                 <span class="p">):</span>
-                    <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;修改密码失败&quot;</span><span class="p">)</span>
+                    <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;修改密码失败&quot;</span><span class="p">)</span>
                     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_error_response</span><span class="p">(</span>
                         <span class="n">frame</span><span class="p">,</span> <span class="n">error_code</span><span class="o">=</span><span class="n">ErrorCode</span><span class="o">.</span><span class="n">AuthFailed</span>
                     <span class="p">)</span>
