@@ -51,16 +51,22 @@
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.common.html#submodules">Submodules</a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.common.html#module-src.common.base_log">src.common.base_log module</a><ul>
 <li class="toctree-l6"><a class="reference internal" href="../../../../src.common.html#src.common.base_log.Log"><code class="docutils literal notranslate"><span class="pre">Log</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="../../../../src.common.html#src.common.base_log.Log.set_config"><code class="docutils literal notranslate"><span class="pre">Log.set_config()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="../../../../src.common.html#src.common.base_log.Log.set_logger"><code class="docutils literal notranslate"><span class="pre">Log.set_logger()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../../src.common.html#src.common.base_log.Log.enable_log"><code class="docutils literal notranslate"><span class="pre">Log.enable_log()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../../src.common.html#src.common.base_log.Log.disable_log"><code class="docutils literal notranslate"><span class="pre">Log.disable_log()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../../src.common.html#src.common.base_log.Log.set_log_level"><code class="docutils literal notranslate"><span class="pre">Log.set_log_level()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="../../../../src.common.html#src.common.base_log.Log.debug"><code class="docutils literal notranslate"><span class="pre">Log.debug()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="../../../../src.common.html#src.common.base_log.Log.info"><code class="docutils literal notranslate"><span class="pre">Log.info()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="../../../../src.common.html#src.common.base_log.Log.warning"><code class="docutils literal notranslate"><span class="pre">Log.warning()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="../../../../src.common.html#src.common.base_log.Log.error"><code class="docutils literal notranslate"><span class="pre">Log.error()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="../../../../src.common.html#src.common.base_log.Log.critical"><code class="docutils literal notranslate"><span class="pre">Log.critical()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="../../../../src.common.html#src.common.base_log.Log.set_config"><code class="docutils literal notranslate"><span class="pre">Log.set_config()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="../../../../src.common.html#src.common.base_log.Log.exception"><code class="docutils literal notranslate"><span class="pre">Log.exception()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l6"><a class="reference internal" href="../../../../src.common.html#src.common.base_log.configure_logging"><code class="docutils literal notranslate"><span class="pre">configure_logging()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../../src.common.html#src.common.base_log.enable_logging"><code class="docutils literal notranslate"><span class="pre">enable_logging()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../../src.common.html#src.common.base_log.disable_logging"><code class="docutils literal notranslate"><span class="pre">disable_logging()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.common.html#module-src.common.env">src.common.env module</a></li>
@@ -172,7 +178,6 @@
 </li>
 <li class="toctree-l8"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.CtrlCode"><code class="docutils literal notranslate"><span class="pre">CtrlCode</span></code></a><ul>
 <li class="toctree-l9"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.CtrlCode.BroadcastTimeSync"><code class="docutils literal notranslate"><span class="pre">CtrlCode.BroadcastTimeSync</span></code></a></li>
-<li class="toctree-l9"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.CtrlCode.ClearDemand"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ClearDemand</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.CtrlCode.ReadData"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ReadData</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.CtrlCode.ReadAddress"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ReadAddress</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.CtrlCode.WriteData"><code class="docutils literal notranslate"><span class="pre">CtrlCode.WriteData</span></code></a></li>
@@ -180,6 +185,16 @@
 <li class="toctree-l9"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.CtrlCode.FreezeCmd"><code class="docutils literal notranslate"><span class="pre">CtrlCode.FreezeCmd</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.CtrlCode.ChangeBaudRate"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ChangeBaudRate</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.CtrlCode.ChangePassword"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ChangePassword</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.CtrlCode.ClearDemand"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ClearDemand</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.CtrlCode.ClearMeter"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ClearMeter</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.CtrlCode.ClearEvent"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ClearEvent</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l8"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.BaudRateCode"><code class="docutils literal notranslate"><span class="pre">BaudRateCode</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.CodeToBaudRate"><code class="docutils literal notranslate"><span class="pre">CodeToBaudRate</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.BroadcastAddr"><code class="docutils literal notranslate"><span class="pre">BroadcastAddr</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.BroadcastAddr.TimeSync"><code class="docutils literal notranslate"><span class="pre">BroadcastAddr.TimeSync</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.BroadcastAddr.Address"><code class="docutils literal notranslate"><span class="pre">BroadcastAddr.Address</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l8"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.ErrorCode"><code class="docutils literal notranslate"><span class="pre">ErrorCode</span></code></a><ul>
@@ -277,6 +292,12 @@
 <li class="toctree-l9"><a class="reference internal" href="../../../../src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.write_04"><code class="docutils literal notranslate"><span class="pre">MeterClientService.write_04()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="../../../../src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.read_address"><code class="docutils literal notranslate"><span class="pre">MeterClientService.read_address()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="../../../../src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.write_address"><code class="docutils literal notranslate"><span class="pre">MeterClientService.write_address()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../../src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.broadcast_time_sync"><code class="docutils literal notranslate"><span class="pre">MeterClientService.broadcast_time_sync()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../../src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.freeze"><code class="docutils literal notranslate"><span class="pre">MeterClientService.freeze()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../../src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.change_baud_rate"><code class="docutils literal notranslate"><span class="pre">MeterClientService.change_baud_rate()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../../src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.clear_demand"><code class="docutils literal notranslate"><span class="pre">MeterClientService.clear_demand()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../../src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.clear_meter"><code class="docutils literal notranslate"><span class="pre">MeterClientService.clear_meter()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../../src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.clear_event"><code class="docutils literal notranslate"><span class="pre">MeterClientService.clear_event()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="../../../../src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.send_and_handle_request"><code class="docutils literal notranslate"><span class="pre">MeterClientService.send_and_handle_request()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="../../../../src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.handle_response"><code class="docutils literal notranslate"><span class="pre">MeterClientService.handle_response()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="../../../../src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.enable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterClientService.enable_message_capture()</span></code></a></li>
@@ -343,6 +364,7 @@
 <li class="toctree-l9"><a class="reference internal" href="../../../../src.transport.client.html#src.transport.client.rtu_client.RtuClient.connect"><code class="docutils literal notranslate"><span class="pre">RtuClient.connect()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="../../../../src.transport.client.html#src.transport.client.rtu_client.RtuClient.disconnect"><code class="docutils literal notranslate"><span class="pre">RtuClient.disconnect()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="../../../../src.transport.client.html#src.transport.client.rtu_client.RtuClient.send_request"><code class="docutils literal notranslate"><span class="pre">RtuClient.send_request()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../../src.transport.client.html#src.transport.client.rtu_client.RtuClient.send_only"><code class="docutils literal notranslate"><span class="pre">RtuClient.send_only()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -352,6 +374,7 @@
 <li class="toctree-l9"><a class="reference internal" href="../../../../src.transport.client.html#src.transport.client.tcp_client.TcpClient.connect"><code class="docutils literal notranslate"><span class="pre">TcpClient.connect()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="../../../../src.transport.client.html#src.transport.client.tcp_client.TcpClient.disconnect"><code class="docutils literal notranslate"><span class="pre">TcpClient.disconnect()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="../../../../src.transport.client.html#src.transport.client.tcp_client.TcpClient.send_request"><code class="docutils literal notranslate"><span class="pre">TcpClient.send_request()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../../src.transport.client.html#src.transport.client.tcp_client.TcpClient.send_only"><code class="docutils literal notranslate"><span class="pre">TcpClient.send_only()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -393,6 +416,9 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../../../../src.html#module-src">Module contents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../src.html#src.configure_logging"><code class="docutils literal notranslate"><span class="pre">configure_logging()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../src.html#src.enable_logging"><code class="docutils literal notranslate"><span class="pre">enable_logging()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../src.html#src.disable_logging"><code class="docutils literal notranslate"><span class="pre">disable_logging()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../src.html#src.MeterServerService"><code class="docutils literal notranslate"><span class="pre">MeterServerService</span></code></a><ul>
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MeterServerService.new_tcp_server"><code class="docutils literal notranslate"><span class="pre">MeterServerService.new_tcp_server()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MeterServerService.new_rtu_server"><code class="docutils literal notranslate"><span class="pre">MeterServerService.new_rtu_server()</span></code></a></li>
@@ -433,6 +459,12 @@
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MeterClientService.write_04"><code class="docutils literal notranslate"><span class="pre">MeterClientService.write_04()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MeterClientService.read_address"><code class="docutils literal notranslate"><span class="pre">MeterClientService.read_address()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MeterClientService.write_address"><code class="docutils literal notranslate"><span class="pre">MeterClientService.write_address()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MeterClientService.broadcast_time_sync"><code class="docutils literal notranslate"><span class="pre">MeterClientService.broadcast_time_sync()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MeterClientService.freeze"><code class="docutils literal notranslate"><span class="pre">MeterClientService.freeze()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MeterClientService.change_baud_rate"><code class="docutils literal notranslate"><span class="pre">MeterClientService.change_baud_rate()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MeterClientService.clear_demand"><code class="docutils literal notranslate"><span class="pre">MeterClientService.clear_demand()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MeterClientService.clear_meter"><code class="docutils literal notranslate"><span class="pre">MeterClientService.clear_meter()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MeterClientService.clear_event"><code class="docutils literal notranslate"><span class="pre">MeterClientService.clear_event()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MeterClientService.send_and_handle_request"><code class="docutils literal notranslate"><span class="pre">MeterClientService.send_and_handle_request()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MeterClientService.handle_response"><code class="docutils literal notranslate"><span class="pre">MeterClientService.handle_response()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MeterClientService.enable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterClientService.enable_message_capture()</span></code></a></li>
@@ -457,7 +489,6 @@
 </li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../src.html#src.CtrlCode"><code class="docutils literal notranslate"><span class="pre">CtrlCode</span></code></a><ul>
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.CtrlCode.BroadcastTimeSync"><code class="docutils literal notranslate"><span class="pre">CtrlCode.BroadcastTimeSync</span></code></a></li>
-<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.CtrlCode.ClearDemand"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ClearDemand</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.CtrlCode.ReadData"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ReadData</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.CtrlCode.ReadAddress"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ReadAddress</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.CtrlCode.WriteData"><code class="docutils literal notranslate"><span class="pre">CtrlCode.WriteData</span></code></a></li>
@@ -465,6 +496,9 @@
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.CtrlCode.FreezeCmd"><code class="docutils literal notranslate"><span class="pre">CtrlCode.FreezeCmd</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.CtrlCode.ChangeBaudRate"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ChangeBaudRate</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.CtrlCode.ChangePassword"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ChangePassword</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.CtrlCode.ClearDemand"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ClearDemand</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.CtrlCode.ClearMeter"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ClearMeter</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.CtrlCode.ClearEvent"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ClearEvent</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../src.html#src.Demand"><code class="docutils literal notranslate"><span class="pre">Demand</span></code></a></li>
@@ -503,12 +537,14 @@
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.TcpClient.connect"><code class="docutils literal notranslate"><span class="pre">TcpClient.connect()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.TcpClient.disconnect"><code class="docutils literal notranslate"><span class="pre">TcpClient.disconnect()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.TcpClient.send_request"><code class="docutils literal notranslate"><span class="pre">TcpClient.send_request()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.TcpClient.send_only"><code class="docutils literal notranslate"><span class="pre">TcpClient.send_only()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../src.html#src.RtuClient"><code class="docutils literal notranslate"><span class="pre">RtuClient</span></code></a><ul>
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.RtuClient.connect"><code class="docutils literal notranslate"><span class="pre">RtuClient.connect()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.RtuClient.disconnect"><code class="docutils literal notranslate"><span class="pre">RtuClient.disconnect()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.RtuClient.send_request"><code class="docutils literal notranslate"><span class="pre">RtuClient.send_request()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.RtuClient.send_only"><code class="docutils literal notranslate"><span class="pre">RtuClient.send_only()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../src.html#src.MessageRecord"><code class="docutils literal notranslate"><span class="pre">MessageRecord</span></code></a><ul>
@@ -646,10 +682,9 @@
 <span class="k">class</span><span class="w"> </span><span class="nc">CtrlCode</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;控制码枚举。</span>
 
-<span class="sd">    DLT645 协议中控制码用于标识帧的功能类型。</span>
+<span class="sd">    DLT645 协议中控制码用于标识帧的功能类型，取值遵循 DL/T645-2007 标准。</span>
 
 <span class="sd">    :cvar BroadcastTimeSync: 广播校时命令（0x08）</span>
-<span class="sd">    :cvar ClearDemand: 需量清零命令（0x10）</span>
 <span class="sd">    :cvar ReadData: 读数据命令（0x11）</span>
 <span class="sd">    :cvar ReadAddress: 读通讯地址命令（0x13）</span>
 <span class="sd">    :cvar WriteData: 写数据命令（0x14）</span>
@@ -657,17 +692,54 @@
 <span class="sd">    :cvar FreezeCmd: 冻结命令（0x16）</span>
 <span class="sd">    :cvar ChangeBaudRate: 修改通信速率命令（0x17）</span>
 <span class="sd">    :cvar ChangePassword: 修改密码命令（0x18）</span>
+<span class="sd">    :cvar ClearDemand: 最大需量清零命令（0x19）</span>
+<span class="sd">    :cvar ClearMeter: 电表清零命令（0x1A）</span>
+<span class="sd">    :cvar ClearEvent: 事件清零命令（0x1B）</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">BroadcastTimeSync</span> <span class="o">=</span> <span class="mh">0x08</span>  <span class="c1"># 广播校时</span>
-    <span class="n">ClearDemand</span> <span class="o">=</span> <span class="mh">0x10</span>  <span class="c1"># 需量清零</span>
     <span class="n">ReadData</span> <span class="o">=</span> <span class="mh">0x11</span>  <span class="c1"># 读数据</span>
     <span class="n">ReadAddress</span> <span class="o">=</span> <span class="mh">0x13</span>  <span class="c1"># 读通讯地址</span>
     <span class="n">WriteData</span> <span class="o">=</span> <span class="mh">0x14</span>  <span class="c1"># 写数据</span>
     <span class="n">WriteAddress</span> <span class="o">=</span> <span class="mh">0x15</span>  <span class="c1"># 写通讯地址</span>
     <span class="n">FreezeCmd</span> <span class="o">=</span> <span class="mh">0x16</span>  <span class="c1"># 冻结命令</span>
     <span class="n">ChangeBaudRate</span> <span class="o">=</span> <span class="mh">0x17</span>  <span class="c1"># 修改通信速率</span>
-    <span class="n">ChangePassword</span> <span class="o">=</span> <span class="mh">0x18</span>  <span class="c1"># 改变密码</span></div>
+    <span class="n">ChangePassword</span> <span class="o">=</span> <span class="mh">0x18</span>  <span class="c1"># 改变密码</span>
+    <span class="n">ClearDemand</span> <span class="o">=</span> <span class="mh">0x19</span>  <span class="c1"># 最大需量清零</span>
+    <span class="n">ClearMeter</span> <span class="o">=</span> <span class="mh">0x1A</span>  <span class="c1"># 电表清零</span>
+    <span class="n">ClearEvent</span> <span class="o">=</span> <span class="mh">0x1B</span>  <span class="c1"># 事件清零</span></div>
+
+
+
+<span class="c1">#: 通信速率特征字映射（DL/T645-2007 附录C）</span>
+<span class="c1">#: 特征字为速率(bps)/300 的压缩 BCD 码：</span>
+<span class="c1">#: 1200BPS=04H, 2400BPS=08H, 4800BPS=16H, 9600BPS=32H, 19200BPS=64H</span>
+<span class="c1">#: （与文档&quot;通讯功能实现实例&quot;中的改波特率示例一致）</span>
+<span class="n">BaudRateCode</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="mi">1200</span><span class="p">:</span> <span class="mh">0x04</span><span class="p">,</span>
+    <span class="mi">2400</span><span class="p">:</span> <span class="mh">0x08</span><span class="p">,</span>
+    <span class="mi">4800</span><span class="p">:</span> <span class="mh">0x16</span><span class="p">,</span>
+    <span class="mi">9600</span><span class="p">:</span> <span class="mh">0x32</span><span class="p">,</span>
+    <span class="mi">19200</span><span class="p">:</span> <span class="mh">0x64</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1">#: 特征字到通信速率的反向映射</span>
+<span class="n">CodeToBaudRate</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="n">code</span><span class="p">:</span> <span class="n">baud</span> <span class="k">for</span> <span class="n">baud</span><span class="p">,</span> <span class="n">code</span> <span class="ow">in</span> <span class="n">BaudRateCode</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+
+
+<div class="viewcode-block" id="BroadcastAddr">
+<a class="viewcode-back" href="../../../../src.model.types.html#src.BroadcastAddr">[文档]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">BroadcastAddr</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;广播地址常量（DL/T645-2007 地址域说明）。</span>
+
+<span class="sd">    - 999999999999H（0x99 x6）：广播校时、广播冻结等特殊命令的广播地址，不要求从站应答。</span>
+<span class="sd">    - AAAAAAAAAAAAH（0xAA x6）：读/写通信地址等点对点命令使用的地址。</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1">#: 广播校时/广播冻结地址（999999999999H）</span>
+    <span class="n">TimeSync</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">([</span><span class="mh">0x99</span><span class="p">,</span> <span class="mh">0x99</span><span class="p">,</span> <span class="mh">0x99</span><span class="p">,</span> <span class="mh">0x99</span><span class="p">,</span> <span class="mh">0x99</span><span class="p">,</span> <span class="mh">0x99</span><span class="p">])</span>
+    <span class="c1">#: 读/写通信地址广播地址（AAAAAAAAAAAAH）</span>
+    <span class="n">Address</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">([</span><span class="mh">0xAA</span><span class="p">,</span> <span class="mh">0xAA</span><span class="p">,</span> <span class="mh">0xAA</span><span class="p">,</span> <span class="mh">0xAA</span><span class="p">,</span> <span class="mh">0xAA</span><span class="p">,</span> <span class="mh">0xAA</span><span class="p">])</span></div>
 
 
 

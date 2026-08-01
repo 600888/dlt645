@@ -54,16 +54,22 @@
 <li class="toctree-l5"><a class="reference internal" href="src.common.html#submodules">Submodules</a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.common.html#module-src.common.base_log">src.common.base_log module</a><ul>
 <li class="toctree-l6"><a class="reference internal" href="src.common.html#src.common.base_log.Log"><code class="docutils literal notranslate"><span class="pre">Log</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="src.common.html#src.common.base_log.Log.set_config"><code class="docutils literal notranslate"><span class="pre">Log.set_config()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="src.common.html#src.common.base_log.Log.set_logger"><code class="docutils literal notranslate"><span class="pre">Log.set_logger()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.common.html#src.common.base_log.Log.enable_log"><code class="docutils literal notranslate"><span class="pre">Log.enable_log()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.common.html#src.common.base_log.Log.disable_log"><code class="docutils literal notranslate"><span class="pre">Log.disable_log()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.common.html#src.common.base_log.Log.set_log_level"><code class="docutils literal notranslate"><span class="pre">Log.set_log_level()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="src.common.html#src.common.base_log.Log.debug"><code class="docutils literal notranslate"><span class="pre">Log.debug()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="src.common.html#src.common.base_log.Log.info"><code class="docutils literal notranslate"><span class="pre">Log.info()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="src.common.html#src.common.base_log.Log.warning"><code class="docutils literal notranslate"><span class="pre">Log.warning()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="src.common.html#src.common.base_log.Log.error"><code class="docutils literal notranslate"><span class="pre">Log.error()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="src.common.html#src.common.base_log.Log.critical"><code class="docutils literal notranslate"><span class="pre">Log.critical()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="src.common.html#src.common.base_log.Log.set_config"><code class="docutils literal notranslate"><span class="pre">Log.set_config()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="src.common.html#src.common.base_log.Log.exception"><code class="docutils literal notranslate"><span class="pre">Log.exception()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l6"><a class="reference internal" href="src.common.html#src.common.base_log.configure_logging"><code class="docutils literal notranslate"><span class="pre">configure_logging()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="src.common.html#src.common.base_log.enable_logging"><code class="docutils literal notranslate"><span class="pre">enable_logging()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="src.common.html#src.common.base_log.disable_logging"><code class="docutils literal notranslate"><span class="pre">disable_logging()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l5"><a class="reference internal" href="src.common.html#module-src.common.env">src.common.env module</a></li>
@@ -175,7 +181,6 @@
 </li>
 <li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.CtrlCode"><code class="docutils literal notranslate"><span class="pre">CtrlCode</span></code></a><ul>
 <li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.CtrlCode.BroadcastTimeSync"><code class="docutils literal notranslate"><span class="pre">CtrlCode.BroadcastTimeSync</span></code></a></li>
-<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.CtrlCode.ClearDemand"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ClearDemand</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.CtrlCode.ReadData"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ReadData</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.CtrlCode.ReadAddress"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ReadAddress</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.CtrlCode.WriteData"><code class="docutils literal notranslate"><span class="pre">CtrlCode.WriteData</span></code></a></li>
@@ -183,6 +188,16 @@
 <li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.CtrlCode.FreezeCmd"><code class="docutils literal notranslate"><span class="pre">CtrlCode.FreezeCmd</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.CtrlCode.ChangeBaudRate"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ChangeBaudRate</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.CtrlCode.ChangePassword"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ChangePassword</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.CtrlCode.ClearDemand"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ClearDemand</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.CtrlCode.ClearMeter"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ClearMeter</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.CtrlCode.ClearEvent"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ClearEvent</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.BaudRateCode"><code class="docutils literal notranslate"><span class="pre">BaudRateCode</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.CodeToBaudRate"><code class="docutils literal notranslate"><span class="pre">CodeToBaudRate</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.BroadcastAddr"><code class="docutils literal notranslate"><span class="pre">BroadcastAddr</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.BroadcastAddr.TimeSync"><code class="docutils literal notranslate"><span class="pre">BroadcastAddr.TimeSync</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.BroadcastAddr.Address"><code class="docutils literal notranslate"><span class="pre">BroadcastAddr.Address</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l8"><a class="reference internal" href="src.model.types.html#src.model.types.dlt645_type.ErrorCode"><code class="docutils literal notranslate"><span class="pre">ErrorCode</span></code></a><ul>
@@ -280,6 +295,12 @@
 <li class="toctree-l9"><a class="reference internal" href="#src.service.clientsvc.client_service.MeterClientService.write_04"><code class="docutils literal notranslate"><span class="pre">MeterClientService.write_04()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="#src.service.clientsvc.client_service.MeterClientService.read_address"><code class="docutils literal notranslate"><span class="pre">MeterClientService.read_address()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="#src.service.clientsvc.client_service.MeterClientService.write_address"><code class="docutils literal notranslate"><span class="pre">MeterClientService.write_address()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="#src.service.clientsvc.client_service.MeterClientService.broadcast_time_sync"><code class="docutils literal notranslate"><span class="pre">MeterClientService.broadcast_time_sync()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="#src.service.clientsvc.client_service.MeterClientService.freeze"><code class="docutils literal notranslate"><span class="pre">MeterClientService.freeze()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="#src.service.clientsvc.client_service.MeterClientService.change_baud_rate"><code class="docutils literal notranslate"><span class="pre">MeterClientService.change_baud_rate()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="#src.service.clientsvc.client_service.MeterClientService.clear_demand"><code class="docutils literal notranslate"><span class="pre">MeterClientService.clear_demand()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="#src.service.clientsvc.client_service.MeterClientService.clear_meter"><code class="docutils literal notranslate"><span class="pre">MeterClientService.clear_meter()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="#src.service.clientsvc.client_service.MeterClientService.clear_event"><code class="docutils literal notranslate"><span class="pre">MeterClientService.clear_event()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="#src.service.clientsvc.client_service.MeterClientService.send_and_handle_request"><code class="docutils literal notranslate"><span class="pre">MeterClientService.send_and_handle_request()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="#src.service.clientsvc.client_service.MeterClientService.handle_response"><code class="docutils literal notranslate"><span class="pre">MeterClientService.handle_response()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="#src.service.clientsvc.client_service.MeterClientService.enable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterClientService.enable_message_capture()</span></code></a></li>
@@ -346,6 +367,7 @@
 <li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.rtu_client.RtuClient.connect"><code class="docutils literal notranslate"><span class="pre">RtuClient.connect()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.rtu_client.RtuClient.disconnect"><code class="docutils literal notranslate"><span class="pre">RtuClient.disconnect()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.rtu_client.RtuClient.send_request"><code class="docutils literal notranslate"><span class="pre">RtuClient.send_request()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.rtu_client.RtuClient.send_only"><code class="docutils literal notranslate"><span class="pre">RtuClient.send_only()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -355,6 +377,7 @@
 <li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.tcp_client.TcpClient.connect"><code class="docutils literal notranslate"><span class="pre">TcpClient.connect()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.tcp_client.TcpClient.disconnect"><code class="docutils literal notranslate"><span class="pre">TcpClient.disconnect()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.tcp_client.TcpClient.send_request"><code class="docutils literal notranslate"><span class="pre">TcpClient.send_request()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.tcp_client.TcpClient.send_only"><code class="docutils literal notranslate"><span class="pre">TcpClient.send_only()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -396,6 +419,9 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="src.html#module-src">Module contents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.html#src.configure_logging"><code class="docutils literal notranslate"><span class="pre">configure_logging()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.html#src.enable_logging"><code class="docutils literal notranslate"><span class="pre">enable_logging()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.html#src.disable_logging"><code class="docutils literal notranslate"><span class="pre">disable_logging()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="src.html#src.MeterServerService"><code class="docutils literal notranslate"><span class="pre">MeterServerService</span></code></a><ul>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterServerService.new_tcp_server"><code class="docutils literal notranslate"><span class="pre">MeterServerService.new_tcp_server()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterServerService.new_rtu_server"><code class="docutils literal notranslate"><span class="pre">MeterServerService.new_rtu_server()</span></code></a></li>
@@ -436,6 +462,12 @@
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.write_04"><code class="docutils literal notranslate"><span class="pre">MeterClientService.write_04()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.read_address"><code class="docutils literal notranslate"><span class="pre">MeterClientService.read_address()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.write_address"><code class="docutils literal notranslate"><span class="pre">MeterClientService.write_address()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.broadcast_time_sync"><code class="docutils literal notranslate"><span class="pre">MeterClientService.broadcast_time_sync()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.freeze"><code class="docutils literal notranslate"><span class="pre">MeterClientService.freeze()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.change_baud_rate"><code class="docutils literal notranslate"><span class="pre">MeterClientService.change_baud_rate()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.clear_demand"><code class="docutils literal notranslate"><span class="pre">MeterClientService.clear_demand()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.clear_meter"><code class="docutils literal notranslate"><span class="pre">MeterClientService.clear_meter()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.clear_event"><code class="docutils literal notranslate"><span class="pre">MeterClientService.clear_event()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.send_and_handle_request"><code class="docutils literal notranslate"><span class="pre">MeterClientService.send_and_handle_request()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.handle_response"><code class="docutils literal notranslate"><span class="pre">MeterClientService.handle_response()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.enable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterClientService.enable_message_capture()</span></code></a></li>
@@ -460,7 +492,6 @@
 </li>
 <li class="toctree-l4"><a class="reference internal" href="src.html#src.CtrlCode"><code class="docutils literal notranslate"><span class="pre">CtrlCode</span></code></a><ul>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.CtrlCode.BroadcastTimeSync"><code class="docutils literal notranslate"><span class="pre">CtrlCode.BroadcastTimeSync</span></code></a></li>
-<li class="toctree-l5"><a class="reference internal" href="src.html#src.CtrlCode.ClearDemand"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ClearDemand</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.CtrlCode.ReadData"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ReadData</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.CtrlCode.ReadAddress"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ReadAddress</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.CtrlCode.WriteData"><code class="docutils literal notranslate"><span class="pre">CtrlCode.WriteData</span></code></a></li>
@@ -468,6 +499,9 @@
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.CtrlCode.FreezeCmd"><code class="docutils literal notranslate"><span class="pre">CtrlCode.FreezeCmd</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.CtrlCode.ChangeBaudRate"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ChangeBaudRate</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.CtrlCode.ChangePassword"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ChangePassword</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.CtrlCode.ClearDemand"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ClearDemand</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.CtrlCode.ClearMeter"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ClearMeter</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.CtrlCode.ClearEvent"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ClearEvent</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l4"><a class="reference internal" href="src.html#src.Demand"><code class="docutils literal notranslate"><span class="pre">Demand</span></code></a></li>
@@ -506,12 +540,14 @@
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.TcpClient.connect"><code class="docutils literal notranslate"><span class="pre">TcpClient.connect()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.TcpClient.disconnect"><code class="docutils literal notranslate"><span class="pre">TcpClient.disconnect()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.TcpClient.send_request"><code class="docutils literal notranslate"><span class="pre">TcpClient.send_request()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.TcpClient.send_only"><code class="docutils literal notranslate"><span class="pre">TcpClient.send_only()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l4"><a class="reference internal" href="src.html#src.RtuClient"><code class="docutils literal notranslate"><span class="pre">RtuClient</span></code></a><ul>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.RtuClient.connect"><code class="docutils literal notranslate"><span class="pre">RtuClient.connect()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.RtuClient.disconnect"><code class="docutils literal notranslate"><span class="pre">RtuClient.disconnect()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.RtuClient.send_request"><code class="docutils literal notranslate"><span class="pre">RtuClient.send_request()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.RtuClient.send_only"><code class="docutils literal notranslate"><span class="pre">RtuClient.send_only()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l4"><a class="reference internal" href="src.html#src.MessageRecord"><code class="docutils literal notranslate"><span class="pre">MessageRecord</span></code></a><ul>
@@ -799,6 +835,141 @@
 <dl class="field-list simple">
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="（在 Python v3.14）"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference internal" href="src.model.types.html#src.model.types.data_type.DataItem" title="src.model.types.data_type.DataItem"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataItem</span></code></a>]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.service.clientsvc.client_service.MeterClientService.broadcast_time_sync">
+<span class="sig-name descname"><span class="pre">broadcast_time_sync</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/clientsvc/client_service.html#MeterClientService.broadcast_time_sync"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.service.clientsvc.client_service.MeterClientService.broadcast_time_sync" title="Link to this definition"></a></dt>
+<dd><p>广播校时命令（C=08H，数据域YYMMDDhhmmss）。</p>
+<p>按 DL/T645-2007 第6节：广播校时使用广播地址 999999999999H，
+数据域为 6 字节压缩 BCD 码（YY MM DD hh mm ss，自然顺序），
+从站不要求应答，因此只发送不等待响应。</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dt</strong> (<em>Optional</em><em>[</em><em>datetime</em><em>]</em>) -- 校时时间，默认当前时间。</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>发送成功返回 True，失败返回 False。</p>
+</dd>
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.service.clientsvc.client_service.MeterClientService.freeze">
+<span class="sig-name descname"><span class="pre">freeze</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">month</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">day</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hour</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minute</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">broadcast</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/clientsvc/client_service.html#MeterClientService.freeze"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.service.clientsvc.client_service.MeterClientService.freeze" title="Link to this definition"></a></dt>
+<dd><p>冻结命令（C=16H，数据域MMDDhhmm）。</p>
+<p>按 DL/T645-2007 第7节：数据域为 4 字节压缩 BCD 码（MM DD hh mm），
+各字段缺省时取当前时间；可传 99 表示周期定时冻结：
+- 99DDhhmm：以月为周期定时冻结
+- 9999hhmm：以日为周期定时冻结
+- 999999mm：以小时为周期定时冻结
+- 99999999：瞬时冻结</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>month</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><em>int</em></a><em>]</em>) -- 月（1-12 或 99）。</p></li>
+<li><p><strong>day</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><em>int</em></a><em>]</em>) -- 日（1-31 或 99）。</p></li>
+<li><p><strong>hour</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><em>int</em></a><em>]</em>) -- 时（0-23 或 99）。</p></li>
+<li><p><strong>minute</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><em>int</em></a><em>]</em>) -- 分（0-59 或 99）。</p></li>
+<li><p><strong>broadcast</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><em>bool</em></a>) -- 是否广播冻结（使用广播地址，从站不要求应答）。</p></li>
+</ul>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>成功返回 DataItem，失败返回 None。</p>
+</dd>
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Optional[<a class="reference internal" href="src.html#src.DataItem" title="src.DataItem">DataItem</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.service.clientsvc.client_service.MeterClientService.change_baud_rate">
+<span class="sig-name descname"><span class="pre">change_baud_rate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">baud</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/clientsvc/client_service.html#MeterClientService.change_baud_rate"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.service.clientsvc.client_service.MeterClientService.change_baud_rate" title="Link to this definition"></a></dt>
+<dd><p>更改通信速率命令（C=17H，数据域1字节通信速率特征字）。</p>
+<p>按 DL/T645-2007 第8节：数据域为 1 字节特征字（见附录C），
+从站正常应答帧中的数据与请求帧中的特征字必须相同。
+标准速率：1200/2400/4800/9600/19200 bps。</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>baud</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><em>int</em></a>) -- 目标通信速率（bps）。</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>成功返回 DataItem，失败返回 None。</p>
+</dd>
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Optional[<a class="reference internal" href="src.html#src.DataItem" title="src.DataItem">DataItem</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.service.clientsvc.client_service.MeterClientService.clear_demand">
+<span class="sig-name descname"><span class="pre">clear_demand</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">di</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/clientsvc/client_service.html#MeterClientService.clear_demand"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.service.clientsvc.client_service.MeterClientService.clear_demand" title="Link to this definition"></a></dt>
+<dd><p>最大需量清零命令（C=19H，数据域DI+密码）。</p>
+<p>按 DL/T645-2007 第10节：数据域为 4 字节数据标识 + 4 字节密码，
+将当前最大需量及发生时间数据清零。需 04 级及以上权限。</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>di</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><em>int</em></a>) -- 需量数据标识。</p></li>
+<li><p><strong>password</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><em>str</em></a>) -- 密码（4字节BCD，首字节为权限级别，数值越小权限越高，需 0-4 级）。</p></li>
+</ul>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>成功返回 DataItem，失败返回 None。</p>
+</dd>
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Optional[<a class="reference internal" href="src.html#src.DataItem" title="src.DataItem">DataItem</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.service.clientsvc.client_service.MeterClientService.clear_meter">
+<span class="sig-name descname"><span class="pre">clear_meter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">password</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/clientsvc/client_service.html#MeterClientService.clear_meter"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.service.clientsvc.client_service.MeterClientService.clear_meter" title="Link to this definition"></a></dt>
+<dd><p>电表清零命令（C=1AH，数据域DI+密码）。</p>
+<p>按 DL/T645-2007 第11节：数据域为 4 字节数据标识（00000000H）
++ 4 字节密码，清空电能量、最大需量及发生时间、冻结量、
+事件记录、负荷记录等数据（电表清零事件记录不被清除）。</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>password</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><em>str</em></a>) -- 密码（4字节BCD，首字节为权限级别，数值越小权限越高，需 0-2 级）。</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>成功返回 DataItem，失败返回 None。</p>
+</dd>
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Optional[<a class="reference internal" href="src.html#src.DataItem" title="src.DataItem">DataItem</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.service.clientsvc.client_service.MeterClientService.clear_event">
+<span class="sig-name descname"><span class="pre">clear_event</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">password</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">operator_code</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'00000000'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">di</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4294967295</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/clientsvc/client_service.html#MeterClientService.clear_event"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.service.clientsvc.client_service.MeterClientService.clear_event" title="Link to this definition"></a></dt>
+<dd><p>事件清零命令（C=1BH，数据域密码+操作者代码+数据标识）。</p>
+<p>按 DL/T645-2007 第12节：数据域为 4 字节密码 + 4 字节操作者代码
++ 4 字节数据标识。数据标识为 FFFFFFFFH 表示事件总清零；
+分项事件清零时数据标识为事件记录数据标识（DI0 用 FF 表示）。</p>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>password</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><em>str</em></a>) -- 密码（4字节BCD，首字节为权限级别，数值越小权限越高，需 0-2 级）。</p></li>
+<li><p><strong>operator_code</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><em>str</em></a>) -- 操作者代码（4字节BCD）。</p></li>
+<li><p><strong>di</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><em>int</em></a>) -- 数据标识，默认 FFFFFFFFH（事件总清零）。</p></li>
+</ul>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>成功返回 DataItem，失败返回 None。</p>
+</dd>
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Optional[<a class="reference internal" href="src.html#src.DataItem" title="src.DataItem">DataItem</a>]</p>
 </dd>
 </dl>
 </dd></dl>

@@ -51,16 +51,22 @@
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.common.html#submodules">Submodules</a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.common.html#module-src.common.base_log">src.common.base_log module</a><ul>
 <li class="toctree-l6"><a class="reference internal" href="../../../../src.common.html#src.common.base_log.Log"><code class="docutils literal notranslate"><span class="pre">Log</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="../../../../src.common.html#src.common.base_log.Log.set_config"><code class="docutils literal notranslate"><span class="pre">Log.set_config()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="../../../../src.common.html#src.common.base_log.Log.set_logger"><code class="docutils literal notranslate"><span class="pre">Log.set_logger()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../../src.common.html#src.common.base_log.Log.enable_log"><code class="docutils literal notranslate"><span class="pre">Log.enable_log()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../../src.common.html#src.common.base_log.Log.disable_log"><code class="docutils literal notranslate"><span class="pre">Log.disable_log()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../../src.common.html#src.common.base_log.Log.set_log_level"><code class="docutils literal notranslate"><span class="pre">Log.set_log_level()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="../../../../src.common.html#src.common.base_log.Log.debug"><code class="docutils literal notranslate"><span class="pre">Log.debug()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="../../../../src.common.html#src.common.base_log.Log.info"><code class="docutils literal notranslate"><span class="pre">Log.info()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="../../../../src.common.html#src.common.base_log.Log.warning"><code class="docutils literal notranslate"><span class="pre">Log.warning()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="../../../../src.common.html#src.common.base_log.Log.error"><code class="docutils literal notranslate"><span class="pre">Log.error()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="../../../../src.common.html#src.common.base_log.Log.critical"><code class="docutils literal notranslate"><span class="pre">Log.critical()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="../../../../src.common.html#src.common.base_log.Log.set_config"><code class="docutils literal notranslate"><span class="pre">Log.set_config()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="../../../../src.common.html#src.common.base_log.Log.exception"><code class="docutils literal notranslate"><span class="pre">Log.exception()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l6"><a class="reference internal" href="../../../../src.common.html#src.common.base_log.configure_logging"><code class="docutils literal notranslate"><span class="pre">configure_logging()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../../src.common.html#src.common.base_log.enable_logging"><code class="docutils literal notranslate"><span class="pre">enable_logging()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../../src.common.html#src.common.base_log.disable_logging"><code class="docutils literal notranslate"><span class="pre">disable_logging()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.common.html#module-src.common.env">src.common.env module</a></li>
@@ -172,7 +178,6 @@
 </li>
 <li class="toctree-l8"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.CtrlCode"><code class="docutils literal notranslate"><span class="pre">CtrlCode</span></code></a><ul>
 <li class="toctree-l9"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.CtrlCode.BroadcastTimeSync"><code class="docutils literal notranslate"><span class="pre">CtrlCode.BroadcastTimeSync</span></code></a></li>
-<li class="toctree-l9"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.CtrlCode.ClearDemand"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ClearDemand</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.CtrlCode.ReadData"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ReadData</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.CtrlCode.ReadAddress"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ReadAddress</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.CtrlCode.WriteData"><code class="docutils literal notranslate"><span class="pre">CtrlCode.WriteData</span></code></a></li>
@@ -180,6 +185,16 @@
 <li class="toctree-l9"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.CtrlCode.FreezeCmd"><code class="docutils literal notranslate"><span class="pre">CtrlCode.FreezeCmd</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.CtrlCode.ChangeBaudRate"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ChangeBaudRate</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.CtrlCode.ChangePassword"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ChangePassword</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.CtrlCode.ClearDemand"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ClearDemand</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.CtrlCode.ClearMeter"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ClearMeter</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.CtrlCode.ClearEvent"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ClearEvent</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l8"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.BaudRateCode"><code class="docutils literal notranslate"><span class="pre">BaudRateCode</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.CodeToBaudRate"><code class="docutils literal notranslate"><span class="pre">CodeToBaudRate</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.BroadcastAddr"><code class="docutils literal notranslate"><span class="pre">BroadcastAddr</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.BroadcastAddr.TimeSync"><code class="docutils literal notranslate"><span class="pre">BroadcastAddr.TimeSync</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.BroadcastAddr.Address"><code class="docutils literal notranslate"><span class="pre">BroadcastAddr.Address</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l8"><a class="reference internal" href="../../../../src.model.types.html#src.model.types.dlt645_type.ErrorCode"><code class="docutils literal notranslate"><span class="pre">ErrorCode</span></code></a><ul>
@@ -277,6 +292,12 @@
 <li class="toctree-l9"><a class="reference internal" href="../../../../src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.write_04"><code class="docutils literal notranslate"><span class="pre">MeterClientService.write_04()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="../../../../src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.read_address"><code class="docutils literal notranslate"><span class="pre">MeterClientService.read_address()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="../../../../src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.write_address"><code class="docutils literal notranslate"><span class="pre">MeterClientService.write_address()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../../src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.broadcast_time_sync"><code class="docutils literal notranslate"><span class="pre">MeterClientService.broadcast_time_sync()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../../src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.freeze"><code class="docutils literal notranslate"><span class="pre">MeterClientService.freeze()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../../src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.change_baud_rate"><code class="docutils literal notranslate"><span class="pre">MeterClientService.change_baud_rate()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../../src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.clear_demand"><code class="docutils literal notranslate"><span class="pre">MeterClientService.clear_demand()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../../src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.clear_meter"><code class="docutils literal notranslate"><span class="pre">MeterClientService.clear_meter()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../../src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.clear_event"><code class="docutils literal notranslate"><span class="pre">MeterClientService.clear_event()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="../../../../src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.send_and_handle_request"><code class="docutils literal notranslate"><span class="pre">MeterClientService.send_and_handle_request()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="../../../../src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.handle_response"><code class="docutils literal notranslate"><span class="pre">MeterClientService.handle_response()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="../../../../src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.enable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterClientService.enable_message_capture()</span></code></a></li>
@@ -343,6 +364,7 @@
 <li class="toctree-l9"><a class="reference internal" href="../../../../src.transport.client.html#src.transport.client.rtu_client.RtuClient.connect"><code class="docutils literal notranslate"><span class="pre">RtuClient.connect()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="../../../../src.transport.client.html#src.transport.client.rtu_client.RtuClient.disconnect"><code class="docutils literal notranslate"><span class="pre">RtuClient.disconnect()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="../../../../src.transport.client.html#src.transport.client.rtu_client.RtuClient.send_request"><code class="docutils literal notranslate"><span class="pre">RtuClient.send_request()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../../src.transport.client.html#src.transport.client.rtu_client.RtuClient.send_only"><code class="docutils literal notranslate"><span class="pre">RtuClient.send_only()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -352,6 +374,7 @@
 <li class="toctree-l9"><a class="reference internal" href="../../../../src.transport.client.html#src.transport.client.tcp_client.TcpClient.connect"><code class="docutils literal notranslate"><span class="pre">TcpClient.connect()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="../../../../src.transport.client.html#src.transport.client.tcp_client.TcpClient.disconnect"><code class="docutils literal notranslate"><span class="pre">TcpClient.disconnect()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="../../../../src.transport.client.html#src.transport.client.tcp_client.TcpClient.send_request"><code class="docutils literal notranslate"><span class="pre">TcpClient.send_request()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="../../../../src.transport.client.html#src.transport.client.tcp_client.TcpClient.send_only"><code class="docutils literal notranslate"><span class="pre">TcpClient.send_only()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -393,6 +416,9 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../../../../src.html#module-src">Module contents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../src.html#src.configure_logging"><code class="docutils literal notranslate"><span class="pre">configure_logging()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../src.html#src.enable_logging"><code class="docutils literal notranslate"><span class="pre">enable_logging()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../src.html#src.disable_logging"><code class="docutils literal notranslate"><span class="pre">disable_logging()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../src.html#src.MeterServerService"><code class="docutils literal notranslate"><span class="pre">MeterServerService</span></code></a><ul>
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MeterServerService.new_tcp_server"><code class="docutils literal notranslate"><span class="pre">MeterServerService.new_tcp_server()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MeterServerService.new_rtu_server"><code class="docutils literal notranslate"><span class="pre">MeterServerService.new_rtu_server()</span></code></a></li>
@@ -433,6 +459,12 @@
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MeterClientService.write_04"><code class="docutils literal notranslate"><span class="pre">MeterClientService.write_04()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MeterClientService.read_address"><code class="docutils literal notranslate"><span class="pre">MeterClientService.read_address()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MeterClientService.write_address"><code class="docutils literal notranslate"><span class="pre">MeterClientService.write_address()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MeterClientService.broadcast_time_sync"><code class="docutils literal notranslate"><span class="pre">MeterClientService.broadcast_time_sync()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MeterClientService.freeze"><code class="docutils literal notranslate"><span class="pre">MeterClientService.freeze()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MeterClientService.change_baud_rate"><code class="docutils literal notranslate"><span class="pre">MeterClientService.change_baud_rate()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MeterClientService.clear_demand"><code class="docutils literal notranslate"><span class="pre">MeterClientService.clear_demand()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MeterClientService.clear_meter"><code class="docutils literal notranslate"><span class="pre">MeterClientService.clear_meter()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MeterClientService.clear_event"><code class="docutils literal notranslate"><span class="pre">MeterClientService.clear_event()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MeterClientService.send_and_handle_request"><code class="docutils literal notranslate"><span class="pre">MeterClientService.send_and_handle_request()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MeterClientService.handle_response"><code class="docutils literal notranslate"><span class="pre">MeterClientService.handle_response()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.MeterClientService.enable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterClientService.enable_message_capture()</span></code></a></li>
@@ -457,7 +489,6 @@
 </li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../src.html#src.CtrlCode"><code class="docutils literal notranslate"><span class="pre">CtrlCode</span></code></a><ul>
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.CtrlCode.BroadcastTimeSync"><code class="docutils literal notranslate"><span class="pre">CtrlCode.BroadcastTimeSync</span></code></a></li>
-<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.CtrlCode.ClearDemand"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ClearDemand</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.CtrlCode.ReadData"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ReadData</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.CtrlCode.ReadAddress"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ReadAddress</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.CtrlCode.WriteData"><code class="docutils literal notranslate"><span class="pre">CtrlCode.WriteData</span></code></a></li>
@@ -465,6 +496,9 @@
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.CtrlCode.FreezeCmd"><code class="docutils literal notranslate"><span class="pre">CtrlCode.FreezeCmd</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.CtrlCode.ChangeBaudRate"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ChangeBaudRate</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.CtrlCode.ChangePassword"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ChangePassword</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.CtrlCode.ClearDemand"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ClearDemand</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.CtrlCode.ClearMeter"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ClearMeter</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.CtrlCode.ClearEvent"><code class="docutils literal notranslate"><span class="pre">CtrlCode.ClearEvent</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../src.html#src.Demand"><code class="docutils literal notranslate"><span class="pre">Demand</span></code></a></li>
@@ -503,12 +537,14 @@
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.TcpClient.connect"><code class="docutils literal notranslate"><span class="pre">TcpClient.connect()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.TcpClient.disconnect"><code class="docutils literal notranslate"><span class="pre">TcpClient.disconnect()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.TcpClient.send_request"><code class="docutils literal notranslate"><span class="pre">TcpClient.send_request()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.TcpClient.send_only"><code class="docutils literal notranslate"><span class="pre">TcpClient.send_only()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../src.html#src.RtuClient"><code class="docutils literal notranslate"><span class="pre">RtuClient</span></code></a><ul>
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.RtuClient.connect"><code class="docutils literal notranslate"><span class="pre">RtuClient.connect()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.RtuClient.disconnect"><code class="docutils literal notranslate"><span class="pre">RtuClient.disconnect()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.RtuClient.send_request"><code class="docutils literal notranslate"><span class="pre">RtuClient.send_request()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../src.html#src.RtuClient.send_only"><code class="docutils literal notranslate"><span class="pre">RtuClient.send_only()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l4"><a class="reference internal" href="../../../../src.html#src.MessageRecord"><code class="docutils literal notranslate"><span class="pre">MessageRecord</span></code></a><ul>
@@ -605,6 +641,7 @@
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">struct</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">List</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">...common.transform</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
@@ -614,6 +651,7 @@
     <span class="n">string_to_bcd</span><span class="p">,</span>
     <span class="n">bcd_to_value</span><span class="p">,</span>
     <span class="n">bcd_to_string</span><span class="p">,</span>
+    <span class="n">bcd_to_byte</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">...model.data.data_handler</span><span class="w"> </span><span class="kn">import</span> <span class="n">set_data_item</span><span class="p">,</span> <span class="n">get_data_item</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">...model.types.data_type</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataItem</span>
@@ -628,6 +666,9 @@
     <span class="n">ErrorCode</span><span class="p">,</span>
     <span class="n">EventRecord</span><span class="p">,</span>
     <span class="n">PasswordManager</span><span class="p">,</span>
+    <span class="n">BaudRateCode</span><span class="p">,</span>
+    <span class="n">CodeToBaudRate</span><span class="p">,</span>
+    <span class="n">BroadcastAddr</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">...protocol.protocol</span><span class="w"> </span><span class="kn">import</span> <span class="n">DLT645Protocol</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">...model.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">data_handler</span> <span class="k">as</span> <span class="n">data</span>
@@ -673,6 +714,12 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">password_manager</span> <span class="o">=</span> <span class="n">password_manager</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">clear_meter_event_records</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># 记录电表清零事件</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">event_records</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># 记录事件</span>
+        <span class="c1"># 当前表内时钟（广播校时后更新）</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1"># 最近一次冻结命令的原始数据域（MMDDhhmm）</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_freeze_time</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bytearray</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1"># 当前通信速率（bps）</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">baud_rate</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">9600</span>
 
 <div class="viewcode-block" id="MeterServerService.new_tcp_server">
 <a class="viewcode-back" href="../../../../src.service.serversvc.html#src.MeterServerService.new_tcp_server">[文档]</a>
@@ -743,7 +790,30 @@
 <div class="viewcode-block" id="MeterServerService.set_time">
 <a class="viewcode-back" href="../../../../src.service.serversvc.html#src.MeterServerService.set_time">[文档]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">set_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_bytes</span><span class="p">):</span>
-        <span class="k">pass</span></div>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;广播校时：解析 YYMMDDhhmmss 并设置表内时钟。</span>
+
+<span class="sd">        按 DL/T645-2007 第6节：广播校时数据域为 6 字节压缩 BCD 码，</span>
+<span class="sd">        依次为年（后两位）、月、日、时、分、秒（自然顺序）。</span>
+
+<span class="sd">        :param data_bytes: 数据域（6字节）。</span>
+<span class="sd">        :type data_bytes: bytearray</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">data_bytes</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">data_bytes</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="p">:</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;广播校时数据长度无效: </span><span class="si">{</span><span class="n">bytes_to_spaced_hex</span><span class="p">(</span><span class="n">data_bytes</span><span class="p">)</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">data_bytes</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;None&#39;</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+            <span class="k">return</span>
+        <span class="n">year</span> <span class="o">=</span> <span class="n">bcd_to_byte</span><span class="p">(</span><span class="n">data_bytes</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="mi">2000</span>
+        <span class="n">month</span> <span class="o">=</span> <span class="n">bcd_to_byte</span><span class="p">(</span><span class="n">data_bytes</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">day</span> <span class="o">=</span> <span class="n">bcd_to_byte</span><span class="p">(</span><span class="n">data_bytes</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+        <span class="n">hour</span> <span class="o">=</span> <span class="n">bcd_to_byte</span><span class="p">(</span><span class="n">data_bytes</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+        <span class="n">minute</span> <span class="o">=</span> <span class="n">bcd_to_byte</span><span class="p">(</span><span class="n">data_bytes</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
+        <span class="n">second</span> <span class="o">=</span> <span class="n">bcd_to_byte</span><span class="p">(</span><span class="n">data_bytes</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">time</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="p">,</span> <span class="n">day</span><span class="p">,</span> <span class="n">hour</span><span class="p">,</span> <span class="n">minute</span><span class="p">,</span> <span class="n">second</span><span class="p">)</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;广播校时成功: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;广播校时时间无效: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="MeterServerService.set_address">
@@ -875,6 +945,110 @@
         <span class="k">return</span> <span class="n">get_data_item</span><span class="p">(</span><span class="n">di</span><span class="p">)</span></div>
 
 
+    <span class="k">def</span><span class="w"> </span><span class="nf">_check_password_with_level</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">password</span><span class="p">:</span> <span class="nb">bytearray</span><span class="p">,</span> <span class="n">max_level</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;校验密码是否匹配且权限级别满足要求。</span>
+
+<span class="sd">        按 DL/T645-2007 第9节：密码首字节为权限级别（00 最高，数值越大权限越低），</span>
+<span class="sd">        02 级可执行电表清零、事件清零，04 级可执行写数据、最大需量清零。</span>
+
+<span class="sd">        :param password: 密码字节数组（首字节为权限级别）。</span>
+<span class="sd">        :type password: bytearray</span>
+<span class="sd">        :param max_level: 允许的最大权限级别（数字越小权限越高）。</span>
+<span class="sd">        :type max_level: int</span>
+<span class="sd">        :return: 校验通过返回 True，否则返回 False。</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">password_manager</span><span class="o">.</span><span class="n">check_password</span><span class="p">(</span><span class="n">password</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="n">password</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">max_level</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_reset_energy_data</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;清空累计量数据（电表清零）。</span>
+
+<span class="sd">        按 DL/T645-2007 第11节：电表清零清空电能表内电能量、最大需量及</span>
+<span class="sd">        发生时间、冻结量、事件记录、负荷记录等累计数据；</span>
+<span class="sd">        运行变量（0x02 当前电压/电流/功率等瞬时量）不属于清零范围。</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">...model.data.define</span><span class="w"> </span><span class="kn">import</span> <span class="n">DIMap</span>
+
+        <span class="k">for</span> <span class="n">di</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">DIMap</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">di3</span> <span class="o">=</span> <span class="p">(</span><span class="n">di</span> <span class="o">&gt;&gt;</span> <span class="mi">24</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFF</span>  <span class="c1"># DI 高字节为数据分类</span>
+            <span class="k">if</span> <span class="n">di3</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="mh">0x00</span><span class="p">,</span> <span class="mh">0x01</span><span class="p">,</span> <span class="mh">0x05</span><span class="p">):</span>  <span class="c1"># 电能/需量/冻结量</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">Demand</span><span class="p">):</span>
+                <span class="n">item</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">Demand</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
+                <span class="n">item</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_reset_event_records</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">di</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;清空事件记录数据（事件清零）。</span>
+
+<span class="sd">        按 DL/T645-2007 第12节：事件总清零（di=FFFFFFFF）清空全部事件记录；</span>
+<span class="sd">        分项事件清零仅清空指定数据标识的事件。执行时不允许清空事件清零记录</span>
+<span class="sd">        和电表清零记录数据（DI 0x03300100~0x033002FF）。</span>
+<span class="sd">        清零后事件值置为与 data_format 等长的全零字符串，保证 BCD 长度不变。</span>
+
+<span class="sd">        :param di: 数据标识，FFFFFFFF 表示事件总清零。</span>
+<span class="sd">        :type di: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">...model.data.define</span><span class="w"> </span><span class="kn">import</span> <span class="n">DIMap</span>
+
+        <span class="k">for</span> <span class="n">d</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">DIMap</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">di3</span> <span class="o">=</span> <span class="p">(</span><span class="n">d</span> <span class="o">&gt;&gt;</span> <span class="mi">24</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFF</span>
+            <span class="k">if</span> <span class="n">di3</span> <span class="o">!=</span> <span class="mh">0x03</span><span class="p">:</span>  <span class="c1"># 事件记录</span>
+                <span class="k">continue</span>
+            <span class="c1"># 分项事件清零：仅清空指定数据标识</span>
+            <span class="k">if</span> <span class="n">di</span> <span class="o">!=</span> <span class="mh">0xFFFFFFFF</span> <span class="ow">and</span> <span class="n">d</span> <span class="o">!=</span> <span class="n">di</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="c1"># 保留事件清零记录和电表清零记录</span>
+            <span class="k">if</span> <span class="mh">0x03300100</span> <span class="o">&lt;=</span> <span class="n">d</span> <span class="o">&lt;=</span> <span class="mh">0x033002FF</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">sub</span> <span class="ow">in</span> <span class="n">item</span><span class="p">:</span>
+                    <span class="n">event_record</span><span class="p">:</span> <span class="n">EventRecord</span> <span class="o">=</span> <span class="n">sub</span><span class="o">.</span><span class="n">value</span>
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">event_record</span><span class="o">.</span><span class="n">event</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+                        <span class="c1"># data_format 如 &quot;XXXXXX,XXXXXX&quot;，每字段字符数即其长度</span>
+                        <span class="n">step</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sub</span><span class="o">.</span><span class="n">data_format</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+                        <span class="n">event_record</span><span class="o">.</span><span class="n">event</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="s2">&quot;0&quot;</span> <span class="o">*</span> <span class="n">step</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">event_record</span><span class="o">.</span><span class="n">event</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">step</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sub</span><span class="o">.</span><span class="n">data_format</span><span class="p">)</span>
+                        <span class="n">event_record</span><span class="o">.</span><span class="n">event</span> <span class="o">=</span> <span class="s2">&quot;0&quot;</span> <span class="o">*</span> <span class="n">step</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">EventRecord</span><span class="p">):</span>
+                <span class="n">step</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">data_format</span><span class="p">)</span>
+                <span class="n">item</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">event</span> <span class="o">=</span> <span class="s2">&quot;0&quot;</span> <span class="o">*</span> <span class="n">step</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_record_event_clear</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">operator_code</span><span class="p">:</span> <span class="nb">bytearray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;记录事件清零事件（DL/T645-2007 第12节）。</span>
+
+<span class="sd">        递增 0x03300200 事件清零总次数，并更新 0x03300201 上1次事件清零记录</span>
+<span class="sd">        中的发生时刻与操作者代码。</span>
+
+<span class="sd">        :param operator_code: 操作者代码（4字节）。</span>
+<span class="sd">        :type operator_code: bytearray</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">...model.data.define</span><span class="w"> </span><span class="kn">import</span> <span class="n">DIMap</span>
+
+        <span class="c1"># 事件清零总次数（0x03300200）加 1</span>
+        <span class="n">total</span> <span class="o">=</span> <span class="n">DIMap</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mh">0x03300200</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">total</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">total</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="n">total</span> <span class="o">=</span> <span class="n">total</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">count</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">total</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">event</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="n">total</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">event</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">count</span><span class="p">)</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+                <span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;事件清零总次数解析失败，跳过&quot;</span><span class="p">)</span>
+        <span class="c1"># 上1次事件清零记录（0x03300201）：更新发生时刻与操作者代码</span>
+        <span class="n">record</span> <span class="o">=</span> <span class="n">DIMap</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mh">0x03300201</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">record</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">record</span><span class="p">:</span>
+                <span class="k">if</span> <span class="s2">&quot;发生时刻&quot;</span> <span class="ow">in</span> <span class="n">item</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+                    <span class="n">item</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">event</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%y%m</span><span class="si">%d</span><span class="s2">%H%M%S&quot;</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="s2">&quot;操作者代码&quot;</span> <span class="ow">in</span> <span class="n">item</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+                    <span class="n">item</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">event</span> <span class="o">=</span> <span class="n">bcd_to_string</span><span class="p">(</span><span class="n">operator_code</span><span class="p">,</span> <span class="s2">&quot;little&quot;</span><span class="p">)</span>
+
 <div class="viewcode-block" id="MeterServerService.handle_request">
 <a class="viewcode-back" href="../../../../src.service.serversvc.html#src.MeterServerService.handle_request">[文档]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">handle_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame</span><span class="p">):</span>
@@ -896,8 +1070,36 @@
             <span class="k">if</span> <span class="n">frame</span><span class="o">.</span><span class="n">ctrl_code</span> <span class="o">==</span> <span class="n">CtrlCode</span><span class="o">.</span><span class="n">BroadcastTimeSync</span><span class="p">:</span>  <span class="c1"># 广播校时</span>
                 <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;广播校时: </span><span class="si">{</span><span class="n">bytes_to_spaced_hex</span><span class="p">(</span><span class="n">frame</span><span class="o">.</span><span class="n">data</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">set_time</span><span class="p">(</span><span class="n">frame</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+                <span class="c1"># 广播校时不要求应答（DL/T645-2007 第6节），一律不返回响应</span>
+                <span class="k">return</span> <span class="kc">None</span>
+            <span class="k">elif</span> <span class="n">frame</span><span class="o">.</span><span class="n">ctrl_code</span> <span class="o">==</span> <span class="n">CtrlCode</span><span class="o">.</span><span class="n">FreezeCmd</span><span class="p">:</span>  <span class="c1"># 冻结命令</span>
+                <span class="c1"># 数据域：MMDDhhmm（月.日.时.分，各1字节压缩BCD，自然顺序）</span>
+                <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;冻结命令: </span><span class="si">{</span><span class="n">bytes_to_spaced_hex</span><span class="p">(</span><span class="n">frame</span><span class="o">.</span><span class="n">data</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">last_freeze_time</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">frame</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+                <span class="c1"># 广播冻结不要求应答（DL/T645-2007 第7节）</span>
+                <span class="k">if</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">frame</span><span class="o">.</span><span class="n">addr</span><span class="p">)</span> <span class="o">==</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">BroadcastAddr</span><span class="o">.</span><span class="n">TimeSync</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="kc">None</span>
                 <span class="k">return</span> <span class="n">DLT645Protocol</span><span class="o">.</span><span class="n">build_frame</span><span class="p">(</span>
-                    <span class="n">frame</span><span class="o">.</span><span class="n">addr</span><span class="p">,</span> <span class="n">frame</span><span class="o">.</span><span class="n">ctrl_code</span> <span class="o">|</span> <span class="mh">0x80</span><span class="p">,</span> <span class="n">frame</span><span class="o">.</span><span class="n">data</span>
+                    <span class="n">frame</span><span class="o">.</span><span class="n">addr</span><span class="p">,</span> <span class="n">frame</span><span class="o">.</span><span class="n">ctrl_code</span> <span class="o">|</span> <span class="mh">0x80</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span>
+                <span class="p">)</span>
+            <span class="k">elif</span> <span class="n">frame</span><span class="o">.</span><span class="n">ctrl_code</span> <span class="o">==</span> <span class="n">CtrlCode</span><span class="o">.</span><span class="n">ChangeBaudRate</span><span class="p">:</span>  <span class="c1"># 更改通信速率</span>
+                <span class="c1"># 数据域：1字节通信速率特征字（附录C）</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">frame</span><span class="o">.</span><span class="n">data</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_error_response</span><span class="p">(</span>
+                        <span class="n">frame</span><span class="p">,</span> <span class="n">error_code</span><span class="o">=</span><span class="n">ErrorCode</span><span class="o">.</span><span class="n">RequestDataEmpty</span>
+                    <span class="p">)</span>
+                <span class="n">feature</span> <span class="o">=</span> <span class="n">frame</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">baud</span> <span class="o">=</span> <span class="n">CodeToBaudRate</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">feature</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">baud</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;无效的通信速率特征字: </span><span class="si">{</span><span class="nb">hex</span><span class="p">(</span><span class="n">feature</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_error_response</span><span class="p">(</span>
+                        <span class="n">frame</span><span class="p">,</span> <span class="n">error_code</span><span class="o">=</span><span class="n">ErrorCode</span><span class="o">.</span><span class="n">CommRateImmutable</span>
+                    <span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">baud_rate</span> <span class="o">=</span> <span class="n">baud</span>
+                <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;更改通信速率成功: </span><span class="si">{</span><span class="n">baud</span><span class="si">}</span><span class="s2"> bps (特征字 </span><span class="si">{</span><span class="nb">hex</span><span class="p">(</span><span class="n">feature</span><span class="p">)</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+                <span class="c1"># 正常应答帧中的特征字必须与请求帧相同（DL/T645-2007 第8节）</span>
+                <span class="k">return</span> <span class="n">DLT645Protocol</span><span class="o">.</span><span class="n">build_frame</span><span class="p">(</span>
+                    <span class="n">frame</span><span class="o">.</span><span class="n">addr</span><span class="p">,</span> <span class="n">frame</span><span class="o">.</span><span class="n">ctrl_code</span> <span class="o">|</span> <span class="mh">0x80</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">([</span><span class="n">feature</span><span class="p">])</span>
                 <span class="p">)</span>
             <span class="k">elif</span> <span class="n">frame</span><span class="o">.</span><span class="n">ctrl_code</span> <span class="o">==</span> <span class="n">CtrlCode</span><span class="o">.</span><span class="n">ReadData</span><span class="p">:</span>
                 <span class="c1"># 解析数据标识</span>
@@ -1132,8 +1334,19 @@
                 <span class="p">)</span>
             <span class="k">elif</span> <span class="n">frame</span><span class="o">.</span><span class="n">ctrl_code</span> <span class="o">==</span> <span class="n">CtrlCode</span><span class="o">.</span><span class="n">ClearDemand</span><span class="p">:</span>
                 <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;收到需量清零请求: </span><span class="si">{</span><span class="n">bytes_to_spaced_hex</span><span class="p">(</span><span class="n">frame</span><span class="o">.</span><span class="n">data</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="c1"># 数据域：DI(4字节) + 密码(4字节)，需 04 级及以上权限</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">frame</span><span class="o">.</span><span class="n">data</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">DI_LEN</span> <span class="o">+</span> <span class="n">PASSWORD_LEN</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_error_response</span><span class="p">(</span>
+                        <span class="n">frame</span><span class="p">,</span> <span class="n">error_code</span><span class="o">=</span><span class="n">ErrorCode</span><span class="o">.</span><span class="n">RequestDataEmpty</span>
+                    <span class="p">)</span>
                 <span class="c1"># 解析数据标识为 32 位无符号整数</span>
                 <span class="n">data_id</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;&lt;I&quot;</span><span class="p">,</span> <span class="n">frame</span><span class="o">.</span><span class="n">data</span><span class="p">[:</span><span class="n">DI_LEN</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="c1"># 需量清零仅作用于需量类数据标识（DI3=01）</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">data_id</span> <span class="o">&gt;&gt;</span> <span class="mi">24</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFF</span> <span class="o">!=</span> <span class="mh">0x01</span><span class="p">:</span>
+                    <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;需量清零数据标识必须为需量类(0x01xxxxxx): </span><span class="si">{</span><span class="nb">hex</span><span class="p">(</span><span class="n">data_id</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_error_response</span><span class="p">(</span>
+                        <span class="n">frame</span><span class="p">,</span> <span class="n">error_code</span><span class="o">=</span><span class="n">ErrorCode</span><span class="o">.</span><span class="n">OtherError</span>
+                    <span class="p">)</span>
                 <span class="n">data_item</span> <span class="o">=</span> <span class="n">get_data_item</span><span class="p">(</span><span class="n">data_id</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">data_item</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;数据项未找到: </span><span class="si">{</span><span class="n">data_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -1141,21 +1354,15 @@
                         <span class="n">frame</span><span class="p">,</span> <span class="n">error_code</span><span class="o">=</span><span class="n">ErrorCode</span><span class="o">.</span><span class="n">RequestDataEmpty</span>
                     <span class="p">)</span>
 
-                <span class="c1"># 提取密码</span>
+                <span class="c1"># 提取密码并校验权限（04级及以上）</span>
                 <span class="n">password</span> <span class="o">=</span> <span class="n">frame</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">DI_LEN</span> <span class="p">:</span> <span class="n">DI_LEN</span> <span class="o">+</span> <span class="n">PASSWORD_LEN</span><span class="p">]</span>
-                <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">password_manager</span><span class="o">.</span><span class="n">check_password</span><span class="p">(</span><span class="n">password</span><span class="p">):</span>
-                    <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;密码错误: </span><span class="si">{</span><span class="n">bytes_to_spaced_hex</span><span class="p">(</span><span class="n">password</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_password_with_level</span><span class="p">(</span><span class="n">password</span><span class="p">,</span> <span class="n">max_level</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
+                    <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;密码错误或权限不足: </span><span class="si">{</span><span class="n">bytes_to_spaced_hex</span><span class="p">(</span><span class="n">password</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
                     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_error_response</span><span class="p">(</span>
                         <span class="n">frame</span><span class="p">,</span> <span class="n">error_code</span><span class="o">=</span><span class="n">ErrorCode</span><span class="o">.</span><span class="n">AuthFailed</span>
                     <span class="p">)</span>
 
-                <span class="c1"># 提取操作者代码</span>
-                <span class="n">operator_code</span> <span class="o">=</span> <span class="n">frame</span><span class="o">.</span><span class="n">data</span><span class="p">[</span>
-                    <span class="n">DI_LEN</span> <span class="o">+</span> <span class="n">PASSWORD_LEN</span> <span class="p">:</span> <span class="n">DI_LEN</span> <span class="o">+</span> <span class="n">PASSWORD_LEN</span> <span class="o">+</span> <span class="n">OPERATOR_CODE_LEN</span>
-                <span class="p">]</span>
-
                 <span class="c1"># 执行需量清零：将需量值设为0，时间设为当前时间</span>
-                <span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
                 <span class="n">cleared_demand</span> <span class="o">=</span> <span class="n">Demand</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">set_data_item</span><span class="p">(</span><span class="n">data_id</span><span class="p">,</span> <span class="n">cleared_demand</span><span class="p">):</span>
                     <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;需量清零失败: </span><span class="si">{</span><span class="n">data_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -1163,12 +1370,74 @@
                         <span class="n">frame</span><span class="p">,</span> <span class="n">error_code</span><span class="o">=</span><span class="n">ErrorCode</span><span class="o">.</span><span class="n">OtherError</span>
                     <span class="p">)</span>
 
-                <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;需量清零成功: DI=</span><span class="si">{</span><span class="nb">hex</span><span class="p">(</span><span class="n">data_id</span><span class="p">)</span><span class="si">}</span><span class="s2">, 操作者代码=</span><span class="si">{</span><span class="n">bytes_to_spaced_hex</span><span class="p">(</span><span class="n">operator_code</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;最大需量清零成功: DI=</span><span class="si">{</span><span class="nb">hex</span><span class="p">(</span><span class="n">data_id</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
                 <span class="c1"># 构建响应帧</span>
                 <span class="n">res_data</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span>
                 <span class="k">return</span> <span class="n">DLT645Protocol</span><span class="o">.</span><span class="n">build_frame</span><span class="p">(</span>
                     <span class="n">frame</span><span class="o">.</span><span class="n">addr</span><span class="p">,</span> <span class="n">frame</span><span class="o">.</span><span class="n">ctrl_code</span> <span class="o">|</span> <span class="mh">0x80</span><span class="p">,</span> <span class="n">res_data</span>
+                <span class="p">)</span>
+            <span class="k">elif</span> <span class="n">frame</span><span class="o">.</span><span class="n">ctrl_code</span> <span class="o">==</span> <span class="n">CtrlCode</span><span class="o">.</span><span class="n">ClearMeter</span><span class="p">:</span>  <span class="c1"># 电表清零</span>
+                <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;收到电表清零请求: </span><span class="si">{</span><span class="n">bytes_to_spaced_hex</span><span class="p">(</span><span class="n">frame</span><span class="o">.</span><span class="n">data</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">frame</span><span class="o">.</span><span class="n">data</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">DI_LEN</span> <span class="o">+</span> <span class="n">PASSWORD_LEN</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_error_response</span><span class="p">(</span>
+                        <span class="n">frame</span><span class="p">,</span> <span class="n">error_code</span><span class="o">=</span><span class="n">ErrorCode</span><span class="o">.</span><span class="n">RequestDataEmpty</span>
+                    <span class="p">)</span>
+                <span class="c1"># 数据域：DI(4字节，规范固定为00000000H) + 密码(4字节)，02级及以上权限</span>
+                <span class="n">data_id</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s2">&quot;&lt;I&quot;</span><span class="p">,</span> <span class="n">frame</span><span class="o">.</span><span class="n">data</span><span class="p">[:</span><span class="n">DI_LEN</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">data_id</span> <span class="o">!=</span> <span class="mh">0x00000000</span><span class="p">:</span>
+                    <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;电表清零数据标识必须为00000000H: </span><span class="si">{</span><span class="nb">hex</span><span class="p">(</span><span class="n">data_id</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_error_response</span><span class="p">(</span>
+                        <span class="n">frame</span><span class="p">,</span> <span class="n">error_code</span><span class="o">=</span><span class="n">ErrorCode</span><span class="o">.</span><span class="n">OtherError</span>
+                    <span class="p">)</span>
+                <span class="n">password</span> <span class="o">=</span> <span class="n">frame</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">DI_LEN</span> <span class="p">:</span> <span class="n">DI_LEN</span> <span class="o">+</span> <span class="n">PASSWORD_LEN</span><span class="p">]</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_password_with_level</span><span class="p">(</span><span class="n">password</span><span class="p">,</span> <span class="n">max_level</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+                    <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;密码错误或权限不足: </span><span class="si">{</span><span class="n">bytes_to_spaced_hex</span><span class="p">(</span><span class="n">password</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_error_response</span><span class="p">(</span>
+                        <span class="n">frame</span><span class="p">,</span> <span class="n">error_code</span><span class="o">=</span><span class="n">ErrorCode</span><span class="o">.</span><span class="n">AuthFailed</span>
+                    <span class="p">)</span>
+                <span class="c1"># 清空电能量、最大需量、冻结量、事件记录、负荷记录（保留清零类记录）</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_reset_energy_data</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_reset_event_records</span><span class="p">(</span><span class="mh">0xFFFFFFFF</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">clear_meter_event_records</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="p">{</span><span class="s2">&quot;time&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span> <span class="s2">&quot;di&quot;</span><span class="p">:</span> <span class="n">data_id</span><span class="p">}</span>
+                <span class="p">)</span>
+                <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;电表清零成功: DI=</span><span class="si">{</span><span class="nb">hex</span><span class="p">(</span><span class="n">data_id</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">DLT645Protocol</span><span class="o">.</span><span class="n">build_frame</span><span class="p">(</span>
+                    <span class="n">frame</span><span class="o">.</span><span class="n">addr</span><span class="p">,</span> <span class="n">frame</span><span class="o">.</span><span class="n">ctrl_code</span> <span class="o">|</span> <span class="mh">0x80</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span>
+                <span class="p">)</span>
+            <span class="k">elif</span> <span class="n">frame</span><span class="o">.</span><span class="n">ctrl_code</span> <span class="o">==</span> <span class="n">CtrlCode</span><span class="o">.</span><span class="n">ClearEvent</span><span class="p">:</span>  <span class="c1"># 事件清零</span>
+                <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;收到事件清零请求: </span><span class="si">{</span><span class="n">bytes_to_spaced_hex</span><span class="p">(</span><span class="n">frame</span><span class="o">.</span><span class="n">data</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">frame</span><span class="o">.</span><span class="n">data</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">PASSWORD_LEN</span> <span class="o">+</span> <span class="n">OPERATOR_CODE_LEN</span> <span class="o">+</span> <span class="n">DI_LEN</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_error_response</span><span class="p">(</span>
+                        <span class="n">frame</span><span class="p">,</span> <span class="n">error_code</span><span class="o">=</span><span class="n">ErrorCode</span><span class="o">.</span><span class="n">RequestDataEmpty</span>
+                    <span class="p">)</span>
+                <span class="c1"># 数据域：密码(4字节) + 操作者代码(4字节) + DI(4字节)，02级及以上权限</span>
+                <span class="n">password</span> <span class="o">=</span> <span class="n">frame</span><span class="o">.</span><span class="n">data</span><span class="p">[:</span><span class="n">PASSWORD_LEN</span><span class="p">]</span>
+                <span class="n">operator_code</span> <span class="o">=</span> <span class="n">frame</span><span class="o">.</span><span class="n">data</span><span class="p">[</span>
+                    <span class="n">PASSWORD_LEN</span> <span class="p">:</span> <span class="n">PASSWORD_LEN</span> <span class="o">+</span> <span class="n">OPERATOR_CODE_LEN</span>
+                <span class="p">]</span>
+                <span class="n">data_id</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span>
+                    <span class="s2">&quot;&lt;I&quot;</span><span class="p">,</span>
+                    <span class="n">frame</span><span class="o">.</span><span class="n">data</span><span class="p">[</span>
+                        <span class="n">PASSWORD_LEN</span> <span class="o">+</span> <span class="n">OPERATOR_CODE_LEN</span> <span class="p">:</span>
+                        <span class="n">PASSWORD_LEN</span> <span class="o">+</span> <span class="n">OPERATOR_CODE_LEN</span> <span class="o">+</span> <span class="n">DI_LEN</span>
+                    <span class="p">],</span>
+                <span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_password_with_level</span><span class="p">(</span><span class="n">password</span><span class="p">,</span> <span class="n">max_level</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+                    <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;密码错误或权限不足: </span><span class="si">{</span><span class="n">bytes_to_spaced_hex</span><span class="p">(</span><span class="n">password</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_error_response</span><span class="p">(</span>
+                        <span class="n">frame</span><span class="p">,</span> <span class="n">error_code</span><span class="o">=</span><span class="n">ErrorCode</span><span class="o">.</span><span class="n">AuthFailed</span>
+                    <span class="p">)</span>
+                <span class="c1"># 清空事件记录（保留事件清零记录和电表清零记录）</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_reset_event_records</span><span class="p">(</span><span class="n">data_id</span><span class="p">)</span>
+                <span class="c1"># 记录事件清零事件（总次数 +1，更新上1次记录）</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_record_event_clear</span><span class="p">(</span><span class="n">operator_code</span><span class="p">)</span>
+                <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;事件清零成功: DI=</span><span class="si">{</span><span class="nb">hex</span><span class="p">(</span><span class="n">data_id</span><span class="p">)</span><span class="si">}</span><span class="s2">, 操作者代码=</span><span class="si">{</span><span class="n">bytes_to_spaced_hex</span><span class="p">(</span><span class="n">operator_code</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+                <span class="k">return</span> <span class="n">DLT645Protocol</span><span class="o">.</span><span class="n">build_frame</span><span class="p">(</span>
+                    <span class="n">frame</span><span class="o">.</span><span class="n">addr</span><span class="p">,</span> <span class="n">frame</span><span class="o">.</span><span class="n">ctrl_code</span> <span class="o">|</span> <span class="mh">0x80</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span>
                 <span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;未知的控制码: </span><span class="si">{</span><span class="nb">hex</span><span class="p">(</span><span class="n">frame</span><span class="o">.</span><span class="n">ctrl_code</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
