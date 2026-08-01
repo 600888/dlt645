@@ -37,6 +37,15 @@ dev = [
     "mypy>=0.800",
 ]
 
+# uv 依赖组（uv sync --group docs）
+[dependency-groups]
+docs = [
+    "sphinx",
+    "sphinx-rtd-theme",
+    "sphinx-autodoc-typehints",
+    "sphinx-copybutton",
+]
+
 [project.urls]
 Homepage = "https://gitee.com/chen-dongyu123/dlt645"
 Repository = "https://gitee.com/chen-dongyu123/dlt645"

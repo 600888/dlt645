@@ -9,7 +9,7 @@ sys.path.append("..")
 import unittest
 import time
 import os
-from src.common.base_log import Log
+from src.common.base_log import Log, disable_logging
 
 
 class TestLogControl(unittest.TestCase):
@@ -19,6 +19,15 @@ class TestLogControl(unittest.TestCase):
         """设置测试环境"""
         self.log_file = "test_log_control.log"
         self.log = Log(filename=self.log_file, cmdlevel="DEBUG", filelevel="DEBUG")
+
+    def tearDown(self):
+        """清理全局日志状态，避免影响其他测试"""
+        from src.common import base_log
+        with base_log._lock:
+            for key in base_log._settings:
+                if key != "enabled":
+                    base_log._settings[key] = None
+        disable_logging()
     
     def test_enable_disable_log(self):
         """测试开启和关闭日志功能"""

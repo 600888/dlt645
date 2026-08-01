@@ -23,25 +23,30 @@ jobs:
 
       # 步骤 2: 设置 Python 环境
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.10'
           cache: 'pip'
 
-      # 步骤 3: 安装依赖
+      # 步骤 3: 安装 uv
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      # 步骤 4: 安装依赖（主依赖 + docs 依赖组）
       - name: Install dependencies
         run: |
-          pip install --upgrade pip
-          pip install -r python/requirements.txt
-          pip install sphinx sphinx-rtd-theme sphinx-autodoc-typehints sphinx-copybutton
+          cd python
+          uv sync --group docs
 
-      # 步骤 4: 生成 HTML 文档
+      # 步骤 5: 生成 HTML 文档
       - name: Build HTML documentation
         run: |
           cd python/docs
-          make html
+          uv run --project .. make html
 
-      # 步骤 5: 部署到 GitHub Pages
+      # 步骤 6: 部署到 GitHub Pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:

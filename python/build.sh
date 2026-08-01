@@ -66,20 +66,10 @@ run_tests() {
 check_dependencies() {
     print_info "检查构建依赖..."
     
-    # 检查必要的包
-    python -c "import setuptools" 2>/dev/null || {
-        print_error "setuptools未安装，正在安装..."
-        pip install setuptools
-    }
-    
-    python -c "import wheel" 2>/dev/null || {
-        print_error "wheel未安装，正在安装..."
-        pip install wheel
-    }
-    
-    python -c "import build" 2>/dev/null || {
-        print_warning "build未安装，正在安装..."
-        pip install build
+    # 检查 uv（推荐使用 uv 构建）
+    command -v uv >/dev/null 2>&1 || {
+        print_warning "uv未安装，正在安装..."
+        pip install uv
     }
     
     print_success "✓ 构建依赖检查完成"
@@ -89,12 +79,12 @@ check_dependencies() {
 build_package() {
     print_info "构建Python包..."
     
-    # 使用现代构建工具
-    if command -v python -m build &> /dev/null; then
-        python -m build
+    # 优先使用 uv 构建
+    if command -v uv &> /dev/null; then
+        uv build
     else
         # 回退到传统方法
-        python setup.py sdist bdist_wheel
+        python -m build || python setup.py sdist bdist_wheel
     fi
     
     print_success "✓ 包构建完成"

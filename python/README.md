@@ -413,18 +413,36 @@ DLT645协议使用4字节的数据标识来标识不同的数据项：
 
 ### 环境要求
 
-- Python >= 3.7
-- loguru >= 0.5.0
-- pyserial >= 3.4
+- Python >= 3.9
+- [uv](https://docs.astral.sh/uv/)（推荐，用于依赖管理与构建）
+- loguru >= 0.7.0
+- pyserial >= 3.5
+
+### 安装 uv
+
+```bash
+pip install uv
+```
 
 ### 运行测试
 
 ```bash
-# 安装开发依赖
-pip install -e .[dev]
+# 安装依赖并同步（生成 .venv 与 uv.lock）
+uv sync
 
 # 运行测试
-pytest
+uv run python -m unittest test.test_basic test.test_new_commands test.test_log_control test.test_logging_config
+```
+
+### 构建与发布
+
+```bash
+# 构建 wheel 与 sdist
+uv build
+
+# 构建文档（docs 依赖组）
+uv sync --group docs
+cd docs && uv run --project .. make html
 ```
 
 ### 调试日志
