@@ -23,6 +23,7 @@ from ...common.transform import (
     bytes_to_int,
     bytes_to_spaced_hex,
     string_to_bcd,
+    uint8_to_bcd,
 )
 from ...model.validators import validate_device
 from ...model.types.data_type import DataFormat, DataItem
@@ -30,11 +31,15 @@ from ...model.types.dlt645_type import (
     DI_LEN,
     ADDRESS_LEN,
     PASSWORD_LEN,
+    OPERATOR_CODE_LEN,
     CtrlCode,
     Demand,
     EventRecord,
     PasswordManager,
     ErrorCode,
+    BaudRateCode,
+    CodeToBaudRate,
+    BroadcastAddr,
     get_error_msg,
 )
 from ...protocol.protocol import DLT645Protocol
@@ -227,6 +232,230 @@ class MeterClientService:
         )
         return self.send_and_handle_request(frame_bytes)
 
+    def broadcast_time_sync(self, dt: Optional[datetime] = None) -> bool:
+        """广播校时命令（C=08H，数据域YYMMDDhhmmss）。
+
+        按 DL/T645-2007 第6节：广播校时使用广播地址 999999999999H，
+        数据域为 6 字节压缩 BCD 码（YY MM DD hh mm ss，自然顺序），
+        从站不要求应答，因此只发送不等待响应。
+
+        :param dt: 校时时间，默认当前时间。
+        :type dt: Optional[datetime]
+        :return: 发送成功返回 True，失败返回 False。
+        :rtype: bool
+        """
+        dt = dt or datetime.now()
+        data = bytearray(
+            [
+                uint8_to_bcd(dt.year % 100),
+                uint8_to_bcd(dt.month),
+                uint8_to_bcd(dt.day),
+                uint8_to_bcd(dt.hour),
+                uint8_to_bcd(dt.minute),
+                uint8_to_bcd(dt.second),
+            ]
+        )
+        frame_bytes = DLT645Protocol.build_frame(
+            BroadcastAddr.TimeSync, CtrlCode.BroadcastTimeSync, data
+        )
+        log.info(
+            f"广播校时: {dt.strftime('%y-%m-%d %H:%M:%S')} ({bytes_to_spaced_hex(data)})"
+        )
+        return self._send_broadcast(frame_bytes)
+
+    def freeze(
+        self,
+        month: Optional[int] = None,
+        day: Optional[int] = None,
+        hour: Optional[int] = None,
+        minute: Optional[int] = None,
+        broadcast: bool = False,
+    ) -> Optional[DataItem]:
+        """冻结命令（C=16H，数据域MMDDhhmm）。
+
+        按 DL/T645-2007 第7节：数据域为 4 字节压缩 BCD 码（MM DD hh mm），
+        各字段缺省时取当前时间；可传 99 表示周期定时冻结：
+        - 99DDhhmm：以月为周期定时冻结
+        - 9999hhmm：以日为周期定时冻结
+        - 999999mm：以小时为周期定时冻结
+        - 99999999：瞬时冻结
+
+        :param month: 月（1-12 或 99）。
+        :type month: Optional[int]
+        :param day: 日（1-31 或 99）。
+        :type day: Optional[int]
+        :param hour: 时（0-23 或 99）。
+        :type hour: Optional[int]
+        :param minute: 分（0-59 或 99）。
+        :type minute: Optional[int]
+        :param broadcast: 是否广播冻结（使用广播地址，从站不要求应答）。
+        :type broadcast: bool
+        :return: 成功返回 DataItem，失败返回 None。
+        :rtype: Optional[DataItem]
+        """
+        now = datetime.now()
+        data = bytearray(
+            [
+                uint8_to_bcd(now.month if month is None else month),
+                uint8_to_bcd(now.day if day is None else day),
+                uint8_to_bcd(now.hour if hour is None else hour),
+                uint8_to_bcd(now.minute if minute is None else minute),
+            ]
+        )
+        if broadcast:
+            frame_bytes = DLT645Protocol.build_frame(
+                BroadcastAddr.TimeSync, CtrlCode.FreezeCmd, data
+            )
+            log.info(f"广播冻结: {bytes_to_spaced_hex(data)}")
+            ok = self._send_broadcast(frame_bytes)
+            if not ok:
+                return None
+            return DataItem(
+                di=0,
+                name="广播冻结",
+                data_format=DataFormat.YYMMDDhhmm.value,
+                value=bytes_to_spaced_hex(data),
+                unit="",
+                update_time=datetime.now(),
+            )
+        frame_bytes = DLT645Protocol.build_frame(
+            self.address, CtrlCode.FreezeCmd, data
+        )
+        log.info(f"冻结命令: {bytes_to_spaced_hex(data)}")
+        return self.send_and_handle_request(frame_bytes)
+
+    def change_baud_rate(self, baud: int) -> Optional[DataItem]:
+        """更改通信速率命令（C=17H，数据域1字节通信速率特征字）。
+
+        按 DL/T645-2007 第8节：数据域为 1 字节特征字（见附录C），
+        从站正常应答帧中的数据与请求帧中的特征字必须相同。
+        标准速率：1200/2400/4800/9600/19200 bps。
+
+        :param baud: 目标通信速率（bps）。
+        :type baud: int
+        :return: 成功返回 DataItem，失败返回 None。
+        :rtype: Optional[DataItem]
+        """
+        feature = BaudRateCode.get(baud)
+        if feature is None:
+            log.error(f"不支持的通信速率: {baud}, 支持: {sorted(BaudRateCode.keys())}")
+            return None
+        data_bytes = bytes([feature])
+        frame_bytes = DLT645Protocol.build_frame(
+            self.address, CtrlCode.ChangeBaudRate, data_bytes
+        )
+        return self.send_and_handle_request(frame_bytes)
+
+    def clear_demand(self, di: int, password: str) -> Optional[DataItem]:
+        """最大需量清零命令（C=19H，数据域DI+密码）。
+
+        按 DL/T645-2007 第10节：数据域为 4 字节数据标识 + 4 字节密码，
+        将当前最大需量及发生时间数据清零。需 04 级及以上权限。
+
+        :param di: 需量数据标识。
+        :type di: int
+        :param password: 密码（4字节BCD，首字节为权限级别，数值越小权限越高，需 0-4 级）。
+        :type password: str
+        :return: 成功返回 DataItem，失败返回 None。
+        :rtype: Optional[DataItem]
+        """
+        password_bytes = string_to_bcd(password)
+        if len(password_bytes) != PASSWORD_LEN:
+            log.error("无效的密码长度")
+            return None
+        if password_bytes[0] > 4:
+            log.error("权限不足：最大需量清零需要 04 级及以上权限")
+            return None
+        data_bytes = struct.pack("<I", di) + password_bytes
+        frame_bytes = DLT645Protocol.build_frame(
+            self.address, CtrlCode.ClearDemand, data_bytes
+        )
+        return self.send_and_handle_request(frame_bytes)
+
+    def clear_meter(self, password: str) -> Optional[DataItem]:
+        """电表清零命令（C=1AH，数据域DI+密码）。
+
+        按 DL/T645-2007 第11节：数据域为 4 字节数据标识（00000000H）
+        + 4 字节密码，清空电能量、最大需量及发生时间、冻结量、
+        事件记录、负荷记录等数据（电表清零事件记录不被清除）。
+
+        :param password: 密码（4字节BCD，首字节为权限级别，数值越小权限越高，需 0-2 级）。
+        :type password: str
+        :return: 成功返回 DataItem，失败返回 None。
+        :rtype: Optional[DataItem]
+        """
+        password_bytes = string_to_bcd(password)
+        if len(password_bytes) != PASSWORD_LEN:
+            log.error("无效的密码长度")
+            return None
+        if password_bytes[0] > 2:
+            log.error("权限不足：电表清零需要 02 级及以上权限")
+            return None
+        data_bytes = struct.pack("<I", 0x00000000) + password_bytes
+        frame_bytes = DLT645Protocol.build_frame(
+            self.address, CtrlCode.ClearMeter, data_bytes
+        )
+        return self.send_and_handle_request(frame_bytes)
+
+    def clear_event(
+        self,
+        password: str,
+        operator_code: str = "00000000",
+        di: int = 0xFFFFFFFF,
+    ) -> Optional[DataItem]:
+        """事件清零命令（C=1BH，数据域密码+操作者代码+数据标识）。
+
+        按 DL/T645-2007 第12节：数据域为 4 字节密码 + 4 字节操作者代码
+        + 4 字节数据标识。数据标识为 FFFFFFFFH 表示事件总清零；
+        分项事件清零时数据标识为事件记录数据标识（DI0 用 FF 表示）。
+
+        :param password: 密码（4字节BCD，首字节为权限级别，数值越小权限越高，需 0-2 级）。
+        :type password: str
+        :param operator_code: 操作者代码（4字节BCD）。
+        :type operator_code: str
+        :param di: 数据标识，默认 FFFFFFFFH（事件总清零）。
+        :type di: int
+        :return: 成功返回 DataItem，失败返回 None。
+        :rtype: Optional[DataItem]
+        """
+        password_bytes = string_to_bcd(password)
+        operator_bytes = string_to_bcd(operator_code)
+        if len(password_bytes) != PASSWORD_LEN:
+            log.error("无效的密码长度")
+            return None
+        if password_bytes[0] > 2:
+            log.error("权限不足：事件清零需要 02 级及以上权限")
+            return None
+        if len(operator_bytes) != OPERATOR_CODE_LEN:
+            log.error("无效的操作者代码长度")
+            return None
+        data_bytes = password_bytes + operator_bytes + struct.pack("<I", di)
+        frame_bytes = DLT645Protocol.build_frame(
+            self.address, CtrlCode.ClearEvent, data_bytes
+        )
+        return self.send_and_handle_request(frame_bytes)
+
+    def _send_broadcast(self, frame_bytes: bytes) -> bool:
+        """发送广播帧（只发送，不等待响应）。
+
+        :param frame_bytes: 帧字节。
+        :type frame_bytes: bytes
+        :return: 发送成功返回 True，失败返回 False。
+        :rtype: bool
+        """
+        try:
+            if self.client is None:
+                log.error("连接未初始化")
+                return False
+            # 确保连接有效
+            if not self.client._ensure_connection():
+                log.error("连接失败")
+                return False
+            return self.client.send_only(frame_bytes)
+        except Exception as e:
+            log.error(f"发送广播帧失败: {str(e)}", exc_info=True)
+            return False
+
     def send_and_handle_request(
         self,
         frame_bytes: bytes,
@@ -301,17 +530,7 @@ class MeterClientService:
                 return None
 
             # 根据控制码判断响应类型
-            if frame.ctrl_code == (CtrlCode.BroadcastTimeSync | 0x80):  # 广播校时响应
-                log.debug(f"广播校时响应: {bytes_to_spaced_hex(frame.data)}")
-                time_value = self.get_time(frame.data[0:4])
-                data_item = data.get_data_item(bytes_to_int(frame.data[0:4]))
-                if not data_item:
-                    log.warning("获取数据项失败")
-                    return None
-                data_item.value = time_value
-                return data_item
-
-            elif frame.ctrl_code == (CtrlCode.ReadData | 0x80):  # 读数据响应
+            if frame.ctrl_code == (CtrlCode.ReadData | 0x80):  # 读数据响应
                 # 解析数据标识
                 if len(frame.data) < DI_LEN:
                     log.warning("读数据响应数据长度无效")
@@ -445,6 +664,61 @@ class MeterClientService:
                 log.debug(f"写密码响应: {bytes_to_spaced_hex(frame.data)}")
                 password = frame.data[:DI_LEN]
                 self.password_manager.set_password(password)
+            elif frame.ctrl_code == (CtrlCode.FreezeCmd | 0x80):  # 冻结命令响应
+                log.debug(f"冻结命令响应: {bytes_to_spaced_hex(frame.data)}")
+                return DataItem(
+                    di=0,
+                    name="冻结命令",
+                    data_format=DataFormat.NN.value,
+                    value=bytes_to_spaced_hex(frame.data),
+                    unit="",
+                    update_time=datetime.now(),
+                )
+            elif frame.ctrl_code == (CtrlCode.ChangeBaudRate | 0x80):  # 更改通信速率响应
+                log.debug(f"更改通信速率响应: {bytes_to_spaced_hex(frame.data)}")
+                if len(frame.data) < 1:
+                    log.warning("更改通信速率响应数据长度无效")
+                    return None
+                feature = frame.data[0]
+                baud = CodeToBaudRate.get(feature)
+                return DataItem(
+                    di=feature,
+                    name="更改通信速率",
+                    data_format=DataFormat.NN.value,
+                    value=baud if baud is not None else feature,
+                    unit="bps",
+                    update_time=datetime.now(),
+                )
+            elif frame.ctrl_code == (CtrlCode.ClearDemand | 0x80):  # 最大需量清零响应
+                log.debug(f"最大需量清零响应: {bytes_to_spaced_hex(frame.data)}")
+                return DataItem(
+                    di=0,
+                    name="最大需量清零",
+                    data_format=DataFormat.NN.value,
+                    value=0,
+                    unit="",
+                    update_time=datetime.now(),
+                )
+            elif frame.ctrl_code == (CtrlCode.ClearMeter | 0x80):  # 电表清零响应
+                log.debug(f"电表清零响应: {bytes_to_spaced_hex(frame.data)}")
+                return DataItem(
+                    di=0,
+                    name="电表清零",
+                    data_format=DataFormat.NN.value,
+                    value=0,
+                    unit="",
+                    update_time=datetime.now(),
+                )
+            elif frame.ctrl_code == (CtrlCode.ClearEvent | 0x80):  # 事件清零响应
+                log.debug(f"事件清零响应: {bytes_to_spaced_hex(frame.data)}")
+                return DataItem(
+                    di=0,
+                    name="事件清零",
+                    data_format=DataFormat.NN.value,
+                    value=0,
+                    unit="",
+                    update_time=datetime.now(),
+                )
             else:
                 log.warning(f"Unknown control code: {frame.ctrl_code}")
                 return None

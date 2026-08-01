@@ -33,12 +33,20 @@ from .transport.client.rtu_client import RtuClient
 from .common.message_types import MessageRecord, MessagePair
 from .common.message_capture import MessageCapture, MessageQueue
 
+# 日志配置接口（默认关闭，开放配置）
+from .common.base_log import configure_logging, enable_logging, disable_logging
+
 # 导出所有公共接口
 __all__ = [
     # 版本信息
     "__version__",
     "__author__",
     "__email__",
+
+    # 日志配置
+    "configure_logging",
+    "enable_logging",
+    "disable_logging",
     
     # 服务类
     "MeterServerService",

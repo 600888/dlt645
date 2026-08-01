@@ -23,3 +23,6 @@ bin-release/
 build/
 cpp/build/
 go/log
+.reasonix
+reasonix.toml
+

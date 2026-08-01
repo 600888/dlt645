@@ -3,6 +3,7 @@ import json
 from loguru import logger
 import os
 import sys
+import threading
 from typing import Optional, Union
 
 LOG_COLORS = {
@@ -15,7 +16,179 @@ LOG_COLORS = {
 }
 COLOR_RESET = "\033[1;0m"
 
+# ==================== 全局日志配置 ====================
+# 默认关闭日志输出：仅当 configure_logging(enabled=True) 被调用后，
+# 才会挂载 handler 输出日志。
+# None 表示"未配置，使用默认值"。
+_settings = {
+    "enabled": False,  # 默认关闭
+    "cmdlevel": None,  # 控制台级别，None=DEBUG
+    "filelevel": None,  # 文件级别，None=DEBUG
+    "filename": None,  # 统一日志文件，None=各模块默认文件
+    "backup_count": None,  # None=7
+    "limit": None,  # None="20 MB"
+    "when": None,  # None=按大小轮转
+    "colorful": None,  # None=True
+    "compression": None,  # None=不压缩
+    "is_backtrace": None,  # None=True
+}
+_lock = threading.Lock()
+_loggers: list = []  # 已创建的所有 Log 实例
+
+# 全局 handler 管理（由 configure_logging 统一维护，避免重复输出）
+_stderr_handler_id: Optional[int] = None
+_file_handler_ids: dict = {}  # filename -> handler id
+
+
+def _effective_cmdlevel() -> str:
+    return _settings["cmdlevel"] or "DEBUG"
+
+
+def _effective_filelevel() -> str:
+    return _settings["filelevel"] or "DEBUG"
+
+
+def _effective_backup_count() -> int:
+    return _settings["backup_count"] if _settings["backup_count"] is not None else 7
+
+
+def _effective_limit():
+    return _settings["limit"] if _settings["limit"] is not None else "20 MB"
+
+
+def _effective_when():
+    return _settings["when"]
+
+
+def _effective_colorful() -> bool:
+    return _settings["colorful"] if _settings["colorful"] is not None else True
+
+
+def _effective_compression():
+    return _settings["compression"]
+
+
+def _effective_is_backtrace() -> bool:
+    return _settings["is_backtrace"] if _settings["is_backtrace"] is not None else True
+
+
+def _formatter(record) -> str:
+    """全局日志格式（模块级，避免依赖实例状态）。"""
+    # 处理消息内容
+    message = str(record["message"]).replace("{", "{{").replace("}", "}}")
+    if isinstance(message, (dict, list)):
+        try:
+            message = json.dumps(message, ensure_ascii=False)
+        except TypeError:
+            message = str(message)
+
+    # 处理调用栈和颜色
+    if _effective_is_backtrace():
+        frame = inspect.currentframe()
+        while frame:
+            if (
+                "loguru" not in frame.f_code.co_filename
+                and "base_log.py" not in frame.f_code.co_filename
+            ):
+                break
+            frame = frame.f_back
+        file_info = (
+            f"[{os.path.basename(frame.f_code.co_filename)}:{frame.f_code.co_name}:{frame.f_lineno}]"
+            if frame
+            else f"[{record['file']}:{record['function']}:{record['line']}]"
+        )
+    else:
+        file_info = f"[{record['file']}:{record['line']}]"
+
+    # 转义 '<' '>'：co_name 可能是 <module> 等，loguru colorize 会把 <> 当作颜色标签
+    file_info = file_info.replace("<", "\\<").replace(">", "\\>")
+
+    level_color = LOG_COLORS.get(record["level"].name, "")
+    return (
+        f"{level_color}[{record['time'].strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]}] "
+        + file_info
+        + f"[{record['level']}] {message}{COLOR_RESET}\n"
+    )
+
+
+def _get_rotation_config(when: Optional[str], limit: Union[int, str]):
+    if when:  # 时间轮转
+        return when  # "D"（天）、"H"（小时）、"midnight"等
+    else:  # 大小轮转
+        if isinstance(limit, int):
+            return f"{limit / 1024 / 1024} MB"
+        return limit  # 直接支持"10 MB"、"1 GB"等字符串格式
+
+
+def _ensure_log_dir(filename: str) -> None:
+    log_dir = os.path.abspath(os.path.dirname(filename))
+    if not os.path.exists(log_dir):
+        os.makedirs(log_dir, exist_ok=True)
+
+
+def _sync_instance(log: "Log") -> None:
+    """同步实例的 task 标记与有效文件名（统一文件名模式下需要 rebind）。"""
+    fn = log._effective_filename()
+    if log.filename != fn:
+        log.filename = fn
+        log.logger = logger.bind(task=fn)
+
+
+def _install() -> None:
+    """挂载全局 stderr handler 和按文件分组的文件 handler。"""
+    global _stderr_handler_id
+    if _stderr_handler_id is None:
+        _ensure_log_dir(_settings["filename"] or ".")
+        _stderr_handler_id = logger.add(
+            sys.stderr,
+            level=_effective_cmdlevel(),
+            format=_formatter,
+            colorize=_effective_colorful(),
+            backtrace=True,
+            enqueue=True,
+        )
+
+    for log in _loggers:
+        _sync_instance(log)
+        fn = log.filename
+        if fn in _file_handler_ids:
+            continue
+        _ensure_log_dir(fn)
+        _file_handler_ids[fn] = logger.add(
+            fn,
+            level=_effective_filelevel(),
+            format=_formatter,
+            backtrace=True,
+            rotation=_get_rotation_config(_effective_when(), _effective_limit()),
+            retention=f"{_effective_backup_count()} days",
+            compression=_effective_compression(),
+            enqueue=True,
+            filter=lambda record, _fn=fn: record["extra"].get("task") == _fn,
+        )
+
+
+def _uninstall() -> None:
+    """移除全部日志 handler（回到默认关闭状态）。"""
+    global _stderr_handler_id
+    handler_ids = list(_file_handler_ids.values())
+    if _stderr_handler_id is not None:
+        handler_ids.append(_stderr_handler_id)
+    for handler_id in handler_ids:
+        try:
+            logger.remove(handler_id)
+        except ValueError:
+            pass
+    _file_handler_ids.clear()
+    _stderr_handler_id = None
+
+
 class Log:
+    """DLT645 库日志封装。
+
+    默认不输出任何日志（不挂载 handler）；通过模块级函数
+    :func:`configure_logging` 启用并配置日志。
+    """
+
     # 静态标记：确保只移除一次默认 handler
     _default_handler_removed = False
 
@@ -28,7 +201,7 @@ class Log:
         limit: Union[int, str] = "20 MB",  # 支持字符串格式
         when: Optional[str] = None,
         colorful: bool = True,
-        compression: Optional[str] = None,  # 新增压缩功能
+        compression: Optional[str] = None,
         is_backtrace: bool = True,
     ):
         # 只移除 loguru 默认的 stderr handler (ID 0)，避免删除其他模块已添加的 handlers
@@ -39,88 +212,116 @@ class Log:
                 pass  # 默认 handler 可能已被移除
             Log._default_handler_removed = True
 
-        self.is_backtrace = is_backtrace
         self.logger = logger.bind(task=filename)
         # 设置日志文件路径
         if filename is None:
             filename = getattr(sys.modules["__main__"], "__file__", "log.py")
             filename = os.path.basename(filename.replace(".py", ".log"))
 
-        # 确保日志目录存在
-        log_dir = os.path.abspath(os.path.dirname(filename))
-        if not os.path.exists(log_dir):
-            os.makedirs(log_dir)
+        # 实例自身的日志参数（在全局未配置时作为默认值）
+        self.filename = filename
+        self.cmdlevel = cmdlevel
+        self.filelevel = filelevel
+        self.backup_count = backup_count
+        self.limit = limit
+        self.when = when
+        self.colorful = colorful
+        self.compression = compression
+        self.is_backtrace = is_backtrace
 
-        # 控制台输出配置
-        self.logger.add(
-            sys.stderr,
-            level=cmdlevel,
-            format=self._formatter,
-            colorize=colorful,
-            backtrace=True,
-            enqueue=True,
-            filter=lambda record: record["extra"].get("task") == filename,
-        )
+        # 注册实例
+        with _lock:
+            _loggers.append(self)
+            # 默认关闭：仅当全局已启用时才确保 handler 挂载
+            if _settings["enabled"]:
+                _install()
 
-        # 文件输出配置
-        rotation_config = self._get_rotation_config(when, limit)
-        self.logger.add(
-            filename,
-            level=filelevel,
-            format=self._formatter,
-            backtrace=True,
-            rotation=rotation_config,
-            retention=f"{backup_count} days",
-            compression=compression,
-            enqueue=True,
-            filter=lambda record: record["extra"].get("task") == filename,
-        )
+    def _effective_filename(self) -> str:
+        """实际使用的日志文件名（全局配置优先）。"""
+        if _settings["filename"]:
+            return _settings["filename"]
+        return self.filename
 
-    def _formatter(self, record):
-        # 处理消息内容
-        message = str(record["message"]).replace("{", "{{").replace("}", "}}")
-        if isinstance(message, (dict, list)):
-            try:
-                message = json.dumps(message, ensure_ascii=False)
-            except TypeError:
-                message = str(message)
+    def set_config(
+        self,
+        filename: Optional[str] = None,
+        cmdlevel: str = "DEBUG",
+        filelevel: str = "INFO",
+        backup_count: int = 7,
+        limit: Union[int, str] = "20 MB",
+        when: Optional[str] = None,
+        colorful: bool = True,
+        compression: Optional[str] = None,
+    ):
+        """动态修改本实例的日志配置。
 
-        # 处理调用栈和颜色
-        if self.is_backtrace:
-            frame = inspect.currentframe()
-            while frame:
-                if (
-                    "loguru" not in frame.f_code.co_filename
-                    and "base_log.py" not in frame.f_code.co_filename
-                ):
-                    break
-                frame = frame.f_back
-            file_info = (
-                f"[{os.path.basename(frame.f_code.co_filename)}:{frame.f_code.co_name}:{frame.f_lineno}]"
-                if frame
-                else f"[{record['file']}:{record['function']}:{record['line']}]"
-            )
-        else:
-            file_info = f"[{record['file']}:{record['line']}]"
+        仅当全局日志已启用时立即生效；否则下次启用时生效。
+        """
+        if filename is not None:
+            self.filename = filename
+            self.logger = logger.bind(task=filename)
+        self.cmdlevel = cmdlevel
+        self.filelevel = filelevel
+        self.backup_count = backup_count
+        self.limit = limit
+        self.when = when
+        self.colorful = colorful
+        self.compression = compression
 
-        level_color = LOG_COLORS.get(record["level"].name, "")
-        return (
-            f"{level_color}[{record['time'].strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]}] "
-            + file_info
-            + f"[{record['level']}] {message}{COLOR_RESET}\n"
-        )
-
-    def _get_rotation_config(self, when: Optional[str], limit: Union[int, str]):
-        if when:  # 时间轮转
-            return when  # "D"（天）、"H"（小时）、"midnight"等
-        else:  # 大小轮转
-            if isinstance(limit, int):
-                return f"{limit / 1024 / 1024} MB"
-            return limit  # 直接支持"10 MB"、"1 GB"等字符串格式
+        # 重建全局 handler（filename 可能变化导致文件分组改变）
+        with _lock:
+            if _settings["enabled"]:
+                _uninstall()
+                _install()
 
     @staticmethod
     def set_logger(**kwargs) -> bool:
         """For backward compatibility."""
+        return True
+
+    def enable_log(self) -> None:
+        """启用本库日志输出（全局开关）。
+
+        兼容接口，等价于 :func:`configure_logging`(enabled=True)。
+        """
+        configure_logging(enabled=True)
+
+    def disable_log(self) -> None:
+        """关闭本库日志输出（全局开关）。
+
+        兼容接口，等价于 :func:`configure_logging`(enabled=False)。
+        """
+        configure_logging(enabled=False)
+
+    def set_log_level(
+        self, level: str, is_console: bool = True, is_file: bool = True
+    ) -> bool:
+        """设置日志级别（全局生效）。
+
+        :param level: 日志级别（DEBUG/INFO/WARNING/ERROR/CRITICAL）。
+        :type level: str
+        :param is_console: 是否应用到控制台输出。
+        :type is_console: bool
+        :param is_file: 是否应用到文件输出。
+        :type is_file: bool
+        :return: 级别有效返回 True，无效返回 False。
+        :rtype: bool
+        """
+        valid_levels = {"DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"}
+        level = str(level).upper()
+        if level not in valid_levels:
+            return False
+
+        with _lock:
+            if is_console:
+                self.cmdlevel = level
+                _settings["cmdlevel"] = level
+            if is_file:
+                self.filelevel = level
+                _settings["filelevel"] = level
+            if _settings["enabled"]:
+                _uninstall()
+                _install()
         return True
 
     def debug(self, *args, **kwargs):
@@ -138,55 +339,99 @@ class Log:
     def critical(self, *args, **kwargs):
         self.logger.critical(*args, **kwargs)
 
-    def set_config(
-        self,
-        filename: Optional[str] = None,
-        cmdlevel: str = "DEBUG",
-        filelevel: str = "INFO",
-        backup_count: int = 7,
-        limit: Union[int, str] = "20 MB",
-        when: Optional[str] = None,
-        colorful: bool = True,
-        compression: Optional[str] = None,
-    ):
-        """动态修改日志配置"""
-        # 移除旧的handler
-        self.logger.remove()
-        
-        # 重新添加handler
-        if filename is None:
-            filename = getattr(sys.modules["__main__"], "__file__", "log.py")
-            filename = os.path.basename(filename.replace(".py", ".log"))
-
-        # 确保日志目录存在
-        log_dir = os.path.abspath(os.path.dirname(filename))
-        if not os.path.exists(log_dir):
-            os.makedirs(log_dir)
-
-        # 控制台输出配置
-        self.logger.add(
-            sys.stderr,
-            level=cmdlevel,
-            format=self._formatter,
-            colorize=colorful,
-            backtrace=True,
-            enqueue=True,
-            filter=lambda record: record["extra"].get("task") == filename,
-        )
-
-        # 文件输出配置
-        rotation_config = self._get_rotation_config(when, limit)
-        self.logger.add(
-            filename,
-            level=filelevel,
-            format=self._formatter,
-            backtrace=True,
-            rotation=rotation_config,
-            retention=f"{backup_count} days",
-            compression=compression,
-            enqueue=True,
-            filter=lambda record: record["extra"].get("task") == filename,
-        )
-
     def exception(self, *args, **kwargs):
         self.logger.exception(*args, **kwargs)
+
+
+# ==================== 开放配置接口 ====================
+
+
+def configure_logging(
+    enabled: bool = True,
+    cmdlevel: Optional[str] = None,
+    filelevel: Optional[str] = None,
+    filename: Optional[str] = None,
+    backup_count: Optional[int] = None,
+    limit: Union[int, str, None] = None,
+    when: Optional[str] = None,
+    colorful: Optional[bool] = None,
+    compression: Optional[str] = None,
+    is_backtrace: Optional[bool] = None,
+) -> None:
+    """配置 dlt645 库的日志输出。
+
+    库默认**不输出任何日志**；调用本函数启用日志或调整日志配置。
+
+    :param enabled: True 启用日志输出，False 关闭（移除所有日志 handler）。
+    :type enabled: bool
+    :param cmdlevel: 控制台日志级别（如 "DEBUG"/"INFO"/"WARNING"/"ERROR"）。
+        None 表示使用默认级别 DEBUG。
+    :type cmdlevel: Optional[str]
+    :param filelevel: 文件日志级别。None 表示使用默认级别 DEBUG。
+    :type filelevel: Optional[str]
+    :param filename: 统一日志文件路径；指定后所有模块日志输出到该文件。
+        None 表示各模块保持各自的日志文件（data.log/protocol.log 等）。
+    :type filename: Optional[str]
+    :param backup_count: 日志文件保留数量（天）。
+    :type backup_count: Optional[int]
+    :param limit: 单文件大小限制（如 "10 MB"）。
+    :type limit: Union[int, str, None]
+    :param when: 按时间轮转（如 "midnight"、"D"、"H"）。
+    :type when: Optional[str]
+    :param colorful: 控制台输出是否带颜色。
+    :type colorful: Optional[bool]
+    :param compression: 轮转文件压缩格式（如 "zip"）。
+    :type compression: Optional[str]
+    :param is_backtrace: 是否显示调用位置（文件:函数:行号）。
+    :type is_backtrace: Optional[bool]
+
+    示例::
+
+        from dlt645 import configure_logging
+
+        # 启用日志，控制台 INFO、文件 DEBUG
+        configure_logging(cmdlevel="INFO", filelevel="DEBUG")
+
+        # 所有日志统一写入指定文件
+        configure_logging(filename="logs/meter.log")
+
+        # 关闭日志
+        configure_logging(enabled=False)
+    """
+    global _settings
+    with _lock:
+        if enabled is not None:
+            _settings["enabled"] = enabled
+        if cmdlevel is not None:
+            _settings["cmdlevel"] = cmdlevel
+        if filelevel is not None:
+            _settings["filelevel"] = filelevel
+        if filename is not None:
+            _settings["filename"] = filename
+        if backup_count is not None:
+            _settings["backup_count"] = backup_count
+        if limit is not None:
+            _settings["limit"] = limit
+        if when is not None:
+            _settings["when"] = when
+        if colorful is not None:
+            _settings["colorful"] = colorful
+        if compression is not None:
+            _settings["compression"] = compression
+        if is_backtrace is not None:
+            _settings["is_backtrace"] = is_backtrace
+
+        # 重建全部 handler 以应用新配置
+        _uninstall()
+        if _settings["enabled"]:
+            _install()
+
+
+def enable_logging(**kwargs) -> None:
+    """启用 dlt645 库日志输出（可传 :func:`configure_logging` 的参数）。"""
+    configure_logging(enabled=True, **kwargs)
+
+
+def disable_logging() -> None:
+    """关闭 dlt645 库日志输出。"""
+    configure_logging(enabled=False)

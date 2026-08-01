@@ -8,6 +8,7 @@
 """
 
 import struct
+from datetime import datetime
 from typing import Optional, Union, List
 
 from ...common.transform import (
@@ -17,6 +18,7 @@ from ...common.transform import (
     string_to_bcd,
     bcd_to_value,
     bcd_to_string,
+    bcd_to_byte,
 )
 from ...model.data.data_handler import set_data_item, get_data_item
 from ...model.types.data_type import DataItem
@@ -31,6 +33,9 @@ from ...model.types.dlt645_type import (
     ErrorCode,
     EventRecord,
     PasswordManager,
+    BaudRateCode,
+    CodeToBaudRate,
+    BroadcastAddr,
 )
 from ...protocol.protocol import DLT645Protocol
 from ...model.data import data_handler as data
@@ -74,6 +79,12 @@ class MeterServerService:
         self.password_manager = password_manager
         self.clear_meter_event_records = []  # 记录电表清零事件
         self.event_records = []  # 记录事件
+        # 当前表内时钟（广播校时后更新）
+        self.time: Optional[datetime] = None
+        # 最近一次冻结命令的原始数据域（MMDDhhmm）
+        self.last_freeze_time: Optional[bytearray] = None
+        # 当前通信速率（bps）
+        self.baud_rate: int = 9600
 
     @classmethod
     def new_tcp_server(
@@ -133,7 +144,30 @@ class MeterServerService:
 
     # 设置时间，需根据实际情况实现
     def set_time(self, data_bytes):
-        pass
+        """广播校时：解析 YYMMDDhhmmss 并设置表内时钟。
+
+        按 DL/T645-2007 第6节：广播校时数据域为 6 字节压缩 BCD 码，
+        依次为年（后两位）、月、日、时、分、秒（自然顺序）。
+
+        :param data_bytes: 数据域（6字节）。
+        :type data_bytes: bytearray
+        """
+        if data_bytes is None or len(data_bytes) < 6:
+            log.warning(
+                f"广播校时数据长度无效: {bytes_to_spaced_hex(data_bytes) if data_bytes else 'None'}"
+            )
+            return
+        year = bcd_to_byte(data_bytes[0]) + 2000
+        month = bcd_to_byte(data_bytes[1])
+        day = bcd_to_byte(data_bytes[2])
+        hour = bcd_to_byte(data_bytes[3])
+        minute = bcd_to_byte(data_bytes[4])
+        second = bcd_to_byte(data_bytes[5])
+        try:
+            self.time = datetime(year, month, day, hour, minute, second)
+            log.info(f"广播校时成功: {self.time.strftime('%Y-%m-%d %H:%M:%S')}")
+        except ValueError as e:
+            log.error(f"广播校时时间无效: {e}")
 
     def set_address(self, address: str):
         """写通讯地址
@@ -240,6 +274,110 @@ class MeterServerService:
         """
         return get_data_item(di)
 
+    def _check_password_with_level(self, password: bytearray, max_level: int) -> bool:
+        """校验密码是否匹配且权限级别满足要求。
+
+        按 DL/T645-2007 第9节：密码首字节为权限级别（00 最高，数值越大权限越低），
+        02 级可执行电表清零、事件清零，04 级可执行写数据、最大需量清零。
+
+        :param password: 密码字节数组（首字节为权限级别）。
+        :type password: bytearray
+        :param max_level: 允许的最大权限级别（数字越小权限越高）。
+        :type max_level: int
+        :return: 校验通过返回 True，否则返回 False。
+        :rtype: bool
+        """
+        if not self.password_manager.check_password(password):
+            return False
+        return password[0] <= max_level
+
+    def _reset_energy_data(self) -> None:
+        """清空累计量数据（电表清零）。
+
+        按 DL/T645-2007 第11节：电表清零清空电能表内电能量、最大需量及
+        发生时间、冻结量、事件记录、负荷记录等累计数据；
+        运行变量（0x02 当前电压/电流/功率等瞬时量）不属于清零范围。
+        """
+        from ...model.data.define import DIMap
+
+        for di, item in DIMap.items():
+            di3 = (di >> 24) & 0xFF  # DI 高字节为数据分类
+            if di3 not in (0x00, 0x01, 0x05):  # 电能/需量/冻结量
+                continue
+            if isinstance(item, list):
+                continue
+            if isinstance(item.value, Demand):
+                item.value = Demand(0.0, datetime.now())
+            elif isinstance(item.value, (int, float)):
+                item.value = 0.0
+
+    def _reset_event_records(self, di: int) -> None:
+        """清空事件记录数据（事件清零）。
+
+        按 DL/T645-2007 第12节：事件总清零（di=FFFFFFFF）清空全部事件记录；
+        分项事件清零仅清空指定数据标识的事件。执行时不允许清空事件清零记录
+        和电表清零记录数据（DI 0x03300100~0x033002FF）。
+        清零后事件值置为与 data_format 等长的全零字符串，保证 BCD 长度不变。
+
+        :param di: 数据标识，FFFFFFFF 表示事件总清零。
+        :type di: int
+        """
+        from ...model.data.define import DIMap
+
+        for d, item in DIMap.items():
+            di3 = (d >> 24) & 0xFF
+            if di3 != 0x03:  # 事件记录
+                continue
+            # 分项事件清零：仅清空指定数据标识
+            if di != 0xFFFFFFFF and d != di:
+                continue
+            # 保留事件清零记录和电表清零记录
+            if 0x03300100 <= d <= 0x033002FF:
+                continue
+            if isinstance(item, list):
+                for sub in item:
+                    event_record: EventRecord = sub.value
+                    if isinstance(event_record.event, tuple):
+                        # data_format 如 "XXXXXX,XXXXXX"，每字段字符数即其长度
+                        step = len(sub.data_format.split(",")[0])
+                        event_record.event = tuple("0" * step for _ in event_record.event)
+                    else:
+                        step = len(sub.data_format)
+                        event_record.event = "0" * step
+            elif isinstance(item.value, EventRecord):
+                step = len(item.data_format)
+                item.value.event = "0" * step
+
+    def _record_event_clear(self, operator_code: bytearray) -> None:
+        """记录事件清零事件（DL/T645-2007 第12节）。
+
+        递增 0x03300200 事件清零总次数，并更新 0x03300201 上1次事件清零记录
+        中的发生时刻与操作者代码。
+
+        :param operator_code: 操作者代码（4字节）。
+        :type operator_code: bytearray
+        """
+        from ...model.data.define import DIMap
+
+        # 事件清零总次数（0x03300200）加 1
+        total = DIMap.get(0x03300200)
+        if total is not None:
+            if isinstance(total, list):
+                total = total[0]
+            try:
+                count = int(str(total.value.event)) + 1
+                total.value.event = str(count).zfill(6)
+            except (ValueError, TypeError):
+                log.warning("事件清零总次数解析失败，跳过")
+        # 上1次事件清零记录（0x03300201）：更新发生时刻与操作者代码
+        record = DIMap.get(0x03300201)
+        if isinstance(record, list):
+            for item in record:
+                if "发生时刻" in item.name:
+                    item.value.event = datetime.now().strftime("%y%m%d%H%M%S")
+                elif "操作者代码" in item.name:
+                    item.value.event = bcd_to_string(operator_code, "little")
+
     def handle_request(self, frame):
         """处理读数据请求
 
@@ -259,8 +397,36 @@ class MeterServerService:
             if frame.ctrl_code == CtrlCode.BroadcastTimeSync:  # 广播校时
                 log.info(f"广播校时: {bytes_to_spaced_hex(frame.data)}")
                 self.set_time(frame.data)
+                # 广播校时不要求应答（DL/T645-2007 第6节），一律不返回响应
+                return None
+            elif frame.ctrl_code == CtrlCode.FreezeCmd:  # 冻结命令
+                # 数据域：MMDDhhmm（月.日.时.分，各1字节压缩BCD，自然顺序）
+                log.info(f"冻结命令: {bytes_to_spaced_hex(frame.data)}")
+                self.last_freeze_time = bytearray(frame.data)
+                # 广播冻结不要求应答（DL/T645-2007 第7节）
+                if bytes(frame.addr) == bytes(BroadcastAddr.TimeSync):
+                    return None
                 return DLT645Protocol.build_frame(
-                    frame.addr, frame.ctrl_code | 0x80, frame.data
+                    frame.addr, frame.ctrl_code | 0x80, b""
+                )
+            elif frame.ctrl_code == CtrlCode.ChangeBaudRate:  # 更改通信速率
+                # 数据域：1字节通信速率特征字（附录C）
+                if len(frame.data) < 1:
+                    return self._build_error_response(
+                        frame, error_code=ErrorCode.RequestDataEmpty
+                    )
+                feature = frame.data[0]
+                baud = CodeToBaudRate.get(feature)
+                if baud is None:
+                    log.error(f"无效的通信速率特征字: {hex(feature)}")
+                    return self._build_error_response(
+                        frame, error_code=ErrorCode.CommRateImmutable
+                    )
+                self.baud_rate = baud
+                log.info(f"更改通信速率成功: {baud} bps (特征字 {hex(feature)})")
+                # 正常应答帧中的特征字必须与请求帧相同（DL/T645-2007 第8节）
+                return DLT645Protocol.build_frame(
+                    frame.addr, frame.ctrl_code | 0x80, bytes([feature])
                 )
             elif frame.ctrl_code == CtrlCode.ReadData:
                 # 解析数据标识
@@ -495,8 +661,19 @@ class MeterServerService:
                 )
             elif frame.ctrl_code == CtrlCode.ClearDemand:
                 log.debug(f"收到需量清零请求: {bytes_to_spaced_hex(frame.data)}")
+                # 数据域：DI(4字节) + 密码(4字节)，需 04 级及以上权限
+                if len(frame.data) < DI_LEN + PASSWORD_LEN:
+                    return self._build_error_response(
+                        frame, error_code=ErrorCode.RequestDataEmpty
+                    )
                 # 解析数据标识为 32 位无符号整数
                 data_id = struct.unpack("<I", frame.data[:DI_LEN])[0]
+                # 需量清零仅作用于需量类数据标识（DI3=01）
+                if (data_id >> 24) & 0xFF != 0x01:
+                    log.error(f"需量清零数据标识必须为需量类(0x01xxxxxx): {hex(data_id)}")
+                    return self._build_error_response(
+                        frame, error_code=ErrorCode.OtherError
+                    )
                 data_item = get_data_item(data_id)
                 if data_item is None:
                     log.error(f"数据项未找到: {data_id}")
@@ -504,21 +681,15 @@ class MeterServerService:
                         frame, error_code=ErrorCode.RequestDataEmpty
                     )
 
-                # 提取密码
+                # 提取密码并校验权限（04级及以上）
                 password = frame.data[DI_LEN : DI_LEN + PASSWORD_LEN]
-                if not self.password_manager.check_password(password):
-                    log.error(f"密码错误: {bytes_to_spaced_hex(password)}")
+                if not self._check_password_with_level(password, max_level=4):
+                    log.error(f"密码错误或权限不足: {bytes_to_spaced_hex(password)}")
                     return self._build_error_response(
                         frame, error_code=ErrorCode.AuthFailed
                     )
 
-                # 提取操作者代码
-                operator_code = frame.data[
-                    DI_LEN + PASSWORD_LEN : DI_LEN + PASSWORD_LEN + OPERATOR_CODE_LEN
-                ]
-
                 # 执行需量清零：将需量值设为0，时间设为当前时间
-                from datetime import datetime
                 cleared_demand = Demand(0.0, datetime.now())
                 if not set_data_item(data_id, cleared_demand):
                     log.error(f"需量清零失败: {data_id}")
@@ -526,12 +697,74 @@ class MeterServerService:
                         frame, error_code=ErrorCode.OtherError
                     )
 
-                log.info(f"需量清零成功: DI={hex(data_id)}, 操作者代码={bytes_to_spaced_hex(operator_code)}")
+                log.info(f"最大需量清零成功: DI={hex(data_id)}")
 
                 # 构建响应帧
                 res_data = bytearray()
                 return DLT645Protocol.build_frame(
                     frame.addr, frame.ctrl_code | 0x80, res_data
+                )
+            elif frame.ctrl_code == CtrlCode.ClearMeter:  # 电表清零
+                log.debug(f"收到电表清零请求: {bytes_to_spaced_hex(frame.data)}")
+                if len(frame.data) < DI_LEN + PASSWORD_LEN:
+                    return self._build_error_response(
+                        frame, error_code=ErrorCode.RequestDataEmpty
+                    )
+                # 数据域：DI(4字节，规范固定为00000000H) + 密码(4字节)，02级及以上权限
+                data_id = struct.unpack("<I", frame.data[:DI_LEN])[0]
+                if data_id != 0x00000000:
+                    log.error(f"电表清零数据标识必须为00000000H: {hex(data_id)}")
+                    return self._build_error_response(
+                        frame, error_code=ErrorCode.OtherError
+                    )
+                password = frame.data[DI_LEN : DI_LEN + PASSWORD_LEN]
+                if not self._check_password_with_level(password, max_level=2):
+                    log.error(f"密码错误或权限不足: {bytes_to_spaced_hex(password)}")
+                    return self._build_error_response(
+                        frame, error_code=ErrorCode.AuthFailed
+                    )
+                # 清空电能量、最大需量、冻结量、事件记录、负荷记录（保留清零类记录）
+                self._reset_energy_data()
+                self._reset_event_records(0xFFFFFFFF)
+                self.clear_meter_event_records.append(
+                    {"time": datetime.now(), "di": data_id}
+                )
+                log.info(f"电表清零成功: DI={hex(data_id)}")
+                return DLT645Protocol.build_frame(
+                    frame.addr, frame.ctrl_code | 0x80, b""
+                )
+            elif frame.ctrl_code == CtrlCode.ClearEvent:  # 事件清零
+                log.debug(f"收到事件清零请求: {bytes_to_spaced_hex(frame.data)}")
+                if len(frame.data) < PASSWORD_LEN + OPERATOR_CODE_LEN + DI_LEN:
+                    return self._build_error_response(
+                        frame, error_code=ErrorCode.RequestDataEmpty
+                    )
+                # 数据域：密码(4字节) + 操作者代码(4字节) + DI(4字节)，02级及以上权限
+                password = frame.data[:PASSWORD_LEN]
+                operator_code = frame.data[
+                    PASSWORD_LEN : PASSWORD_LEN + OPERATOR_CODE_LEN
+                ]
+                data_id = struct.unpack(
+                    "<I",
+                    frame.data[
+                        PASSWORD_LEN + OPERATOR_CODE_LEN :
+                        PASSWORD_LEN + OPERATOR_CODE_LEN + DI_LEN
+                    ],
+                )[0]
+                if not self._check_password_with_level(password, max_level=2):
+                    log.error(f"密码错误或权限不足: {bytes_to_spaced_hex(password)}")
+                    return self._build_error_response(
+                        frame, error_code=ErrorCode.AuthFailed
+                    )
+                # 清空事件记录（保留事件清零记录和电表清零记录）
+                self._reset_event_records(data_id)
+                # 记录事件清零事件（总次数 +1，更新上1次记录）
+                self._record_event_clear(operator_code)
+                log.info(
+                    f"事件清零成功: DI={hex(data_id)}, 操作者代码={bytes_to_spaced_hex(operator_code)}"
+                )
+                return DLT645Protocol.build_frame(
+                    frame.addr, frame.ctrl_code | 0x80, b""
                 )
             else:
                 log.error(f"未知的控制码: {hex(frame.ctrl_code)}")

@@ -429,12 +429,27 @@ pytest
 
 ### 调试日志
 
-库使用loguru进行日志记录，可以通过以下方式启用详细日志：
+库默认**不输出任何日志**。需要日志时，通过库提供的配置接口启用：
 
 ```python
-from loguru import logger
-logger.add("dlt645.log", level="DEBUG")
+from dlt645 import configure_logging
+
+# 启用日志，控制台 INFO、文件 DEBUG
+configure_logging(cmdlevel="INFO", filelevel="DEBUG")
+
+# 所有日志统一写入指定文件
+configure_logging(filename="logs/meter.log")
+
+# 关闭日志
+configure_logging(enabled=False)
+# 或便捷接口
+from dlt645 import enable_logging, disable_logging
+enable_logging(cmdlevel="DEBUG")
+disable_logging()
 ```
+
+未指定 `filename` 时，各模块日志写入各自的文件
+（`log/data.log`、`log/protocol.log`、`log/client.log`、`log/server.log` 等）。
 
 ## 常见问题
 

@@ -186,6 +186,34 @@ class TcpClient:
         self.conn.settimeout(original_timeout)
         return None
 
+    def send_only(self, data: bytes, timeout: float = 2.0) -> bool:
+        """只发送数据，不等待响应。
+
+        用于广播命令（如广播校时、广播冻结），从站不应答。
+
+        :param data: 要发送的请求数据。
+        :type data: bytes
+        :param timeout: 数据写入超时(秒)。
+        :type timeout: float
+        :return: 发送成功返回 True，失败返回 False。
+        :rtype: bool
+        """
+        if self.conn is None:
+            log.error("Not connected to server")
+            return False
+
+        try:
+            ok = self._safe_sendall(data, timeout)
+            if ok:
+                log.info(f"TX (no response expected): {bytes_to_spaced_hex(data)}")
+                # 捕获发送的报文
+                if self._message_capture:
+                    self._message_capture.capture_tx(data)
+            return ok
+        except Exception as e:
+            log.error(f"send_only failed: {type(e).__name__}: {str(e)}")
+            return False
+
     def _ensure_connection(self) -> bool:
         """确保连接有效（用于重试时重新连接）"""
         if self.conn is None:

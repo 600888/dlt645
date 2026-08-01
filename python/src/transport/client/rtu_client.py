@@ -245,6 +245,39 @@ class RtuClient:
         log.error("All attempts failed")
         return None
 
+    def send_only(self, data: bytes) -> bool:
+        """只发送数据，不等待响应。
+
+        用于广播命令（如广播校时、广播冻结），从站不应答。
+
+        :param data: 要发送的请求数据。
+        :type data: bytes
+        :return: 发送成功返回 True，失败返回 False。
+        :rtype: bool
+        """
+        try:
+            # 确保连接已建立
+            if not self._ensure_connection():
+                log.error("Failed to establish serial port connection")
+                return False
+
+            # 清空缓冲区，避免旧数据干扰
+            self._safe_clear_buffer()
+
+            written = self.conn.write(data)
+            if written != len(data):
+                log.error(f"TX: Write incomplete ({written}/{len(data)} bytes)")
+                return False
+
+            log.info(f"TX (no response expected): {bytes_to_spaced_hex(data)}")
+            # 捕获发送的报文
+            if self._message_capture:
+                self._message_capture.capture_tx(data)
+            return True
+        except Exception as e:
+            log.error(f"send_only failed: {type(e).__name__}: {str(e)}")
+            return False
+
     def _safe_clear_buffer(self) -> bool:
         """安全清空串口缓冲区
         

@@ -43,10 +43,9 @@ class DICategory(IntEnum):
 class CtrlCode(IntEnum):
     """控制码枚举。
 
-    DLT645 协议中控制码用于标识帧的功能类型。
+    DLT645 协议中控制码用于标识帧的功能类型，取值遵循 DL/T645-2007 标准。
 
     :cvar BroadcastTimeSync: 广播校时命令（0x08）
-    :cvar ClearDemand: 需量清零命令（0x10）
     :cvar ReadData: 读数据命令（0x11）
     :cvar ReadAddress: 读通讯地址命令（0x13）
     :cvar WriteData: 写数据命令（0x14）
@@ -54,10 +53,12 @@ class CtrlCode(IntEnum):
     :cvar FreezeCmd: 冻结命令（0x16）
     :cvar ChangeBaudRate: 修改通信速率命令（0x17）
     :cvar ChangePassword: 修改密码命令（0x18）
+    :cvar ClearDemand: 最大需量清零命令（0x19）
+    :cvar ClearMeter: 电表清零命令（0x1A）
+    :cvar ClearEvent: 事件清零命令（0x1B）
     """
 
     BroadcastTimeSync = 0x08  # 广播校时
-    ClearDemand = 0x10  # 需量清零
     ReadData = 0x11  # 读数据
     ReadAddress = 0x13  # 读通讯地址
     WriteData = 0x14  # 写数据
@@ -65,6 +66,38 @@ class CtrlCode(IntEnum):
     FreezeCmd = 0x16  # 冻结命令
     ChangeBaudRate = 0x17  # 修改通信速率
     ChangePassword = 0x18  # 改变密码
+    ClearDemand = 0x19  # 最大需量清零
+    ClearMeter = 0x1A  # 电表清零
+    ClearEvent = 0x1B  # 事件清零
+
+
+#: 通信速率特征字映射（DL/T645-2007 附录C）
+#: 特征字为速率(bps)/300 的压缩 BCD 码：
+#: 1200BPS=04H, 2400BPS=08H, 4800BPS=16H, 9600BPS=32H, 19200BPS=64H
+#: （与文档"通讯功能实现实例"中的改波特率示例一致）
+BaudRateCode: dict[int, int] = {
+    1200: 0x04,
+    2400: 0x08,
+    4800: 0x16,
+    9600: 0x32,
+    19200: 0x64,
+}
+
+#: 特征字到通信速率的反向映射
+CodeToBaudRate: dict[int, int] = {code: baud for baud, code in BaudRateCode.items()}
+
+
+class BroadcastAddr:
+    """广播地址常量（DL/T645-2007 地址域说明）。
+
+    - 999999999999H（0x99 x6）：广播校时、广播冻结等特殊命令的广播地址，不要求从站应答。
+    - AAAAAAAAAAAAH（0xAA x6）：读/写通信地址等点对点命令使用的地址。
+    """
+
+    #: 广播校时/广播冻结地址（999999999999H）
+    TimeSync = bytearray([0x99, 0x99, 0x99, 0x99, 0x99, 0x99])
+    #: 读/写通信地址广播地址（AAAAAAAAAAAAH）
+    Address = bytearray([0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA])
 
 
 class ErrorCode(IntEnum):

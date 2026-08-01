@@ -10,7 +10,8 @@ def read_readme():
 
 setup(
     name="dlt645",  # 改为简单的包名
-    version="1.0.0",
+    # 注意：版本号由 pyproject.toml + setuptools-scm 从 git tag 自动派生，
+    # 不要在此处硬编码 version，否则会覆盖动态版本
     author="Chen Dongyu",
     author_email="1755696012@qq.com",
     description="DLT645协议Python实现库",

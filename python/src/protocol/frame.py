@@ -125,6 +125,10 @@ class Frame:
                     op_name = "修改密码"
                 elif original_ctrl == CtrlCode.ClearDemand:
                     op_name = "需量清零"
+                elif original_ctrl == CtrlCode.ClearMeter:
+                    op_name = "电表清零"
+                elif original_ctrl == CtrlCode.ClearEvent:
+                    op_name = "事件清零"
                 
                 return f"{op_name}失败响应: {err_str}"
 
@@ -202,6 +206,16 @@ class Frame:
                 if is_response:
                     return "需量清零响应"
                 return "需量清零"
+
+            elif func_code == CtrlCode.ClearMeter:
+                if is_response:
+                    return "电表清零响应"
+                return "电表清零"
+
+            elif func_code == CtrlCode.ClearEvent:
+                if is_response:
+                    return "事件清零响应"
+                return "事件清零"
 
             return f"未知控制码(0x{self.ctrl_code:02X})"
 

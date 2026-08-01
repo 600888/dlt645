@@ -22,6 +22,9 @@ venv/
 .pypirc
 *.egg-info
 dist/
+build/
+# setuptools-scm/setuptools 构建时可能产生的版本目录（如 dlt645-2.0.0/）
+dlt645-*/
 
 # Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
 # should NOT be excluded as they contain compiler settings and other important
