@@ -129,6 +129,7 @@
 </li>
 <li class="toctree-l7"><a class="reference internal" href="src.model.data.html#submodules">Submodules</a></li>
 <li class="toctree-l7"><a class="reference internal" href="src.model.data.html#module-src.model.data.data_handler">src.model.data.data_handler module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="src.model.data.html#src.model.data.data_handler.clone_data_map"><code class="docutils literal notranslate"><span class="pre">clone_data_map()</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="src.model.data.html#src.model.data.data_handler.get_data_item"><code class="docutils literal notranslate"><span class="pre">get_data_item()</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="src.model.data.html#src.model.data.data_handler.set_data_item"><code class="docutils literal notranslate"><span class="pre">set_data_item()</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="src.model.data.html#src.model.data.data_handler.is_value_valid"><code class="docutils literal notranslate"><span class="pre">is_value_valid()</span></code></a></li>
@@ -260,9 +261,12 @@
 <li class="toctree-l5"><a class="reference internal" href="src.protocol.html#module-src.protocol.log">src.protocol.log module</a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.protocol.html#module-src.protocol.protocol">src.protocol.protocol module</a><ul>
 <li class="toctree-l6"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.MAX_DATA_LENGTH"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.MAX_DATA_LENGTH</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.MAX_PREAMBLE_LENGTH"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.MAX_PREAMBLE_LENGTH</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.MIN_FRAME_LENGTH"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.MIN_FRAME_LENGTH</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.decode_data"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.decode_data()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.calculate_checksum"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.calculate_checksum()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.encode_data"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.encode_data()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.calculate_checksum"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.calculate_checksum()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.build_frame"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.build_frame()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.deserialize"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.deserialize()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.deserialize_with_remaining"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.deserialize_with_remaining()</span></code></a></li>
@@ -303,6 +307,9 @@
 <li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.clear_event"><code class="docutils literal notranslate"><span class="pre">MeterClientService.clear_event()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.send_and_handle_request"><code class="docutils literal notranslate"><span class="pre">MeterClientService.send_and_handle_request()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.handle_response"><code class="docutils literal notranslate"><span class="pre">MeterClientService.handle_response()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.connect"><code class="docutils literal notranslate"><span class="pre">MeterClientService.connect()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.disconnect"><code class="docutils literal notranslate"><span class="pre">MeterClientService.disconnect()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.close"><code class="docutils literal notranslate"><span class="pre">MeterClientService.close()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.enable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterClientService.enable_message_capture()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.disable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterClientService.disable_message_capture()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.get_captured_messages"><code class="docutils literal notranslate"><span class="pre">MeterClientService.get_captured_messages()</span></code></a></li>
@@ -337,6 +344,9 @@
 <li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.set_04"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_04()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.get_data_item"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_data_item()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.handle_request"><code class="docutils literal notranslate"><span class="pre">MeterServerService.handle_request()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.start"><code class="docutils literal notranslate"><span class="pre">MeterServerService.start()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.stop"><code class="docutils literal notranslate"><span class="pre">MeterServerService.stop()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.close"><code class="docutils literal notranslate"><span class="pre">MeterServerService.close()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.enable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterServerService.enable_message_capture()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.disable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterServerService.disable_message_capture()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.get_captured_messages"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_captured_messages()</span></code></a></li>
@@ -364,6 +374,8 @@
 <li class="toctree-l7"><a class="reference internal" href="src.transport.client.html#module-src.transport.client.log">src.transport.client.log module</a></li>
 <li class="toctree-l7"><a class="reference internal" href="src.transport.client.html#module-src.transport.client.rtu_client">src.transport.client.rtu_client module</a><ul>
 <li class="toctree-l8"><a class="reference internal" href="src.transport.client.html#src.transport.client.rtu_client.RtuClient"><code class="docutils literal notranslate"><span class="pre">RtuClient</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.rtu_client.RtuClient.MAX_BUFFER_SIZE"><code class="docutils literal notranslate"><span class="pre">RtuClient.MAX_BUFFER_SIZE</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.rtu_client.RtuClient.conn"><code class="docutils literal notranslate"><span class="pre">RtuClient.conn</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.rtu_client.RtuClient.connect"><code class="docutils literal notranslate"><span class="pre">RtuClient.connect()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.rtu_client.RtuClient.disconnect"><code class="docutils literal notranslate"><span class="pre">RtuClient.disconnect()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.rtu_client.RtuClient.send_request"><code class="docutils literal notranslate"><span class="pre">RtuClient.send_request()</span></code></a></li>
@@ -374,6 +386,8 @@
 </li>
 <li class="toctree-l7"><a class="reference internal" href="src.transport.client.html#module-src.transport.client.tcp_client">src.transport.client.tcp_client module</a><ul>
 <li class="toctree-l8"><a class="reference internal" href="src.transport.client.html#src.transport.client.tcp_client.TcpClient"><code class="docutils literal notranslate"><span class="pre">TcpClient</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.tcp_client.TcpClient.MAX_BUFFER_SIZE"><code class="docutils literal notranslate"><span class="pre">TcpClient.MAX_BUFFER_SIZE</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.tcp_client.TcpClient.conn"><code class="docutils literal notranslate"><span class="pre">TcpClient.conn</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.tcp_client.TcpClient.connect"><code class="docutils literal notranslate"><span class="pre">TcpClient.connect()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.tcp_client.TcpClient.disconnect"><code class="docutils literal notranslate"><span class="pre">TcpClient.disconnect()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.tcp_client.TcpClient.send_request"><code class="docutils literal notranslate"><span class="pre">TcpClient.send_request()</span></code></a></li>
@@ -390,6 +404,8 @@
 <li class="toctree-l7"><a class="reference internal" href="src.transport.server.html#module-src.transport.server.log">src.transport.server.log module</a></li>
 <li class="toctree-l7"><a class="reference internal" href="src.transport.server.html#module-src.transport.server.rtu_server">src.transport.server.rtu_server module</a><ul>
 <li class="toctree-l8"><a class="reference internal" href="src.transport.server.html#src.transport.server.rtu_server.RtuServer"><code class="docutils literal notranslate"><span class="pre">RtuServer</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="src.transport.server.html#src.transport.server.rtu_server.RtuServer.MAX_BUFFER_SIZE"><code class="docutils literal notranslate"><span class="pre">RtuServer.MAX_BUFFER_SIZE</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.transport.server.html#src.transport.server.rtu_server.RtuServer.conn"><code class="docutils literal notranslate"><span class="pre">RtuServer.conn</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.transport.server.html#src.transport.server.rtu_server.RtuServer.start"><code class="docutils literal notranslate"><span class="pre">RtuServer.start()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.transport.server.html#src.transport.server.rtu_server.RtuServer.stop"><code class="docutils literal notranslate"><span class="pre">RtuServer.stop()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.transport.server.html#src.transport.server.rtu_server.RtuServer.is_running"><code class="docutils literal notranslate"><span class="pre">RtuServer.is_running()</span></code></a></li>
@@ -400,6 +416,8 @@
 </li>
 <li class="toctree-l7"><a class="reference internal" href="src.transport.server.html#module-src.transport.server.tcp_server">src.transport.server.tcp_server module</a><ul>
 <li class="toctree-l8"><a class="reference internal" href="src.transport.server.html#src.transport.server.tcp_server.TcpServer"><code class="docutils literal notranslate"><span class="pre">TcpServer</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="src.transport.server.html#src.transport.server.tcp_server.TcpServer.MAX_BUFFER_SIZE"><code class="docutils literal notranslate"><span class="pre">TcpServer.MAX_BUFFER_SIZE</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.transport.server.html#src.transport.server.tcp_server.TcpServer.ln"><code class="docutils literal notranslate"><span class="pre">TcpServer.ln</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.transport.server.html#src.transport.server.tcp_server.TcpServer.start"><code class="docutils literal notranslate"><span class="pre">TcpServer.start()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.transport.server.html#src.transport.server.tcp_server.TcpServer.stop"><code class="docutils literal notranslate"><span class="pre">TcpServer.stop()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.transport.server.html#src.transport.server.tcp_server.TcpServer.is_running"><code class="docutils literal notranslate"><span class="pre">TcpServer.is_running()</span></code></a></li>
@@ -436,6 +454,9 @@
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterServerService.set_04"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_04()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterServerService.get_data_item"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_data_item()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterServerService.handle_request"><code class="docutils literal notranslate"><span class="pre">MeterServerService.handle_request()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterServerService.start"><code class="docutils literal notranslate"><span class="pre">MeterServerService.start()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterServerService.stop"><code class="docutils literal notranslate"><span class="pre">MeterServerService.stop()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterServerService.close"><code class="docutils literal notranslate"><span class="pre">MeterServerService.close()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterServerService.enable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterServerService.enable_message_capture()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterServerService.disable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterServerService.disable_message_capture()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterServerService.get_captured_messages"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_captured_messages()</span></code></a></li>
@@ -470,6 +491,9 @@
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.clear_event"><code class="docutils literal notranslate"><span class="pre">MeterClientService.clear_event()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.send_and_handle_request"><code class="docutils literal notranslate"><span class="pre">MeterClientService.send_and_handle_request()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.handle_response"><code class="docutils literal notranslate"><span class="pre">MeterClientService.handle_response()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.connect"><code class="docutils literal notranslate"><span class="pre">MeterClientService.connect()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.disconnect"><code class="docutils literal notranslate"><span class="pre">MeterClientService.disconnect()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.close"><code class="docutils literal notranslate"><span class="pre">MeterClientService.close()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.enable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterClientService.enable_message_capture()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.disable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterClientService.disable_message_capture()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.get_captured_messages"><code class="docutils literal notranslate"><span class="pre">MeterClientService.get_captured_messages()</span></code></a></li>
@@ -481,9 +505,12 @@
 </ul>
 </li>
 <li class="toctree-l4"><a class="reference internal" href="src.html#src.DLT645Protocol"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.DLT645Protocol.MAX_DATA_LENGTH"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.MAX_DATA_LENGTH</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.DLT645Protocol.MAX_PREAMBLE_LENGTH"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.MAX_PREAMBLE_LENGTH</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.DLT645Protocol.MIN_FRAME_LENGTH"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.MIN_FRAME_LENGTH</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.DLT645Protocol.decode_data"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.decode_data()</span></code></a></li>
-<li class="toctree-l5"><a class="reference internal" href="src.html#src.DLT645Protocol.calculate_checksum"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.calculate_checksum()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.DLT645Protocol.encode_data"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.encode_data()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.DLT645Protocol.calculate_checksum"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.calculate_checksum()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.DLT645Protocol.build_frame"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.build_frame()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.DLT645Protocol.deserialize"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.deserialize()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.DLT645Protocol.deserialize_with_remaining"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.deserialize_with_remaining()</span></code></a></li>
@@ -523,6 +550,7 @@
 </ul>
 </li>
 <li class="toctree-l4"><a class="reference internal" href="src.html#src.TcpServer"><code class="docutils literal notranslate"><span class="pre">TcpServer</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.TcpServer.MAX_BUFFER_SIZE"><code class="docutils literal notranslate"><span class="pre">TcpServer.MAX_BUFFER_SIZE</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.TcpServer.start"><code class="docutils literal notranslate"><span class="pre">TcpServer.start()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.TcpServer.stop"><code class="docutils literal notranslate"><span class="pre">TcpServer.stop()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.TcpServer.is_running"><code class="docutils literal notranslate"><span class="pre">TcpServer.is_running()</span></code></a></li>
@@ -530,6 +558,7 @@
 </ul>
 </li>
 <li class="toctree-l4"><a class="reference internal" href="src.html#src.RtuServer"><code class="docutils literal notranslate"><span class="pre">RtuServer</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.RtuServer.MAX_BUFFER_SIZE"><code class="docutils literal notranslate"><span class="pre">RtuServer.MAX_BUFFER_SIZE</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.RtuServer.start"><code class="docutils literal notranslate"><span class="pre">RtuServer.start()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.RtuServer.stop"><code class="docutils literal notranslate"><span class="pre">RtuServer.stop()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.RtuServer.is_running"><code class="docutils literal notranslate"><span class="pre">RtuServer.is_running()</span></code></a></li>
@@ -537,6 +566,7 @@
 </ul>
 </li>
 <li class="toctree-l4"><a class="reference internal" href="src.html#src.TcpClient"><code class="docutils literal notranslate"><span class="pre">TcpClient</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.TcpClient.MAX_BUFFER_SIZE"><code class="docutils literal notranslate"><span class="pre">TcpClient.MAX_BUFFER_SIZE</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.TcpClient.connect"><code class="docutils literal notranslate"><span class="pre">TcpClient.connect()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.TcpClient.disconnect"><code class="docutils literal notranslate"><span class="pre">TcpClient.disconnect()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.TcpClient.send_request"><code class="docutils literal notranslate"><span class="pre">TcpClient.send_request()</span></code></a></li>
@@ -544,6 +574,7 @@
 </ul>
 </li>
 <li class="toctree-l4"><a class="reference internal" href="src.html#src.RtuClient"><code class="docutils literal notranslate"><span class="pre">RtuClient</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.RtuClient.MAX_BUFFER_SIZE"><code class="docutils literal notranslate"><span class="pre">RtuClient.MAX_BUFFER_SIZE</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.RtuClient.connect"><code class="docutils literal notranslate"><span class="pre">RtuClient.connect()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.RtuClient.disconnect"><code class="docutils literal notranslate"><span class="pre">RtuClient.disconnect()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.RtuClient.send_request"><code class="docutils literal notranslate"><span class="pre">RtuClient.send_request()</span></code></a></li>
@@ -668,6 +699,9 @@
 <li class="toctree-l4"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.clear_event"><code class="docutils literal notranslate"><span class="pre">MeterClientService.clear_event()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.send_and_handle_request"><code class="docutils literal notranslate"><span class="pre">MeterClientService.send_and_handle_request()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.handle_response"><code class="docutils literal notranslate"><span class="pre">MeterClientService.handle_response()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.connect"><code class="docutils literal notranslate"><span class="pre">MeterClientService.connect()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.disconnect"><code class="docutils literal notranslate"><span class="pre">MeterClientService.disconnect()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.close"><code class="docutils literal notranslate"><span class="pre">MeterClientService.close()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.enable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterClientService.enable_message_capture()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.disable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterClientService.disable_message_capture()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.get_captured_messages"><code class="docutils literal notranslate"><span class="pre">MeterClientService.get_captured_messages()</span></code></a></li>
@@ -702,6 +736,9 @@
 <li class="toctree-l4"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.set_04"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_04()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.get_data_item"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_data_item()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.handle_request"><code class="docutils literal notranslate"><span class="pre">MeterServerService.handle_request()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.start"><code class="docutils literal notranslate"><span class="pre">MeterServerService.start()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.stop"><code class="docutils literal notranslate"><span class="pre">MeterServerService.stop()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.close"><code class="docutils literal notranslate"><span class="pre">MeterServerService.close()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.enable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterServerService.enable_message_capture()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.disable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterServerService.disable_message_capture()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.get_captured_messages"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_captured_messages()</span></code></a></li>

@@ -129,6 +129,7 @@
 </li>
 <li class="toctree-l7"><a class="reference internal" href="src.model.data.html#submodules">Submodules</a></li>
 <li class="toctree-l7"><a class="reference internal" href="src.model.data.html#module-src.model.data.data_handler">src.model.data.data_handler module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="src.model.data.html#src.model.data.data_handler.clone_data_map"><code class="docutils literal notranslate"><span class="pre">clone_data_map()</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="src.model.data.html#src.model.data.data_handler.get_data_item"><code class="docutils literal notranslate"><span class="pre">get_data_item()</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="src.model.data.html#src.model.data.data_handler.set_data_item"><code class="docutils literal notranslate"><span class="pre">set_data_item()</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="src.model.data.html#src.model.data.data_handler.is_value_valid"><code class="docutils literal notranslate"><span class="pre">is_value_valid()</span></code></a></li>
@@ -260,9 +261,12 @@
 <li class="toctree-l5"><a class="reference internal" href="#module-src.protocol.log">src.protocol.log module</a></li>
 <li class="toctree-l5"><a class="reference internal" href="#module-src.protocol.protocol">src.protocol.protocol module</a><ul>
 <li class="toctree-l6"><a class="reference internal" href="#src.protocol.protocol.DLT645Protocol"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="#src.protocol.protocol.DLT645Protocol.MAX_DATA_LENGTH"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.MAX_DATA_LENGTH</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#src.protocol.protocol.DLT645Protocol.MAX_PREAMBLE_LENGTH"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.MAX_PREAMBLE_LENGTH</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#src.protocol.protocol.DLT645Protocol.MIN_FRAME_LENGTH"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.MIN_FRAME_LENGTH</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="#src.protocol.protocol.DLT645Protocol.decode_data"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.decode_data()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="#src.protocol.protocol.DLT645Protocol.calculate_checksum"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.calculate_checksum()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="#src.protocol.protocol.DLT645Protocol.encode_data"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.encode_data()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#src.protocol.protocol.DLT645Protocol.calculate_checksum"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.calculate_checksum()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="#src.protocol.protocol.DLT645Protocol.build_frame"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.build_frame()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="#src.protocol.protocol.DLT645Protocol.deserialize"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.deserialize()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="#src.protocol.protocol.DLT645Protocol.deserialize_with_remaining"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.deserialize_with_remaining()</span></code></a></li>
@@ -303,6 +307,9 @@
 <li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.clear_event"><code class="docutils literal notranslate"><span class="pre">MeterClientService.clear_event()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.send_and_handle_request"><code class="docutils literal notranslate"><span class="pre">MeterClientService.send_and_handle_request()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.handle_response"><code class="docutils literal notranslate"><span class="pre">MeterClientService.handle_response()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.connect"><code class="docutils literal notranslate"><span class="pre">MeterClientService.connect()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.disconnect"><code class="docutils literal notranslate"><span class="pre">MeterClientService.disconnect()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.close"><code class="docutils literal notranslate"><span class="pre">MeterClientService.close()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.enable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterClientService.enable_message_capture()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.disable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterClientService.disable_message_capture()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.get_captured_messages"><code class="docutils literal notranslate"><span class="pre">MeterClientService.get_captured_messages()</span></code></a></li>
@@ -337,6 +344,9 @@
 <li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.set_04"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_04()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.get_data_item"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_data_item()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.handle_request"><code class="docutils literal notranslate"><span class="pre">MeterServerService.handle_request()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.start"><code class="docutils literal notranslate"><span class="pre">MeterServerService.start()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.stop"><code class="docutils literal notranslate"><span class="pre">MeterServerService.stop()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.close"><code class="docutils literal notranslate"><span class="pre">MeterServerService.close()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.enable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterServerService.enable_message_capture()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.disable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterServerService.disable_message_capture()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.get_captured_messages"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_captured_messages()</span></code></a></li>
@@ -364,6 +374,8 @@
 <li class="toctree-l7"><a class="reference internal" href="src.transport.client.html#module-src.transport.client.log">src.transport.client.log module</a></li>
 <li class="toctree-l7"><a class="reference internal" href="src.transport.client.html#module-src.transport.client.rtu_client">src.transport.client.rtu_client module</a><ul>
 <li class="toctree-l8"><a class="reference internal" href="src.transport.client.html#src.transport.client.rtu_client.RtuClient"><code class="docutils literal notranslate"><span class="pre">RtuClient</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.rtu_client.RtuClient.MAX_BUFFER_SIZE"><code class="docutils literal notranslate"><span class="pre">RtuClient.MAX_BUFFER_SIZE</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.rtu_client.RtuClient.conn"><code class="docutils literal notranslate"><span class="pre">RtuClient.conn</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.rtu_client.RtuClient.connect"><code class="docutils literal notranslate"><span class="pre">RtuClient.connect()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.rtu_client.RtuClient.disconnect"><code class="docutils literal notranslate"><span class="pre">RtuClient.disconnect()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.rtu_client.RtuClient.send_request"><code class="docutils literal notranslate"><span class="pre">RtuClient.send_request()</span></code></a></li>
@@ -374,6 +386,8 @@
 </li>
 <li class="toctree-l7"><a class="reference internal" href="src.transport.client.html#module-src.transport.client.tcp_client">src.transport.client.tcp_client module</a><ul>
 <li class="toctree-l8"><a class="reference internal" href="src.transport.client.html#src.transport.client.tcp_client.TcpClient"><code class="docutils literal notranslate"><span class="pre">TcpClient</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.tcp_client.TcpClient.MAX_BUFFER_SIZE"><code class="docutils literal notranslate"><span class="pre">TcpClient.MAX_BUFFER_SIZE</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.tcp_client.TcpClient.conn"><code class="docutils literal notranslate"><span class="pre">TcpClient.conn</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.tcp_client.TcpClient.connect"><code class="docutils literal notranslate"><span class="pre">TcpClient.connect()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.tcp_client.TcpClient.disconnect"><code class="docutils literal notranslate"><span class="pre">TcpClient.disconnect()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.tcp_client.TcpClient.send_request"><code class="docutils literal notranslate"><span class="pre">TcpClient.send_request()</span></code></a></li>
@@ -390,6 +404,8 @@
 <li class="toctree-l7"><a class="reference internal" href="src.transport.server.html#module-src.transport.server.log">src.transport.server.log module</a></li>
 <li class="toctree-l7"><a class="reference internal" href="src.transport.server.html#module-src.transport.server.rtu_server">src.transport.server.rtu_server module</a><ul>
 <li class="toctree-l8"><a class="reference internal" href="src.transport.server.html#src.transport.server.rtu_server.RtuServer"><code class="docutils literal notranslate"><span class="pre">RtuServer</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="src.transport.server.html#src.transport.server.rtu_server.RtuServer.MAX_BUFFER_SIZE"><code class="docutils literal notranslate"><span class="pre">RtuServer.MAX_BUFFER_SIZE</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.transport.server.html#src.transport.server.rtu_server.RtuServer.conn"><code class="docutils literal notranslate"><span class="pre">RtuServer.conn</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.transport.server.html#src.transport.server.rtu_server.RtuServer.start"><code class="docutils literal notranslate"><span class="pre">RtuServer.start()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.transport.server.html#src.transport.server.rtu_server.RtuServer.stop"><code class="docutils literal notranslate"><span class="pre">RtuServer.stop()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.transport.server.html#src.transport.server.rtu_server.RtuServer.is_running"><code class="docutils literal notranslate"><span class="pre">RtuServer.is_running()</span></code></a></li>
@@ -400,6 +416,8 @@
 </li>
 <li class="toctree-l7"><a class="reference internal" href="src.transport.server.html#module-src.transport.server.tcp_server">src.transport.server.tcp_server module</a><ul>
 <li class="toctree-l8"><a class="reference internal" href="src.transport.server.html#src.transport.server.tcp_server.TcpServer"><code class="docutils literal notranslate"><span class="pre">TcpServer</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="src.transport.server.html#src.transport.server.tcp_server.TcpServer.MAX_BUFFER_SIZE"><code class="docutils literal notranslate"><span class="pre">TcpServer.MAX_BUFFER_SIZE</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.transport.server.html#src.transport.server.tcp_server.TcpServer.ln"><code class="docutils literal notranslate"><span class="pre">TcpServer.ln</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.transport.server.html#src.transport.server.tcp_server.TcpServer.start"><code class="docutils literal notranslate"><span class="pre">TcpServer.start()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.transport.server.html#src.transport.server.tcp_server.TcpServer.stop"><code class="docutils literal notranslate"><span class="pre">TcpServer.stop()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.transport.server.html#src.transport.server.tcp_server.TcpServer.is_running"><code class="docutils literal notranslate"><span class="pre">TcpServer.is_running()</span></code></a></li>
@@ -436,6 +454,9 @@
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterServerService.set_04"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_04()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterServerService.get_data_item"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_data_item()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterServerService.handle_request"><code class="docutils literal notranslate"><span class="pre">MeterServerService.handle_request()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterServerService.start"><code class="docutils literal notranslate"><span class="pre">MeterServerService.start()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterServerService.stop"><code class="docutils literal notranslate"><span class="pre">MeterServerService.stop()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterServerService.close"><code class="docutils literal notranslate"><span class="pre">MeterServerService.close()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterServerService.enable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterServerService.enable_message_capture()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterServerService.disable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterServerService.disable_message_capture()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterServerService.get_captured_messages"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_captured_messages()</span></code></a></li>
@@ -470,6 +491,9 @@
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.clear_event"><code class="docutils literal notranslate"><span class="pre">MeterClientService.clear_event()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.send_and_handle_request"><code class="docutils literal notranslate"><span class="pre">MeterClientService.send_and_handle_request()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.handle_response"><code class="docutils literal notranslate"><span class="pre">MeterClientService.handle_response()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.connect"><code class="docutils literal notranslate"><span class="pre">MeterClientService.connect()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.disconnect"><code class="docutils literal notranslate"><span class="pre">MeterClientService.disconnect()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.close"><code class="docutils literal notranslate"><span class="pre">MeterClientService.close()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.enable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterClientService.enable_message_capture()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.disable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterClientService.disable_message_capture()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.get_captured_messages"><code class="docutils literal notranslate"><span class="pre">MeterClientService.get_captured_messages()</span></code></a></li>
@@ -481,9 +505,12 @@
 </ul>
 </li>
 <li class="toctree-l4"><a class="reference internal" href="src.html#src.DLT645Protocol"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.DLT645Protocol.MAX_DATA_LENGTH"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.MAX_DATA_LENGTH</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.DLT645Protocol.MAX_PREAMBLE_LENGTH"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.MAX_PREAMBLE_LENGTH</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.DLT645Protocol.MIN_FRAME_LENGTH"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.MIN_FRAME_LENGTH</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.DLT645Protocol.decode_data"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.decode_data()</span></code></a></li>
-<li class="toctree-l5"><a class="reference internal" href="src.html#src.DLT645Protocol.calculate_checksum"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.calculate_checksum()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.DLT645Protocol.encode_data"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.encode_data()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.DLT645Protocol.calculate_checksum"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.calculate_checksum()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.DLT645Protocol.build_frame"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.build_frame()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.DLT645Protocol.deserialize"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.deserialize()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.DLT645Protocol.deserialize_with_remaining"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.deserialize_with_remaining()</span></code></a></li>
@@ -523,6 +550,7 @@
 </ul>
 </li>
 <li class="toctree-l4"><a class="reference internal" href="src.html#src.TcpServer"><code class="docutils literal notranslate"><span class="pre">TcpServer</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.TcpServer.MAX_BUFFER_SIZE"><code class="docutils literal notranslate"><span class="pre">TcpServer.MAX_BUFFER_SIZE</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.TcpServer.start"><code class="docutils literal notranslate"><span class="pre">TcpServer.start()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.TcpServer.stop"><code class="docutils literal notranslate"><span class="pre">TcpServer.stop()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.TcpServer.is_running"><code class="docutils literal notranslate"><span class="pre">TcpServer.is_running()</span></code></a></li>
@@ -530,6 +558,7 @@
 </ul>
 </li>
 <li class="toctree-l4"><a class="reference internal" href="src.html#src.RtuServer"><code class="docutils literal notranslate"><span class="pre">RtuServer</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.RtuServer.MAX_BUFFER_SIZE"><code class="docutils literal notranslate"><span class="pre">RtuServer.MAX_BUFFER_SIZE</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.RtuServer.start"><code class="docutils literal notranslate"><span class="pre">RtuServer.start()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.RtuServer.stop"><code class="docutils literal notranslate"><span class="pre">RtuServer.stop()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.RtuServer.is_running"><code class="docutils literal notranslate"><span class="pre">RtuServer.is_running()</span></code></a></li>
@@ -537,6 +566,7 @@
 </ul>
 </li>
 <li class="toctree-l4"><a class="reference internal" href="src.html#src.TcpClient"><code class="docutils literal notranslate"><span class="pre">TcpClient</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.TcpClient.MAX_BUFFER_SIZE"><code class="docutils literal notranslate"><span class="pre">TcpClient.MAX_BUFFER_SIZE</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.TcpClient.connect"><code class="docutils literal notranslate"><span class="pre">TcpClient.connect()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.TcpClient.disconnect"><code class="docutils literal notranslate"><span class="pre">TcpClient.disconnect()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.TcpClient.send_request"><code class="docutils literal notranslate"><span class="pre">TcpClient.send_request()</span></code></a></li>
@@ -544,6 +574,7 @@
 </ul>
 </li>
 <li class="toctree-l4"><a class="reference internal" href="src.html#src.RtuClient"><code class="docutils literal notranslate"><span class="pre">RtuClient</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.RtuClient.MAX_BUFFER_SIZE"><code class="docutils literal notranslate"><span class="pre">RtuClient.MAX_BUFFER_SIZE</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.RtuClient.connect"><code class="docutils literal notranslate"><span class="pre">RtuClient.connect()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.RtuClient.disconnect"><code class="docutils literal notranslate"><span class="pre">RtuClient.disconnect()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.RtuClient.send_request"><code class="docutils literal notranslate"><span class="pre">RtuClient.send_request()</span></code></a></li>
@@ -664,7 +695,7 @@
 
 <dl class="py class">
 <dt class="sig sig-object py" id="src.protocol.frame.Frame">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.protocol.frame.</span></span><span class="sig-name descname"><span class="pre">Frame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">preamble</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">bytearray(b'')</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_flag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">addr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">bytearray(b'')</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctrl_code</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_len</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">bytearray(b'')</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_sum</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_flag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/protocol/frame.html#Frame"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.protocol.frame.Frame" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.protocol.frame.</span></span><span class="sig-name descname"><span class="pre">Frame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">preamble</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_flag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">addr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctrl_code</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_len</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check_sum</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_flag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/protocol/frame.html#Frame"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.protocol.frame.Frame" title="Link to this definition"></a></dt>
 <dd><p>基类：<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>DLT645 协议帧结构类。</p>
 <p>表示一个完整的 DLT645 协议数据帧。</p>
@@ -725,52 +756,34 @@
 </section>
 <section id="module-src.protocol.protocol">
 <span id="src-protocol-protocol-module"></span><h2>src.protocol.protocol module<a class="headerlink" href="#module-src.protocol.protocol" title="Link to this heading"></a></h2>
-<p>DLT645 协议实现模块。</p>
-<p>本模块实现了 DLT645 协议的核心功能，包括：
-- 数据域编码/解码（±0x33H 转换）
-- 校验和计算
-- 帧构建和解析</p>
+<p>DL/T 645-2007 数据帧编码、校验与流式解析。</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="src.protocol.protocol.DLT645Protocol">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.protocol.protocol.</span></span><span class="sig-name descname"><span class="pre">DLT645Protocol</span></span><a class="reference internal" href="_modules/src/protocol/protocol.html#DLT645Protocol"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.protocol.protocol.DLT645Protocol" title="Link to this definition"></a></dt>
 <dd><p>基类：<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<p>DLT645 协议实现类。</p>
-<p>该类实现了 DLT645 协议的核心功能，包括数据编码/解码、校验和计算、
-帧构建和解析等操作。所有方法均为类方法，可直接调用。</p>
+<p>无状态的 DL/T 645 帧编解码器。</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.protocol.protocol.DLT645Protocol.MAX_DATA_LENGTH">
+<span class="sig-name descname"><span class="pre">MAX_DATA_LENGTH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">255</span></em><a class="headerlink" href="#src.protocol.protocol.DLT645Protocol.MAX_DATA_LENGTH" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.protocol.protocol.DLT645Protocol.MAX_PREAMBLE_LENGTH">
+<span class="sig-name descname"><span class="pre">MAX_PREAMBLE_LENGTH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#src.protocol.protocol.DLT645Protocol.MAX_PREAMBLE_LENGTH" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.protocol.protocol.DLT645Protocol.MIN_FRAME_LENGTH">
+<span class="sig-name descname"><span class="pre">MIN_FRAME_LENGTH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">12</span></em><a class="headerlink" href="#src.protocol.protocol.DLT645Protocol.MIN_FRAME_LENGTH" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="src.protocol.protocol.DLT645Protocol.decode_data">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">decode_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/protocol/protocol.html#DLT645Protocol.decode_data"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.protocol.protocol.DLT645Protocol.decode_data" title="Link to this definition"></a></dt>
-<dd><p>数据域解码（-0x33H 转换）。</p>
-<p>按照 DLT645 协议规定，对数据域进行解码处理，
-每个字节减去 0x33H，并使用模 256 运算确保结果在 0-255 范围内。</p>
+<dd><p>移除数据域逐字节增加的 <code class="docutils literal notranslate"><span class="pre">0x33</span></code> 偏移。</p>
 <dl class="field-list simple">
-<dt class="field-odd">参数<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）"><em>bytes</em></a>) -- 需要解码的数据字节。</p>
-</dd>
-<dt class="field-even">返回<span class="colon">:</span></dt>
-<dd class="field-even"><p>解码后的原始数据。</p>
-</dd>
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）">bytes</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="src.protocol.protocol.DLT645Protocol.calculate_checksum">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">calculate_checksum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/protocol/protocol.html#DLT645Protocol.calculate_checksum"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.protocol.protocol.DLT645Protocol.calculate_checksum" title="Link to this definition"></a></dt>
-<dd><p>校验和计算（模 256 求和）。</p>
-<p>按照 DLT645 协议规定，计算数据的校验和，
-对所有字节进行累加，然后对结果取模 256。</p>
-<dl class="field-list simple">
-<dt class="field-odd">参数<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）"><em>bytes</em></a>) -- 需要计算校验和的数据字节。</p>
-</dd>
-<dt class="field-even">返回<span class="colon">:</span></dt>
-<dd class="field-even"><p>计算得到的校验和值（0-255 范围）。</p>
-</dd>
-<dt class="field-odd">返回类型<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）">int</a></p>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
@@ -778,44 +791,32 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="src.protocol.protocol.DLT645Protocol.encode_data">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">encode_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/protocol/protocol.html#DLT645Protocol.encode_data"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.protocol.protocol.DLT645Protocol.encode_data" title="Link to this definition"></a></dt>
-<dd><p>数据域编码（+0x33H 转换）。</p>
-<p>按照 DLT645 协议规定，对数据域进行编码处理，
-每个字节加上 0x33H，并使用模 256 运算确保结果在 0-255 范围内。</p>
+<dd><p>按协议为数据域逐字节增加 <code class="docutils literal notranslate"><span class="pre">0x33</span></code> 偏移。</p>
 <dl class="field-list simple">
-<dt class="field-odd">参数<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）"><em>bytes</em></a>) -- 需要编码的原始数据字节。</p>
-</dd>
-<dt class="field-even">返回<span class="colon">:</span></dt>
-<dd class="field-even"><p>编码后的数据。</p>
-</dd>
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）">bytes</a></p>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.protocol.protocol.DLT645Protocol.calculate_checksum">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">calculate_checksum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/protocol/protocol.html#DLT645Protocol.calculate_checksum"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.protocol.protocol.DLT645Protocol.calculate_checksum" title="Link to this definition"></a></dt>
+<dd><p>计算从第一个 <code class="docutils literal notranslate"><span class="pre">0x68</span></code> 到数据域末尾的模 256 累加和。</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.protocol.protocol.DLT645Protocol.build_frame">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">build_frame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">addr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctrl_code</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/protocol/protocol.html#DLT645Protocol.build_frame"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.protocol.protocol.DLT645Protocol.build_frame" title="Link to this definition"></a></dt>
-<dd><p>构建 DLT645 协议帧。</p>
-<p>按照 DLT645 协议规定，构建完整的协议帧，包括前导字节、
-地址域、控制码、数据域、校验和和结束标志。</p>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">build_frame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">addr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctrl_code</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preamble_count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/protocol/protocol.html#DLT645Protocol.build_frame"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.protocol.protocol.DLT645Protocol.build_frame" title="Link to this definition"></a></dt>
+<dd><p>从解码后的地址、控制码和数据域构建完整帧。</p>
 <dl class="field-list simple">
-<dt class="field-odd">参数<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>addr</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）"><em>bytes</em></a>) -- 设备地址（6字节）。</p></li>
-<li><p><strong>ctrl_code</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><em>int</em></a>) -- 控制码。</p></li>
-<li><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）"><em>bytes</em></a>) -- 原始数据域（未编码）。</p></li>
-</ul>
-</dd>
-<dt class="field-even">返回<span class="colon">:</span></dt>
-<dd class="field-even"><p>完整的 DLT645 协议帧。</p>
-</dd>
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="（在 Python v3.14）">bytearray</a></p>
-</dd>
-<dt class="field-even">抛出<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="（在 Python v3.14）"><strong>ValueError</strong></a> -- 当地址长度不为6字节时抛出。</p>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytearray</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
@@ -823,21 +824,10 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="src.protocol.protocol.DLT645Protocol.deserialize">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">deserialize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raw</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/protocol/protocol.html#DLT645Protocol.deserialize"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.protocol.protocol.DLT645Protocol.deserialize" title="Link to this definition"></a></dt>
-<dd><p>将字节数据反序列化为 Frame 对象。</p>
-<p>从原始字节数据中解析出 DLT645 协议帧。如果无法找到完整的帧，
-则抛出异常。</p>
+<dd><p>解析第一帧；数据不完整或没有合法帧时抛出 <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>。</p>
 <dl class="field-list simple">
-<dt class="field-odd">参数<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>raw</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）"><em>bytes</em></a>) -- 输入的原始字节数据。</p>
-</dd>
-<dt class="field-even">返回<span class="colon">:</span></dt>
-<dd class="field-even"><p>解析出的 Frame 对象。</p>
-</dd>
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Optional[<a class="reference internal" href="#src.protocol.frame.Frame" title="src.protocol.frame.Frame">Frame</a>]</p>
-</dd>
-<dt class="field-even">抛出<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="（在 Python v3.14）"><strong>Exception</strong></a> -- 当无法找到完整帧时抛出。</p>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="（在 Python v3.14）"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference internal" href="#src.protocol.frame.Frame" title="src.protocol.frame.Frame"><code class="xref py py-class docutils literal notranslate"><span class="pre">Frame</span></code></a>]</span></p>
 </dd>
 </dl>
 </dd></dl>
@@ -845,19 +835,12 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="src.protocol.protocol.DLT645Protocol.deserialize_with_remaining">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">deserialize_with_remaining</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raw</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/protocol/protocol.html#DLT645Protocol.deserialize_with_remaining"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.protocol.protocol.DLT645Protocol.deserialize_with_remaining" title="Link to this definition"></a></dt>
-<dd><p>将字节数据反序列化为 Frame 对象，并返回未解析的剩余数据。</p>
-<p>从原始字节数据中解析出 DLT645 协议帧，并返回未解析的剩余数据。
-如果数据不完整或无法解析，返回 (原始数据, None)。</p>
+<dd><p>从字节流中解析一帧，并返回帧后的剩余数据。</p>
+<p>无效噪声和损坏帧会被丢弃；不完整帧会从首个有效候选 <code class="docutils literal notranslate"><span class="pre">0x68</span></code>
+起保留，供下一批数据继续拼接。</p>
 <dl class="field-list simple">
-<dt class="field-odd">参数<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>raw</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）"><em>bytes</em></a>) -- 输入的原始字节数据。</p>
-</dd>
-<dt class="field-even">返回<span class="colon">:</span></dt>
-<dd class="field-even"><p>元组 (未解析的剩余数据, 解析出的帧)。
-如果数据不完整或无法解析，返回 (原始数据, None)。</p>
-</dd>
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="（在 Python v3.14）">tuple</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）">bytes</a>, Optional[<a class="reference internal" href="#src.protocol.frame.Frame" title="src.protocol.frame.Frame">Frame</a>]]</p>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="（在 Python v3.14）"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference internal" href="#src.protocol.frame.Frame" title="src.protocol.frame.Frame"><code class="xref py py-class docutils literal notranslate"><span class="pre">Frame</span></code></a>]]</span></p>
 </dd>
 </dl>
 </dd></dl>
@@ -865,20 +848,10 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="src.protocol.protocol.DLT645Protocol.serialize">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">serialize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/protocol/protocol.html#DLT645Protocol.serialize"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.protocol.protocol.DLT645Protocol.serialize" title="Link to this definition"></a></dt>
-<dd><p>将 Frame 对象序列化为字节数据。</p>
-<p>按照 DLT645 协议规定，将 Frame 对象序列化为完整的协议帧字节。</p>
+<dd><p>序列化帧；前导 <code class="docutils literal notranslate"><span class="pre">0xFE</span></code> 不参与校验和计算。</p>
 <dl class="field-list simple">
-<dt class="field-odd">参数<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>frame</strong> (<a class="reference internal" href="#src.protocol.frame.Frame" title="src.protocol.frame.Frame"><em>Frame</em></a>) -- 需要序列化的 Frame 对象。</p>
-</dd>
-<dt class="field-even">返回<span class="colon">:</span></dt>
-<dd class="field-even"><p>序列化后的协议帧字节。</p>
-</dd>
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Optional[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）">bytes</a>]</p>
-</dd>
-<dt class="field-even">抛出<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="（在 Python v3.14）"><strong>Exception</strong></a> -- 当起始或结束标志无效时抛出。</p>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>

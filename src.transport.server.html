@@ -128,6 +128,7 @@
 </li>
 <li class="toctree-l7"><a class="reference internal" href="src.model.data.html#submodules">Submodules</a></li>
 <li class="toctree-l7"><a class="reference internal" href="src.model.data.html#module-src.model.data.data_handler">src.model.data.data_handler module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="src.model.data.html#src.model.data.data_handler.clone_data_map"><code class="docutils literal notranslate"><span class="pre">clone_data_map()</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="src.model.data.html#src.model.data.data_handler.get_data_item"><code class="docutils literal notranslate"><span class="pre">get_data_item()</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="src.model.data.html#src.model.data.data_handler.set_data_item"><code class="docutils literal notranslate"><span class="pre">set_data_item()</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="src.model.data.html#src.model.data.data_handler.is_value_valid"><code class="docutils literal notranslate"><span class="pre">is_value_valid()</span></code></a></li>
@@ -259,9 +260,12 @@
 <li class="toctree-l5"><a class="reference internal" href="src.protocol.html#module-src.protocol.log">src.protocol.log module</a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.protocol.html#module-src.protocol.protocol">src.protocol.protocol module</a><ul>
 <li class="toctree-l6"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.MAX_DATA_LENGTH"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.MAX_DATA_LENGTH</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.MAX_PREAMBLE_LENGTH"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.MAX_PREAMBLE_LENGTH</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.MIN_FRAME_LENGTH"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.MIN_FRAME_LENGTH</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.decode_data"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.decode_data()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.calculate_checksum"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.calculate_checksum()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.encode_data"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.encode_data()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.calculate_checksum"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.calculate_checksum()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.build_frame"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.build_frame()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.deserialize"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.deserialize()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.deserialize_with_remaining"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.deserialize_with_remaining()</span></code></a></li>
@@ -302,6 +306,9 @@
 <li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.clear_event"><code class="docutils literal notranslate"><span class="pre">MeterClientService.clear_event()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.send_and_handle_request"><code class="docutils literal notranslate"><span class="pre">MeterClientService.send_and_handle_request()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.handle_response"><code class="docutils literal notranslate"><span class="pre">MeterClientService.handle_response()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.connect"><code class="docutils literal notranslate"><span class="pre">MeterClientService.connect()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.disconnect"><code class="docutils literal notranslate"><span class="pre">MeterClientService.disconnect()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.close"><code class="docutils literal notranslate"><span class="pre">MeterClientService.close()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.enable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterClientService.enable_message_capture()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.disable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterClientService.disable_message_capture()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.get_captured_messages"><code class="docutils literal notranslate"><span class="pre">MeterClientService.get_captured_messages()</span></code></a></li>
@@ -336,6 +343,9 @@
 <li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.set_04"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_04()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.get_data_item"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_data_item()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.handle_request"><code class="docutils literal notranslate"><span class="pre">MeterServerService.handle_request()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.start"><code class="docutils literal notranslate"><span class="pre">MeterServerService.start()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.stop"><code class="docutils literal notranslate"><span class="pre">MeterServerService.stop()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.close"><code class="docutils literal notranslate"><span class="pre">MeterServerService.close()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.enable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterServerService.enable_message_capture()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.disable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterServerService.disable_message_capture()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.get_captured_messages"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_captured_messages()</span></code></a></li>
@@ -363,6 +373,8 @@
 <li class="toctree-l7"><a class="reference internal" href="src.transport.client.html#module-src.transport.client.log">src.transport.client.log module</a></li>
 <li class="toctree-l7"><a class="reference internal" href="src.transport.client.html#module-src.transport.client.rtu_client">src.transport.client.rtu_client module</a><ul>
 <li class="toctree-l8"><a class="reference internal" href="src.transport.client.html#src.transport.client.rtu_client.RtuClient"><code class="docutils literal notranslate"><span class="pre">RtuClient</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.rtu_client.RtuClient.MAX_BUFFER_SIZE"><code class="docutils literal notranslate"><span class="pre">RtuClient.MAX_BUFFER_SIZE</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.rtu_client.RtuClient.conn"><code class="docutils literal notranslate"><span class="pre">RtuClient.conn</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.rtu_client.RtuClient.connect"><code class="docutils literal notranslate"><span class="pre">RtuClient.connect()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.rtu_client.RtuClient.disconnect"><code class="docutils literal notranslate"><span class="pre">RtuClient.disconnect()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.rtu_client.RtuClient.send_request"><code class="docutils literal notranslate"><span class="pre">RtuClient.send_request()</span></code></a></li>
@@ -373,6 +385,8 @@
 </li>
 <li class="toctree-l7"><a class="reference internal" href="src.transport.client.html#module-src.transport.client.tcp_client">src.transport.client.tcp_client module</a><ul>
 <li class="toctree-l8"><a class="reference internal" href="src.transport.client.html#src.transport.client.tcp_client.TcpClient"><code class="docutils literal notranslate"><span class="pre">TcpClient</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.tcp_client.TcpClient.MAX_BUFFER_SIZE"><code class="docutils literal notranslate"><span class="pre">TcpClient.MAX_BUFFER_SIZE</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.tcp_client.TcpClient.conn"><code class="docutils literal notranslate"><span class="pre">TcpClient.conn</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.tcp_client.TcpClient.connect"><code class="docutils literal notranslate"><span class="pre">TcpClient.connect()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.tcp_client.TcpClient.disconnect"><code class="docutils literal notranslate"><span class="pre">TcpClient.disconnect()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.tcp_client.TcpClient.send_request"><code class="docutils literal notranslate"><span class="pre">TcpClient.send_request()</span></code></a></li>
@@ -389,6 +403,8 @@
 <li class="toctree-l7"><a class="reference internal" href="#module-src.transport.server.log">src.transport.server.log module</a></li>
 <li class="toctree-l7"><a class="reference internal" href="#module-src.transport.server.rtu_server">src.transport.server.rtu_server module</a><ul>
 <li class="toctree-l8"><a class="reference internal" href="#src.transport.server.rtu_server.RtuServer"><code class="docutils literal notranslate"><span class="pre">RtuServer</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="#src.transport.server.rtu_server.RtuServer.MAX_BUFFER_SIZE"><code class="docutils literal notranslate"><span class="pre">RtuServer.MAX_BUFFER_SIZE</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="#src.transport.server.rtu_server.RtuServer.conn"><code class="docutils literal notranslate"><span class="pre">RtuServer.conn</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="#src.transport.server.rtu_server.RtuServer.start"><code class="docutils literal notranslate"><span class="pre">RtuServer.start()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="#src.transport.server.rtu_server.RtuServer.stop"><code class="docutils literal notranslate"><span class="pre">RtuServer.stop()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="#src.transport.server.rtu_server.RtuServer.is_running"><code class="docutils literal notranslate"><span class="pre">RtuServer.is_running()</span></code></a></li>
@@ -399,6 +415,8 @@
 </li>
 <li class="toctree-l7"><a class="reference internal" href="#module-src.transport.server.tcp_server">src.transport.server.tcp_server module</a><ul>
 <li class="toctree-l8"><a class="reference internal" href="#src.transport.server.tcp_server.TcpServer"><code class="docutils literal notranslate"><span class="pre">TcpServer</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="#src.transport.server.tcp_server.TcpServer.MAX_BUFFER_SIZE"><code class="docutils literal notranslate"><span class="pre">TcpServer.MAX_BUFFER_SIZE</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="#src.transport.server.tcp_server.TcpServer.ln"><code class="docutils literal notranslate"><span class="pre">TcpServer.ln</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="#src.transport.server.tcp_server.TcpServer.start"><code class="docutils literal notranslate"><span class="pre">TcpServer.start()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="#src.transport.server.tcp_server.TcpServer.stop"><code class="docutils literal notranslate"><span class="pre">TcpServer.stop()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="#src.transport.server.tcp_server.TcpServer.is_running"><code class="docutils literal notranslate"><span class="pre">TcpServer.is_running()</span></code></a></li>
@@ -435,6 +453,9 @@
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterServerService.set_04"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_04()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterServerService.get_data_item"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_data_item()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterServerService.handle_request"><code class="docutils literal notranslate"><span class="pre">MeterServerService.handle_request()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterServerService.start"><code class="docutils literal notranslate"><span class="pre">MeterServerService.start()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterServerService.stop"><code class="docutils literal notranslate"><span class="pre">MeterServerService.stop()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterServerService.close"><code class="docutils literal notranslate"><span class="pre">MeterServerService.close()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterServerService.enable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterServerService.enable_message_capture()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterServerService.disable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterServerService.disable_message_capture()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterServerService.get_captured_messages"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_captured_messages()</span></code></a></li>
@@ -469,6 +490,9 @@
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.clear_event"><code class="docutils literal notranslate"><span class="pre">MeterClientService.clear_event()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.send_and_handle_request"><code class="docutils literal notranslate"><span class="pre">MeterClientService.send_and_handle_request()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.handle_response"><code class="docutils literal notranslate"><span class="pre">MeterClientService.handle_response()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.connect"><code class="docutils literal notranslate"><span class="pre">MeterClientService.connect()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.disconnect"><code class="docutils literal notranslate"><span class="pre">MeterClientService.disconnect()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.close"><code class="docutils literal notranslate"><span class="pre">MeterClientService.close()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.enable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterClientService.enable_message_capture()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.disable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterClientService.disable_message_capture()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.MeterClientService.get_captured_messages"><code class="docutils literal notranslate"><span class="pre">MeterClientService.get_captured_messages()</span></code></a></li>
@@ -480,9 +504,12 @@
 </ul>
 </li>
 <li class="toctree-l4"><a class="reference internal" href="src.html#src.DLT645Protocol"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.DLT645Protocol.MAX_DATA_LENGTH"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.MAX_DATA_LENGTH</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.DLT645Protocol.MAX_PREAMBLE_LENGTH"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.MAX_PREAMBLE_LENGTH</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.DLT645Protocol.MIN_FRAME_LENGTH"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.MIN_FRAME_LENGTH</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.DLT645Protocol.decode_data"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.decode_data()</span></code></a></li>
-<li class="toctree-l5"><a class="reference internal" href="src.html#src.DLT645Protocol.calculate_checksum"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.calculate_checksum()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.DLT645Protocol.encode_data"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.encode_data()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.DLT645Protocol.calculate_checksum"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.calculate_checksum()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.DLT645Protocol.build_frame"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.build_frame()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.DLT645Protocol.deserialize"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.deserialize()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.DLT645Protocol.deserialize_with_remaining"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.deserialize_with_remaining()</span></code></a></li>
@@ -522,6 +549,7 @@
 </ul>
 </li>
 <li class="toctree-l4"><a class="reference internal" href="src.html#src.TcpServer"><code class="docutils literal notranslate"><span class="pre">TcpServer</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.TcpServer.MAX_BUFFER_SIZE"><code class="docutils literal notranslate"><span class="pre">TcpServer.MAX_BUFFER_SIZE</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.TcpServer.start"><code class="docutils literal notranslate"><span class="pre">TcpServer.start()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.TcpServer.stop"><code class="docutils literal notranslate"><span class="pre">TcpServer.stop()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.TcpServer.is_running"><code class="docutils literal notranslate"><span class="pre">TcpServer.is_running()</span></code></a></li>
@@ -529,6 +557,7 @@
 </ul>
 </li>
 <li class="toctree-l4"><a class="reference internal" href="src.html#src.RtuServer"><code class="docutils literal notranslate"><span class="pre">RtuServer</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.RtuServer.MAX_BUFFER_SIZE"><code class="docutils literal notranslate"><span class="pre">RtuServer.MAX_BUFFER_SIZE</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.RtuServer.start"><code class="docutils literal notranslate"><span class="pre">RtuServer.start()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.RtuServer.stop"><code class="docutils literal notranslate"><span class="pre">RtuServer.stop()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.RtuServer.is_running"><code class="docutils literal notranslate"><span class="pre">RtuServer.is_running()</span></code></a></li>
@@ -536,6 +565,7 @@
 </ul>
 </li>
 <li class="toctree-l4"><a class="reference internal" href="src.html#src.TcpClient"><code class="docutils literal notranslate"><span class="pre">TcpClient</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.TcpClient.MAX_BUFFER_SIZE"><code class="docutils literal notranslate"><span class="pre">TcpClient.MAX_BUFFER_SIZE</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.TcpClient.connect"><code class="docutils literal notranslate"><span class="pre">TcpClient.connect()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.TcpClient.disconnect"><code class="docutils literal notranslate"><span class="pre">TcpClient.disconnect()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.TcpClient.send_request"><code class="docutils literal notranslate"><span class="pre">TcpClient.send_request()</span></code></a></li>
@@ -543,6 +573,7 @@
 </ul>
 </li>
 <li class="toctree-l4"><a class="reference internal" href="src.html#src.RtuClient"><code class="docutils literal notranslate"><span class="pre">RtuClient</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="src.html#src.RtuClient.MAX_BUFFER_SIZE"><code class="docutils literal notranslate"><span class="pre">RtuClient.MAX_BUFFER_SIZE</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.RtuClient.connect"><code class="docutils literal notranslate"><span class="pre">RtuClient.connect()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.RtuClient.disconnect"><code class="docutils literal notranslate"><span class="pre">RtuClient.disconnect()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.html#src.RtuClient.send_request"><code class="docutils literal notranslate"><span class="pre">RtuClient.send_request()</span></code></a></li>
@@ -645,48 +676,26 @@
 </section>
 <section id="module-src.transport.server.rtu_server">
 <span id="src-transport-server-rtu-server-module"></span><h2>src.transport.server.rtu_server module<a class="headerlink" href="#module-src.transport.server.rtu_server" title="Link to this heading"></a></h2>
-<p>RTU 服务器模块。</p>
-<p>本模块实现了 DLT645 协议的 RTU（串口）服务器功能。</p>
+<p>线程式 DL/T 645 串口服务端。</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="src.transport.server.rtu_server.RtuServer">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.transport.server.rtu_server.</span></span><span class="sig-name descname"><span class="pre">RtuServer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">port</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_bits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop_bits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">baud_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">9600</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'N'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">service</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/transport/server/rtu_server.html#RtuServer"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.transport.server.rtu_server.RtuServer" title="Link to this definition"></a></dt>
 <dd><p>基类：<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<p>RTU 服务器类，用于与 DLT645 客户端进行串口通信。</p>
-<p>该类实现了 RTU（Remote Terminal Unit）服务器功能，
-支持与 DLT645 协议客户端进行串口通信。</p>
-<dl class="field-list simple">
-<dt class="field-odd">变量<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>port</strong> -- 串口名称。</p></li>
-<li><p><strong>data_bits</strong> -- 数据位。</p></li>
-<li><p><strong>stop_bits</strong> -- 停止位。</p></li>
-<li><p><strong>baud_rate</strong> -- 波特率。</p></li>
-<li><p><strong>parity</strong> -- 校验位。</p></li>
-<li><p><strong>timeout</strong> -- 超时时间（秒）。</p></li>
-<li><p><strong>service</strong> -- 服务实例，用于处理业务逻辑。</p></li>
-<li><p><strong>conn</strong> -- 串口连接对象。</p></li>
-</ul>
-</dd>
-</dl>
-<p>初始化 RTU 服务器。</p>
-<dl class="field-list simple">
-<dt class="field-odd">参数<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>port</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><em>str</em></a>) -- 串口端口名（如 '/dev/ttyUSB0'）。</p></li>
-<li><p><strong>data_bits</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><em>int</em></a>) -- 数据位，默认 8。</p></li>
-<li><p><strong>stop_bits</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><em>int</em></a>) -- 停止位，默认 1。</p></li>
-<li><p><strong>baud_rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><em>int</em></a>) -- 波特率，默认 9600。</p></li>
-<li><p><strong>parity</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><em>str</em></a>) -- 校验位，默认无校验。</p></li>
-<li><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="（在 Python v3.14）"><em>float</em></a>) -- 超时时间（秒），默认 5.0。</p></li>
-<li><p><strong>service</strong> (<em>Any</em>) -- 服务实例，用于处理业务逻辑。</p></li>
-</ul>
-</dd>
-</dl>
+<p>在后台线程中读取和处理串口帧。</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.transport.server.rtu_server.RtuServer.MAX_BUFFER_SIZE">
+<span class="sig-name descname"><span class="pre">MAX_BUFFER_SIZE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4096</span></em><a class="headerlink" href="#src.transport.server.rtu_server.RtuServer.MAX_BUFFER_SIZE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.transport.server.rtu_server.RtuServer.conn">
+<span class="sig-name descname"><span class="pre">conn</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="（在 Python v3.14）"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a><span class="pre">[</span><code class="xref py py-class docutils literal notranslate"><span class="pre">SerialBase</span></code><span class="pre">]</span></em><a class="headerlink" href="#src.transport.server.rtu_server.RtuServer.conn" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="src.transport.server.rtu_server.RtuServer.start">
 <span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/transport/server/rtu_server.html#RtuServer.start"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.transport.server.rtu_server.RtuServer.start" title="Link to this definition"></a></dt>
-<dd><p>启动RTU服务器（非阻塞，在后台线程中运行）</p>
-<dl class="field-list simple">
+<dd><dl class="field-list simple">
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
 </dd>
@@ -696,8 +705,7 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="src.transport.server.rtu_server.RtuServer.stop">
 <span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/transport/server/rtu_server.html#RtuServer.stop"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.transport.server.rtu_server.RtuServer.stop" title="Link to this definition"></a></dt>
-<dd><p>停止RTU服务器</p>
-<dl class="field-list simple">
+<dd><dl class="field-list simple">
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
 </dd>
@@ -707,8 +715,7 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="src.transport.server.rtu_server.RtuServer.is_running">
 <span class="sig-name descname"><span class="pre">is_running</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/transport/server/rtu_server.html#RtuServer.is_running"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.transport.server.rtu_server.RtuServer.is_running" title="Link to this definition"></a></dt>
-<dd><p>检查服务器是否正在运行</p>
-<dl class="field-list simple">
+<dd><dl class="field-list simple">
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
 </dd>
@@ -718,14 +725,9 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="src.transport.server.rtu_server.RtuServer.handle_connection">
 <span class="sig-name descname"><span class="pre">handle_connection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">conn</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/transport/server/rtu_server.html#RtuServer.handle_connection"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.transport.server.rtu_server.RtuServer.handle_connection" title="Link to this definition"></a></dt>
-<dd><p>处理单个串口连接</p>
-<dl class="field-list simple">
+<dd><dl class="field-list simple">
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="（在 Python v3.14）"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
-</dd>
-</dl>
-<dl class="simple">
-<dt>Args:</dt><dd><p>conn: 串口连接对象，必须是 serial.Serial 实例</p>
 </dd>
 </dl>
 </dd></dl>
@@ -735,57 +737,63 @@
 </section>
 <section id="module-src.transport.server.tcp_server">
 <span id="src-transport-server-tcp-server-module"></span><h2>src.transport.server.tcp_server module<a class="headerlink" href="#module-src.transport.server.tcp_server" title="Link to this heading"></a></h2>
-<p>TCP 服务器模块。</p>
-<p>本模块实现了 DLT645 协议的 TCP 服务器功能。</p>
+<p>线程式 DL/T 645 TCP 服务端。</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="src.transport.server.tcp_server.TcpServer">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.transport.server.tcp_server.</span></span><span class="sig-name descname"><span class="pre">TcpServer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ip</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">service</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/transport/server/tcp_server.html#TcpServer"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.transport.server.tcp_server.TcpServer" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.transport.server.tcp_server.</span></span><span class="sig-name descname"><span class="pre">TcpServer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ip</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">service</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/transport/server/tcp_server.html#TcpServer"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.transport.server.tcp_server.TcpServer" title="Link to this definition"></a></dt>
 <dd><p>基类：<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<p>TCP 服务器类，用于与 DLT645 客户端进行 TCP 通信。</p>
-<dl class="field-list simple">
-<dt class="field-odd">变量<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>ip</strong> -- 服务器 IP 地址。</p></li>
-<li><p><strong>port</strong> -- 服务器端口号。</p></li>
-<li><p><strong>timeout</strong> -- 连接超时时间（秒）。</p></li>
-<li><p><strong>ln</strong> -- 监听套接字。</p></li>
-<li><p><strong>service</strong> -- 服务实例，用于处理业务逻辑。</p></li>
-</ul>
-</dd>
-</dl>
-<p>初始化 TCP 服务器。</p>
-<dl class="field-list simple">
-<dt class="field-odd">参数<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>ip</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><em>str</em></a>) -- 服务器 IP 地址（如 '0.0.0.0'）。</p></li>
-<li><p><strong>port</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><em>int</em></a>) -- 服务器端口号。</p></li>
-<li><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="（在 Python v3.14）"><em>float</em></a>) -- 连接超时时间（秒）。</p></li>
-<li><p><strong>service</strong> (<em>Any</em>) -- 服务实例，用于处理业务逻辑。</p></li>
-</ul>
-</dd>
-</dl>
+<p>为每条 TCP 连接创建一个工作线程的服务端。</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.transport.server.tcp_server.TcpServer.MAX_BUFFER_SIZE">
+<span class="sig-name descname"><span class="pre">MAX_BUFFER_SIZE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4096</span></em><a class="headerlink" href="#src.transport.server.tcp_server.TcpServer.MAX_BUFFER_SIZE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.transport.server.tcp_server.TcpServer.ln">
+<span class="sig-name descname"><span class="pre">ln</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="（在 Python v3.14）"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a><span class="pre">[</span><a class="reference external" href="https://docs.python.org/3/library/socket.html#socket.socket" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">socket</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#src.transport.server.tcp_server.TcpServer.ln" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="src.transport.server.tcp_server.TcpServer.start">
 <span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/transport/server/tcp_server.html#TcpServer.start"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.transport.server.tcp_server.TcpServer.start" title="Link to this definition"></a></dt>
-<dd><p>启动TCP服务器（非阻塞，在后台线程中运行）</p>
+<dd><p>启动监听并等待绑定完成；重复调用是幂等的。</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.transport.server.tcp_server.TcpServer.stop">
 <span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/transport/server/tcp_server.html#TcpServer.stop"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.transport.server.tcp_server.TcpServer.stop" title="Link to this definition"></a></dt>
-<dd><p>停止TCP服务器</p>
+<dd><p>关闭监听、活动连接和工作线程；重复调用是幂等的。</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.transport.server.tcp_server.TcpServer.is_running">
 <span class="sig-name descname"><span class="pre">is_running</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/transport/server/tcp_server.html#TcpServer.is_running"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.transport.server.tcp_server.TcpServer.is_running" title="Link to this definition"></a></dt>
-<dd><p>检查服务器是否正在运行</p>
+<dd><dl class="field-list simple">
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.transport.server.tcp_server.TcpServer.handle_connection">
 <span class="sig-name descname"><span class="pre">handle_connection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">conn</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/transport/server/tcp_server.html#TcpServer.handle_connection"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.transport.server.tcp_server.TcpServer.handle_connection" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><dl class="field-list simple">
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="（在 Python v3.14）"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 

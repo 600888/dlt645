@@ -129,6 +129,7 @@
 </li>
 <li class="toctree-l7"><a class="reference internal" href="src.model.data.html#submodules">Submodules</a></li>
 <li class="toctree-l7"><a class="reference internal" href="src.model.data.html#module-src.model.data.data_handler">src.model.data.data_handler module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="src.model.data.html#src.model.data.data_handler.clone_data_map"><code class="docutils literal notranslate"><span class="pre">clone_data_map()</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="src.model.data.html#src.model.data.data_handler.get_data_item"><code class="docutils literal notranslate"><span class="pre">get_data_item()</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="src.model.data.html#src.model.data.data_handler.set_data_item"><code class="docutils literal notranslate"><span class="pre">set_data_item()</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="src.model.data.html#src.model.data.data_handler.is_value_valid"><code class="docutils literal notranslate"><span class="pre">is_value_valid()</span></code></a></li>
@@ -260,9 +261,12 @@
 <li class="toctree-l5"><a class="reference internal" href="src.protocol.html#module-src.protocol.log">src.protocol.log module</a></li>
 <li class="toctree-l5"><a class="reference internal" href="src.protocol.html#module-src.protocol.protocol">src.protocol.protocol module</a><ul>
 <li class="toctree-l6"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.MAX_DATA_LENGTH"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.MAX_DATA_LENGTH</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.MAX_PREAMBLE_LENGTH"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.MAX_PREAMBLE_LENGTH</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.MIN_FRAME_LENGTH"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.MIN_FRAME_LENGTH</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.decode_data"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.decode_data()</span></code></a></li>
-<li class="toctree-l7"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.calculate_checksum"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.calculate_checksum()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.encode_data"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.encode_data()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.calculate_checksum"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.calculate_checksum()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.build_frame"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.build_frame()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.deserialize"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.deserialize()</span></code></a></li>
 <li class="toctree-l7"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.deserialize_with_remaining"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.deserialize_with_remaining()</span></code></a></li>
@@ -303,6 +307,9 @@
 <li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.clear_event"><code class="docutils literal notranslate"><span class="pre">MeterClientService.clear_event()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.send_and_handle_request"><code class="docutils literal notranslate"><span class="pre">MeterClientService.send_and_handle_request()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.handle_response"><code class="docutils literal notranslate"><span class="pre">MeterClientService.handle_response()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.connect"><code class="docutils literal notranslate"><span class="pre">MeterClientService.connect()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.disconnect"><code class="docutils literal notranslate"><span class="pre">MeterClientService.disconnect()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.close"><code class="docutils literal notranslate"><span class="pre">MeterClientService.close()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.enable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterClientService.enable_message_capture()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.disable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterClientService.disable_message_capture()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService.get_captured_messages"><code class="docutils literal notranslate"><span class="pre">MeterClientService.get_captured_messages()</span></code></a></li>
@@ -337,6 +344,9 @@
 <li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.set_04"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_04()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.get_data_item"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_data_item()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.handle_request"><code class="docutils literal notranslate"><span class="pre">MeterServerService.handle_request()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.start"><code class="docutils literal notranslate"><span class="pre">MeterServerService.start()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.stop"><code class="docutils literal notranslate"><span class="pre">MeterServerService.stop()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.close"><code class="docutils literal notranslate"><span class="pre">MeterServerService.close()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.enable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterServerService.enable_message_capture()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.disable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterServerService.disable_message_capture()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.service.serversvc.html#src.service.serversvc.server_service.MeterServerService.get_captured_messages"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_captured_messages()</span></code></a></li>
@@ -364,6 +374,8 @@
 <li class="toctree-l7"><a class="reference internal" href="src.transport.client.html#module-src.transport.client.log">src.transport.client.log module</a></li>
 <li class="toctree-l7"><a class="reference internal" href="src.transport.client.html#module-src.transport.client.rtu_client">src.transport.client.rtu_client module</a><ul>
 <li class="toctree-l8"><a class="reference internal" href="src.transport.client.html#src.transport.client.rtu_client.RtuClient"><code class="docutils literal notranslate"><span class="pre">RtuClient</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.rtu_client.RtuClient.MAX_BUFFER_SIZE"><code class="docutils literal notranslate"><span class="pre">RtuClient.MAX_BUFFER_SIZE</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.rtu_client.RtuClient.conn"><code class="docutils literal notranslate"><span class="pre">RtuClient.conn</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.rtu_client.RtuClient.connect"><code class="docutils literal notranslate"><span class="pre">RtuClient.connect()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.rtu_client.RtuClient.disconnect"><code class="docutils literal notranslate"><span class="pre">RtuClient.disconnect()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.rtu_client.RtuClient.send_request"><code class="docutils literal notranslate"><span class="pre">RtuClient.send_request()</span></code></a></li>
@@ -374,6 +386,8 @@
 </li>
 <li class="toctree-l7"><a class="reference internal" href="src.transport.client.html#module-src.transport.client.tcp_client">src.transport.client.tcp_client module</a><ul>
 <li class="toctree-l8"><a class="reference internal" href="src.transport.client.html#src.transport.client.tcp_client.TcpClient"><code class="docutils literal notranslate"><span class="pre">TcpClient</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.tcp_client.TcpClient.MAX_BUFFER_SIZE"><code class="docutils literal notranslate"><span class="pre">TcpClient.MAX_BUFFER_SIZE</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.tcp_client.TcpClient.conn"><code class="docutils literal notranslate"><span class="pre">TcpClient.conn</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.tcp_client.TcpClient.connect"><code class="docutils literal notranslate"><span class="pre">TcpClient.connect()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.tcp_client.TcpClient.disconnect"><code class="docutils literal notranslate"><span class="pre">TcpClient.disconnect()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.transport.client.html#src.transport.client.tcp_client.TcpClient.send_request"><code class="docutils literal notranslate"><span class="pre">TcpClient.send_request()</span></code></a></li>
@@ -390,6 +404,8 @@
 <li class="toctree-l7"><a class="reference internal" href="src.transport.server.html#module-src.transport.server.log">src.transport.server.log module</a></li>
 <li class="toctree-l7"><a class="reference internal" href="src.transport.server.html#module-src.transport.server.rtu_server">src.transport.server.rtu_server module</a><ul>
 <li class="toctree-l8"><a class="reference internal" href="src.transport.server.html#src.transport.server.rtu_server.RtuServer"><code class="docutils literal notranslate"><span class="pre">RtuServer</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="src.transport.server.html#src.transport.server.rtu_server.RtuServer.MAX_BUFFER_SIZE"><code class="docutils literal notranslate"><span class="pre">RtuServer.MAX_BUFFER_SIZE</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.transport.server.html#src.transport.server.rtu_server.RtuServer.conn"><code class="docutils literal notranslate"><span class="pre">RtuServer.conn</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.transport.server.html#src.transport.server.rtu_server.RtuServer.start"><code class="docutils literal notranslate"><span class="pre">RtuServer.start()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.transport.server.html#src.transport.server.rtu_server.RtuServer.stop"><code class="docutils literal notranslate"><span class="pre">RtuServer.stop()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.transport.server.html#src.transport.server.rtu_server.RtuServer.is_running"><code class="docutils literal notranslate"><span class="pre">RtuServer.is_running()</span></code></a></li>
@@ -400,6 +416,8 @@
 </li>
 <li class="toctree-l7"><a class="reference internal" href="src.transport.server.html#module-src.transport.server.tcp_server">src.transport.server.tcp_server module</a><ul>
 <li class="toctree-l8"><a class="reference internal" href="src.transport.server.html#src.transport.server.tcp_server.TcpServer"><code class="docutils literal notranslate"><span class="pre">TcpServer</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="src.transport.server.html#src.transport.server.tcp_server.TcpServer.MAX_BUFFER_SIZE"><code class="docutils literal notranslate"><span class="pre">TcpServer.MAX_BUFFER_SIZE</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="src.transport.server.html#src.transport.server.tcp_server.TcpServer.ln"><code class="docutils literal notranslate"><span class="pre">TcpServer.ln</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.transport.server.html#src.transport.server.tcp_server.TcpServer.start"><code class="docutils literal notranslate"><span class="pre">TcpServer.start()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.transport.server.html#src.transport.server.tcp_server.TcpServer.stop"><code class="docutils literal notranslate"><span class="pre">TcpServer.stop()</span></code></a></li>
 <li class="toctree-l9"><a class="reference internal" href="src.transport.server.html#src.transport.server.tcp_server.TcpServer.is_running"><code class="docutils literal notranslate"><span class="pre">TcpServer.is_running()</span></code></a></li>
@@ -436,6 +454,9 @@
 <li class="toctree-l5"><a class="reference internal" href="#src.MeterServerService.set_04"><code class="docutils literal notranslate"><span class="pre">MeterServerService.set_04()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="#src.MeterServerService.get_data_item"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_data_item()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="#src.MeterServerService.handle_request"><code class="docutils literal notranslate"><span class="pre">MeterServerService.handle_request()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MeterServerService.start"><code class="docutils literal notranslate"><span class="pre">MeterServerService.start()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MeterServerService.stop"><code class="docutils literal notranslate"><span class="pre">MeterServerService.stop()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MeterServerService.close"><code class="docutils literal notranslate"><span class="pre">MeterServerService.close()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="#src.MeterServerService.enable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterServerService.enable_message_capture()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="#src.MeterServerService.disable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterServerService.disable_message_capture()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="#src.MeterServerService.get_captured_messages"><code class="docutils literal notranslate"><span class="pre">MeterServerService.get_captured_messages()</span></code></a></li>
@@ -470,6 +491,9 @@
 <li class="toctree-l5"><a class="reference internal" href="#src.MeterClientService.clear_event"><code class="docutils literal notranslate"><span class="pre">MeterClientService.clear_event()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="#src.MeterClientService.send_and_handle_request"><code class="docutils literal notranslate"><span class="pre">MeterClientService.send_and_handle_request()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="#src.MeterClientService.handle_response"><code class="docutils literal notranslate"><span class="pre">MeterClientService.handle_response()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MeterClientService.connect"><code class="docutils literal notranslate"><span class="pre">MeterClientService.connect()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MeterClientService.disconnect"><code class="docutils literal notranslate"><span class="pre">MeterClientService.disconnect()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.MeterClientService.close"><code class="docutils literal notranslate"><span class="pre">MeterClientService.close()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="#src.MeterClientService.enable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterClientService.enable_message_capture()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="#src.MeterClientService.disable_message_capture"><code class="docutils literal notranslate"><span class="pre">MeterClientService.disable_message_capture()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="#src.MeterClientService.get_captured_messages"><code class="docutils literal notranslate"><span class="pre">MeterClientService.get_captured_messages()</span></code></a></li>
@@ -481,9 +505,12 @@
 </ul>
 </li>
 <li class="toctree-l4"><a class="reference internal" href="#src.DLT645Protocol"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#src.DLT645Protocol.MAX_DATA_LENGTH"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.MAX_DATA_LENGTH</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.DLT645Protocol.MAX_PREAMBLE_LENGTH"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.MAX_PREAMBLE_LENGTH</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.DLT645Protocol.MIN_FRAME_LENGTH"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.MIN_FRAME_LENGTH</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="#src.DLT645Protocol.decode_data"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.decode_data()</span></code></a></li>
-<li class="toctree-l5"><a class="reference internal" href="#src.DLT645Protocol.calculate_checksum"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.calculate_checksum()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="#src.DLT645Protocol.encode_data"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.encode_data()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#src.DLT645Protocol.calculate_checksum"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.calculate_checksum()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="#src.DLT645Protocol.build_frame"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.build_frame()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="#src.DLT645Protocol.deserialize"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.deserialize()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="#src.DLT645Protocol.deserialize_with_remaining"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.deserialize_with_remaining()</span></code></a></li>
@@ -523,6 +550,7 @@
 </ul>
 </li>
 <li class="toctree-l4"><a class="reference internal" href="#src.TcpServer"><code class="docutils literal notranslate"><span class="pre">TcpServer</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#src.TcpServer.MAX_BUFFER_SIZE"><code class="docutils literal notranslate"><span class="pre">TcpServer.MAX_BUFFER_SIZE</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="#src.TcpServer.start"><code class="docutils literal notranslate"><span class="pre">TcpServer.start()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="#src.TcpServer.stop"><code class="docutils literal notranslate"><span class="pre">TcpServer.stop()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="#src.TcpServer.is_running"><code class="docutils literal notranslate"><span class="pre">TcpServer.is_running()</span></code></a></li>
@@ -530,6 +558,7 @@
 </ul>
 </li>
 <li class="toctree-l4"><a class="reference internal" href="#src.RtuServer"><code class="docutils literal notranslate"><span class="pre">RtuServer</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#src.RtuServer.MAX_BUFFER_SIZE"><code class="docutils literal notranslate"><span class="pre">RtuServer.MAX_BUFFER_SIZE</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="#src.RtuServer.start"><code class="docutils literal notranslate"><span class="pre">RtuServer.start()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="#src.RtuServer.stop"><code class="docutils literal notranslate"><span class="pre">RtuServer.stop()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="#src.RtuServer.is_running"><code class="docutils literal notranslate"><span class="pre">RtuServer.is_running()</span></code></a></li>
@@ -537,6 +566,7 @@
 </ul>
 </li>
 <li class="toctree-l4"><a class="reference internal" href="#src.TcpClient"><code class="docutils literal notranslate"><span class="pre">TcpClient</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#src.TcpClient.MAX_BUFFER_SIZE"><code class="docutils literal notranslate"><span class="pre">TcpClient.MAX_BUFFER_SIZE</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="#src.TcpClient.connect"><code class="docutils literal notranslate"><span class="pre">TcpClient.connect()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="#src.TcpClient.disconnect"><code class="docutils literal notranslate"><span class="pre">TcpClient.disconnect()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="#src.TcpClient.send_request"><code class="docutils literal notranslate"><span class="pre">TcpClient.send_request()</span></code></a></li>
@@ -544,6 +574,7 @@
 </ul>
 </li>
 <li class="toctree-l4"><a class="reference internal" href="#src.RtuClient"><code class="docutils literal notranslate"><span class="pre">RtuClient</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#src.RtuClient.MAX_BUFFER_SIZE"><code class="docutils literal notranslate"><span class="pre">RtuClient.MAX_BUFFER_SIZE</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="#src.RtuClient.connect"><code class="docutils literal notranslate"><span class="pre">RtuClient.connect()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="#src.RtuClient.disconnect"><code class="docutils literal notranslate"><span class="pre">RtuClient.disconnect()</span></code></a></li>
 <li class="toctree-l5"><a class="reference internal" href="#src.RtuClient.send_request"><code class="docutils literal notranslate"><span class="pre">RtuClient.send_request()</span></code></a></li>
@@ -731,9 +762,12 @@
 <li class="toctree-l2"><a class="reference internal" href="src.protocol.html#module-src.protocol.log">src.protocol.log module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="src.protocol.html#module-src.protocol.protocol">src.protocol.protocol module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.MAX_DATA_LENGTH"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.MAX_DATA_LENGTH</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.MAX_PREAMBLE_LENGTH"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.MAX_PREAMBLE_LENGTH</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.MIN_FRAME_LENGTH"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.MIN_FRAME_LENGTH</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.decode_data"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.decode_data()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.calculate_checksum"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.calculate_checksum()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.encode_data"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.encode_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.calculate_checksum"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.calculate_checksum()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.build_frame"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.build_frame()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.deserialize"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.deserialize()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="src.protocol.html#src.protocol.protocol.DLT645Protocol.deserialize_with_remaining"><code class="docutils literal notranslate"><span class="pre">DLT645Protocol.deserialize_with_remaining()</span></code></a></li>
@@ -869,7 +903,7 @@ None 表示回退到各模块默认级别。</p></li>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="src.MeterServerService">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.</span></span><span class="sig-name descname"><span class="pre">MeterServerService</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">server</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">address=bytearray(b'\\x00\\x00\\x00\\x00\\x00\\x00')</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password_manager=&lt;src.model.types.dlt645_type.PasswordManager</span> <span class="pre">object&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/serversvc/server_service.html#MeterServerService"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterServerService" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.</span></span><span class="sig-name descname"><span class="pre">MeterServerService</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">server</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">address</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password_manager</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/serversvc/server_service.html#MeterServerService"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterServerService" title="Link to this definition"></a></dt>
 <dd><p>基类：<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>电表服务端服务类。</p>
 <p>用于模拟 DLT645 电表设备，响应客户端的数据读写请求。</p>
@@ -975,10 +1009,13 @@ None 表示回退到各模块默认级别。</p></li>
 <dd><p>写通讯地址</p>
 <dl class="field-list simple">
 <dt class="field-odd">参数<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>address</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>)</p>
+<dd class="field-odd"><p><strong>address</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytearray</span></code></a>]</span>)</p>
 </dd>
-<dt class="field-even">返回<span class="colon">:</span></dt>
-<dd class="field-even"><p></p>
+<dt class="field-even">返回类型<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
+</dd>
+<dt class="field-odd">返回<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p>
 </dd>
 </dl>
 </dd></dl>
@@ -992,7 +1029,7 @@ None 表示回退到各模块默认级别。</p></li>
 <dd class="field-odd"><p><strong>password</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>)</p>
 </dd>
 <dt class="field-even">返回类型<span class="colon">:</span></dt>
-<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="（在 Python v3.14）"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
 </dd>
 <dt class="field-odd">返回<span class="colon">:</span></dt>
 <dd class="field-odd"><p></p>
@@ -1127,6 +1164,39 @@ None 表示回退到各模块默认级别。</p></li>
 </dd>
 <dt class="field-even">返回<span class="colon">:</span></dt>
 <dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MeterServerService.start">
+<span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/serversvc/server_service.html#MeterServerService.start"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterServerService.start" title="Link to this definition"></a></dt>
+<dd><p>启动底层服务端。</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MeterServerService.stop">
+<span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/serversvc/server_service.html#MeterServerService.stop"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterServerService.stop" title="Link to this definition"></a></dt>
+<dd><p>停止底层服务端。</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MeterServerService.close">
+<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.MeterServerService.close" title="Link to this definition"></a></dt>
+<dd><p>停止底层服务端。</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1279,7 +1349,7 @@ None 表示回退到各模块默认级别。</p></li>
 <dd><p>创建TCP客户端</p>
 <dl class="field-list simple">
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="（在 Python v3.14）"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService" title="src.service.clientsvc.client_service.MeterClientService"><code class="xref py py-class docutils literal notranslate"><span class="pre">MeterClientService</span></code></a>]</span></p>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService" title="src.service.clientsvc.client_service.MeterClientService"><code class="xref py py-class docutils literal notranslate"><span class="pre">MeterClientService</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1290,7 +1360,7 @@ None 表示回退到各模块默认级别。</p></li>
 <dd><p>创建RTU客户端</p>
 <dl class="field-list simple">
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="（在 Python v3.14）"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService" title="src.service.clientsvc.client_service.MeterClientService"><code class="xref py py-class docutils literal notranslate"><span class="pre">MeterClientService</span></code></a>]</span></p>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService" title="src.service.clientsvc.client_service.MeterClientService"><code class="xref py py-class docutils literal notranslate"><span class="pre">MeterClientService</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1301,7 +1371,7 @@ None 表示回退到各模块默认级别。</p></li>
 <dd><p>创建新的MeterService实例</p>
 <dl class="field-list simple">
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
-<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="（在 Python v3.14）"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService" title="src.service.clientsvc.client_service.MeterClientService"><code class="xref py py-class docutils literal notranslate"><span class="pre">MeterClientService</span></code></a>]</span></p>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="src.service.clientsvc.html#src.service.clientsvc.client_service.MeterClientService" title="src.service.clientsvc.client_service.MeterClientService"><code class="xref py py-class docutils literal notranslate"><span class="pre">MeterClientService</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1603,6 +1673,39 @@ None: 超时或失败时返回</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="src.MeterClientService.connect">
+<span class="sig-name descname"><span class="pre">connect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/clientsvc/client_service.html#MeterClientService.connect"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterClientService.connect" title="Link to this definition"></a></dt>
+<dd><p>建立底层连接。</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MeterClientService.disconnect">
+<span class="sig-name descname"><span class="pre">disconnect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/clientsvc/client_service.html#MeterClientService.disconnect"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterClientService.disconnect" title="Link to this definition"></a></dt>
+<dd><p>关闭底层连接。</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.MeterClientService.close">
+<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#src.MeterClientService.close" title="Link to this definition"></a></dt>
+<dd><p>关闭底层连接。</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="src.MeterClientService.enable_message_capture">
 <span class="sig-name descname"><span class="pre">enable_message_capture</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">queue_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/service/clientsvc/client_service.html#MeterClientService.enable_message_capture"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.MeterClientService.enable_message_capture" title="Link to this definition"></a></dt>
 <dd><p>启用报文捕获功能。</p>
@@ -1726,43 +1829,29 @@ None: 超时或失败时返回</p>
 <dt class="sig sig-object py" id="src.DLT645Protocol">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.</span></span><span class="sig-name descname"><span class="pre">DLT645Protocol</span></span><a class="reference internal" href="_modules/src/protocol/protocol.html#DLT645Protocol"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DLT645Protocol" title="Link to this definition"></a></dt>
 <dd><p>基类：<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<p>DLT645 协议实现类。</p>
-<p>该类实现了 DLT645 协议的核心功能，包括数据编码/解码、校验和计算、
-帧构建和解析等操作。所有方法均为类方法，可直接调用。</p>
+<p>无状态的 DL/T 645 帧编解码器。</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.DLT645Protocol.MAX_DATA_LENGTH">
+<span class="sig-name descname"><span class="pre">MAX_DATA_LENGTH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">255</span></em><a class="headerlink" href="#src.DLT645Protocol.MAX_DATA_LENGTH" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.DLT645Protocol.MAX_PREAMBLE_LENGTH">
+<span class="sig-name descname"><span class="pre">MAX_PREAMBLE_LENGTH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#src.DLT645Protocol.MAX_PREAMBLE_LENGTH" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.DLT645Protocol.MIN_FRAME_LENGTH">
+<span class="sig-name descname"><span class="pre">MIN_FRAME_LENGTH</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">12</span></em><a class="headerlink" href="#src.DLT645Protocol.MIN_FRAME_LENGTH" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="src.DLT645Protocol.decode_data">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">decode_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/protocol/protocol.html#DLT645Protocol.decode_data"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DLT645Protocol.decode_data" title="Link to this definition"></a></dt>
-<dd><p>数据域解码（-0x33H 转换）。</p>
-<p>按照 DLT645 协议规定，对数据域进行解码处理，
-每个字节减去 0x33H，并使用模 256 运算确保结果在 0-255 范围内。</p>
+<dd><p>移除数据域逐字节增加的 <code class="docutils literal notranslate"><span class="pre">0x33</span></code> 偏移。</p>
 <dl class="field-list simple">
-<dt class="field-odd">参数<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）"><em>bytes</em></a>) -- 需要解码的数据字节。</p>
-</dd>
-<dt class="field-even">返回<span class="colon">:</span></dt>
-<dd class="field-even"><p>解码后的原始数据。</p>
-</dd>
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）">bytes</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="src.DLT645Protocol.calculate_checksum">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">calculate_checksum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/protocol/protocol.html#DLT645Protocol.calculate_checksum"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DLT645Protocol.calculate_checksum" title="Link to this definition"></a></dt>
-<dd><p>校验和计算（模 256 求和）。</p>
-<p>按照 DLT645 协议规定，计算数据的校验和，
-对所有字节进行累加，然后对结果取模 256。</p>
-<dl class="field-list simple">
-<dt class="field-odd">参数<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）"><em>bytes</em></a>) -- 需要计算校验和的数据字节。</p>
-</dd>
-<dt class="field-even">返回<span class="colon">:</span></dt>
-<dd class="field-even"><p>计算得到的校验和值（0-255 范围）。</p>
-</dd>
-<dt class="field-odd">返回类型<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）">int</a></p>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1770,44 +1859,32 @@ None: 超时或失败时返回</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="src.DLT645Protocol.encode_data">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">encode_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/protocol/protocol.html#DLT645Protocol.encode_data"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DLT645Protocol.encode_data" title="Link to this definition"></a></dt>
-<dd><p>数据域编码（+0x33H 转换）。</p>
-<p>按照 DLT645 协议规定，对数据域进行编码处理，
-每个字节加上 0x33H，并使用模 256 运算确保结果在 0-255 范围内。</p>
+<dd><p>按协议为数据域逐字节增加 <code class="docutils literal notranslate"><span class="pre">0x33</span></code> 偏移。</p>
 <dl class="field-list simple">
-<dt class="field-odd">参数<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）"><em>bytes</em></a>) -- 需要编码的原始数据字节。</p>
-</dd>
-<dt class="field-even">返回<span class="colon">:</span></dt>
-<dd class="field-even"><p>编码后的数据。</p>
-</dd>
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）">bytes</a></p>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.DLT645Protocol.calculate_checksum">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">calculate_checksum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/protocol/protocol.html#DLT645Protocol.calculate_checksum"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DLT645Protocol.calculate_checksum" title="Link to this definition"></a></dt>
+<dd><p>计算从第一个 <code class="docutils literal notranslate"><span class="pre">0x68</span></code> 到数据域末尾的模 256 累加和。</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.DLT645Protocol.build_frame">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">build_frame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">addr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctrl_code</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/protocol/protocol.html#DLT645Protocol.build_frame"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DLT645Protocol.build_frame" title="Link to this definition"></a></dt>
-<dd><p>构建 DLT645 协议帧。</p>
-<p>按照 DLT645 协议规定，构建完整的协议帧，包括前导字节、
-地址域、控制码、数据域、校验和和结束标志。</p>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">build_frame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">addr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctrl_code</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preamble_count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/protocol/protocol.html#DLT645Protocol.build_frame"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DLT645Protocol.build_frame" title="Link to this definition"></a></dt>
+<dd><p>从解码后的地址、控制码和数据域构建完整帧。</p>
 <dl class="field-list simple">
-<dt class="field-odd">参数<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>addr</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）"><em>bytes</em></a>) -- 设备地址（6字节）。</p></li>
-<li><p><strong>ctrl_code</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><em>int</em></a>) -- 控制码。</p></li>
-<li><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）"><em>bytes</em></a>) -- 原始数据域（未编码）。</p></li>
-</ul>
-</dd>
-<dt class="field-even">返回<span class="colon">:</span></dt>
-<dd class="field-even"><p>完整的 DLT645 协议帧。</p>
-</dd>
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="（在 Python v3.14）">bytearray</a></p>
-</dd>
-<dt class="field-even">抛出<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="（在 Python v3.14）"><strong>ValueError</strong></a> -- 当地址长度不为6字节时抛出。</p>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytearray</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1815,21 +1892,10 @@ None: 超时或失败时返回</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="src.DLT645Protocol.deserialize">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">deserialize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raw</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/protocol/protocol.html#DLT645Protocol.deserialize"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DLT645Protocol.deserialize" title="Link to this definition"></a></dt>
-<dd><p>将字节数据反序列化为 Frame 对象。</p>
-<p>从原始字节数据中解析出 DLT645 协议帧。如果无法找到完整的帧，
-则抛出异常。</p>
+<dd><p>解析第一帧；数据不完整或没有合法帧时抛出 <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>。</p>
 <dl class="field-list simple">
-<dt class="field-odd">参数<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>raw</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）"><em>bytes</em></a>) -- 输入的原始字节数据。</p>
-</dd>
-<dt class="field-even">返回<span class="colon">:</span></dt>
-<dd class="field-even"><p>解析出的 Frame 对象。</p>
-</dd>
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Optional[<a class="reference internal" href="src.protocol.html#src.protocol.frame.Frame" title="src.protocol.frame.Frame">Frame</a>]</p>
-</dd>
-<dt class="field-even">抛出<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="（在 Python v3.14）"><strong>Exception</strong></a> -- 当无法找到完整帧时抛出。</p>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="（在 Python v3.14）"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference internal" href="src.protocol.html#src.protocol.frame.Frame" title="src.protocol.frame.Frame"><code class="xref py py-class docutils literal notranslate"><span class="pre">Frame</span></code></a>]</span></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1837,19 +1903,12 @@ None: 超时或失败时返回</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="src.DLT645Protocol.deserialize_with_remaining">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">deserialize_with_remaining</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raw</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/protocol/protocol.html#DLT645Protocol.deserialize_with_remaining"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DLT645Protocol.deserialize_with_remaining" title="Link to this definition"></a></dt>
-<dd><p>将字节数据反序列化为 Frame 对象，并返回未解析的剩余数据。</p>
-<p>从原始字节数据中解析出 DLT645 协议帧，并返回未解析的剩余数据。
-如果数据不完整或无法解析，返回 (原始数据, None)。</p>
+<dd><p>从字节流中解析一帧，并返回帧后的剩余数据。</p>
+<p>无效噪声和损坏帧会被丢弃；不完整帧会从首个有效候选 <code class="docutils literal notranslate"><span class="pre">0x68</span></code>
+起保留，供下一批数据继续拼接。</p>
 <dl class="field-list simple">
-<dt class="field-odd">参数<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>raw</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）"><em>bytes</em></a>) -- 输入的原始字节数据。</p>
-</dd>
-<dt class="field-even">返回<span class="colon">:</span></dt>
-<dd class="field-even"><p>元组 (未解析的剩余数据, 解析出的帧)。
-如果数据不完整或无法解析，返回 (原始数据, None)。</p>
-</dd>
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="（在 Python v3.14）">tuple</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）">bytes</a>, Optional[<a class="reference internal" href="src.protocol.html#src.protocol.frame.Frame" title="src.protocol.frame.Frame">Frame</a>]]</p>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="（在 Python v3.14）"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference internal" href="src.protocol.html#src.protocol.frame.Frame" title="src.protocol.frame.Frame"><code class="xref py py-class docutils literal notranslate"><span class="pre">Frame</span></code></a>]]</span></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1857,20 +1916,10 @@ None: 超时或失败时返回</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="src.DLT645Protocol.serialize">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">serialize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/protocol/protocol.html#DLT645Protocol.serialize"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DLT645Protocol.serialize" title="Link to this definition"></a></dt>
-<dd><p>将 Frame 对象序列化为字节数据。</p>
-<p>按照 DLT645 协议规定，将 Frame 对象序列化为完整的协议帧字节。</p>
+<dd><p>序列化帧；前导 <code class="docutils literal notranslate"><span class="pre">0xFE</span></code> 不参与校验和计算。</p>
 <dl class="field-list simple">
-<dt class="field-odd">参数<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>frame</strong> (<a class="reference internal" href="src.protocol.html#src.protocol.frame.Frame" title="src.protocol.frame.Frame"><em>Frame</em></a>) -- 需要序列化的 Frame 对象。</p>
-</dd>
-<dt class="field-even">返回<span class="colon">:</span></dt>
-<dd class="field-even"><p>序列化后的协议帧字节。</p>
-</dd>
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Optional[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）">bytes</a>]</p>
-</dd>
-<dt class="field-even">抛出<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="（在 Python v3.14）"><strong>Exception</strong></a> -- 当起始或结束标志无效时抛出。</p>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1984,7 +2033,7 @@ None: 超时或失败时返回</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="src.DataItem">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.</span></span><span class="sig-name descname"><span class="pre">DataItem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">di</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_format</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">datetime.datetime(2026,</span> <span class="pre">8,</span> <span class="pre">1,</span> <span class="pre">11,</span> <span class="pre">51,</span> <span class="pre">5,</span> <span class="pre">400103)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/model/types/data_type.html#DataItem"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DataItem" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.</span></span><span class="sig-name descname"><span class="pre">DataItem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">di</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_format</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/model/types/data_type.html#DataItem"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.DataItem" title="Link to this definition"></a></dt>
 <dd><p>基类：<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>数据项实体类，表示一个具体的数据项。</p>
 <dl class="field-list simple">
@@ -2098,53 +2147,55 @@ None: 超时或失败时返回</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="src.TcpServer">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.</span></span><span class="sig-name descname"><span class="pre">TcpServer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ip</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">service</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/transport/server/tcp_server.html#TcpServer"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.TcpServer" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.</span></span><span class="sig-name descname"><span class="pre">TcpServer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ip</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">service</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/transport/server/tcp_server.html#TcpServer"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.TcpServer" title="Link to this definition"></a></dt>
 <dd><p>基类：<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<p>TCP 服务器类，用于与 DLT645 客户端进行 TCP 通信。</p>
-<dl class="field-list simple">
-<dt class="field-odd">变量<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>ip</strong> -- 服务器 IP 地址。</p></li>
-<li><p><strong>port</strong> -- 服务器端口号。</p></li>
-<li><p><strong>timeout</strong> -- 连接超时时间（秒）。</p></li>
-<li><p><strong>ln</strong> -- 监听套接字。</p></li>
-<li><p><strong>service</strong> -- 服务实例，用于处理业务逻辑。</p></li>
-</ul>
-</dd>
-</dl>
-<p>初始化 TCP 服务器。</p>
-<dl class="field-list simple">
-<dt class="field-odd">参数<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>ip</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><em>str</em></a>) -- 服务器 IP 地址（如 '0.0.0.0'）。</p></li>
-<li><p><strong>port</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><em>int</em></a>) -- 服务器端口号。</p></li>
-<li><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="（在 Python v3.14）"><em>float</em></a>) -- 连接超时时间（秒）。</p></li>
-<li><p><strong>service</strong> (<em>Any</em>) -- 服务实例，用于处理业务逻辑。</p></li>
-</ul>
-</dd>
-</dl>
+<p>为每条 TCP 连接创建一个工作线程的服务端。</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.TcpServer.MAX_BUFFER_SIZE">
+<span class="sig-name descname"><span class="pre">MAX_BUFFER_SIZE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4096</span></em><a class="headerlink" href="#src.TcpServer.MAX_BUFFER_SIZE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="src.TcpServer.start">
 <span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/transport/server/tcp_server.html#TcpServer.start"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.TcpServer.start" title="Link to this definition"></a></dt>
-<dd><p>启动TCP服务器（非阻塞，在后台线程中运行）</p>
+<dd><p>启动监听并等待绑定完成；重复调用是幂等的。</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.TcpServer.stop">
 <span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/transport/server/tcp_server.html#TcpServer.stop"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.TcpServer.stop" title="Link to this definition"></a></dt>
-<dd><p>停止TCP服务器</p>
+<dd><p>关闭监听、活动连接和工作线程；重复调用是幂等的。</p>
+<dl class="field-list simple">
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.TcpServer.is_running">
 <span class="sig-name descname"><span class="pre">is_running</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/transport/server/tcp_server.html#TcpServer.is_running"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.TcpServer.is_running" title="Link to this definition"></a></dt>
-<dd><p>检查服务器是否正在运行</p>
+<dd><dl class="field-list simple">
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.TcpServer.handle_connection">
 <span class="sig-name descname"><span class="pre">handle_connection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">conn</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/transport/server/tcp_server.html#TcpServer.handle_connection"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.TcpServer.handle_connection" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><dl class="field-list simple">
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="（在 Python v3.14）"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
@@ -2152,42 +2203,16 @@ None: 超时或失败时返回</p>
 <dt class="sig sig-object py" id="src.RtuServer">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.</span></span><span class="sig-name descname"><span class="pre">RtuServer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">port</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_bits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop_bits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">baud_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">9600</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'N'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">service</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/transport/server/rtu_server.html#RtuServer"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.RtuServer" title="Link to this definition"></a></dt>
 <dd><p>基类：<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<p>RTU 服务器类，用于与 DLT645 客户端进行串口通信。</p>
-<p>该类实现了 RTU（Remote Terminal Unit）服务器功能，
-支持与 DLT645 协议客户端进行串口通信。</p>
-<dl class="field-list simple">
-<dt class="field-odd">变量<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>port</strong> -- 串口名称。</p></li>
-<li><p><strong>data_bits</strong> -- 数据位。</p></li>
-<li><p><strong>stop_bits</strong> -- 停止位。</p></li>
-<li><p><strong>baud_rate</strong> -- 波特率。</p></li>
-<li><p><strong>parity</strong> -- 校验位。</p></li>
-<li><p><strong>timeout</strong> -- 超时时间（秒）。</p></li>
-<li><p><strong>service</strong> -- 服务实例，用于处理业务逻辑。</p></li>
-<li><p><strong>conn</strong> -- 串口连接对象。</p></li>
-</ul>
-</dd>
-</dl>
-<p>初始化 RTU 服务器。</p>
-<dl class="field-list simple">
-<dt class="field-odd">参数<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>port</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><em>str</em></a>) -- 串口端口名（如 '/dev/ttyUSB0'）。</p></li>
-<li><p><strong>data_bits</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><em>int</em></a>) -- 数据位，默认 8。</p></li>
-<li><p><strong>stop_bits</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><em>int</em></a>) -- 停止位，默认 1。</p></li>
-<li><p><strong>baud_rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><em>int</em></a>) -- 波特率，默认 9600。</p></li>
-<li><p><strong>parity</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><em>str</em></a>) -- 校验位，默认无校验。</p></li>
-<li><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="（在 Python v3.14）"><em>float</em></a>) -- 超时时间（秒），默认 5.0。</p></li>
-<li><p><strong>service</strong> (<em>Any</em>) -- 服务实例，用于处理业务逻辑。</p></li>
-</ul>
-</dd>
-</dl>
+<p>在后台线程中读取和处理串口帧。</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.RtuServer.MAX_BUFFER_SIZE">
+<span class="sig-name descname"><span class="pre">MAX_BUFFER_SIZE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4096</span></em><a class="headerlink" href="#src.RtuServer.MAX_BUFFER_SIZE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="src.RtuServer.start">
 <span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/transport/server/rtu_server.html#RtuServer.start"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.RtuServer.start" title="Link to this definition"></a></dt>
-<dd><p>启动RTU服务器（非阻塞，在后台线程中运行）</p>
-<dl class="field-list simple">
+<dd><dl class="field-list simple">
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
 </dd>
@@ -2197,8 +2222,7 @@ None: 超时或失败时返回</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="src.RtuServer.stop">
 <span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/transport/server/rtu_server.html#RtuServer.stop"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.RtuServer.stop" title="Link to this definition"></a></dt>
-<dd><p>停止RTU服务器</p>
-<dl class="field-list simple">
+<dd><dl class="field-list simple">
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
 </dd>
@@ -2208,8 +2232,7 @@ None: 超时或失败时返回</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="src.RtuServer.is_running">
 <span class="sig-name descname"><span class="pre">is_running</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/transport/server/rtu_server.html#RtuServer.is_running"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.RtuServer.is_running" title="Link to this definition"></a></dt>
-<dd><p>检查服务器是否正在运行</p>
-<dl class="field-list simple">
+<dd><dl class="field-list simple">
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
 </dd>
@@ -2219,14 +2242,9 @@ None: 超时或失败时返回</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="src.RtuServer.handle_connection">
 <span class="sig-name descname"><span class="pre">handle_connection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">conn</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/transport/server/rtu_server.html#RtuServer.handle_connection"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.RtuServer.handle_connection" title="Link to this definition"></a></dt>
-<dd><p>处理单个串口连接</p>
-<dl class="field-list simple">
+<dd><dl class="field-list simple">
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="（在 Python v3.14）"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
-</dd>
-</dl>
-<dl class="simple">
-<dt>Args:</dt><dd><p>conn: 串口连接对象，必须是 serial.Serial 实例</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2237,31 +2255,16 @@ None: 超时或失败时返回</p>
 <dt class="sig sig-object py" id="src.TcpClient">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.</span></span><span class="sig-name descname"><span class="pre">TcpClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ip</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/transport/client/tcp_client.html#TcpClient"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.TcpClient" title="Link to this definition"></a></dt>
 <dd><p>基类：<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<p>TCP 客户端类，用于与 DLT645 设备进行 TCP 通信。</p>
-<dl class="field-list simple">
-<dt class="field-odd">变量<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>ip</strong> -- 服务器 IP 地址。</p></li>
-<li><p><strong>port</strong> -- 服务器端口号。</p></li>
-<li><p><strong>timeout</strong> -- 连接超时时间（秒）。</p></li>
-<li><p><strong>conn</strong> -- socket 连接对象。</p></li>
-</ul>
-</dd>
-</dl>
-<p>初始化 TCP 客户端。</p>
-<dl class="field-list simple">
-<dt class="field-odd">参数<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>ip</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><em>str</em></a>) -- 服务器 IP 地址（如 '0.0.0.0'）。</p></li>
-<li><p><strong>port</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><em>int</em></a>) -- 服务器端口号。</p></li>
-<li><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="（在 Python v3.14）"><em>float</em></a>) -- 连接超时时间（秒），默认 5.0。</p></li>
-</ul>
-</dd>
-</dl>
+<p>支持分片响应、总超时和串行请求的 TCP 客户端。</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.TcpClient.MAX_BUFFER_SIZE">
+<span class="sig-name descname"><span class="pre">MAX_BUFFER_SIZE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4096</span></em><a class="headerlink" href="#src.TcpClient.MAX_BUFFER_SIZE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="src.TcpClient.connect">
 <span class="sig-name descname"><span class="pre">connect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/transport/client/tcp_client.html#TcpClient.connect"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.TcpClient.connect" title="Link to this definition"></a></dt>
-<dd><p>连接到服务器</p>
+<dd><p>建立连接；已有有效连接时直接复用。</p>
 <dl class="field-list simple">
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
@@ -2272,7 +2275,7 @@ None: 超时或失败时返回</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="src.TcpClient.disconnect">
 <span class="sig-name descname"><span class="pre">disconnect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/transport/client/tcp_client.html#TcpClient.disconnect"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.TcpClient.disconnect" title="Link to this definition"></a></dt>
-<dd><p>断开与服务器的连接</p>
+<dd><p>关闭连接；重复调用是幂等的。</p>
 <dl class="field-list simple">
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
@@ -2282,23 +2285,11 @@ None: 超时或失败时返回</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="src.TcpClient.send_request">
-<span class="sig-name descname"><span class="pre">send_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">write_timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">read_timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_response_len</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">retries</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/transport/client/tcp_client.html#TcpClient.send_request"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.TcpClient.send_request" title="Link to this definition"></a></dt>
-<dd><p>增强版TCP请求-响应（支持超时控制和分片数据处理）</p>
+<span class="sig-name descname"><span class="pre">send_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">write_timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">read_timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_response_len</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">retries</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/transport/client/tcp_client.html#TcpClient.send_request"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.TcpClient.send_request" title="Link to this definition"></a></dt>
+<dd><p>发送请求并返回一个经过校验的完整响应帧。</p>
 <dl class="field-list simple">
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="（在 Python v3.14）"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code></a>]</span></p>
-</dd>
-</dl>
-<dl class="simple">
-<dt>Args:</dt><dd><p>data: 要发送的请求数据
-write_timeout: 数据写入超时(秒)
-read_timeout: 单次recv操作的超时(秒)
-total_timeout: 整个请求-响应的总超时(秒)
-min_response_len: 最小有效响应长度
-retries: 失败重试次数</p>
-</dd>
-<dt>Returns:</dt><dd><p>bytes: 成功接收的响应数据
-None: 超时或失败时返回</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2307,19 +2298,9 @@ None: 超时或失败时返回</p>
 <dt class="sig sig-object py" id="src.TcpClient.send_only">
 <span class="sig-name descname"><span class="pre">send_only</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/transport/client/tcp_client.html#TcpClient.send_only"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.TcpClient.send_only" title="Link to this definition"></a></dt>
 <dd><p>只发送数据，不等待响应。</p>
-<p>用于广播命令（如广播校时、广播冻结），从站不应答。</p>
 <dl class="field-list simple">
-<dt class="field-odd">参数<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）"><em>bytes</em></a>) -- 要发送的请求数据。</p></li>
-<li><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="（在 Python v3.14）"><em>float</em></a>) -- 数据写入超时(秒)。</p></li>
-</ul>
-</dd>
-<dt class="field-even">返回<span class="colon">:</span></dt>
-<dd class="field-even"><p>发送成功返回 True，失败返回 False。</p>
-</dd>
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）">bool</a></p>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
@@ -2330,47 +2311,18 @@ None: 超时或失败时返回</p>
 <dt class="sig sig-object py" id="src.RtuClient">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.</span></span><span class="sig-name descname"><span class="pre">RtuClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">baud_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">9600</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_bits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop_bits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'N'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/transport/client/rtu_client.html#RtuClient"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.RtuClient" title="Link to this definition"></a></dt>
 <dd><p>基类：<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<p>RTU 客户端类，用于与 DLT645 设备进行串口通信。</p>
-<p>该类实现了 RTU（Remote Terminal Unit）客户端功能，
-支持与 DLT645 协议设备进行串口通信。</p>
-<dl class="field-list simple">
-<dt class="field-odd">变量<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>port</strong> -- 串口名称。</p></li>
-<li><p><strong>baud_rate</strong> -- 波特率。</p></li>
-<li><p><strong>data_bits</strong> -- 数据位。</p></li>
-<li><p><strong>stop_bits</strong> -- 停止位。</p></li>
-<li><p><strong>parity</strong> -- 校验位。</p></li>
-<li><p><strong>timeout</strong> -- 超时时间（秒）。</p></li>
-<li><p><strong>conn</strong> -- 串口连接对象。</p></li>
-</ul>
-</dd>
-</dl>
-<p>初始化 RTU 客户端。</p>
-<dl class="field-list simple">
-<dt class="field-odd">参数<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>port</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><em>str</em></a>) -- 串口名称（如 &quot;COM1&quot; 或 &quot;/dev/ttyUSB0&quot;）。</p></li>
-<li><p><strong>baud_rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><em>int</em></a>) -- 波特率，默认 9600。</p></li>
-<li><p><strong>data_bits</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><em>int</em></a>) -- 数据位，默认 8。</p></li>
-<li><p><strong>stop_bits</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="（在 Python v3.14）"><em>int</em></a>) -- 停止位，默认 1。</p></li>
-<li><p><strong>parity</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><em>str</em></a>) -- 校验位，默认无校验。</p></li>
-<li><p><strong>timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="（在 Python v3.14）"><em>float</em></a>) -- 超时时间（秒），默认 1.0。</p></li>
-</ul>
-</dd>
-</dl>
+<p>支持分片读取、总超时与重试的串口客户端。</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.RtuClient.MAX_BUFFER_SIZE">
+<span class="sig-name descname"><span class="pre">MAX_BUFFER_SIZE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4096</span></em><a class="headerlink" href="#src.RtuClient.MAX_BUFFER_SIZE" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="src.RtuClient.connect">
 <span class="sig-name descname"><span class="pre">connect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/transport/client/rtu_client.html#RtuClient.connect"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.RtuClient.connect" title="Link to this definition"></a></dt>
-<dd><p>连接到串口</p>
-<p>建立与指定串口的连接，配置为DLT645协议通信所需的参数。</p>
-<dl class="field-list simple">
+<dd><dl class="field-list simple">
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
-</dd>
-</dl>
-<dl class="simple">
-<dt>Returns:</dt><dd><p>bool: 连接成功返回True，失败返回False</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2378,15 +2330,9 @@ None: 超时或失败时返回</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="src.RtuClient.disconnect">
 <span class="sig-name descname"><span class="pre">disconnect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/transport/client/rtu_client.html#RtuClient.disconnect"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.RtuClient.disconnect" title="Link to this definition"></a></dt>
-<dd><p>断开与串口的连接</p>
-<p>关闭串口连接并释放资源。</p>
-<dl class="field-list simple">
+<dd><dl class="field-list simple">
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
-</dd>
-</dl>
-<dl class="simple">
-<dt>Returns:</dt><dd><p>bool: 断开连接成功返回True，失败返回False</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2394,19 +2340,9 @@ None: 超时或失败时返回</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="src.RtuClient.send_request">
 <span class="sig-name descname"><span class="pre">send_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">retries</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/transport/client/rtu_client.html#RtuClient.send_request"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.RtuClient.send_request" title="Link to this definition"></a></dt>
-<dd><p>发送请求并接收响应</p>
-<p>向DLT645设备发送请求数据，并接收响应。支持超时处理和自动重试机制。</p>
-<dl class="field-list simple">
+<dd><dl class="field-list simple">
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="（在 Python v3.14）"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code></a>]</span></p>
-</dd>
-</dl>
-<dl class="simple">
-<dt>Args:</dt><dd><p>data: 要发送的请求数据
-retries: 失败重试次数，默认1次</p>
-</dd>
-<dt>Returns:</dt><dd><p>bytes: 成功接收的响应数据
-None: 失败时返回</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2414,17 +2350,9 @@ None: 失败时返回</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="src.RtuClient.send_only">
 <span class="sig-name descname"><span class="pre">send_only</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/transport/client/rtu_client.html#RtuClient.send_only"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.RtuClient.send_only" title="Link to this definition"></a></dt>
-<dd><p>只发送数据，不等待响应。</p>
-<p>用于广播命令（如广播校时、广播冻结），从站不应答。</p>
-<dl class="field-list simple">
-<dt class="field-odd">参数<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="（在 Python v3.14）"><em>bytes</em></a>) -- 要发送的请求数据。</p>
-</dd>
-<dt class="field-even">返回<span class="colon">:</span></dt>
-<dd class="field-even"><p>发送成功返回 True，失败返回 False。</p>
-</dd>
+<dd><dl class="field-list simple">
 <dt class="field-odd">返回类型<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）">bool</a></p>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
 </dd>
 </dl>
 </dd></dl>
