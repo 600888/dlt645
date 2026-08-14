@@ -133,6 +133,7 @@
 <li class="toctree-l8"><a class="reference internal" href="#src.model.data.data_handler.get_data_item"><code class="docutils literal notranslate"><span class="pre">get_data_item()</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="#src.model.data.data_handler.set_data_item"><code class="docutils literal notranslate"><span class="pre">set_data_item()</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="#src.model.data.data_handler.is_value_valid"><code class="docutils literal notranslate"><span class="pre">is_value_valid()</span></code></a></li>
+<li class="toctree-l8"><a class="reference internal" href="#src.model.data.data_handler.get_value_range"><code class="docutils literal notranslate"><span class="pre">get_value_range()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l7"><a class="reference internal" href="#module-src.model.data">Module contents</a></li>
@@ -788,6 +789,41 @@
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="（在 Python v3.14）">bool</a></p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.model.data.data_handler.get_value_range">
+<span class="sig-prename descclassname"><span class="pre">src.model.data.data_handler.</span></span><span class="sig-name descname"><span class="pre">get_value_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_format</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/model/data/data_handler.html#get_value_range"><span class="viewcode-link"><span class="pre">[源代码]</span></span></a><a class="headerlink" href="#src.model.data.data_handler.get_value_range" title="Link to this definition"></a></dt>
+<dd><p>根据数据格式返回数值的上下限范围。</p>
+<p>支持：
+- 常见小数格式（XXXXXX.XX 等）：返回与 <a class="reference internal" href="#src.model.data.data_handler.is_value_valid" title="src.model.data.data_handler.is_value_valid"><code class="xref py py-func docutils literal notranslate"><span class="pre">is_value_valid()</span></code></a> 一致的范围；
+- 其他纯数字格式（仅由 X/N/小数点组成）：按位数推导，</p>
+<blockquote>
+<div><p>N 表示无符号整数（下限为 0），X 表示有符号数字；</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>日期时间、ASCII 字符串、多段组合格式：返回 None（无数值上下限）。</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">参数<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data_format</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="（在 Python v3.14）"><em>str</em></a>) -- 数据格式字符串，如 &quot;XXXXXX.XX&quot;。</p>
+</dd>
+<dt class="field-even">返回<span class="colon">:</span></dt>
+<dd class="field-even"><p>(最小值, 最大值) 元组；无法确定数值范围时返回 None。</p>
+</dd>
+<dt class="field-odd">返回类型<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Optional[Tuple[<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="（在 Python v3.14）">float</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="（在 Python v3.14）">float</a>]]</p>
+</dd>
+</dl>
+<p>示例:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">get_value_range</span><span class="p">(</span><span class="s2">&quot;XXXXXX.XX&quot;</span><span class="p">)</span>
+<span class="go">(-799999.99, 799999.99)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">get_value_range</span><span class="p">(</span><span class="s2">&quot;NN&quot;</span><span class="p">)</span>
+<span class="go">(0.0, 99.0)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">get_value_range</span><span class="p">(</span><span class="s2">&quot;YYMMDDWW&quot;</span><span class="p">)</span>
+<span class="go">None</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </section>
