@@ -130,7 +130,6 @@
 <li class="toctree-l8"><a class="reference internal" href="../../../../../src.model.data.html#src.model.data.data_handler.get_data_item"><code class="docutils literal notranslate"><span class="pre">get_data_item()</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="../../../../../src.model.data.html#src.model.data.data_handler.set_data_item"><code class="docutils literal notranslate"><span class="pre">set_data_item()</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="../../../../../src.model.data.html#src.model.data.data_handler.is_value_valid"><code class="docutils literal notranslate"><span class="pre">is_value_valid()</span></code></a></li>
-<li class="toctree-l8"><a class="reference internal" href="../../../../../src.model.data.html#src.model.data.data_handler.get_value_range"><code class="docutils literal notranslate"><span class="pre">get_value_range()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l7"><a class="reference internal" href="../../../../../src.model.data.html#module-src.model.data">Module contents</a></li>
@@ -671,6 +670,10 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">....model.types.dlt645_type</span><span class="w"> </span><span class="kn">import</span> <span class="n">Demand</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">DIMap</span>
 
+<span class="c1"># 需量数据格式统一为 XX.XXXX，对应上下限</span>
+<span class="n">_DEMAND_MIN</span> <span class="o">=</span> <span class="o">-</span><span class="mf">79.9999</span>
+<span class="n">_DEMAND_MAX</span> <span class="o">=</span> <span class="mf">79.9999</span>
+
 <span class="c1"># 需量DI列表</span>
 <span class="n">demand_di_list</span> <span class="o">=</span> <span class="p">[</span>
     <span class="mh">0x01150000</span><span class="p">,</span>
@@ -732,6 +735,8 @@
                 <span class="n">di</span><span class="o">=</span><span class="n">key</span><span class="p">,</span>
                 <span class="n">name</span><span class="o">=</span><span class="n">name_prefix</span> <span class="o">+</span> <span class="n">demand_types</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
                 <span class="n">data_format</span><span class="o">=</span><span class="n">DataFormat</span><span class="o">.</span><span class="n">XX_XXXX</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                <span class="n">min_value</span><span class="o">=</span><span class="n">_DEMAND_MIN</span><span class="p">,</span>
+                <span class="n">max_value</span><span class="o">=</span><span class="n">_DEMAND_MAX</span><span class="p">,</span>
                 <span class="n">unit</span><span class="o">=</span><span class="n">demand_types</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">unit</span><span class="p">,</span>
                 <span class="n">value</span><span class="o">=</span><span class="n">Demand</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()),</span>
             <span class="p">)</span>
@@ -742,6 +747,8 @@
                 <span class="n">di</span><span class="o">=</span><span class="n">key</span><span class="p">,</span>
                 <span class="n">name</span><span class="o">=</span><span class="n">name_prefix</span> <span class="o">+</span> <span class="n">demand_types</span><span class="p">[</span><span class="mi">64</span> <span class="o">+</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
                 <span class="n">data_format</span><span class="o">=</span><span class="n">DataFormat</span><span class="o">.</span><span class="n">XX_XXXX</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                <span class="n">min_value</span><span class="o">=</span><span class="n">_DEMAND_MIN</span><span class="p">,</span>
+                <span class="n">max_value</span><span class="o">=</span><span class="n">_DEMAND_MAX</span><span class="p">,</span>
                 <span class="n">unit</span><span class="o">=</span><span class="n">demand_types</span><span class="p">[</span><span class="mi">64</span> <span class="o">+</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">unit</span><span class="p">,</span>
                 <span class="n">value</span><span class="o">=</span><span class="n">Demand</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()),</span>
             <span class="p">)</span>
@@ -752,6 +759,8 @@
                 <span class="n">di</span><span class="o">=</span><span class="n">key</span><span class="p">,</span>
                 <span class="n">name</span><span class="o">=</span><span class="n">name_prefix</span> <span class="o">+</span> <span class="n">demand_types</span><span class="p">[</span><span class="mi">64</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
                 <span class="n">data_format</span><span class="o">=</span><span class="n">DataFormat</span><span class="o">.</span><span class="n">XX_XXXX</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                <span class="n">min_value</span><span class="o">=</span><span class="n">_DEMAND_MIN</span><span class="p">,</span>
+                <span class="n">max_value</span><span class="o">=</span><span class="n">_DEMAND_MAX</span><span class="p">,</span>
                 <span class="n">unit</span><span class="o">=</span><span class="n">demand_types</span><span class="p">[</span><span class="mi">64</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">unit</span><span class="p">,</span>
                 <span class="n">value</span><span class="o">=</span><span class="n">Demand</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()),</span>
             <span class="p">)</span>
@@ -762,6 +771,8 @@
                 <span class="n">di</span><span class="o">=</span><span class="n">key</span><span class="p">,</span>
                 <span class="n">name</span><span class="o">=</span><span class="n">name_prefix</span> <span class="o">+</span> <span class="n">demand_types</span><span class="p">[</span><span class="mi">64</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">+</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
                 <span class="n">data_format</span><span class="o">=</span><span class="n">DataFormat</span><span class="o">.</span><span class="n">XX_XXXX</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                <span class="n">min_value</span><span class="o">=</span><span class="n">_DEMAND_MIN</span><span class="p">,</span>
+                <span class="n">max_value</span><span class="o">=</span><span class="n">_DEMAND_MAX</span><span class="p">,</span>
                 <span class="n">unit</span><span class="o">=</span><span class="n">demand_types</span><span class="p">[</span><span class="mi">64</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">+</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">unit</span><span class="p">,</span>
                 <span class="n">value</span><span class="o">=</span><span class="n">Demand</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()),</span>
             <span class="p">)</span>
@@ -772,6 +783,8 @@
                 <span class="n">di</span><span class="o">=</span><span class="n">key</span><span class="p">,</span>
                 <span class="n">name</span><span class="o">=</span><span class="n">name_prefix</span> <span class="o">+</span> <span class="n">demand_types</span><span class="p">[</span><span class="mi">64</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">+</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
                 <span class="n">data_format</span><span class="o">=</span><span class="n">DataFormat</span><span class="o">.</span><span class="n">XX_XXXX</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                <span class="n">min_value</span><span class="o">=</span><span class="n">_DEMAND_MIN</span><span class="p">,</span>
+                <span class="n">max_value</span><span class="o">=</span><span class="n">_DEMAND_MAX</span><span class="p">,</span>
                 <span class="n">unit</span><span class="o">=</span><span class="n">demand_types</span><span class="p">[</span><span class="mi">64</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">+</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">unit</span><span class="p">,</span>
                 <span class="n">value</span><span class="o">=</span><span class="n">Demand</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()),</span>
             <span class="p">)</span>
@@ -782,6 +795,8 @@
                 <span class="n">di</span><span class="o">=</span><span class="n">key</span><span class="p">,</span>
                 <span class="n">name</span><span class="o">=</span><span class="n">name_prefix</span> <span class="o">+</span> <span class="n">demand_types</span><span class="p">[</span><span class="mi">64</span> <span class="o">*</span> <span class="mi">5</span> <span class="o">+</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
                 <span class="n">data_format</span><span class="o">=</span><span class="n">DataFormat</span><span class="o">.</span><span class="n">XX_XXXX</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                <span class="n">min_value</span><span class="o">=</span><span class="n">_DEMAND_MIN</span><span class="p">,</span>
+                <span class="n">max_value</span><span class="o">=</span><span class="n">_DEMAND_MAX</span><span class="p">,</span>
                 <span class="n">unit</span><span class="o">=</span><span class="n">demand_types</span><span class="p">[</span><span class="mi">64</span> <span class="o">*</span> <span class="mi">5</span> <span class="o">+</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">unit</span><span class="p">,</span>
                 <span class="n">value</span><span class="o">=</span><span class="n">Demand</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()),</span>
             <span class="p">)</span>
@@ -792,6 +807,8 @@
                 <span class="n">di</span><span class="o">=</span><span class="n">key</span><span class="p">,</span>
                 <span class="n">name</span><span class="o">=</span><span class="n">name_prefix</span> <span class="o">+</span> <span class="n">demand_types</span><span class="p">[</span><span class="mi">64</span> <span class="o">*</span> <span class="mi">6</span> <span class="o">+</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
                 <span class="n">data_format</span><span class="o">=</span><span class="n">DataFormat</span><span class="o">.</span><span class="n">XX_XXXX</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                <span class="n">min_value</span><span class="o">=</span><span class="n">_DEMAND_MIN</span><span class="p">,</span>
+                <span class="n">max_value</span><span class="o">=</span><span class="n">_DEMAND_MAX</span><span class="p">,</span>
                 <span class="n">unit</span><span class="o">=</span><span class="n">demand_types</span><span class="p">[</span><span class="mi">64</span> <span class="o">*</span> <span class="mi">6</span> <span class="o">+</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">unit</span><span class="p">,</span>
                 <span class="n">value</span><span class="o">=</span><span class="n">Demand</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()),</span>
             <span class="p">)</span>
@@ -802,6 +819,8 @@
                 <span class="n">di</span><span class="o">=</span><span class="n">key</span><span class="p">,</span>
                 <span class="n">name</span><span class="o">=</span><span class="n">name_prefix</span> <span class="o">+</span> <span class="n">demand_types</span><span class="p">[</span><span class="mi">64</span> <span class="o">*</span> <span class="mi">7</span> <span class="o">+</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
                 <span class="n">data_format</span><span class="o">=</span><span class="n">DataFormat</span><span class="o">.</span><span class="n">XX_XXXX</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                <span class="n">min_value</span><span class="o">=</span><span class="n">_DEMAND_MIN</span><span class="p">,</span>
+                <span class="n">max_value</span><span class="o">=</span><span class="n">_DEMAND_MAX</span><span class="p">,</span>
                 <span class="n">unit</span><span class="o">=</span><span class="n">demand_types</span><span class="p">[</span><span class="mi">64</span> <span class="o">*</span> <span class="mi">7</span> <span class="o">+</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">unit</span><span class="p">,</span>
                 <span class="n">value</span><span class="o">=</span><span class="n">Demand</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()),</span>
             <span class="p">)</span>
@@ -812,6 +831,8 @@
                 <span class="n">di</span><span class="o">=</span><span class="n">key</span><span class="p">,</span>
                 <span class="n">name</span><span class="o">=</span><span class="n">name_prefix</span> <span class="o">+</span> <span class="n">demand_types</span><span class="p">[</span><span class="mi">64</span> <span class="o">*</span> <span class="mi">8</span> <span class="o">+</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
                 <span class="n">data_format</span><span class="o">=</span><span class="n">DataFormat</span><span class="o">.</span><span class="n">XX_XXXX</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                <span class="n">min_value</span><span class="o">=</span><span class="n">_DEMAND_MIN</span><span class="p">,</span>
+                <span class="n">max_value</span><span class="o">=</span><span class="n">_DEMAND_MAX</span><span class="p">,</span>
                 <span class="n">unit</span><span class="o">=</span><span class="n">demand_types</span><span class="p">[</span><span class="mi">64</span> <span class="o">*</span> <span class="mi">8</span> <span class="o">+</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">unit</span><span class="p">,</span>
                 <span class="n">value</span><span class="o">=</span><span class="n">Demand</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()),</span>
             <span class="p">)</span>
@@ -822,6 +843,8 @@
                 <span class="n">di</span><span class="o">=</span><span class="n">key</span><span class="p">,</span>
                 <span class="n">name</span><span class="o">=</span><span class="n">name_prefix</span> <span class="o">+</span> <span class="n">demand_types</span><span class="p">[</span><span class="mi">64</span> <span class="o">*</span> <span class="mi">9</span> <span class="o">+</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
                 <span class="n">data_format</span><span class="o">=</span><span class="n">DataFormat</span><span class="o">.</span><span class="n">XX_XXXX</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                <span class="n">min_value</span><span class="o">=</span><span class="n">_DEMAND_MIN</span><span class="p">,</span>
+                <span class="n">max_value</span><span class="o">=</span><span class="n">_DEMAND_MAX</span><span class="p">,</span>
                 <span class="n">unit</span><span class="o">=</span><span class="n">demand_types</span><span class="p">[</span><span class="mi">64</span> <span class="o">*</span> <span class="mi">9</span> <span class="o">+</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">unit</span><span class="p">,</span>
                 <span class="n">value</span><span class="o">=</span><span class="n">Demand</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()),</span>
             <span class="p">)</span>
@@ -834,6 +857,8 @@
                     <span class="n">di</span><span class="o">=</span><span class="n">key</span><span class="p">,</span>
                     <span class="n">name</span><span class="o">=</span><span class="n">name_prefix</span> <span class="o">+</span> <span class="n">demand_types</span><span class="p">[</span><span class="mi">64</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">+</span> <span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
                     <span class="n">data_format</span><span class="o">=</span><span class="n">DataFormat</span><span class="o">.</span><span class="n">XX_XXXX</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                    <span class="n">min_value</span><span class="o">=</span><span class="n">_DEMAND_MIN</span><span class="p">,</span>
+                    <span class="n">max_value</span><span class="o">=</span><span class="n">_DEMAND_MAX</span><span class="p">,</span>
                     <span class="n">unit</span><span class="o">=</span><span class="n">demand_types</span><span class="p">[</span><span class="mi">64</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">+</span> <span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">unit</span><span class="p">,</span>
                     <span class="n">value</span><span class="o">=</span><span class="n">Demand</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()),</span>
                 <span class="p">)</span></div>

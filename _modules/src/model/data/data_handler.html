@@ -130,7 +130,6 @@
 <li class="toctree-l8"><a class="reference internal" href="../../../../src.model.data.html#src.model.data.data_handler.get_data_item"><code class="docutils literal notranslate"><span class="pre">get_data_item()</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="../../../../src.model.data.html#src.model.data.data_handler.set_data_item"><code class="docutils literal notranslate"><span class="pre">set_data_item()</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="../../../../src.model.data.html#src.model.data.data_handler.is_value_valid"><code class="docutils literal notranslate"><span class="pre">is_value_valid()</span></code></a></li>
-<li class="toctree-l8"><a class="reference internal" href="../../../../src.model.data.html#src.model.data.data_handler.get_value_range"><code class="docutils literal notranslate"><span class="pre">get_value_range()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l7"><a class="reference internal" href="../../../../src.model.data.html#module-src.model.data">Module contents</a></li>
@@ -670,24 +669,14 @@
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">copy</span><span class="w"> </span><span class="kn">import</span> <span class="n">deepcopy</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">...model.types.data_type</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataItem</span><span class="p">,</span> <span class="n">DataFormat</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">...model.types.data_type</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataItem</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">...model.types.dlt645_type</span><span class="w"> </span><span class="kn">import</span> <span class="n">Demand</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">...model.log</span><span class="w"> </span><span class="kn">import</span> <span class="n">log</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.define</span><span class="w"> </span><span class="kn">import</span> <span class="n">DIMap</span>
 
 <span class="n">DataMap</span> <span class="o">=</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">DataItem</span> <span class="o">|</span> <span class="n">List</span><span class="p">[</span><span class="n">DataItem</span><span class="p">]]</span>
-
-<span class="c1"># 常见小数格式对应的数值上下限（与 is_value_valid 的校验范围保持一致）</span>
-<span class="n">_VALUE_RANGES</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="n">DataFormat</span><span class="o">.</span><span class="n">XXXXXX_XX</span><span class="o">.</span><span class="n">value</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="mf">799999.99</span><span class="p">,</span> <span class="mf">799999.99</span><span class="p">),</span>
-    <span class="n">DataFormat</span><span class="o">.</span><span class="n">XXXX_XX</span><span class="o">.</span><span class="n">value</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="mf">7999.99</span><span class="p">,</span> <span class="mf">7999.99</span><span class="p">),</span>
-    <span class="n">DataFormat</span><span class="o">.</span><span class="n">XXX_XXX</span><span class="o">.</span><span class="n">value</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="mf">799.999</span><span class="p">,</span> <span class="mf">799.999</span><span class="p">),</span>
-    <span class="n">DataFormat</span><span class="o">.</span><span class="n">XX_XXXX</span><span class="o">.</span><span class="n">value</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="mf">79.9999</span><span class="p">,</span> <span class="mf">79.9999</span><span class="p">),</span>
-    <span class="n">DataFormat</span><span class="o">.</span><span class="n">XXX_X</span><span class="o">.</span><span class="n">value</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="mf">799.9</span><span class="p">,</span> <span class="mf">799.9</span><span class="p">),</span>
-    <span class="n">DataFormat</span><span class="o">.</span><span class="n">X_XXX</span><span class="o">.</span><span class="n">value</span><span class="p">:</span> <span class="p">(</span><span class="o">-</span><span class="mf">0.999</span><span class="p">,</span> <span class="mf">0.999</span><span class="p">),</span>
-<span class="p">}</span>
 
 
 <div class="viewcode-block" id="clone_data_map">
@@ -745,24 +734,44 @@
     <span class="k">if</span> <span class="n">di</span> <span class="ow">in</span> <span class="n">registry</span><span class="p">:</span>
         <span class="n">item</span> <span class="o">=</span> <span class="n">registry</span><span class="p">[</span><span class="n">di</span><span class="p">]</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">Demand</span><span class="p">):</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">is_value_valid</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">data_format</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">value</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">is_value_valid</span><span class="p">(</span>
+                <span class="n">item</span><span class="o">.</span><span class="n">data_format</span><span class="p">,</span>
+                <span class="n">data</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                <span class="n">item</span><span class="o">.</span><span class="n">min_value</span><span class="p">,</span>
+                <span class="n">item</span><span class="o">.</span><span class="n">max_value</span><span class="p">,</span>
+            <span class="p">):</span>
                 <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;值 </span><span class="si">{</span><span class="n">data</span><span class="si">}</span><span class="s2"> 不符合数据格式: </span><span class="si">{</span><span class="n">item</span><span class="o">.</span><span class="n">data_format</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
                 <span class="k">return</span> <span class="kc">False</span>
             <span class="n">item</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">data</span>
         <span class="k">elif</span> <span class="mh">0x03010000</span> <span class="o">&lt;=</span> <span class="n">di</span> <span class="o">&lt;=</span> <span class="mh">0x03300E0A</span><span class="p">:</span>  <span class="c1"># 事件记录数据</span>
             <span class="k">for</span> <span class="n">data_item</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>  <span class="c1"># data的每一条数据是一个事件记录</span>
-                <span class="k">if</span> <span class="ow">not</span> <span class="n">is_value_valid</span><span class="p">(</span><span class="n">data_item</span><span class="o">.</span><span class="n">data_format</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">is_value_valid</span><span class="p">(</span>
+                    <span class="n">data_item</span><span class="o">.</span><span class="n">data_format</span><span class="p">,</span>
+                    <span class="n">value</span><span class="p">,</span>
+                    <span class="n">data_item</span><span class="o">.</span><span class="n">min_value</span><span class="p">,</span>
+                    <span class="n">data_item</span><span class="o">.</span><span class="n">max_value</span><span class="p">,</span>
+                <span class="p">):</span>
                     <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;值 </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2"> 不符合数据格式: </span><span class="si">{</span><span class="n">data_item</span><span class="o">.</span><span class="n">data_format</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
                     <span class="k">return</span> <span class="kc">False</span>
                 <span class="n">data_item</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">event</span> <span class="o">=</span> <span class="n">value</span>
         <span class="k">elif</span> <span class="mh">0x04010000</span> <span class="o">&lt;=</span> <span class="n">di</span> <span class="o">&lt;=</span> <span class="mh">0x04020008</span><span class="p">:</span>  <span class="c1"># 参变量时段表数据</span>
             <span class="k">for</span> <span class="n">data_item</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-                <span class="k">if</span> <span class="ow">not</span> <span class="n">is_value_valid</span><span class="p">(</span><span class="n">data_item</span><span class="o">.</span><span class="n">data_format</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">is_value_valid</span><span class="p">(</span>
+                    <span class="n">data_item</span><span class="o">.</span><span class="n">data_format</span><span class="p">,</span>
+                    <span class="n">value</span><span class="p">,</span>
+                    <span class="n">data_item</span><span class="o">.</span><span class="n">min_value</span><span class="p">,</span>
+                    <span class="n">data_item</span><span class="o">.</span><span class="n">max_value</span><span class="p">,</span>
+                <span class="p">):</span>
                     <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;值 </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2"> 不符合数据格式: </span><span class="si">{</span><span class="n">data_item</span><span class="o">.</span><span class="n">data_format</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
                     <span class="k">return</span> <span class="kc">False</span>
                 <span class="n">data_item</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">is_value_valid</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">data_format</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">is_value_valid</span><span class="p">(</span>
+                <span class="n">item</span><span class="o">.</span><span class="n">data_format</span><span class="p">,</span>
+                <span class="n">data</span><span class="p">,</span>
+                <span class="n">item</span><span class="o">.</span><span class="n">min_value</span><span class="p">,</span>
+                <span class="n">item</span><span class="o">.</span><span class="n">max_value</span><span class="p">,</span>
+            <span class="p">):</span>
                 <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;值 </span><span class="si">{</span><span class="n">data</span><span class="si">}</span><span class="s2"> 不符合数据格式: </span><span class="si">{</span><span class="n">item</span><span class="o">.</span><span class="n">data_format</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
                 <span class="k">return</span> <span class="kc">False</span>
             <span class="n">item</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">data</span>
@@ -774,28 +783,37 @@
 
 <div class="viewcode-block" id="is_value_valid">
 <a class="viewcode-back" href="../../../../src.model.data.html#src.model.data.data_handler.is_value_valid">[文档]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">is_value_valid</span><span class="p">(</span><span class="n">data_format</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;检查值是否符合指定的数据格式。</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">is_value_valid</span><span class="p">(</span>
+    <span class="n">data_format</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">value</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">],</span>
+    <span class="n">min_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">max_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;检查值是否符合数据项定义的上下限及数据格式。</span>
 
-<span class="sd">    根据数据格式字符串验证值的有效范围：</span>
-<span class="sd">    - XXXXXX.XX: 范围 [-799999.99, 799999.99]</span>
-<span class="sd">    - XXXX.XX: 范围 [-7999.99, 7999.99]</span>
-<span class="sd">    - XXX.XXX: 范围 [-799.999, 799.999]</span>
-<span class="sd">    - XX.XXXX: 范围 [-79.9999, 79.9999]</span>
-<span class="sd">    - XXX.X: 范围 [-799.9, 799.9]</span>
-<span class="sd">    - X.XXX: 范围 [-0.999, 0.999]</span>
-<span class="sd">    - 其他格式: 检查字符串长度或递归验证元组</span>
+<span class="sd">    校验规则：</span>
+<span class="sd">    - 数值类型的值且点位配置了上下限（min_value/max_value 均非 None）时，</span>
+<span class="sd">      校验数值是否在范围内；</span>
+<span class="sd">    - 字符串类型检查长度是否与格式一致；</span>
+<span class="sd">    - 元组递归验证（多段格式）。</span>
 
 <span class="sd">    :param data_format: 数据格式字符串。</span>
 <span class="sd">    :type data_format: str</span>
 <span class="sd">    :param value: 待验证的值。</span>
 <span class="sd">    :type value: Union[int, float, str, tuple]</span>
+<span class="sd">    :param min_value: 数据项允许的最小值，None 表示不限制。</span>
+<span class="sd">    :type min_value: Optional[float], 可选</span>
+<span class="sd">    :param max_value: 数据项允许的最大值，None 表示不限制。</span>
+<span class="sd">    :type max_value: Optional[float], 可选</span>
 <span class="sd">    :return: 值有效返回 True，无效返回 False。</span>
 <span class="sd">    :rtype: bool</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">value_range</span> <span class="o">=</span> <span class="n">_VALUE_RANGES</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">data_format</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">value_range</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">value_range</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">value</span> <span class="o">&lt;=</span> <span class="n">value_range</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">if</span> <span class="p">(</span>
+        <span class="n">min_value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="ow">and</span> <span class="n">max_value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span>
+    <span class="p">):</span>
+        <span class="k">return</span> <span class="n">min_value</span> <span class="o">&lt;=</span> <span class="n">value</span> <span class="o">&lt;=</span> <span class="n">max_value</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">data_format</span><span class="p">):</span>
             <span class="k">return</span> <span class="kc">True</span>
@@ -807,54 +825,6 @@
             <span class="k">return</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span></div>
-
-
-
-<div class="viewcode-block" id="get_value_range">
-<a class="viewcode-back" href="../../../../src.model.data.html#src.model.data.data_handler.get_value_range">[文档]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">get_value_range</span><span class="p">(</span><span class="n">data_format</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;根据数据格式返回数值的上下限范围。</span>
-
-<span class="sd">    支持：</span>
-<span class="sd">    - 常见小数格式（XXXXXX.XX 等）：返回与 :func:`is_value_valid` 一致的范围；</span>
-<span class="sd">    - 其他纯数字格式（仅由 X/N/小数点组成）：按位数推导，</span>
-<span class="sd">      N 表示无符号整数（下限为 0），X 表示有符号数字；</span>
-<span class="sd">    - 日期时间、ASCII 字符串、多段组合格式：返回 None（无数值上下限）。</span>
-
-<span class="sd">    :param data_format: 数据格式字符串，如 &quot;XXXXXX.XX&quot;。</span>
-<span class="sd">    :type data_format: str</span>
-<span class="sd">    :return: (最小值, 最大值) 元组；无法确定数值范围时返回 None。</span>
-<span class="sd">    :rtype: Optional[Tuple[float, float]]</span>
-
-<span class="sd">    示例::</span>
-
-<span class="sd">        &gt;&gt;&gt; get_value_range(&quot;XXXXXX.XX&quot;)</span>
-<span class="sd">        (-799999.99, 799999.99)</span>
-<span class="sd">        &gt;&gt;&gt; get_value_range(&quot;NN&quot;)</span>
-<span class="sd">        (0.0, 99.0)</span>
-<span class="sd">        &gt;&gt;&gt; get_value_range(&quot;YYMMDDWW&quot;)</span>
-<span class="sd">        None</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">data_format</span> <span class="ow">in</span> <span class="n">_VALUE_RANGES</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">_VALUE_RANGES</span><span class="p">[</span><span class="n">data_format</span><span class="p">]</span>
-
-    <span class="c1"># 多段组合格式（如 &quot;XXXX.XX,XXX.XXX&quot;）无法给出单一范围</span>
-    <span class="k">if</span> <span class="s2">&quot;,&quot;</span> <span class="ow">in</span> <span class="n">data_format</span><span class="p">:</span>
-        <span class="k">return</span> <span class="kc">None</span>
-
-    <span class="c1"># 纯数字格式（X/N，可含小数点）按位数通用推导</span>
-    <span class="k">if</span> <span class="nb">set</span><span class="p">(</span><span class="n">data_format</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="p">{</span><span class="s2">&quot;X&quot;</span><span class="p">,</span> <span class="s2">&quot;N&quot;</span><span class="p">,</span> <span class="s2">&quot;.&quot;</span><span class="p">}:</span>
-        <span class="n">digits</span> <span class="o">=</span> <span class="n">data_format</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">digits</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">None</span>
-        <span class="n">decimal_places</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data_format</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span> <span class="k">if</span> <span class="s2">&quot;.&quot;</span> <span class="ow">in</span> <span class="n">data_format</span> <span class="k">else</span> <span class="mi">0</span>
-        <span class="n">max_value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;9&quot;</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">digits</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">10</span><span class="o">**</span><span class="n">decimal_places</span><span class="p">)</span>
-        <span class="k">if</span> <span class="s2">&quot;N&quot;</span> <span class="ow">in</span> <span class="n">data_format</span><span class="p">:</span>  <span class="c1"># N 为无符号数字</span>
-            <span class="k">return</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">max_value</span>
-        <span class="k">return</span> <span class="o">-</span><span class="n">max_value</span><span class="p">,</span> <span class="n">max_value</span>
-
-    <span class="c1"># 日期时间、ASCII 等非数值格式</span>
-    <span class="k">return</span> <span class="kc">None</span></div>
 
 
 </pre></div>

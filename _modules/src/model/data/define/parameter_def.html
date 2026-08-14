@@ -130,7 +130,6 @@
 <li class="toctree-l8"><a class="reference internal" href="../../../../../src.model.data.html#src.model.data.data_handler.get_data_item"><code class="docutils literal notranslate"><span class="pre">get_data_item()</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="../../../../../src.model.data.html#src.model.data.data_handler.set_data_item"><code class="docutils literal notranslate"><span class="pre">set_data_item()</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="../../../../../src.model.data.html#src.model.data.data_handler.is_value_valid"><code class="docutils literal notranslate"><span class="pre">is_value_valid()</span></code></a></li>
-<li class="toctree-l8"><a class="reference internal" href="../../../../../src.model.data.html#src.model.data.data_handler.get_value_range"><code class="docutils literal notranslate"><span class="pre">get_value_range()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l7"><a class="reference internal" href="../../../../../src.model.data.html#module-src.model.data">Module contents</a></li>
@@ -691,6 +690,8 @@
                 <span class="n">data_format</span><span class="o">=</span><span class="n">data_type</span><span class="o">.</span><span class="n">data_format</span><span class="p">,</span>
                 <span class="n">value</span><span class="o">=</span><span class="n">pad_with_zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data_type</span><span class="o">.</span><span class="n">data_format</span><span class="p">)),</span>
                 <span class="n">unit</span><span class="o">=</span><span class="n">data_type</span><span class="o">.</span><span class="n">unit</span><span class="p">,</span>
+                <span class="n">min_value</span><span class="o">=</span><span class="n">data_type</span><span class="o">.</span><span class="n">min_value</span><span class="p">,</span>
+                <span class="n">max_value</span><span class="o">=</span><span class="n">data_type</span><span class="o">.</span><span class="n">max_value</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="n">DIMap</span><span class="p">[</span><span class="n">data_type</span><span class="o">.</span><span class="n">di</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data_item</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
@@ -700,6 +701,8 @@
                 <span class="n">data_format</span><span class="o">=</span><span class="n">data_type</span><span class="o">.</span><span class="n">data_format</span><span class="p">,</span>
                 <span class="n">value</span><span class="o">=</span><span class="n">pad_with_zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data_type</span><span class="o">.</span><span class="n">data_format</span><span class="p">)),</span>
                 <span class="n">unit</span><span class="o">=</span><span class="n">data_type</span><span class="o">.</span><span class="n">unit</span><span class="p">,</span>
+                <span class="n">min_value</span><span class="o">=</span><span class="n">data_type</span><span class="o">.</span><span class="n">min_value</span><span class="p">,</span>
+                <span class="n">max_value</span><span class="o">=</span><span class="n">data_type</span><span class="o">.</span><span class="n">max_value</span><span class="p">,</span>
             <span class="p">)</span></div>
 
 </pre></div>

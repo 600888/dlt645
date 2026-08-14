@@ -130,7 +130,6 @@
 <li class="toctree-l8"><a class="reference internal" href="../../../../src.model.data.html#src.model.data.data_handler.get_data_item"><code class="docutils literal notranslate"><span class="pre">get_data_item()</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="../../../../src.model.data.html#src.model.data.data_handler.set_data_item"><code class="docutils literal notranslate"><span class="pre">set_data_item()</span></code></a></li>
 <li class="toctree-l8"><a class="reference internal" href="../../../../src.model.data.html#src.model.data.data_handler.is_value_valid"><code class="docutils literal notranslate"><span class="pre">is_value_valid()</span></code></a></li>
-<li class="toctree-l8"><a class="reference internal" href="../../../../src.model.data.html#src.model.data.data_handler.get_value_range"><code class="docutils literal notranslate"><span class="pre">get_value_range()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l7"><a class="reference internal" href="../../../../src.model.data.html#module-src.model.data">Module contents</a></li>
@@ -689,6 +688,8 @@
         <span class="n">data_format</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">value</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="n">List</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
         <span class="n">unit</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">min_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">max_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">update_time</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;初始化 DataItem 实例。</span>
@@ -703,6 +704,10 @@
 <span class="sd">        :type value: Union[str, float, List], 可选</span>
 <span class="sd">        :param unit: 单位字符串（如 &quot;kWh&quot;），默认为空字符串。</span>
 <span class="sd">        :type unit: str, 可选</span>
+<span class="sd">        :param min_value: 数据项允许的最小值，None 表示不限制。</span>
+<span class="sd">        :type min_value: Optional[float], 可选</span>
+<span class="sd">        :param max_value: 数据项允许的最大值，None 表示不限制。</span>
+<span class="sd">        :type max_value: Optional[float], 可选</span>
 <span class="sd">        :param update_time: 数据更新的时间戳，默认为当前时间。</span>
 <span class="sd">        :type update_time: datetime.datetime, 可选</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -711,6 +716,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">data_format</span> <span class="o">=</span> <span class="n">data_format</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">unit</span> <span class="o">=</span> <span class="n">unit</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">min_value</span> <span class="o">=</span> <span class="n">min_value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_value</span> <span class="o">=</span> <span class="n">max_value</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">update_time</span> <span class="o">=</span> <span class="n">update_time</span> <span class="ow">or</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -737,7 +744,7 @@
 <span class="sd">    :ivar data_format: 格式字符串定义。</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Di</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">Name</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">Unit</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">DataFormat</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Di</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">Name</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">Unit</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">DataFormat</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">Min</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">Max</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;初始化 DataType 实例。</span>
 
 <span class="sd">        :param Di: 数据标识字符串（十六进制），默认为空字符串。</span>
@@ -748,11 +755,17 @@
 <span class="sd">        :type Unit: str, 可选</span>
 <span class="sd">        :param DataFormat: 格式字符串，默认为空字符串。</span>
 <span class="sd">        :type DataFormat: str, 可选</span>
+<span class="sd">        :param Min: 数据项允许的最小值，None 表示不限制。</span>
+<span class="sd">        :type Min: Optional[float], 可选</span>
+<span class="sd">        :param Max: 数据项允许的最大值，None 表示不限制。</span>
+<span class="sd">        :type Max: Optional[float], 可选</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">di</span> <span class="o">=</span> <span class="n">uint32_from_string</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">Di</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">Name</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">unit</span> <span class="o">=</span> <span class="n">Unit</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data_format</span> <span class="o">=</span> <span class="n">DataFormat</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">min_value</span> <span class="o">=</span> <span class="n">Min</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_value</span> <span class="o">=</span> <span class="n">Max</span>
 
 <div class="viewcode-block" id="DataType.from_dict">
 <a class="viewcode-back" href="../../../../src.model.types.html#src.DataType.from_dict">[文档]</a>
