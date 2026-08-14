@@ -4,7 +4,7 @@
 """
 
 from copy import deepcopy
-from typing import Dict, List, Optional, Union
+from typing import Dict, List, Optional, Tuple, Union
 
 from ...model.types.data_type import DataItem, DataFormat
 from ...model.types.dlt645_type import Demand
@@ -12,6 +12,16 @@ from ...model.log import log
 from .define import DIMap
 
 DataMap = Dict[int, DataItem | List[DataItem]]
+
+# 常见小数格式对应的数值上下限（与 is_value_valid 的校验范围保持一致）
+_VALUE_RANGES: Dict[str, Tuple[float, float]] = {
+    DataFormat.XXXXXX_XX.value: (-799999.99, 799999.99),
+    DataFormat.XXXX_XX.value: (-7999.99, 7999.99),
+    DataFormat.XXX_XXX.value: (-799.999, 799.999),
+    DataFormat.XX_XXXX.value: (-79.9999, 79.9999),
+    DataFormat.XXX_X.value: (-799.9, 799.9),
+    DataFormat.X_XXX.value: (-0.999, 0.999),
+}
 
 
 def clone_data_map() -> DataMap:
@@ -106,18 +116,9 @@ def is_value_valid(data_format: str, value: Union[int, float, str, tuple]) -> bo
     :return: 值有效返回 True，无效返回 False。
     :rtype: bool
     """
-    if data_format == DataFormat.XXXXXX_XX.value:
-        return -799999.99 <= value <= 799999.99
-    elif data_format == DataFormat.XXXX_XX.value:
-        return -7999.99 <= value <= 7999.99
-    elif data_format == DataFormat.XXX_XXX.value:
-        return -799.999 <= value <= 799.999
-    elif data_format == DataFormat.XX_XXXX.value:
-        return -79.9999 <= value <= 79.9999
-    elif data_format == DataFormat.XXX_X.value:
-        return -799.9 <= value <= 799.9
-    elif data_format == DataFormat.X_XXX.value:
-        return -0.999 <= value <= 0.999
+    value_range = _VALUE_RANGES.get(data_format)
+    if value_range is not None:
+        return value_range[0] <= value <= value_range[1]
     else:
         if isinstance(value, str) and len(value) == len(data_format):
             return True
@@ -129,4 +130,49 @@ def is_value_valid(data_format: str, value: Union[int, float, str, tuple]) -> bo
             return True
         else:
             return False
+
+
+def get_value_range(data_format: str) -> Optional[Tuple[float, float]]:
+    """根据数据格式返回数值的上下限范围。
+
+    支持：
+    - 常见小数格式（XXXXXX.XX 等）：返回与 :func:`is_value_valid` 一致的范围；
+    - 其他纯数字格式（仅由 X/N/小数点组成）：按位数推导，
+      N 表示无符号整数（下限为 0），X 表示有符号数字；
+    - 日期时间、ASCII 字符串、多段组合格式：返回 None（无数值上下限）。
+
+    :param data_format: 数据格式字符串，如 "XXXXXX.XX"。
+    :type data_format: str
+    :return: (最小值, 最大值) 元组；无法确定数值范围时返回 None。
+    :rtype: Optional[Tuple[float, float]]
+
+    示例::
+
+        >>> get_value_range("XXXXXX.XX")
+        (-799999.99, 799999.99)
+        >>> get_value_range("NN")
+        (0.0, 99.0)
+        >>> get_value_range("YYMMDDWW")
+        None
+    """
+    if data_format in _VALUE_RANGES:
+        return _VALUE_RANGES[data_format]
+
+    # 多段组合格式（如 "XXXX.XX,XXX.XXX"）无法给出单一范围
+    if "," in data_format:
+        return None
+
+    # 纯数字格式（X/N，可含小数点）按位数通用推导
+    if set(data_format) <= {"X", "N", "."}:
+        digits = data_format.replace(".", "")
+        if not digits:
+            return None
+        decimal_places = len(data_format.split(".")[1]) if "." in data_format else 0
+        max_value = float("9" * len(digits)) / (10**decimal_places)
+        if "N" in data_format:  # N 为无符号数字
+            return 0.0, max_value
+        return -max_value, max_value
+
+    # 日期时间、ASCII 等非数值格式
+    return None
 
