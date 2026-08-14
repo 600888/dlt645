@@ -4,24 +4,14 @@
 """
 
 from copy import deepcopy
-from typing import Dict, List, Optional, Tuple, Union
+from typing import Dict, List, Optional, Union
 
-from ...model.types.data_type import DataItem, DataFormat
+from ...model.types.data_type import DataItem
 from ...model.types.dlt645_type import Demand
 from ...model.log import log
 from .define import DIMap
 
 DataMap = Dict[int, DataItem | List[DataItem]]
-
-# 常见小数格式对应的数值上下限（与 is_value_valid 的校验范围保持一致）
-_VALUE_RANGES: Dict[str, Tuple[float, float]] = {
-    DataFormat.XXXXXX_XX.value: (-799999.99, 799999.99),
-    DataFormat.XXXX_XX.value: (-7999.99, 7999.99),
-    DataFormat.XXX_XXX.value: (-799.999, 799.999),
-    DataFormat.XX_XXXX.value: (-79.9999, 79.9999),
-    DataFormat.XXX_X.value: (-799.9, 799.9),
-    DataFormat.X_XXX.value: (-0.999, 0.999),
-}
 
 
 def clone_data_map() -> DataMap:
@@ -71,24 +61,44 @@ def set_data_item(
     if di in registry:
         item = registry[di]
         if isinstance(data, Demand):
-            if not is_value_valid(item.data_format, data.value):
+            if not is_value_valid(
+                item.data_format,
+                data.value,
+                item.min_value,
+                item.max_value,
+            ):
                 log.error(f"值 {data} 不符合数据格式: {item.data_format}")
                 return False
             item.value = data
         elif 0x03010000 <= di <= 0x03300E0A:  # 事件记录数据
             for data_item, value in zip(item, data):  # data的每一条数据是一个事件记录
-                if not is_value_valid(data_item.data_format, value):
+                if not is_value_valid(
+                    data_item.data_format,
+                    value,
+                    data_item.min_value,
+                    data_item.max_value,
+                ):
                     log.error(f"值 {value} 不符合数据格式: {data_item.data_format}")
                     return False
                 data_item.value.event = value
         elif 0x04010000 <= di <= 0x04020008:  # 参变量时段表数据
             for data_item, value in zip(item, data):
-                if not is_value_valid(data_item.data_format, value):
+                if not is_value_valid(
+                    data_item.data_format,
+                    value,
+                    data_item.min_value,
+                    data_item.max_value,
+                ):
                     log.error(f"值 {value} 不符合数据格式: {data_item.data_format}")
                     return False
                 data_item.value = value
         else:
-            if not is_value_valid(item.data_format, data):
+            if not is_value_valid(
+                item.data_format,
+                data,
+                item.min_value,
+                item.max_value,
+            ):
                 log.error(f"值 {data} 不符合数据格式: {item.data_format}")
                 return False
             item.value = data
@@ -97,28 +107,37 @@ def set_data_item(
     return False
 
 
-def is_value_valid(data_format: str, value: Union[int, float, str, tuple]) -> bool:
-    """检查值是否符合指定的数据格式。
+def is_value_valid(
+    data_format: str,
+    value: Union[int, float, str, tuple],
+    min_value: Optional[float] = None,
+    max_value: Optional[float] = None,
+) -> bool:
+    """检查值是否符合数据项定义的上下限及数据格式。
 
-    根据数据格式字符串验证值的有效范围：
-    - XXXXXX.XX: 范围 [-799999.99, 799999.99]
-    - XXXX.XX: 范围 [-7999.99, 7999.99]
-    - XXX.XXX: 范围 [-799.999, 799.999]
-    - XX.XXXX: 范围 [-79.9999, 79.9999]
-    - XXX.X: 范围 [-799.9, 799.9]
-    - X.XXX: 范围 [-0.999, 0.999]
-    - 其他格式: 检查字符串长度或递归验证元组
+    校验规则：
+    - 数值类型的值且点位配置了上下限（min_value/max_value 均非 None）时，
+      校验数值是否在范围内；
+    - 字符串类型检查长度是否与格式一致；
+    - 元组递归验证（多段格式）。
 
     :param data_format: 数据格式字符串。
     :type data_format: str
     :param value: 待验证的值。
     :type value: Union[int, float, str, tuple]
+    :param min_value: 数据项允许的最小值，None 表示不限制。
+    :type min_value: Optional[float], 可选
+    :param max_value: 数据项允许的最大值，None 表示不限制。
+    :type max_value: Optional[float], 可选
     :return: 值有效返回 True，无效返回 False。
     :rtype: bool
     """
-    value_range = _VALUE_RANGES.get(data_format)
-    if value_range is not None:
-        return value_range[0] <= value <= value_range[1]
+    if (
+        min_value is not None
+        and max_value is not None
+        and isinstance(value, (int, float))
+    ):
+        return min_value <= value <= max_value
     else:
         if isinstance(value, str) and len(value) == len(data_format):
             return True
@@ -130,49 +149,4 @@ def is_value_valid(data_format: str, value: Union[int, float, str, tuple]) -> bo
             return True
         else:
             return False
-
-
-def get_value_range(data_format: str) -> Optional[Tuple[float, float]]:
-    """根据数据格式返回数值的上下限范围。
-
-    支持：
-    - 常见小数格式（XXXXXX.XX 等）：返回与 :func:`is_value_valid` 一致的范围；
-    - 其他纯数字格式（仅由 X/N/小数点组成）：按位数推导，
-      N 表示无符号整数（下限为 0），X 表示有符号数字；
-    - 日期时间、ASCII 字符串、多段组合格式：返回 None（无数值上下限）。
-
-    :param data_format: 数据格式字符串，如 "XXXXXX.XX"。
-    :type data_format: str
-    :return: (最小值, 最大值) 元组；无法确定数值范围时返回 None。
-    :rtype: Optional[Tuple[float, float]]
-
-    示例::
-
-        >>> get_value_range("XXXXXX.XX")
-        (-799999.99, 799999.99)
-        >>> get_value_range("NN")
-        (0.0, 99.0)
-        >>> get_value_range("YYMMDDWW")
-        None
-    """
-    if data_format in _VALUE_RANGES:
-        return _VALUE_RANGES[data_format]
-
-    # 多段组合格式（如 "XXXX.XX,XXX.XXX"）无法给出单一范围
-    if "," in data_format:
-        return None
-
-    # 纯数字格式（X/N，可含小数点）按位数通用推导
-    if set(data_format) <= {"X", "N", "."}:
-        digits = data_format.replace(".", "")
-        if not digits:
-            return None
-        decimal_places = len(data_format.split(".")[1]) if "." in data_format else 0
-        max_value = float("9" * len(digits)) / (10**decimal_places)
-        if "N" in data_format:  # N 为无符号数字
-            return 0.0, max_value
-        return -max_value, max_value
-
-    # 日期时间、ASCII 等非数值格式
-    return None
 

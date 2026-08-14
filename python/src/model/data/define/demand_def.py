@@ -5,6 +5,10 @@ from ....model.types.data_type import DataItem, DataFormat
 from ....model.types.dlt645_type import Demand
 from . import DIMap
 
+# 需量数据格式统一为 XX.XXXX，对应上下限
+_DEMAND_MIN = -79.9999
+_DEMAND_MAX = 79.9999
+
 # 需量DI列表
 demand_di_list = [
     0x01150000,
@@ -64,6 +68,8 @@ def init_demand_def(demand_types: List[DataItem]):
                 di=key,
                 name=name_prefix + demand_types[i].name,
                 data_format=DataFormat.XX_XXXX.value,
+                min_value=_DEMAND_MIN,
+                max_value=_DEMAND_MAX,
                 unit=demand_types[i].unit,
                 value=Demand(0.0, datetime.now()),
             )
@@ -74,6 +80,8 @@ def init_demand_def(demand_types: List[DataItem]):
                 di=key,
                 name=name_prefix + demand_types[64 + i].name,
                 data_format=DataFormat.XX_XXXX.value,
+                min_value=_DEMAND_MIN,
+                max_value=_DEMAND_MAX,
                 unit=demand_types[64 + i].unit,
                 value=Demand(0.0, datetime.now()),
             )
@@ -84,6 +92,8 @@ def init_demand_def(demand_types: List[DataItem]):
                 di=key,
                 name=name_prefix + demand_types[64 * 2 + i].name,
                 data_format=DataFormat.XX_XXXX.value,
+                min_value=_DEMAND_MIN,
+                max_value=_DEMAND_MAX,
                 unit=demand_types[64 * 2 + i].unit,
                 value=Demand(0.0, datetime.now()),
             )
@@ -94,6 +104,8 @@ def init_demand_def(demand_types: List[DataItem]):
                 di=key,
                 name=name_prefix + demand_types[64 * 3 + i].name,
                 data_format=DataFormat.XX_XXXX.value,
+                min_value=_DEMAND_MIN,
+                max_value=_DEMAND_MAX,
                 unit=demand_types[64 * 3 + i].unit,
                 value=Demand(0.0, datetime.now()),
             )
@@ -104,6 +116,8 @@ def init_demand_def(demand_types: List[DataItem]):
                 di=key,
                 name=name_prefix + demand_types[64 * 4 + i].name,
                 data_format=DataFormat.XX_XXXX.value,
+                min_value=_DEMAND_MIN,
+                max_value=_DEMAND_MAX,
                 unit=demand_types[64 * 4 + i].unit,
                 value=Demand(0.0, datetime.now()),
             )
@@ -114,6 +128,8 @@ def init_demand_def(demand_types: List[DataItem]):
                 di=key,
                 name=name_prefix + demand_types[64 * 5 + i].name,
                 data_format=DataFormat.XX_XXXX.value,
+                min_value=_DEMAND_MIN,
+                max_value=_DEMAND_MAX,
                 unit=demand_types[64 * 5 + i].unit,
                 value=Demand(0.0, datetime.now()),
             )
@@ -124,6 +140,8 @@ def init_demand_def(demand_types: List[DataItem]):
                 di=key,
                 name=name_prefix + demand_types[64 * 6 + i].name,
                 data_format=DataFormat.XX_XXXX.value,
+                min_value=_DEMAND_MIN,
+                max_value=_DEMAND_MAX,
                 unit=demand_types[64 * 6 + i].unit,
                 value=Demand(0.0, datetime.now()),
             )
@@ -134,6 +152,8 @@ def init_demand_def(demand_types: List[DataItem]):
                 di=key,
                 name=name_prefix + demand_types[64 * 7 + i].name,
                 data_format=DataFormat.XX_XXXX.value,
+                min_value=_DEMAND_MIN,
+                max_value=_DEMAND_MAX,
                 unit=demand_types[64 * 7 + i].unit,
                 value=Demand(0.0, datetime.now()),
             )
@@ -144,6 +164,8 @@ def init_demand_def(demand_types: List[DataItem]):
                 di=key,
                 name=name_prefix + demand_types[64 * 8 + i].name,
                 data_format=DataFormat.XX_XXXX.value,
+                min_value=_DEMAND_MIN,
+                max_value=_DEMAND_MAX,
                 unit=demand_types[64 * 8 + i].unit,
                 value=Demand(0.0, datetime.now()),
             )
@@ -154,6 +176,8 @@ def init_demand_def(demand_types: List[DataItem]):
                 di=key,
                 name=name_prefix + demand_types[64 * 9 + i].name,
                 data_format=DataFormat.XX_XXXX.value,
+                min_value=_DEMAND_MIN,
+                max_value=_DEMAND_MAX,
                 unit=demand_types[64 * 9 + i].unit,
                 value=Demand(0.0, datetime.now()),
             )
@@ -166,6 +190,8 @@ def init_demand_def(demand_types: List[DataItem]):
                     di=key,
                     name=name_prefix + demand_types[64 * 10 + k].name,
                     data_format=DataFormat.XX_XXXX.value,
+                    min_value=_DEMAND_MIN,
+                    max_value=_DEMAND_MAX,
                     unit=demand_types[64 * 10 + k].unit,
                     value=Demand(0.0, datetime.now()),
                 )

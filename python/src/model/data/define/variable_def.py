@@ -16,4 +16,6 @@ def init_variable_def(VariableTypes: List[DataItem]):
             name=data_type.name,
             data_format=data_type.data_format,
             unit=data_type.unit,
+            min_value=data_type.min_value,
+            max_value=data_type.max_value,
         )

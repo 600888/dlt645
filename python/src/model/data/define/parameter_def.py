@@ -23,6 +23,8 @@ def init_parameter_def(ParaMeterTypes: List[DataItem]):
                 data_format=data_type.data_format,
                 value=pad_with_zeros(len(data_type.data_format)),
                 unit=data_type.unit,
+                min_value=data_type.min_value,
+                max_value=data_type.max_value,
             )
             DIMap[data_type.di].append(data_item)
         else:
@@ -32,4 +34,6 @@ def init_parameter_def(ParaMeterTypes: List[DataItem]):
                 data_format=data_type.data_format,
                 value=pad_with_zeros(len(data_type.data_format)),
                 unit=data_type.unit,
+                min_value=data_type.min_value,
+                max_value=data_type.max_value,
             )

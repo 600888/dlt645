@@ -1,7 +1,12 @@
 # 数据标识DI（完整定义）
 from typing import List
+
 from ....model.types.data_type import DataItem, DataFormat
 from . import DIMap
+
+# 电能数据格式统一为 XXXXXX.XX，对应上下限
+_ENERGY_MIN = -799999.99
+_ENERGY_MAX = 799999.99
 
 energy_di_list = [
     0x00800000,
@@ -88,6 +93,8 @@ def init_energy_def(energy_types: List[DataItem]):
                 di=(di3 << 24) | (di2 << 16) | ((di1 + i) << 8) | (di0 + j),
                 name=name_prefix + energy_types[i].name,
                 data_format=DataFormat.XXXXXX_XX.value,
+                min_value=_ENERGY_MIN,
+                max_value=_ENERGY_MAX,
                 unit=energy_types[i].unit,
             )
 
@@ -97,6 +104,8 @@ def init_energy_def(energy_types: List[DataItem]):
                     di=(di3 << 24) | ((di2 + 1) << 16) | ((di1 + i) << 8) | (di0 + j),
                     name=name_prefix + energy_types[64 + i].name,
                     data_format=DataFormat.XXXXXX_XX.value,
+                    min_value=_ENERGY_MIN,
+                    max_value=_ENERGY_MAX,
                     unit=energy_types[64 + i].unit,
                 )
             )
@@ -107,6 +116,8 @@ def init_energy_def(energy_types: List[DataItem]):
                     di=(di3 << 24) | ((di2 + 2) << 16) | ((di1 + i) << 8) | (di0 + j),
                     name=name_prefix + energy_types[64 * 2 + i].name,
                     data_format=DataFormat.XXXXXX_XX.value,
+                    min_value=_ENERGY_MIN,
+                    max_value=_ENERGY_MAX,
                     unit=energy_types[64 * 2 + i].unit,
                 )
             )
@@ -117,6 +128,8 @@ def init_energy_def(energy_types: List[DataItem]):
                     di=(di3 << 24) | ((di2 + 3) << 16) | ((di1 + i) << 8) | (di0 + j),
                     name=name_prefix + energy_types[64 * 3 + i].name,
                     data_format=DataFormat.XXXXXX_XX.value,
+                    min_value=_ENERGY_MIN,
+                    max_value=_ENERGY_MAX,
                     unit=energy_types[64 * 3 + i].unit,
                 )
             )
@@ -127,6 +140,8 @@ def init_energy_def(energy_types: List[DataItem]):
                     di=(di3 << 24) | ((di2 + 4) << 16) | ((di1 + i) << 8) | (di0 + j),
                     name=name_prefix + energy_types[64 * 4 + i].name,
                     data_format=DataFormat.XXXXXX_XX.value,
+                    min_value=_ENERGY_MIN,
+                    max_value=_ENERGY_MAX,
                     unit=energy_types[64 * 4 + i].unit,
                 )
             )
@@ -137,6 +152,8 @@ def init_energy_def(energy_types: List[DataItem]):
                     di=(di3 << 24) | ((di2 + 5) << 16) | ((di1 + i) << 8) | (di0 + j),
                     name=name_prefix + energy_types[64 * 5 + i].name,
                     data_format=DataFormat.XXXXXX_XX.value,
+                    min_value=_ENERGY_MIN,
+                    max_value=_ENERGY_MAX,
                     unit=energy_types[64 * 5 + i].unit,
                 )
             )
@@ -147,6 +164,8 @@ def init_energy_def(energy_types: List[DataItem]):
                     di=(di3 << 24) | ((di2 + 6) << 16) | ((di1 + i) << 8) | (di0 + j),
                     name=name_prefix + energy_types[64 * 6 + i].name,
                     data_format=DataFormat.XXXXXX_XX.value,
+                    min_value=_ENERGY_MIN,
+                    max_value=_ENERGY_MAX,
                     unit=energy_types[64 * 6 + i].unit,
                 )
             )
@@ -157,6 +176,8 @@ def init_energy_def(energy_types: List[DataItem]):
                     di=(di3 << 24) | ((di2 + 7) << 16) | ((di1 + i) << 8) | (di0 + j),
                     name=name_prefix + energy_types[64 * 7 + i].name,
                     data_format=DataFormat.XXXXXX_XX.value,
+                    min_value=_ENERGY_MIN,
+                    max_value=_ENERGY_MAX,
                     unit=energy_types[64 * 7 + i].unit,
                 )
             )
@@ -167,6 +188,8 @@ def init_energy_def(energy_types: List[DataItem]):
                     di=(di3 << 24) | ((di2 + 8) << 16) | ((di1 + i) << 8) | (di0 + j),
                     name=name_prefix + energy_types[64 * 8 + i].name,
                     data_format=DataFormat.XXXXXX_XX.value,
+                    min_value=_ENERGY_MIN,
+                    max_value=_ENERGY_MAX,
                     unit=energy_types[64 * 8 + i].unit,
                 )
             )
@@ -177,6 +200,8 @@ def init_energy_def(energy_types: List[DataItem]):
                     di=(di3 << 24) | ((di2 + 9) << 16) | ((di1 + i) << 8) | (di0 + j),
                     name=name_prefix + energy_types[64 * 9 + i].name,
                     data_format=DataFormat.XXXXXX_XX.value,
+                    min_value=_ENERGY_MIN,
+                    max_value=_ENERGY_MAX,
                     unit=energy_types[64 * 9 + i].unit,
                 )
             )
@@ -187,6 +212,8 @@ def init_energy_def(energy_types: List[DataItem]):
                     di=(di3 << 24) | ((di2 + 10) << 16) | ((di1 + i) << 8) | (di0 + j),
                     name=name_prefix + energy_types[64 * 10 + i].name,
                     data_format=DataFormat.XXXXXX_XX.value,
+                    min_value=_ENERGY_MIN,
+                    max_value=_ENERGY_MAX,
                     unit=energy_types[64 * 10 + i].unit,
                 )
             )
@@ -200,5 +227,7 @@ def init_energy_def(energy_types: List[DataItem]):
                     di=value,
                     name=name_prefix + energy_types[64 * 11 + k].name,
                     data_format=DataFormat.XXXXXX_XX.value,
+                    min_value=_ENERGY_MIN,
+                    max_value=_ENERGY_MAX,
                     unit=energy_types[64 * 11 + k].unit,
                 )

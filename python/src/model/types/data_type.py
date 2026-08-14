@@ -21,6 +21,8 @@ class DataItem:
         data_format: str,
         value: Union[str, float, List] = 0,
         unit: str = "",
+        min_value: Optional[float] = None,
+        max_value: Optional[float] = None,
         update_time: Optional[datetime.datetime] = None,
     ):
         """初始化 DataItem 实例。
@@ -35,6 +37,10 @@ class DataItem:
         :type value: Union[str, float, List], 可选
         :param unit: 单位字符串（如 "kWh"），默认为空字符串。
         :type unit: str, 可选
+        :param min_value: 数据项允许的最小值，None 表示不限制。
+        :type min_value: Optional[float], 可选
+        :param max_value: 数据项允许的最大值，None 表示不限制。
+        :type max_value: Optional[float], 可选
         :param update_time: 数据更新的时间戳，默认为当前时间。
         :type update_time: datetime.datetime, 可选
         """
@@ -43,6 +49,8 @@ class DataItem:
         self.data_format = data_format
         self.value = value
         self.unit = unit
+        self.min_value = min_value
+        self.max_value = max_value
         self.update_time = update_time or datetime.datetime.now()
 
     def __repr__(self):
@@ -66,7 +74,7 @@ class DataType:
     :ivar data_format: 格式字符串定义。
     """
 
-    def __init__(self, Di="", Name="", Unit="", DataFormat=""):
+    def __init__(self, Di="", Name="", Unit="", DataFormat="", Min=None, Max=None):
         """初始化 DataType 实例。
 
         :param Di: 数据标识字符串（十六进制），默认为空字符串。
@@ -77,11 +85,17 @@ class DataType:
         :type Unit: str, 可选
         :param DataFormat: 格式字符串，默认为空字符串。
         :type DataFormat: str, 可选
+        :param Min: 数据项允许的最小值，None 表示不限制。
+        :type Min: Optional[float], 可选
+        :param Max: 数据项允许的最大值，None 表示不限制。
+        :type Max: Optional[float], 可选
         """
         self.di = uint32_from_string.from_json(Di)
         self.name = Name
         self.unit = Unit
         self.data_format = DataFormat
+        self.min_value = Min
+        self.max_value = Max
 
     @classmethod
     def from_dict(cls, data):

@@ -34,5 +34,7 @@ def init_event_record_def(EventRecordTypes: List[DataItem]):
             data_format=data_type.data_format,
             value=value,
             unit=data_type.unit,
+            min_value=data_type.min_value,
+            max_value=data_type.max_value,
         )
         DIMap[data_type.di].append(data_item)
