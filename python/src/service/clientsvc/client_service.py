@@ -20,6 +20,7 @@ from ...common.transform import (
     bcd_to_string,
     bytes_to_int,
     bytes_to_spaced_hex,
+    parse_format,
     string_to_bcd,
     uint8_to_bcd,
 )
@@ -584,8 +585,18 @@ class MeterClientService:
                     if not data_item:
                         log.error("获取变量数据项失败")
                         return None
+                    # 变量数据长度由 data_format 决定：(总位数 + 1) // 2，范围 2~4 字节
+                    _, total_digits = parse_format(data_item.data_format)
+                    data_len = (total_digits + 1) // 2
+                    if len(frame.data) < DI_LEN + data_len:
+                        log.warning(
+                            f"变量响应长度不足: 需要 {DI_LEN + data_len}, 实际 {len(frame.data)}"
+                        )
+                        return None
                     data_item.value = bcd_to_float(
-                        frame.data[DI_LEN : DI_LEN + 4], data_item.data_format, "little"
+                        frame.data[DI_LEN : DI_LEN + data_len],
+                        data_item.data_format,
+                        "little",
                     )
                     return data_item
                 elif di3 == 0x03:

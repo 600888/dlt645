@@ -19,6 +19,7 @@ from ...common.transform import (
     bcd_to_value,
     bcd_to_string,
     bcd_to_byte,
+    parse_format,
 )
 from ...model.data.data_handler import clone_data_map, get_data_item, set_data_item
 from ...model.types.data_type import DataItem
@@ -477,11 +478,10 @@ class MeterServerService:
                         return self._build_error_response(
                             frame, error_code=ErrorCode.RequestDataEmpty
                         )
-                    # 变量数据长度
-                    data_len = DI_LEN
-                    data_len += (
-                        len(data_item.data_format) - 1
-                    ) // 2  # (数据格式长度 - 1 位小数点)/2
+                    # 变量数据长度：总位数 (含小数点前后) 加 1 后整除 2，
+                    # 对无小数点格式（如 XXXXXXXX）同样成立
+                    _, total_digits = parse_format(data_item.data_format)
+                    data_len = DI_LEN + (total_digits + 1) // 2
                     # 构建响应帧
                     res_data = bytearray(data_len)
                     res_data[:DI_LEN] = frame.data[:DI_LEN]  # 仅复制前 DI_LEN 字节
