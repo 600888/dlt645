@@ -41,6 +41,11 @@ from ...protocol.protocol import DLT645Protocol
 from ...service.serversvc.log import log
 from ...transport.server.rtu_server import RtuServer
 from ...transport.server.tcp_server import TcpServer
+from ...transport.server.tcp_lifecycle import (
+    TcpActivityCallback,
+    TcpConnectCallback,
+    TcpDisconnectCallback,
+)
 from ...common.message_capture import MessageCapture
 from ...common.message_types import MessageRecord, MessagePair
 
@@ -87,7 +92,14 @@ class MeterServerService:
 
     @classmethod
     def new_tcp_server(
-        cls, ip: str, port: int, timeout: float = 5.0
+        cls,
+        ip: str,
+        port: int,
+        timeout: float = 5.0,
+        *,
+        on_connect: Optional[TcpConnectCallback] = None,
+        on_activity: Optional[TcpActivityCallback] = None,
+        on_disconnect: Optional[TcpDisconnectCallback] = None,
     ) -> "MeterServerService":
         """创建 TCP 服务器
 
@@ -97,7 +109,15 @@ class MeterServerService:
         :return:
         """
         # 1. 先创建 TcpServer
-        tcp_server = TcpServer(ip, port, timeout, None)
+        tcp_server = TcpServer(
+            ip,
+            port,
+            timeout,
+            None,
+            on_connect=on_connect,
+            on_activity=on_activity,
+            on_disconnect=on_disconnect,
+        )
         # 2. 创建 MeterServerService，注入 TcpServer（作为 Server 接口）
         return cls.new_meter_server_service(tcp_server)
 

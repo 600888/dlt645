@@ -1,10 +1,15 @@
 """DLT645 异步服务端业务服务。"""
 
-from typing import Any
+from typing import Any, Optional
 
 from ...service.serversvc.server_service import MeterServerService
 from ...transport.server.async_rtu_server import AsyncRtuServer
 from ...transport.server.async_tcp_server import AsyncTcpServer
+from ...transport.server.tcp_lifecycle import (
+    TcpActivityCallback,
+    TcpConnectCallback,
+    TcpDisconnectCallback,
+)
 
 
 class AsyncMeterServerService(MeterServerService):
@@ -15,10 +20,24 @@ class AsyncMeterServerService(MeterServerService):
 
     @classmethod
     def new_tcp_server(
-        cls, ip: str, port: int, timeout: float = 5.0
+        cls,
+        ip: str,
+        port: int,
+        timeout: float = 5.0,
+        *,
+        on_connect: Optional[TcpConnectCallback] = None,
+        on_activity: Optional[TcpActivityCallback] = None,
+        on_disconnect: Optional[TcpDisconnectCallback] = None,
     ) -> "AsyncMeterServerService":
         return cls.new_meter_server_service(
-            AsyncTcpServer(ip=ip, port=port, timeout=timeout)
+            AsyncTcpServer(
+                ip=ip,
+                port=port,
+                timeout=timeout,
+                on_connect=on_connect,
+                on_activity=on_activity,
+                on_disconnect=on_disconnect,
+            )
         )
 
     @classmethod
@@ -61,7 +80,5 @@ class AsyncMeterServerService(MeterServerService):
             raise OSError("无法启动异步 DLT645 服务端")
         return self
 
-    async def __aexit__(
-        self, exc_type: Any, exc_val: Any, exc_tb: Any
-    ) -> None:
+    async def __aexit__(self, exc_type: Any, exc_val: Any, exc_tb: Any) -> None:
         await self.stop()

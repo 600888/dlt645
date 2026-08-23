@@ -9,6 +9,14 @@ from .transport.client.async_rtu_client import AsyncRtuClient
 from .transport.client.async_tcp_client import AsyncTcpClient
 from .transport.server.async_rtu_server import AsyncRtuServer
 from .transport.server.async_tcp_server import AsyncTcpServer
+from .transport.server.tcp_lifecycle import (
+    TcpActivity,
+    TcpActivityCallback,
+    TcpConnectCallback,
+    TcpConnectionContext,
+    TcpDisconnectCallback,
+    TcpDisconnectReason,
+)
 
 __all__ = [
     "AsyncMeterClientService",
@@ -17,4 +25,10 @@ __all__ = [
     "AsyncRtuClient",
     "AsyncTcpServer",
     "AsyncRtuServer",
+    "TcpActivity",
+    "TcpActivityCallback",
+    "TcpConnectCallback",
+    "TcpConnectionContext",
+    "TcpDisconnectCallback",
+    "TcpDisconnectReason",
 ]

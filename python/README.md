@@ -133,6 +133,41 @@ server_svc.server.start()
 
 ![](../resource/python/1.png)
 
+### TCP 连接生命周期回调
+
+同步 TCP 服务端支持可选的 `on_connect`、`on_activity`、`on_disconnect`
+回调，参数结构与异步服务端一致：
+
+```python
+from dlt645 import MeterServerService
+
+
+def on_connect(connection):
+    print(connection.connection_id, connection.peer_host, connection.peer_port)
+
+
+def on_activity(connection, activity):
+    print(activity.direction, len(activity.data), connection.last_activity_at)
+
+
+def on_disconnect(connection):
+    print(connection.disconnect_reason, connection.duration)
+    print(connection.bytes_received, connection.bytes_sent)
+
+
+server_svc = MeterServerService.new_tcp_server(
+    "127.0.0.1",
+    8021,
+    on_connect=on_connect,
+    on_activity=on_activity,
+    on_disconnect=on_disconnect,
+)
+```
+
+三个回调共享同一个 `TcpConnectionContext`，可用于维护实时连接列表和历史连接
+记录。`on_activity` 在成功接收或发送每条完整 DL/T 645 报文时触发。同步服务端
+在每条连接自己的工作线程中按顺序执行回调，回调异常不会中断设备连接。
+
 ### 创建RTU服务器
 
 ```python

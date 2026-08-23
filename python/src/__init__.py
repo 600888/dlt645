@@ -31,6 +31,14 @@ from .model.types.data_type import DataItem, DataFormat
 
 # 导入传输层
 from .transport.server.tcp_server import TcpServer
+from .transport.server.tcp_lifecycle import (
+    TcpActivity,
+    TcpActivityCallback,
+    TcpConnectCallback,
+    TcpConnectionContext,
+    TcpDisconnectCallback,
+    TcpDisconnectReason,
+)
 from .transport.server.rtu_server import RtuServer
 from .transport.client.tcp_client import TcpClient
 from .transport.client.rtu_client import RtuClient
@@ -72,7 +80,13 @@ __all__ = [
     "RtuServer",
     "TcpClient",
     "RtuClient",
-    
+    "TcpActivity",
+    "TcpActivityCallback",
+    "TcpConnectCallback",
+    "TcpConnectionContext",
+    "TcpDisconnectCallback",
+    "TcpDisconnectReason",
+
     # 报文捕获
     "MessageRecord",
     "MessagePair",

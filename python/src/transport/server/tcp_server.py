@@ -1,13 +1,30 @@
 """线程式 DL/T 645 TCP 服务端。"""
 
+import asyncio
+import inspect
 import socket
 import threading
-from typing import Any, Optional
+import time
+from typing import Any, Awaitable, Callable, Optional
 
 from ...common.message_capture import MessageCapture
 from ...common.transform import bytes_to_spaced_hex
 from ...protocol.protocol import DLT645Protocol
 from ...transport.server.log import log
+from ...transport.server.tcp_lifecycle import (
+    TcpActivity,
+    TcpActivityCallback,
+    TcpConnectCallback,
+    TcpConnectionContext,
+    TcpDisconnectCallback,
+    TcpDisconnectReason,
+)
+
+LifecycleCallback = Callable[..., Any]
+
+
+async def _await_callback(result: Awaitable[Any]) -> None:
+    await result
 
 
 class TcpServer:
@@ -21,6 +38,10 @@ class TcpServer:
         port: int,
         timeout: float = 5.0,
         service: Any = None,
+        *,
+        on_connect: Optional[TcpConnectCallback] = None,
+        on_activity: Optional[TcpActivityCallback] = None,
+        on_disconnect: Optional[TcpDisconnectCallback] = None,
     ) -> None:
         self.ip = ip
         self.port = port
@@ -35,6 +56,9 @@ class TcpServer:
         self._connections: set[socket.socket] = set()
         self._connections_lock = threading.Lock()
         self._message_capture: Optional[MessageCapture] = None
+        self.on_connect = on_connect
+        self.on_activity = on_activity
+        self.on_disconnect = on_disconnect
 
     def start(self) -> bool:
         """启动监听并等待绑定完成；重复调用是幂等的。"""
@@ -151,9 +175,40 @@ class TcpServer:
         result = self.service.handle_request(frame)
         return None if result is None else bytes(result)
 
+    def _invoke_callback(
+        self, name: str, callback: Optional[LifecycleCallback], *args: Any
+    ) -> None:
+        """执行生命周期回调，并隔离回调自身的异常。"""
+        if callback is None:
+            return
+        try:
+            result = callback(*args)
+            if inspect.isawaitable(result):
+                asyncio.run(_await_callback(result))
+        except Exception as exc:
+            log.error(f"TCP lifecycle callback {name} failed: {exc}")
+
     def handle_connection(self, conn: socket.socket) -> None:
+        try:
+            peer = conn.getpeername()
+        except OSError:
+            peer = None
+        try:
+            sockname = conn.getsockname()
+        except OSError:
+            sockname = None
+        now = time.time()
+        connection = TcpConnectionContext(
+            peername=peer,
+            sockname=sockname,
+            connected_at=now,
+            last_activity_at=now,
+        )
+        disconnect_reason = TcpDisconnectReason.CLIENT_EOF
+        disconnect_error: Optional[BaseException] = None
         data_buffer = bytearray()
         try:
+            self._invoke_callback("on_connect", self.on_connect, connection)
             while not self._stop_event.is_set():
                 try:
                     chunk = conn.recv(1024)
@@ -165,6 +220,8 @@ class TcpServer:
                 if not chunk:
                     break
 
+                connection.bytes_received += len(chunk)
+                connection.last_activity_at = time.time()
                 data_buffer.extend(chunk)
                 log.info(f"RX: {bytes_to_spaced_hex(chunk)}")
                 if len(data_buffer) > self.MAX_BUFFER_SIZE:
@@ -186,6 +243,16 @@ class TcpServer:
                     consumed = len(original) - len(remaining)
                     request = original[:consumed]
                     data_buffer = bytearray(remaining)
+                    connection.messages_received += 1
+                    activity = TcpActivity(
+                        direction="RX",
+                        data=request,
+                        timestamp=connection.last_activity_at,
+                        frame=frame,
+                    )
+                    self._invoke_callback(
+                        "on_activity", self.on_activity, connection, activity
+                    )
                     pair_id: Optional[str] = None
                     if self._message_capture:
                         pair_id = self._message_capture.capture_rx_for_server(request)
@@ -193,15 +260,36 @@ class TcpServer:
                     response = self._dispatch(frame)
                     if response:
                         conn.sendall(response)
+                        connection.bytes_sent += len(response)
+                        connection.messages_sent += 1
+                        connection.last_activity_at = time.time()
+                        activity = TcpActivity(
+                            direction="TX",
+                            data=response,
+                            timestamp=connection.last_activity_at,
+                        )
+                        self._invoke_callback(
+                            "on_activity", self.on_activity, connection, activity
+                        )
                         log.info(f"TX: {bytes_to_spaced_hex(response)}")
                         if self._message_capture:
                             self._message_capture.capture_tx_for_server(
                                 response, pair_id
                             )
+            if self._stop_event.is_set():
+                disconnect_reason = TcpDisconnectReason.SERVER_STOPPED
         except (ConnectionError, OSError) as exc:
+            disconnect_reason = (
+                TcpDisconnectReason.SERVER_STOPPED
+                if self._stop_event.is_set()
+                else TcpDisconnectReason.CONNECTION_ERROR
+            )
+            disconnect_error = exc
             if not self._stop_event.is_set():
                 log.error(f"TCP connection failed: {exc}")
         except Exception as exc:
+            disconnect_reason = TcpDisconnectReason.HANDLER_ERROR
+            disconnect_error = exc
             log.error(f"TCP request handling failed: {exc}")
         finally:
             with self._connections_lock:
@@ -211,6 +299,11 @@ class TcpServer:
                 conn.close()
             except OSError:
                 pass
+            connection.disconnected_at = time.time()
+            connection._disconnected_monotonic = time.monotonic()
+            connection.disconnect_reason = disconnect_reason
+            connection.disconnect_error = disconnect_error
+            self._invoke_callback("on_disconnect", self.on_disconnect, connection)
 
     def __enter__(self) -> "TcpServer":
         if not self.start():

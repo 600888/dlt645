@@ -2,19 +2,38 @@
 
 import asyncio
 import inspect
-from typing import Any, Optional, Set
+import time
+from typing import Any, Callable, Optional, Set
 
 from ...common.message_capture import MessageCapture
 from ...common.transform import bytes_to_spaced_hex
 from ...protocol.protocol import DLT645Protocol
 from ...transport.server.log import log
+from ...transport.server.tcp_lifecycle import (
+    TcpActivity,
+    TcpActivityCallback,
+    TcpConnectCallback,
+    TcpConnectionContext,
+    TcpDisconnectCallback,
+    TcpDisconnectReason,
+)
+
+LifecycleCallback = Callable[..., Any]
 
 
 class AsyncTcpServer:
     """使用任务而非线程处理 TCP 连接的异步服务端。"""
 
     def __init__(
-        self, ip: str, port: int, timeout: float, service: Any = None
+        self,
+        ip: str,
+        port: int,
+        timeout: float,
+        service: Any = None,
+        *,
+        on_connect: Optional[TcpConnectCallback] = None,
+        on_activity: Optional[TcpActivityCallback] = None,
+        on_disconnect: Optional[TcpDisconnectCallback] = None,
     ) -> None:
         self.ip = ip
         self.port = port
@@ -25,6 +44,9 @@ class AsyncTcpServer:
         self._client_tasks: Set[asyncio.Task] = set()
         self._writers: Set[asyncio.StreamWriter] = set()
         self._message_capture: Optional[MessageCapture] = None
+        self.on_connect = on_connect
+        self.on_activity = on_activity
+        self.on_disconnect = on_disconnect
 
     async def start(self) -> bool:
         """启动监听；方法返回后端口已经可用。"""
@@ -87,6 +109,19 @@ class AsyncTcpServer:
             result = await result
         return result
 
+    async def _invoke_callback(
+        self, name: str, callback: Optional[LifecycleCallback], *args: Any
+    ) -> None:
+        """按事件顺序执行同步或异步回调，并隔离回调自身的异常。"""
+        if callback is None:
+            return
+        try:
+            result = callback(*args)
+            if inspect.isawaitable(result):
+                await result
+        except Exception as exc:
+            log.error(f"异步 TCP 生命周期回调 {name} 执行失败: {exc}")
+
     async def handle_connection(
         self, reader: asyncio.StreamReader, writer: asyncio.StreamWriter
     ) -> None:
@@ -95,9 +130,19 @@ class AsyncTcpServer:
             self._client_tasks.add(task)
         self._writers.add(writer)
         peer = writer.get_extra_info("peername")
+        now = time.time()
+        connection = TcpConnectionContext(
+            peername=peer,
+            sockname=writer.get_extra_info("sockname"),
+            connected_at=now,
+            last_activity_at=now,
+        )
+        disconnect_reason = TcpDisconnectReason.CLIENT_EOF
+        disconnect_error: Optional[BaseException] = None
         log.info(f"异步 TCP 接入连接: {peer}")
         data_buffer = bytearray()
         try:
+            await self._invoke_callback("on_connect", self.on_connect, connection)
             while self._running:
                 try:
                     chunk = await asyncio.wait_for(reader.read(1024), self.timeout)
@@ -108,6 +153,8 @@ class AsyncTcpServer:
                     continue
                 if not chunk:
                     break
+                connection.bytes_received += len(chunk)
+                connection.last_activity_at = time.time()
                 data_buffer.extend(chunk)
                 log.info(f"RX: {bytes_to_spaced_hex(chunk)}")
                 if len(data_buffer) > 4096:
@@ -129,6 +176,16 @@ class AsyncTcpServer:
                     consumed = len(original) - len(remaining)
                     request = original[:consumed]
                     data_buffer = bytearray(remaining)
+                    connection.messages_received += 1
+                    activity = TcpActivity(
+                        direction="RX",
+                        data=request,
+                        timestamp=connection.last_activity_at,
+                        frame=frame,
+                    )
+                    await self._invoke_callback(
+                        "on_activity", self.on_activity, connection, activity
+                    )
                     current_tx_id: Optional[str] = None
                     if self._message_capture:
                         current_tx_id = self._message_capture.capture_rx_for_server(
@@ -139,16 +196,42 @@ class AsyncTcpServer:
                     if response:
                         writer.write(response)
                         await writer.drain()
+                        connection.bytes_sent += len(response)
+                        connection.messages_sent += 1
+                        connection.last_activity_at = time.time()
+                        activity = TcpActivity(
+                            direction="TX",
+                            data=bytes(response),
+                            timestamp=connection.last_activity_at,
+                        )
+                        await self._invoke_callback(
+                            "on_activity", self.on_activity, connection, activity
+                        )
                         log.info(f"TX: {bytes_to_spaced_hex(response)}")
                         if self._message_capture:
                             self._message_capture.capture_tx_for_server(
                                 response, current_tx_id
                             )
+            if not self._running:
+                disconnect_reason = TcpDisconnectReason.SERVER_STOPPED
         except asyncio.CancelledError:
+            disconnect_reason = (
+                TcpDisconnectReason.SERVER_STOPPED
+                if not self._running
+                else TcpDisconnectReason.CANCELLED
+            )
             raise
         except (ConnectionError, OSError) as exc:
+            disconnect_reason = (
+                TcpDisconnectReason.SERVER_STOPPED
+                if not self._running
+                else TcpDisconnectReason.CONNECTION_ERROR
+            )
+            disconnect_error = exc
             log.error(f"异步 TCP 连接异常: {exc}")
         except Exception as exc:
+            disconnect_reason = TcpDisconnectReason.HANDLER_ERROR
+            disconnect_error = exc
             log.error(f"异步 TCP 处理请求失败: {exc}")
         finally:
             writer.close()
@@ -162,6 +245,11 @@ class AsyncTcpServer:
             self._writers.discard(writer)
             if task is not None:
                 self._client_tasks.discard(task)
+            connection.disconnected_at = time.time()
+            connection._disconnected_monotonic = time.monotonic()
+            connection.disconnect_reason = disconnect_reason
+            connection.disconnect_error = disconnect_error
+            await self._invoke_callback("on_disconnect", self.on_disconnect, connection)
             log.info(f"异步 TCP 连接已关闭: {peer}")
 
     async def __aenter__(self) -> "AsyncTcpServer":

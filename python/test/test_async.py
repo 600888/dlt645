@@ -11,6 +11,7 @@ from dlt645.aio import (
     AsyncMeterServerService,
     AsyncRtuClient,
     AsyncTcpClient,
+    TcpDisconnectReason,
 )
 from dlt645.common.transform import string_to_bcd
 from dlt645.model.types.dlt645_type import Demand
@@ -138,6 +139,106 @@ class TestAsyncTcpIntegration(unittest.IsolatedAsyncioTestCase):
 
 
 class TestAsyncTcpTransport(unittest.IsolatedAsyncioTestCase):
+    async def test_server_lifecycle_callbacks(self):
+        connected = []
+        activities = []
+        disconnected = []
+        disconnect_event = asyncio.Event()
+
+        def on_connect(connection):
+            connected.append(connection)
+
+        async def on_activity(connection, activity):
+            activities.append((connection, activity))
+            if activity.direction == "RX":
+                raise RuntimeError("test callback failure")
+
+        def on_disconnect(connection):
+            disconnected.append(connection)
+            disconnect_event.set()
+
+        service = AsyncMeterServerService.new_tcp_server(
+            "127.0.0.1",
+            0,
+            timeout=0.5,
+            on_connect=on_connect,
+            on_activity=on_activity,
+            on_disconnect=on_disconnect,
+        )
+        service.set_address("123456781012")
+        self.assertTrue(await service.start())
+        reader, writer = await asyncio.open_connection("127.0.0.1", service.server.port)
+        request = bytes(
+            DLT645Protocol.build_frame(
+                bytes.fromhex("AAAAAAAAAAAA"), CtrlCode.ReadAddress, None
+            )
+        )
+
+        try:
+            writer.write(request)
+            await writer.drain()
+            response = await asyncio.wait_for(reader.read(1024), timeout=0.5)
+            self.assertTrue(response)
+            writer.close()
+            await writer.wait_closed()
+            await asyncio.wait_for(disconnect_event.wait(), timeout=0.5)
+
+            self.assertEqual(len(connected), 1)
+            self.assertEqual(len(disconnected), 1)
+            connection = connected[0]
+            self.assertIs(disconnected[0], connection)
+            self.assertTrue(all(item[0] is connection for item in activities))
+            self.assertEqual([item[1].direction for item in activities], ["RX", "TX"])
+            self.assertEqual(activities[0][1].data, request)
+            self.assertEqual(activities[1][1].data, response)
+            self.assertEqual(connection.bytes_received, len(request))
+            self.assertEqual(connection.bytes_sent, len(response))
+            self.assertEqual(connection.messages_received, 1)
+            self.assertEqual(connection.messages_sent, 1)
+            self.assertEqual(connection.status, "disconnected")
+            self.assertEqual(
+                connection.disconnect_reason, TcpDisconnectReason.CLIENT_EOF
+            )
+            self.assertIsNone(connection.disconnect_error)
+            self.assertGreaterEqual(connection.duration, 0.0)
+            self.assertEqual(connection.peer_host, "127.0.0.1")
+            self.assertIsInstance(connection.peer_port, int)
+        finally:
+            writer.close()
+            await service.stop()
+
+    async def test_server_stop_reports_disconnect_reason(self):
+        connected_event = asyncio.Event()
+        disconnected = []
+
+        def on_connect(connection):
+            connected_event.set()
+
+        def on_disconnect(connection):
+            disconnected.append(connection)
+
+        service = AsyncMeterServerService.new_tcp_server(
+            "127.0.0.1",
+            0,
+            timeout=0.5,
+            on_connect=on_connect,
+            on_disconnect=on_disconnect,
+        )
+        self.assertTrue(await service.start())
+        reader, writer = await asyncio.open_connection("127.0.0.1", service.server.port)
+        try:
+            await asyncio.wait_for(connected_event.wait(), timeout=0.5)
+            self.assertTrue(await service.stop())
+            self.assertEqual(await reader.read(), b"")
+            self.assertEqual(len(disconnected), 1)
+            self.assertEqual(
+                disconnected[0].disconnect_reason,
+                TcpDisconnectReason.SERVER_STOPPED,
+            )
+        finally:
+            writer.close()
+            await service.stop()
+
     async def test_fragmented_response(self):
         address = bytes.fromhex("121078563412")
         response = bytes(
