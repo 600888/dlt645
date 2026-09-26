@@ -177,5 +177,40 @@ namespace dlt645
             return frame;
         }
 
+        void FrameStreamDecoder::append(const uint8_t* data, size_t size)
+        {
+            if (size != 0) {
+                buffer_.insert(buffer_.end(), data, data + size);
+            }
+        }
+
+        std::shared_ptr<Frame> FrameStreamDecoder::nextFrame()
+        {
+            while (true) {
+                auto start = std::find(buffer_.begin(), buffer_.end(), FRAME_START_BYTE);
+                if (start == buffer_.end()) {
+                    buffer_.clear();
+                    return nullptr;
+                }
+                buffer_.erase(buffer_.begin(), start);
+                if (buffer_.size() < 10) return nullptr;
+                if (buffer_[7] != FRAME_START_BYTE) {
+                    buffer_.erase(buffer_.begin());
+                    continue;
+                }
+
+                const size_t frameSize = 12 + buffer_[9];
+                if (buffer_.size() < frameSize) return nullptr;
+                std::vector<uint8_t> candidate(buffer_.begin(), buffer_.begin() + frameSize);
+                auto frame = Frame::deserialize(candidate);
+                if (frame) {
+                    buffer_.erase(buffer_.begin(), buffer_.begin() + frameSize);
+                    return frame;
+                }
+                // A damaged candidate must not hide a valid frame after it.
+                buffer_.erase(buffer_.begin());
+            }
+        }
+
     } // namespace protocol
 } // namespace dlt645

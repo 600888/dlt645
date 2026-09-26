@@ -154,7 +154,7 @@ namespace dlt645
                             LOG_INFO("New TCP connection from {}", socket->remote_endpoint().address().to_string());
 
                             // 处理客户端连接
-                            handleClient(socket);
+                            handleClient(socket, std::make_shared<protocol::FrameStreamDecoder>());
                         } else {
                             if (isRunning_) {
                                 LOG_ERROR("Failed to accept TCP connection: {}", error.message());
@@ -184,116 +184,46 @@ namespace dlt645
                     } });
             }
 
-            void TcpServer::handleClient(std::shared_ptr<boost::asio::ip::tcp::socket> socket)
+            void TcpServer::handleClient(std::shared_ptr<boost::asio::ip::tcp::socket> socket,
+                                         std::shared_ptr<protocol::FrameStreamDecoder> decoder)
             {
                 auto buffer = std::make_shared<std::vector<uint8_t>>(1024);
-
-                socket->async_read_some(
-                    boost::asio::buffer(*buffer),
-                    [this, socket, buffer](const boost::system::error_code &error, size_t bytes_transferred)
-                    {
-                        try
-                        {
-                            if (!error)
-                            {
-                                buffer->resize(bytes_transferred);
-
-                                LOG_INFO(
-                                    "RX: {}({})", common::bytesToHexString(*buffer), bytes_transferred);
-
-                                // 处理数据
-                                if (connectionHandler_)
-                                {
-                                    // 解析帧
-                                    auto frame = protocol::Frame::deserialize(*buffer);
-                                    if (!frame)
-                                    {
-                                        LOG_WARN("Failed to parse frame");
-                                        // 继续接收数据
-                                        handleClient(socket);
-                                        return;
-                                    }
-
-                                    LOG_DEBUG("Received frame: ctrlCode={}, data length={}", frame->ctrlCode, frame->dataLen);
-
-                                    // 调用handleFrame来处理解析后的帧
-                                    auto response = std::make_shared<std::vector<uint8_t>>(connectionHandler_->handleRequest(*frame));
-
-                                    // 发送响应
-                                    if (!response->empty())
-                                    {
-                                        boost::asio::async_write(
-                                            *socket,
-                                            boost::asio::buffer(*response),
-                                            [socket, response](const boost::system::error_code &error, size_t)
-                                            {
-                                                try
-                                                {
-                                                    if (error)
-                                                    {
-                                                        LOG_ERROR("Failed to send TCP response: {}", error.message());
-                                                    }
-                                                    else
-                                                    {
-                                                        LOG_DEBUG("Sent response to TCP client: {}",
-                                                                  common::bytesToHexString(*response));
-                                                    }
-                                                }
-                                                catch (const std::exception &e)
-                                                {
-                                                    LOG_ERROR("Exception in async_write callback: {}", e.what());
-                                                }
-                                                catch (...)
-                                                {
-                                                    LOG_ERROR("Unknown exception in async_write callback");
-                                                }
-                                            });
-                                    }
-                                }
-
-                                // 继续接收数据
-                                handleClient(socket);
-                            }
-                            else
-                            {
-                                LOG_INFO("TCP client disconnected: {}", error.message());
-
-                                // 通知连接关闭
-                                if (connectionHandler_)
-                                {
-                                    connectionHandler_->onConnectionClosed();
+                socket->async_read_some(boost::asio::buffer(*buffer),
+                    [this, socket, decoder, buffer](const boost::system::error_code &error, size_t bytesRead) {
+                        if (error) {
+                            LOG_INFO("TCP client disconnected: {}", error.message());
+                            if (connectionHandler_) connectionHandler_->onConnectionClosed();
+                            return;
+                        }
+                        try {
+                            decoder->append(buffer->data(), bytesRead);
+                            std::vector<uint8_t> responses;
+                            while (auto frame = decoder->nextFrame()) {
+                                if (!connectionHandler_) continue;
+                                try {
+                                    auto response = connectionHandler_->handleRequest(*frame);
+                                    responses.insert(responses.end(), response.begin(), response.end());
+                                } catch (const std::exception& e) {
+                                    LOG_ERROR("Failed to handle TCP frame: {}", e.what());
                                 }
                             }
-                        }
-                        catch (const std::exception &e)
-                        {
-                            LOG_ERROR("Exception in async_read_some callback: {}", e.what());
-                            // 即使发生异常，也要确保继续接受新连接
-                            if (isRunning_ && !socket->is_open())
-                            {
-                                // 如果socket已关闭，不要继续调用handleClient
-                                LOG_INFO("TCP client socket closed due to exception");
+                            if (responses.empty()) {
+                                if (isRunning_) handleClient(socket, decoder);
+                                return;
                             }
-                            else if (isRunning_)
-                            {
-                                // 继续接收数据
-                                handleClient(socket);
-                            }
-                        }
-                        catch (...)
-                        {
-                            LOG_ERROR("Unknown exception in async_read_some callback");
-                            // 即使发生异常，也要确保继续接受新连接
-                            if (isRunning_ && !socket->is_open())
-                            {
-                                // 如果socket已关闭，不要继续调用handleClient
-                                LOG_INFO("TCP client socket closed due to unknown exception");
-                            }
-                            else if (isRunning_)
-                            {
-                                // 继续接收数据
-                                handleClient(socket);
-                            }
+                            auto output = std::make_shared<std::vector<uint8_t>>(std::move(responses));
+                            boost::asio::async_write(*socket, boost::asio::buffer(*output),
+                                [this, socket, decoder, output](const boost::system::error_code& writeError, size_t) {
+                                    if (writeError) {
+                                        LOG_ERROR("Failed to send TCP response: {}", writeError.message());
+                                        if (connectionHandler_) connectionHandler_->onConnectionClosed();
+                                    } else if (isRunning_) {
+                                        handleClient(socket, decoder);
+                                    }
+                                });
+                        } catch (const std::exception& e) {
+                            LOG_ERROR("Failed to process TCP input: {}", e.what());
+                            if (isRunning_) handleClient(socket, decoder);
                         }
                     });
             }

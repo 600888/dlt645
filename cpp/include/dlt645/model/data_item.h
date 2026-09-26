@@ -12,6 +12,12 @@
 
 namespace dlt645 {
     namespace model {
+        struct DataField {
+            std::string name;
+            std::string dataFormat;
+            std::string unit;
+            std::string value; // Decimal digits; comma-separated for paired event values.
+        };
 
         // 数据项结构体
         class DataItem {
@@ -21,6 +27,7 @@ namespace dlt645 {
             std::string dataFormat;                                                            // 数据格式
             std::variant<std::monostate, float, int32_t, uint32_t, std::string, Demand> value; // 实际值
             std::string unit;                                                                  // 单位（kW/kWh等）
+            std::vector<DataField> fields;                                                     // 03/04 类复合数据项
             std::chrono::system_clock::time_point timestamp;                                   // 数据时间戳
 
             // 默认构造函数
@@ -66,6 +73,8 @@ namespace dlt645 {
 
             // 初始化需量类型定义
             void initDemandDef();
+            void initEventRecordDef();
+            void initParameterDef();
 
             // 获取所有数据项类型定义
             std::unordered_map<uint32_t, DataItem> getDataItems() const;

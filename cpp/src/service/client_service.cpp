@@ -1,4 +1,5 @@
 #include "dlt645/service/client_service.h"
+#include <ctime>
 #include <algorithm>
 #include <chrono>
 #include <cstdint>
@@ -12,6 +13,7 @@
 #include "dlt645/model/model.h"
 #include "dlt645/transport/client/client_api.h"
 #include "log/default_logger.hpp"
+#include "field_codec.h"
 
 namespace dlt645 {
     namespace service {
@@ -117,6 +119,32 @@ namespace dlt645 {
             return readData(di);
         }
 
+        std::shared_ptr<model::DataItem> ClientService::read03(uint32_t di)
+        {
+            return (di >> 24) == 0x03 ? readData(di) : nullptr;
+        }
+
+        std::shared_ptr<model::DataItem> ClientService::read04(uint32_t di)
+        {
+            return (di >> 24) == 0x04 ? readData(di) : nullptr;
+        }
+
+        bool ClientService::write04(uint32_t di, const std::vector<std::string>& values)
+        {
+            if ((di >> 24) != 0x04) return false;
+            const auto item = DIManager::inst()->getDataItem(di);
+            if (!item || item->fields.size() != values.size()) return false;
+            auto fields = item->fields;
+            for (size_t i = 0; i < values.size(); ++i) fields[i].value = values[i];
+            std::vector<uint8_t> data;
+            for (int shift = 0; shift < 32; shift += 8) data.push_back(static_cast<uint8_t>(di >> shift));
+            data.insert(data.end(), password_.begin(), password_.end());
+            data.insert(data.end(), 4, 0); // Operator code.
+            if (!detail::encodeFields(fields, data) || data.size() > 255) return false;
+            return static_cast<bool>(sendAndHandleRequest(
+                protocol::Frame::buildFrame(address_, model::CTRL_WRITE_DATA, data)));
+        }
+
         std::shared_ptr<model::DataItem> ClientService::readData(uint32_t di)
         {
             std::vector<uint8_t> data(4);
@@ -132,7 +160,8 @@ namespace dlt645 {
         std::shared_ptr<model::DataItem> ClientService::readAddress()
         {
             // 构建请求帧，读地址命令不需要数据部分
-            auto frame = protocol::Frame::buildFrame(address_, model::READ_ADDRESS, {});
+            const std::array<uint8_t, 6> broadcastAddress = {0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA};
+            auto frame = protocol::Frame::buildFrame(broadcastAddress, model::READ_ADDRESS, {});
 
             // 发送请求并处理响应
             return sendAndHandleRequest(frame);
@@ -145,11 +174,7 @@ namespace dlt645 {
                 return nullptr;
             }
 
-            // 构建数据部分：包含密码和新地址
-            std::vector<uint8_t> data;
-            data.reserve(4 + 6); // 密码(4字节) + 新地址(6字节)
-            data.insert(data.end(), password_.begin(), password_.end());
-            data.insert(data.end(), newAddress.begin(), newAddress.end());
+            std::vector<uint8_t> data(newAddress.begin(), newAddress.end());
 
             // 构建请求帧
             auto frame = protocol::Frame::buildFrame(address_, model::WRITE_ADDRESS, data);
@@ -167,14 +192,12 @@ namespace dlt645 {
 
         bool ClientService::changePassword(const std::array<uint8_t, 4>& oldPassword, const std::array<uint8_t, 4>& newPassword)
         {
-            if (oldPassword != password_) {
-                LOG_ERROR("Invalid old password");
-                return false;
-            }
-
-            // 构建数据部分：包含旧密码和新密码
+            const uint32_t di = 0x40000C00u | newPassword[0];
             std::vector<uint8_t> data;
-            data.reserve(4 + 4); // 旧密码(4字节) + 新密码(4字节)
+            data.reserve(12);
+            for (int shift = 0; shift < 32; shift += 8) {
+                data.push_back(static_cast<uint8_t>(di >> shift));
+            }
             data.insert(data.end(), oldPassword.begin(), oldPassword.end());
             data.insert(data.end(), newPassword.begin(), newPassword.end());
 
@@ -193,35 +216,80 @@ namespace dlt645 {
             return false;
         }
 
-        bool ClientService::broadcastTimeSync()
+        bool ClientService::broadcastTimeSync(std::chrono::system_clock::time_point time)
         {
-            // 获取当前时间
-            auto now = std::chrono::system_clock::now();
-
-            // 构建广播地址
-            std::array<uint8_t, 6> broadcastAddr = { 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA };
-
-            // 构建数据部分（当前时间的BCD码表示）
-            std::array<uint8_t, 5> timeBcd = common::timeToBcd(now);
-            std::vector<uint8_t> data(timeBcd.begin(), timeBcd.end());
+            const auto timestamp = std::chrono::system_clock::to_time_t(time);
+            std::tm localTime{};
+#ifdef _WIN32
+            if (localtime_s(&localTime, &timestamp) != 0) return false;
+#else
+            if (localtime_r(&timestamp, &localTime) == nullptr) return false;
+#endif
+            const std::array<int, 6> fields = {
+                localTime.tm_year % 100, localTime.tm_mon + 1, localTime.tm_mday,
+                localTime.tm_hour, localTime.tm_min, localTime.tm_sec};
+            std::vector<uint8_t> data;
+            for (int value : fields) {
+                data.push_back(static_cast<uint8_t>(((value / 10) << 4) | (value % 10)));
+            }
+            const std::array<uint8_t, 6> broadcastAddr = {0x99, 0x99, 0x99, 0x99, 0x99, 0x99};
 
             // 构建请求帧
             auto frame = protocol::Frame::buildFrame(broadcastAddr, model::BROADCAST_TIME_SYNC, data);
 
             try {
+                std::lock_guard<std::mutex> lock(mutex_);
                 // 发送请求（广播消息不需要等待响应）
                 if (!connection_->isConnected() && !connection_->connect()) {
                     LOG_ERROR("Failed to connect");
                     return false;
                 }
 
-                connection_->sendRequest(frame);
-                LOG_INFO("Broadcast time sync sent");
-                return true;
+                return connection_->sendOnly(frame);
             } catch (const std::exception& e) {
                 LOG_ERROR("Exception during broadcast time sync: {}", e.what());
                 return false;
             }
+        }
+
+        std::shared_ptr<model::DataItem> ClientService::freeze(
+            const std::array<uint8_t, 4>& freezeTime, bool broadcast)
+        {
+            const std::vector<uint8_t> data(freezeTime.begin(), freezeTime.end());
+            const std::array<uint8_t, 6> broadcastAddress = {0x99, 0x99, 0x99, 0x99, 0x99, 0x99};
+            auto frame = protocol::Frame::buildFrame(
+                broadcast ? broadcastAddress : address_, model::CTRL_FREEZE_CMD, data);
+            if (!broadcast) return sendAndHandleRequest(frame);
+            std::lock_guard<std::mutex> lock(mutex_);
+            try {
+                if (!connection_->isConnected() && !connection_->connect()) return nullptr;
+                if (!connection_->sendOnly(frame)) return nullptr;
+                auto result = std::make_shared<model::DataItem>();
+                result->name = "广播冻结";
+                result->value = common::bytesToHexString(data);
+                return result;
+            } catch (const std::exception& e) {
+                LOG_ERROR("Broadcast freeze failed: {}", e.what());
+                return nullptr;
+            }
+        }
+
+        std::shared_ptr<model::DataItem> ClientService::changeBaudRate(int baud)
+        {
+            uint8_t feature = 0;
+            switch (baud) {
+            case 1200: feature = 0x04; break;
+            case 2400: feature = 0x08; break;
+            case 4800: feature = 0x16; break;
+            case 9600: feature = 0x32; break;
+            case 19200: feature = 0x64; break;
+            default: return nullptr;
+            }
+            auto frame = protocol::Frame::buildFrame(address_, model::CHANGE_BAUD_RATE, {feature});
+            auto result = sendAndHandleRequest(frame);
+            if (!result || !std::holds_alternative<int32_t>(result->value)
+                || std::get<int32_t>(result->value) != baud) return nullptr;
+            return result;
         }
 
         bool ClientService::validateDevice(const std::array<uint8_t, 6>& addr) const
@@ -237,8 +305,7 @@ namespace dlt645 {
             }
         }
 
-        std::shared_ptr<model::DataItem> ClientService::sendAndHandleRequest(const std::vector<uint8_t>& frame,
-                                                                             std::chrono::milliseconds timeout)
+        std::shared_ptr<model::DataItem> ClientService::sendAndHandleRequest(const std::vector<uint8_t>& frame)
         {
             try {
                 std::lock_guard<std::mutex> lock(mutex_);
@@ -253,9 +320,6 @@ namespace dlt645 {
                     LOG_ERROR("Failed to connect");
                     return nullptr;
                 }
-
-                // 设置超时
-                connection_->setTimeout(timeout);
 
                 // 发送请求并获取响应
                 auto response = connection_->sendRequest(frame);
@@ -272,8 +336,25 @@ namespace dlt645 {
                     return nullptr;
                 }
 
+                auto requestFrame = protocol::Frame::deserialize(frame);
+                if (!requestFrame || (responseFrame->ctrlCode != (requestFrame->ctrlCode | 0x80)
+                    && responseFrame->ctrlCode != (requestFrame->ctrlCode | 0xC0))) {
+                    LOG_ERROR("Response control code does not match request");
+                    return nullptr;
+                }
+                if (requestFrame->ctrlCode == model::CTRL_READ_DATA
+                    && responseFrame->ctrlCode == (model::CTRL_READ_DATA | 0x80)
+                    && (responseFrame->data.size() < 4 || requestFrame->data.size() < 4
+                        || !std::equal(requestFrame->data.begin(), requestFrame->data.begin() + 4,
+                                       responseFrame->data.begin()))) {
+                    LOG_ERROR("Response data identifier does not match request");
+                    return nullptr;
+                }
+
                 // 验证设备地址
-                if (!validateDevice(responseFrame->addr)) {
+                const bool addressReply = responseFrame->ctrlCode == (model::READ_ADDRESS | 0x80)
+                    || responseFrame->ctrlCode == (model::WRITE_ADDRESS | 0x80);
+                if (!addressReply && !validateDevice(responseFrame->addr)) {
                     LOG_ERROR("Device address validation failed");
                     return nullptr;
                 }
@@ -289,6 +370,10 @@ namespace dlt645 {
         std::shared_ptr<model::DataItem> ClientService::handleResponse(const std::shared_ptr<protocol::Frame>& frame)
         {
             if (!frame) {
+                return nullptr;
+            }
+            if (frame->ctrlCode & 0x40) {
+                LOG_ERROR("Meter returned error code {}", frame->data.empty() ? 0 : frame->data[0]);
                 return nullptr;
             }
 
@@ -381,6 +466,14 @@ namespace dlt645 {
                         break;
                     }
 
+                    case 0x03:
+                    case 0x04: {
+                        if (!detail::decodeFields(dataItem->fields, frame->data, 4)) return nullptr;
+                        if (dataItem->fields.size() == 1) dataItem->value = dataItem->fields[0].value;
+                        dataItem->timestamp = std::chrono::system_clock::now();
+                        return dataItem;
+                    }
+
                     default: {
                         LOG_WARN("Unknown data type: {}", diType);
                         break;
@@ -419,7 +512,51 @@ namespace dlt645 {
             case model::WRITE_ADDRESS | 0x80: {
                 // 写地址响应
                 LOG_INFO("Write address response received");
-                return nullptr;
+                auto dataItem = std::make_shared<model::DataItem>();
+                dataItem->name = "通讯地址";
+                dataItem->value = common::bytesToHexString(
+                    std::vector<uint8_t>(frame->addr.begin(), frame->addr.end()));
+                return dataItem;
+            }
+
+            case model::CHANGE_PASSWORD | 0x80: {
+                if (frame->data.size() != 4) return nullptr;
+                auto dataItem = std::make_shared<model::DataItem>();
+                dataItem->name = "密码修改";
+                dataItem->value = common::bytesToHexString(frame->data);
+                return dataItem;
+            }
+
+            case model::CTRL_WRITE_DATA | 0x80: {
+                if (!frame->data.empty()) return nullptr;
+                auto dataItem = std::make_shared<model::DataItem>();
+                dataItem->name = "Parameter write";
+                return dataItem;
+            }
+
+            case model::CTRL_FREEZE_CMD | 0x80: {
+                auto dataItem = std::make_shared<model::DataItem>();
+                dataItem->name = "冻结命令";
+                dataItem->value = std::string("已执行");
+                return dataItem;
+            }
+
+            case model::CHANGE_BAUD_RATE | 0x80: {
+                if (frame->data.size() != 1) return nullptr;
+                int baud = 0;
+                switch (frame->data[0]) {
+                case 0x04: baud = 1200; break;
+                case 0x08: baud = 2400; break;
+                case 0x16: baud = 4800; break;
+                case 0x32: baud = 9600; break;
+                case 0x64: baud = 19200; break;
+                default: return nullptr;
+                }
+                auto dataItem = std::make_shared<model::DataItem>();
+                dataItem->name = "通信速率";
+                dataItem->value = static_cast<int32_t>(baud);
+                dataItem->unit = "bps";
+                return dataItem;
             }
 
             default: {

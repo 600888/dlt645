@@ -29,9 +29,39 @@ int main()
         auto frame = Frame::deserialize(raw);
         check(frame && frame->addr == address && frame->data == data, "frame round trip");
         check(frame->serialize() == raw, "frame reserialization with preamble");
+        dlt645::protocol::FrameStreamDecoder stream;
+        stream.append(raw.data(), 7);
+        check(!stream.nextFrame(), "fragmented frame is retained");
+        stream.append(raw.data() + 7, raw.size() - 7);
+        auto splitFrame = stream.nextFrame();
+        check(splitFrame && splitFrame->data == data, "fragmented frame is reassembled");
+        check(!stream.nextFrame(), "stream is drained after one frame");
+        std::vector<uint8_t> together{0x01, 0x68, 0x02};
+        together.insert(together.end(), raw.begin(), raw.end());
+        together.insert(together.end(), raw.begin(), raw.end());
+        stream.append(together.data(), together.size());
+        check(stream.nextFrame() && stream.nextFrame() && !stream.nextFrame(),
+              "noise and coalesced frames");
         auto corrupt = raw;
         corrupt[corrupt.size() - 2] ^= 1;
         check(!Frame::deserialize(corrupt), "checksum rejection");
+        corrupt.insert(corrupt.end(), raw.begin(), raw.end());
+        stream.append(corrupt.data(), corrupt.size());
+        check(stream.nextFrame() && !stream.nextFrame(), "stream resynchronizes after checksum error");
+        check(dlt645::common::bytesToHexString(Frame::buildFrame(
+                  {0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA}, 0x13, {}))
+                  == "FE FE FE FE 68 AA AA AA AA AA AA 68 13 00 DF 16",
+              "Python read-address wire vector");
+        check(dlt645::common::bytesToHexString(Frame::buildFrame(
+                  {0x12, 0x34, 0x56, 0x78, 0x10, 0x12}, 0x15,
+                  {0x12, 0x34, 0x56, 0x78, 0x10, 0x13}))
+                  == "FE FE FE FE 68 12 34 56 78 10 12 68 15 06 45 67 89 AB 43 46 8A 16",
+              "Python write-address wire vector");
+        check(dlt645::common::bytesToHexString(Frame::buildFrame(
+                  {0x99, 0x99, 0x99, 0x99, 0x99, 0x99}, 0x08,
+                  {0x25, 0x11, 0x02, 0x12, 0x34, 0x56}))
+                  == "FE FE FE FE 68 99 99 99 99 99 99 68 08 06 58 44 35 45 67 89 7A 16",
+              "Python time-sync wire vector");
         corrupt = raw;
         corrupt.pop_back();
         check(!Frame::deserialize(corrupt), "truncated frame rejection");
@@ -62,7 +92,7 @@ int main()
         check(shortTime, "short BCD time rejection");
 
         dlt645::model::DataItemManager manager;
-        check(manager.getDataItems().size() == 18783, "static data item count");
+        check(manager.getDataItems().size() == 20286, "static data item count");
         const auto energy = manager.getDataItem(0x00000000u);
         const auto demand = manager.getDataItem(0x01010000u);
         const auto variable = manager.getDataItem(0x02010100u);

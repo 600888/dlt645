@@ -60,6 +60,17 @@ namespace dlt645 {
             static uint8_t calculateChecksum(const uint8_t* data, size_t length);
         };
 
+        // Incrementally extracts frames from a TCP or serial byte stream.
+        class FrameStreamDecoder {
+        public:
+            void append(const uint8_t* data, size_t size);
+            std::shared_ptr<Frame> nextFrame();
+            void clear() { buffer_.clear(); }
+
+        private:
+            std::vector<uint8_t> buffer_;
+        };
+
     } // namespace protocol
 } // namespace dlt645
 

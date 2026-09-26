@@ -237,33 +237,22 @@ namespace dlt645
             {
                 if (!error)
                 {
-                    std::vector<uint8_t> data(receiveBuffer_.begin(), receiveBuffer_.begin() + bytes_transferred);
-
-                    LOG_INFO("RX: {}({})", common::bytesToHexString(data), bytes_transferred);
+                    decoder_.append(receiveBuffer_.data(), bytes_transferred);
 
                     // 处理数据
                     if (connectionHandler_)
                     {
                         try
                         {
-                            // 解析帧
-                            auto frame = protocol::Frame::deserialize(data);
-                            if (!frame)
-                            {
-                                LOG_WARN("Failed to parse frame");
-                                return;
-                            }
-
-                            LOG_DEBUG("Received frame: ctrlCode={}, data length={}", frame->ctrlCode, frame->dataLen);
-
-                            // 调用handleFrame来处理解析后的帧
-                            std::vector<uint8_t> response = connectionHandler_->handleRequest(*frame);
-
-                            // 发送响应
-                            if (!response.empty())
-                            {
-                                boost::asio::write(*serial_port_, boost::asio::buffer(response));
-                                LOG_DEBUG("Sent response to RTU client: {}", common::bytesToHexString(response));
+                            while (auto frame = decoder_.nextFrame()) {
+                                try {
+                                    auto response = connectionHandler_->handleRequest(*frame);
+                                    if (!response.empty()) {
+                                        boost::asio::write(*serial_port_, boost::asio::buffer(response));
+                                    }
+                                } catch (const std::exception& e) {
+                                    LOG_ERROR("Failed to handle RTU frame: {}", e.what());
+                                }
                             }
                         }
                         catch (const std::exception &e)

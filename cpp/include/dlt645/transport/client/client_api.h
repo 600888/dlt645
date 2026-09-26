@@ -10,6 +10,7 @@
 #include <string>
 #include <future>
 #include <boost/asio.hpp>
+#include "dlt645/protocol/protocol.h"
 
 namespace dlt645 {
     namespace transport {
@@ -32,6 +33,11 @@ namespace dlt645 {
 
                 // 发送请求并等待响应（异步）
                 virtual std::future<std::vector<uint8_t>> sendRequestAsync(const std::vector<uint8_t>& frame) = 0;
+                virtual std::future<bool> sendOnlyAsync(const std::vector<uint8_t>&) {
+                    std::promise<bool> promise;
+                    promise.set_value(false);
+                    return promise.get_future();
+                }
 
                 // 检查连接状态
                 virtual bool isConnected() const = 0;
@@ -40,19 +46,19 @@ namespace dlt645 {
                 virtual void setTimeout(std::chrono::milliseconds timeout) = 0;
 
                 // 同步连接（使用connectAsync内部的超时机制）
-                bool connect(std::chrono::milliseconds timeout = std::chrono::seconds(5))
+                bool connect()
                 {
-                    // 设置超时时间
-                    setTimeout(timeout);
                     auto future = connectAsync();
                     return future.get();
                 }
+                bool connect(std::chrono::milliseconds timeout) { setTimeout(timeout); return connect(); }
 
                 // 同步断开连接
                 void disconnect() { disconnectAsync().get(); }
 
                 // 同步发送请求
                 std::vector<uint8_t> sendRequest(const std::vector<uint8_t>& frame) { return sendRequestAsync(frame).get(); }
+                bool sendOnly(const std::vector<uint8_t>& frame) { return sendOnlyAsync(frame).get(); }
             };
 
             // 客户端配置基类
@@ -89,6 +95,7 @@ namespace dlt645 {
                 std::future<bool> connectAsync() override;
                 std::future<void> disconnectAsync() override;
                 std::future<std::vector<uint8_t>> sendRequestAsync(const std::vector<uint8_t>& frame) override;
+                std::future<bool> sendOnlyAsync(const std::vector<uint8_t>& frame) override;
                 bool isConnected() const override;
                 void setTimeout(std::chrono::milliseconds timeout) override;
 
@@ -98,6 +105,7 @@ namespace dlt645 {
                 std::unique_ptr<boost::asio::ip::tcp::socket> socket_;
                 std::atomic<bool> isConnected_;
                 std::thread io_thread_;
+                protocol::FrameStreamDecoder decoder_;
 
                 // 确保io_context运行
                 void ensureIoContextRunning();
@@ -116,6 +124,7 @@ namespace dlt645 {
                 std::future<bool> connectAsync() override;
                 std::future<void> disconnectAsync() override;
                 std::future<std::vector<uint8_t>> sendRequestAsync(const std::vector<uint8_t>& frame) override;
+                std::future<bool> sendOnlyAsync(const std::vector<uint8_t>& frame) override;
                 bool isConnected() const override;
                 void setTimeout(std::chrono::milliseconds timeout) override;
 
@@ -125,6 +134,7 @@ namespace dlt645 {
                 std::unique_ptr<boost::asio::serial_port> serial_port_;
                 std::atomic<bool> isConnected_;
                 std::thread io_thread_;
+                protocol::FrameStreamDecoder decoder_;
 
                 // 确保io_context运行
                 void ensureIoContextRunning();

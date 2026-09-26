@@ -109,7 +109,8 @@ namespace dlt645
                 void acceptConnection();
 
                 // 处理客户端连接
-                void handleClient(std::shared_ptr<boost::asio::ip::tcp::socket> socket);
+                void handleClient(std::shared_ptr<boost::asio::ip::tcp::socket> socket,
+                                  std::shared_ptr<protocol::FrameStreamDecoder> decoder);
             };
 
             // RTU服务器实现
@@ -136,6 +137,7 @@ namespace dlt645
                 std::shared_ptr<ConnectionHandler> connectionHandler_;
                 std::thread io_thread_;
                 std::vector<uint8_t> receiveBuffer_;
+                protocol::FrameStreamDecoder decoder_;
                 std::optional<boost::asio::executor_work_guard<boost::asio::io_context::executor_type>> work_guard_;
 
                 // 配置串口参数

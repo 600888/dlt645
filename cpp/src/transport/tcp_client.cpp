@@ -2,6 +2,7 @@
 #include "dlt645/common/log.h"
 #include "dlt645/common/transform.h"
 #include "dlt645/transport/client/client_api.h"
+#include "transport/read_frame.h"
 #include "log/default_logger.hpp"
 
 namespace dlt645
@@ -185,59 +186,8 @@ namespace dlt645
                                 return;
                             }
 
-                            // 发送成功后接收响应
-                            auto response_buffer = std::make_shared<std::vector<uint8_t>>();
-                            response_buffer->resize(1024); // 预分配空间
-
-                            // 使用steady_timer实现超时
-                            auto timer = std::make_shared<boost::asio::steady_timer>(*io_context_);
-                            timer->expires_after(config_.timeout);
-
-                            // 创建一个取消令牌，用于取消操作
-                            auto cancel_token = std::make_shared<boost::system::error_code>();
-
-                            // 设置定时器回调
-                            timer->async_wait(
-                                [this, promise, response_buffer, cancel_token](const boost::system::error_code &ec)
-                                {
-                                    if (ec != boost::asio::error::operation_aborted)
-                                    {
-                                        // 超时，取消读取操作
-                                        *cancel_token = boost::asio::error::timed_out;
-                                        socket_->cancel();
-                                        LOG_WARN("TCP receive timeout");
-                                        promise->set_value({});
-                                    }
-                                });
-
-                            socket_->async_read_some(boost::asio::buffer(*response_buffer),
-                                                     [this, promise, response_buffer, timer, cancel_token](
-                                                         const boost::system::error_code &error, std::size_t bytes_read)
-                                                     {
-                                                         // 取消定时器
-                                                         timer->cancel();
-
-                                                         // 检查是否是因为定时器超时导致的取消
-                                                         if (*cancel_token == boost::asio::error::timed_out)
-                                                         {
-                                                             return; // 已经处理过了
-                                                         }
-
-                                                         if (error)
-                                                         {
-                                                             if (error != boost::asio::error::operation_aborted)
-                                                             {
-                                                                 LOG_ERROR("TCP receive failed: {}", error.message());
-                                                                 isConnected_ = false;
-                                                             }
-                                                             promise->set_value({});
-                                                             return;
-                                                         }
-
-                                                         response_buffer->resize(bytes_read);
-
-                                                         promise->set_value(*response_buffer);
-                                                     });
+                            std::make_shared<transport::FrameReadOperation<boost::asio::ip::tcp::socket>>(
+                                *socket_, decoder_, *io_context_, config_.timeout, promise)->start();
                         });
                 }
                 catch (const std::exception &e)
@@ -246,6 +196,23 @@ namespace dlt645
                     promise->set_value({});
                 }
 
+                return future;
+            }
+
+            std::future<bool> TcpClient::sendOnlyAsync(const std::vector<uint8_t>& frame)
+            {
+                auto promise = std::make_shared<std::promise<bool>>();
+                auto future = promise->get_future();
+                if (!isConnected_ || !socket_ || !socket_->is_open()) {
+                    promise->set_value(false);
+                    return future;
+                }
+                auto buffer = std::make_shared<std::vector<uint8_t>>(frame);
+                boost::asio::async_write(*socket_, boost::asio::buffer(*buffer),
+                    [this, promise, buffer](const boost::system::error_code& error, size_t) {
+                        if (error) isConnected_ = false;
+                        promise->set_value(!error);
+                    });
                 return future;
             }
 

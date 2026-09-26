@@ -1,5 +1,6 @@
 #include "dlt645/service/server_service.h"
 #include <chrono>
+#include <ctime>
 #include <string>
 #include <array>
 #include <algorithm>
@@ -8,6 +9,7 @@
 #include "dlt645/common/log.h"
 #include "dlt645/common/transform.h"
 #include "dlt645/model/data_item.h"
+#include "field_codec.h"
 
 namespace dlt645
 {
@@ -74,8 +76,26 @@ namespace dlt645
 
         void ServerService::setTime(const std::vector<uint8_t> &dataBytes)
         {
-            // 时间设置实现，可以根据实际需求添加
-            LOG_INFO("Setting time with data: {}", common::bytesToHexString(dataBytes));
+            if (dataBytes.size() != 6) return;
+            std::array<int, 6> fields{};
+            for (size_t i = 0; i < fields.size(); ++i) {
+                const auto value = dataBytes[i];
+                if ((value & 0x0F) > 9 || (value >> 4) > 9) return;
+                fields[i] = (value >> 4) * 10 + (value & 0x0F);
+            }
+            std::tm localTime{};
+            localTime.tm_year = 100 + fields[0];
+            localTime.tm_mon = fields[1] - 1;
+            localTime.tm_mday = fields[2];
+            localTime.tm_hour = fields[3];
+            localTime.tm_min = fields[4];
+            localTime.tm_sec = fields[5];
+            const auto timestamp = std::mktime(&localTime);
+            if (timestamp == static_cast<std::time_t>(-1)
+                || localTime.tm_year != 100 + fields[0] || localTime.tm_mon != fields[1] - 1
+                || localTime.tm_mday != fields[2] || localTime.tm_hour != fields[3]
+                || localTime.tm_min != fields[4] || localTime.tm_sec != fields[5]) return;
+            time_ = std::chrono::system_clock::from_time_t(timestamp);
         }
 
         void ServerService::setAddress(const std::array<uint8_t, 6> &address)
@@ -90,7 +110,7 @@ namespace dlt645
 
         namespace {
         template <typename T>
-        bool setDataItem(uint32_t di, const T& value, const char* category)
+        bool setDataItem(model::DataItemManager& manager, uint32_t di, const T& value, const char* category)
         {
             static_assert(std::is_same_v<T, float> || std::is_same_v<T, model::Demand>, "Unsupported data item value");
             const float numericValue = [&]() {
@@ -98,7 +118,7 @@ namespace dlt645
                 else return value;
             }();
             LOG_INFO("Setting {} value for DI={}: {}", category, di, numericValue);
-            auto item = DIManager::inst()->getDataItem(di);
+            auto item = manager.getDataItem(di);
             if (!item) {
                 LOG_ERROR("Failed to get data item");
                 return false;
@@ -109,13 +129,34 @@ namespace dlt645
             }
             item->value = value;
             item->setTimestamp(std::chrono::system_clock::now());
-            return DIManager::inst()->updateDataItem(di, *item);
+            return manager.updateDataItem(di, *item);
         }
         } // namespace
 
-        bool ServerService::set00(uint32_t di, float value) { return setDataItem(di, value, "energy"); }
-        bool ServerService::set01(uint32_t di, const model::Demand& demand) { return setDataItem(di, demand, "demand"); }
-        bool ServerService::set02(uint32_t di, float value) { return setDataItem(di, value, "variable"); }
+        bool ServerService::set00(uint32_t di, float value) { return setDataItem(dataItems_, di, value, "energy"); }
+        bool ServerService::set01(uint32_t di, const model::Demand& demand) { return setDataItem(dataItems_, di, demand, "demand"); }
+        bool ServerService::set02(uint32_t di, float value) { return setDataItem(dataItems_, di, value, "variable"); }
+
+        namespace {
+        bool setFields(model::DataItemManager& manager, uint32_t di, uint8_t category,
+                       const std::vector<std::string>& values)
+        {
+            if ((di >> 24) != category) return false;
+            auto item = manager.getDataItem(di);
+            if (!item || item->fields.size() != values.size()) return false;
+            for (size_t i = 0; i < values.size(); ++i) item->fields[i].value = values[i];
+            std::vector<uint8_t> encoded;
+            if (!detail::encodeFields(item->fields, encoded) || encoded.size() + 4 > 255) return false;
+            if (values.size() == 1) item->value = values[0];
+            item->setTimestamp(std::chrono::system_clock::now());
+            return manager.updateDataItem(di, *item);
+        }
+        }
+
+        bool ServerService::set03(uint32_t di, const std::vector<std::string>& values)
+        { return setFields(dataItems_, di, 0x03, values); }
+        bool ServerService::set04(uint32_t di, const std::vector<std::string>& values)
+        { return setFields(dataItems_, di, 0x04, values); }
 
         void ServerService::setPassword(const std::array<uint8_t, 4> &password)
         {
@@ -135,7 +176,7 @@ namespace dlt645
 
         std::shared_ptr<model::DataItem> ServerService::getDataItem(uint32_t di) const
         {
-            const auto dataItem = DIManager::inst()->getDataItem(di);
+            const auto dataItem = dataItems_.getDataItem(di);
             if (!dataItem)
             {
                 return nullptr;
@@ -149,6 +190,11 @@ namespace dlt645
             // 可以在这里添加连接关闭时的清理逻辑
         }
 
+        std::vector<uint8_t> ServerService::errorResponse(const protocol::Frame& frame, uint8_t errorCode) const
+        {
+            return protocol::Frame::buildFrame(frame.addr, frame.ctrlCode | 0xC0, {errorCode});
+        }
+
         std::vector<uint8_t> ServerService::handleRequest(const protocol::Frame &frame)
         {
             // 1. 验证设备
@@ -156,7 +202,7 @@ namespace dlt645
             {
                 LOG_INFO("Device validation failed for address: {}",
                          common::bytesToHexString(std::vector<uint8_t>(frame.addr.begin(), frame.addr.end())));
-                throw std::runtime_error("Unauthorized device");
+                return errorResponse(frame, 0x01);
             }
 
             // 2. 根据控制码判断请求类型
@@ -166,6 +212,31 @@ namespace dlt645
             {
                 LOG_INFO("Broadcast time sync: {}", common::bytesToHexString(frame.data));
                 setTime(frame.data);
+                return {}; // Broadcast time sync has no response.
+            }
+
+            case model::CTRL_FREEZE_CMD:
+            {
+                if (frame.data.size() != 4) return errorResponse(frame, 0x02);
+                std::array<uint8_t, 4> freezeTime{};
+                std::copy(frame.data.begin(), frame.data.end(), freezeTime.begin());
+                lastFreezeTime_ = freezeTime;
+                const std::array<uint8_t, 6> broadcastAddress = {0x99, 0x99, 0x99, 0x99, 0x99, 0x99};
+                if (frame.addr == broadcastAddress) return {};
+                return protocol::Frame::buildFrame(frame.addr, frame.ctrlCode | 0x80, {});
+            }
+
+            case model::CHANGE_BAUD_RATE:
+            {
+                if (frame.data.size() != 1) return errorResponse(frame, 0x02);
+                switch (frame.data[0]) {
+                case 0x04: baudRate_ = 1200; break;
+                case 0x08: baudRate_ = 2400; break;
+                case 0x16: baudRate_ = 4800; break;
+                case 0x32: baudRate_ = 9600; break;
+                case 0x64: baudRate_ = 19200; break;
+                default: return errorResponse(frame, 0x08);
+                }
                 return protocol::Frame::buildFrame(frame.addr, frame.ctrlCode | 0x80, frame.data);
             }
 
@@ -175,7 +246,7 @@ namespace dlt645
                 if (frame.data.size() < 4)
                 {
                     LOG_ERROR("Invalid read request data length");
-                    return {};
+                    return errorResponse(frame, 0x02);
                 }
 
                 uint32_t di = dlt645::common::bytesToIntLittleEndian<uint32_t>(frame.data);
@@ -198,9 +269,13 @@ namespace dlt645
                     // 读取变量
                     return handleReadVariable(frame);
 
+                case 0x03:
+                case 0x04:
+                    return handleReadFields(frame);
+
                 default:
                     LOG_INFO("Unknown data type: {}", fmt::format("{:02X}", di3));
-                    throw std::runtime_error("Unknown data type");
+                    return errorResponse(frame, 0x01);
                 }
             }
 
@@ -214,19 +289,48 @@ namespace dlt645
             case model::WRITE_ADDRESS:
             {
                 // 写地址请求
-                if (frame.data.size() >= 6)
-                {
-                    std::array<uint8_t, 6> newAddr;
-                    std::copy(frame.data.begin(), frame.data.begin() + 6, newAddr.begin());
-                    setAddress(newAddr);
-                }
+                if (frame.data.size() != 6) return errorResponse(frame, 0x02);
+                std::array<uint8_t, 6> newAddr;
+                std::copy(frame.data.begin(), frame.data.end(), newAddr.begin());
+                setAddress(newAddr);
+                return protocol::Frame::buildFrame(address_, frame.ctrlCode | 0x80, {});
+            }
+
+            case model::CHANGE_PASSWORD:
+            {
+                if (frame.data.size() != 12) return errorResponse(frame, 0x02);
+                std::array<uint8_t, 4> oldPassword;
+                std::array<uint8_t, 4> newPassword;
+                std::copy_n(frame.data.begin() + 4, 4, oldPassword.begin());
+                std::copy_n(frame.data.begin() + 8, 4, newPassword.begin());
+                if (oldPassword != password_) return errorResponse(frame, 0x04);
+                password_ = newPassword;
+                return protocol::Frame::buildFrame(address_, frame.ctrlCode | 0x80,
+                    std::vector<uint8_t>(newPassword.begin(), newPassword.end()));
+            }
+
+            case model::CTRL_WRITE_DATA:
+            {
+                if (frame.data.size() < 12) return errorResponse(frame, 0x02);
+                const uint32_t di = common::bytesToIntLittleEndian<uint32_t>(frame.data);
+                if ((di >> 24) != 0x04) return errorResponse(frame, 0x01);
+                auto item = dataItems_.getDataItem(di);
+                if (!item || item->fields.empty()) return errorResponse(frame, 0x02);
+                if (!std::equal(password_.begin(), password_.end(), frame.data.begin() + 4))
+                    return errorResponse(frame, 0x04);
+                auto fields = item->fields;
+                if (!detail::decodeFields(fields, frame.data, 12)) return errorResponse(frame, 0x02);
+                item->fields = std::move(fields);
+                if (item->fields.size() == 1) item->value = item->fields[0].value;
+                item->setTimestamp(std::chrono::system_clock::now());
+                if (!dataItems_.updateDataItem(di, *item)) return errorResponse(frame, 0x02);
                 return protocol::Frame::buildFrame(address_, frame.ctrlCode | 0x80, {});
             }
 
             default:
             {
                 LOG_INFO("Unknown control code: {}", fmt::format("{:02X}", frame.ctrlCode));
-                throw std::runtime_error("Unknown control code");
+                return errorResponse(frame, 0x01);
             }
             }
             return {};
@@ -234,16 +338,16 @@ namespace dlt645
 
         std::vector<uint8_t> ServerService::handleReadEnergy(const protocol::Frame &frame)
         {
-            if (frame.data.size() < 4) return {};
+            if (frame.data.size() < 4) return errorResponse(frame, 0x02);
             // 解析数据标识为32位无符号整数
             uint32_t dataId = dlt645::common::bytesToIntLittleEndian<uint32_t>(frame.data);
 
             // 获取数据项
-            const auto dataItem = DIManager::inst()->getDataItem(dataId);
+            const auto dataItem = dataItems_.getDataItem(dataId);
             if (!dataItem)
             {
                 LOG_ERROR("Data item not found for ID: {}", dataId);
-                return {};
+                return errorResponse(frame, 0x02);
             }
 
             // 构建响应数据
@@ -269,16 +373,16 @@ namespace dlt645
 
         std::vector<uint8_t> ServerService::handleReadDemand(const protocol::Frame &frame)
         {
-            if (frame.data.size() < 4) return {};
+            if (frame.data.size() < 4) return errorResponse(frame, 0x02);
             // 解析数据标识为32位无符号整数
             uint32_t dataId = common::bytesToIntLittleEndian<uint32_t>(frame.data);
 
             // 获取数据项
-            const auto dataItem = DIManager::inst()->getDataItem(dataId);
+            const auto dataItem = dataItems_.getDataItem(dataId);
             if (!dataItem)
             {
                 LOG_ERROR("Data item not found for ID: {}", dataId);
-                return {};
+                return errorResponse(frame, 0x02);
             }
 
             // 构建响应数据
@@ -320,16 +424,16 @@ namespace dlt645
 
         std::vector<uint8_t> ServerService::handleReadVariable(const protocol::Frame &frame)
         {
-            if (frame.data.size() < 4) return {};
+            if (frame.data.size() < 4) return errorResponse(frame, 0x02);
             // 解析数据标识为32位无符号整数
             uint32_t dataId = dlt645::common::bytesToIntLittleEndian<uint32_t>(frame.data);
 
             // 获取数据项
-            const auto dataItem = DIManager::inst()->getDataItem(dataId);
+            const auto dataItem = dataItems_.getDataItem(dataId);
             if (!dataItem)
             {
                 LOG_ERROR("Data item not found for ID: {}", dataId);
-                return {};
+                return errorResponse(frame, 0x02);
             }
 
             const size_t digits = std::count(dataItem->dataFormat.begin(), dataItem->dataFormat.end(), 'X');
@@ -353,6 +457,18 @@ namespace dlt645
 
             // 构建响应帧
             return protocol::Frame::buildFrame(frame.addr, frame.ctrlCode | 0x80, resData);
+        }
+
+        std::vector<uint8_t> ServerService::handleReadFields(const protocol::Frame& frame)
+        {
+            if (frame.data.size() != 4) return errorResponse(frame, 0x02);
+            const uint32_t di = common::bytesToIntLittleEndian<uint32_t>(frame.data);
+            const auto item = dataItems_.getDataItem(di);
+            if (!item || item->fields.empty()) return errorResponse(frame, 0x02);
+            std::vector<uint8_t> response(frame.data.begin(), frame.data.end());
+            if (!detail::encodeFields(item->fields, response) || response.size() > 255)
+                return errorResponse(frame, 0x02);
+            return protocol::Frame::buildFrame(frame.addr, frame.ctrlCode | 0x80, response);
         }
 
         bool ServerService::start()

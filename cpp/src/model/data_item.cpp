@@ -21,6 +21,8 @@ namespace dlt645 {
             initEnergyDef();
             initDemandDef();
             initVariablesDef();
+            initEventRecordDef();
+            initParameterDef();
 
             LOG_DEBUG("DataItemManager: Constructor completed - initialization finished");
         }
@@ -275,6 +277,30 @@ namespace dlt645 {
                 item.unit = definition.unit;
                 item.dataFormat = definition.format;
                 diMap_[item.di] = std::move(item);
+            }
+        }
+
+        void DataItemManager::initEventRecordDef()
+        {
+            std::lock_guard<std::mutex> lock(mutex_);
+            for (const auto& definition : definitions::eventRecordTypes) {
+                auto& item = diMap_[definition.di];
+                item.di = definition.di;
+                item.name = "Event record";
+                item.fields.push_back({definition.name, definition.format, definition.unit, {}});
+            }
+        }
+
+        void DataItemManager::initParameterDef()
+        {
+            std::lock_guard<std::mutex> lock(mutex_);
+            for (const auto& definition : definitions::parameterTypes) {
+                auto& item = diMap_[definition.di];
+                item.di = definition.di;
+                item.name = definition.name;
+                item.unit = definition.unit;
+                item.dataFormat = definition.format;
+                item.fields.push_back({definition.name, definition.format, definition.unit, {}});
             }
         }
 

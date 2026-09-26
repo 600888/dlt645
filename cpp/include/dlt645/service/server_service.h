@@ -32,6 +32,9 @@ namespace dlt645 {
 
             // 设置时间
             void setTime(const std::vector<uint8_t>& dataBytes);
+            std::optional<std::chrono::system_clock::time_point> getTime() const { return time_; }
+            std::optional<std::array<uint8_t, 4>> getLastFreezeTime() const { return lastFreezeTime_; }
+            int getBaudRate() const { return baudRate_; }
 
             // 写通讯地址
             void setAddress(const std::array<uint8_t, 6>& address);
@@ -44,6 +47,10 @@ namespace dlt645 {
 
             // 写变量
             bool set02(uint32_t di, float value);
+
+            // Values follow the order of the Python definitions. Paired event values use "first,second".
+            bool set03(uint32_t di, const std::vector<std::string>& values);
+            bool set04(uint32_t di, const std::vector<std::string>& values);
 
             // 设置密码
             void setPassword(const std::array<uint8_t, 4>& password);
@@ -62,6 +69,7 @@ namespace dlt645 {
 
             // 处理变量读取请求
             std::vector<uint8_t> handleReadVariable(const protocol::Frame& frame);
+            std::vector<uint8_t> handleReadFields(const protocol::Frame& frame);
 
             // 连接关闭回调
             void onConnectionClosed();
@@ -82,9 +90,14 @@ namespace dlt645 {
             void init();
 
         private:
+            std::vector<uint8_t> errorResponse(const protocol::Frame& frame, uint8_t errorCode) const;
             std::shared_ptr<transport::server::Server> server_; // 服务器实例
             std::array<uint8_t, 6> address_;                    // 设备地址
             std::array<uint8_t, 4> password_;                   // 设备密码
+            std::optional<std::chrono::system_clock::time_point> time_;
+            std::optional<std::array<uint8_t, 4>> lastFreezeTime_;
+            int baudRate_ = 9600;
+            model::DataItemManager dataItems_;
         };
 
         // 创建TCP服务端服务

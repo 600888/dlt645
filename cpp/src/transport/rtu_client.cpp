@@ -7,6 +7,7 @@
 #include <boost/system/error_code.hpp>
 #include "dlt645/common/log.h"
 #include "dlt645/transport/client/client_api.h"
+#include "transport/read_frame.h"
 #include "dlt645/common/transform.h"
 
 namespace dlt645
@@ -234,64 +235,8 @@ namespace dlt645
                                 return;
                             }
 
-                            // 发送成功后接收响应
-                            auto response_buffer = std::make_shared<std::vector<uint8_t>>();
-                            response_buffer->resize(1024); // 预分配空间
-
-                            // 创建一个定时器用于超时控制
-                            auto timer = std::make_shared<boost::asio::steady_timer>(*io_context_, config_.timeout);
-
-                            // 异步读取数据的标志
-                            auto read_in_progress = std::make_shared<bool>(true);
-
-                            // 设置超时处理
-                            timer->async_wait(
-                                [this, promise, response_buffer, read_in_progress](const boost::system::error_code &error)
-                                {
-                                    if (error == boost::asio::error::operation_aborted)
-                                    {
-                                        // 定时器被取消，说明读取已完成
-                                        return;
-                                    }
-
-                                    if (*read_in_progress)
-                                    {
-                                        *read_in_progress = false;
-                                        if (serial_port_ && serial_port_->is_open()) {
-                                            boost::system::error_code cancel_error;
-                                            serial_port_->cancel(cancel_error);
-                                        }
-                                        LOG_WARN("RTU receive timeout");
-                                        promise->set_value({});
-                                    }
-                                });
-
-                            // 异步读取串口数据
-                            auto read_handler = [this, promise, response_buffer, timer, read_in_progress](
-                                                    const boost::system::error_code &error, std::size_t bytes_read)
-                            {
-                                if (!*read_in_progress)
-                                {
-                                    // 超时已处理
-                                    return;
-                                }
-
-                                *read_in_progress = false;
-                                timer->cancel(); // 取消定时器
-
-                                if (error)
-                                {
-                                    LOG_ERROR("RTU receive failed: {}", error.message());
-                                    isConnected_ = false;
-                                    promise->set_value({});
-                                    return;
-                                }
-
-                                response_buffer->resize(bytes_read);
-                                promise->set_value(*response_buffer);
-                            };
-
-                            serial_port_->async_read_some(boost::asio::buffer(*response_buffer), read_handler);
+                            std::make_shared<transport::FrameReadOperation<boost::asio::serial_port>>(
+                                *serial_port_, decoder_, *io_context_, config_.timeout, promise)->start();
                         });
                 }
                 catch (const std::exception &e)
@@ -300,6 +245,23 @@ namespace dlt645
                     promise->set_value({});
                 }
 
+                return future;
+            }
+
+            std::future<bool> RtuClient::sendOnlyAsync(const std::vector<uint8_t>& frame)
+            {
+                auto promise = std::make_shared<std::promise<bool>>();
+                auto future = promise->get_future();
+                if (!isConnected_ || !serial_port_ || !serial_port_->is_open()) {
+                    promise->set_value(false);
+                    return future;
+                }
+                auto buffer = std::make_shared<std::vector<uint8_t>>(frame);
+                boost::asio::async_write(*serial_port_, boost::asio::buffer(*buffer),
+                    [this, promise, buffer](const boost::system::error_code& error, size_t) {
+                        if (error) isConnected_ = false;
+                        promise->set_value(!error);
+                    });
                 return future;
             }
 

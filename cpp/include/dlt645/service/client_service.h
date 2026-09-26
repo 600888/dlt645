@@ -50,6 +50,10 @@ namespace dlt645 {
 
             // 读取变量（02类）
             std::shared_ptr<model::DataItem> read02(uint32_t di);
+            std::shared_ptr<model::DataItem> read03(uint32_t di);
+            std::shared_ptr<model::DataItem> read04(uint32_t di);
+            bool write04(uint32_t di, const std::vector<std::string>& values);
+            bool write04(uint32_t di, const std::string& value) { return write04(di, std::vector<std::string>{value}); }
 
             // 读取通讯地址
             std::shared_ptr<model::DataItem> readAddress();
@@ -61,7 +65,12 @@ namespace dlt645 {
             bool changePassword(const std::array<uint8_t, 4>& oldPassword, const std::array<uint8_t, 4>& newPassword);
 
             // 广播校时
-            bool broadcastTimeSync();
+            bool broadcastTimeSync(std::chrono::system_clock::time_point time = std::chrono::system_clock::now());
+
+            // MM DD hh mm, each field in packed BCD. 0x99 is a wildcard.
+            std::shared_ptr<model::DataItem> freeze(const std::array<uint8_t, 4>& freezeTime,
+                                                     bool broadcast = false);
+            std::shared_ptr<model::DataItem> changeBaudRate(int baud);
 
             // 连接设备
             bool connect() { return connection_->connect(); }
@@ -81,8 +90,7 @@ namespace dlt645 {
             bool validateDevice(const std::array<uint8_t, 6>& addr) const;
 
             // 发送请求并处理响应（带超时控制）
-            std::shared_ptr<model::DataItem> sendAndHandleRequest(const std::vector<uint8_t>& frame,
-                                                                  std::chrono::milliseconds timeout = std::chrono::seconds(5));
+            std::shared_ptr<model::DataItem> sendAndHandleRequest(const std::vector<uint8_t>& frame);
 
             // 处理响应
             std::shared_ptr<model::DataItem> handleResponse(const std::shared_ptr<protocol::Frame>& frame);
