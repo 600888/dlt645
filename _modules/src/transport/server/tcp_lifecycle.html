@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>src.model.types.dlt645_type &mdash; dlt645 v1.4.0 文档</title>
+  <title>src.transport.server.tcp_lifecycle &mdash; dlt645 v1.4.0 文档</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
@@ -686,8 +686,7 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
           <li class="breadcrumb-item"><a href="../../../index.html">模块代码</a></li>
-          <li class="breadcrumb-item"><a href="../../model.html">src.model</a></li>
-      <li class="breadcrumb-item active">src.model.types.dlt645_type</li>
+      <li class="breadcrumb-item active">src.transport.server.tcp_lifecycle</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -696,376 +695,105 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <h1>src.model.types.dlt645_type 源代码</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;DLT645 协议类型定义模块。</span>
+  <h1>src.transport.server.tcp_lifecycle 源代码</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;TCP 服务端生命周期事件的数据结构。&quot;&quot;&quot;</span>
 
-<span class="sd">本模块定义了 DLT645 协议所需的各种类型，包括：</span>
-<span class="sd">- 数据标识分类枚举 (DICategory)</span>
-<span class="sd">- 控制码枚举 (CtrlCode)</span>
-<span class="sd">- 错误码枚举 (ErrorCode)</span>
-<span class="sd">- 需量数据类 (Demand)</span>
-<span class="sd">- 事件记录类 (EventRecord)</span>
-<span class="sd">- 密码管理器类 (PasswordManager)</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">uuid</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">Enum</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Optional</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">enum</span><span class="w"> </span><span class="kn">import</span> <span class="n">IntEnum</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
-
-<span class="kn">from</span><span class="w"> </span><span class="nn">...common.transform</span><span class="w"> </span><span class="kn">import</span> <span class="n">bytes_to_spaced_hex</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">...model.log</span><span class="w"> </span><span class="kn">import</span> <span class="n">log</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">...protocol.frame</span><span class="w"> </span><span class="kn">import</span> <span class="n">Frame</span>
 
 
-<div class="viewcode-block" id="DICategory">
-<a class="viewcode-back" href="../../../../src.model.types.html#src.DICategory">[文档]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">DICategory</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;数据标识分类枚举。</span>
+<div class="viewcode-block" id="TcpDisconnectReason">
+<a class="viewcode-back" href="../../../../src.html#src.TcpDisconnectReason">[文档]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">TcpDisconnectReason</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;TCP 连接结束原因。&quot;&quot;&quot;</span>
 
-<span class="sd">    DLT645 协议中数据项按功能分为多个类别，</span>
-<span class="sd">    数据标识 (DI) 的高字节决定了数据所属的类别。</span>
+    <span class="n">CLIENT_EOF</span> <span class="o">=</span> <span class="s2">&quot;client_eof&quot;</span>
+    <span class="n">SERVER_STOPPED</span> <span class="o">=</span> <span class="s2">&quot;server_stopped&quot;</span>
+    <span class="n">CONNECTION_ERROR</span> <span class="o">=</span> <span class="s2">&quot;connection_error&quot;</span>
+    <span class="n">HANDLER_ERROR</span> <span class="o">=</span> <span class="s2">&quot;handler_error&quot;</span>
+    <span class="n">CANCELLED</span> <span class="o">=</span> <span class="s2">&quot;cancelled&quot;</span></div>
 
-<span class="sd">    :cvar CategoryEnergy: 电能量数据（0x00）</span>
-<span class="sd">    :cvar CategoryDemand: 需量数据（0x01）</span>
-<span class="sd">    :cvar CategoryVariable: 变量数据（0x02）</span>
-<span class="sd">    :cvar CategoryEvent: 事件记录数据（0x03）</span>
-<span class="sd">    :cvar CategoryParameter: 参变量数据（0x04）</span>
-<span class="sd">    :cvar CategoryFreeze: 冻结量数据（0x05）</span>
-<span class="sd">    :cvar CategoryLoad: 负荷记录数据（0x06）</span>
+
+
+<div class="viewcode-block" id="TcpConnectionContext">
+<a class="viewcode-back" href="../../../../src.html#src.TcpConnectionContext">[文档]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">TcpConnectionContext</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;一条 TCP 连接在整个生命周期内共享的可变上下文。</span>
+
+<span class="sd">    时间字段是 Unix 时间戳（秒）。``duration`` 使用单调时钟计算，不受系统</span>
+<span class="sd">    时间校准影响。上层可以保存同一个上下文对象来展示实时状态和累计统计。</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">CategoryEnergy</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># 电能</span>
-    <span class="n">CategoryDemand</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># 需量</span>
-    <span class="n">CategoryVariable</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># 变量</span>
-    <span class="n">CategoryEvent</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># 事件记录</span>
-    <span class="n">CategoryParameter</span> <span class="o">=</span> <span class="mi">4</span>  <span class="c1"># 参变量</span>
-    <span class="n">CategoryFreeze</span> <span class="o">=</span> <span class="mi">5</span>  <span class="c1"># 冻结量</span>
-    <span class="n">CategoryLoad</span> <span class="o">=</span> <span class="mi">6</span>  <span class="c1"># 负荷纪录</span></div>
-
-
-
-<div class="viewcode-block" id="CtrlCode">
-<a class="viewcode-back" href="../../../../src.model.types.html#src.CtrlCode">[文档]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">CtrlCode</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;控制码枚举。</span>
-
-<span class="sd">    DLT645 协议中控制码用于标识帧的功能类型，取值遵循 DL/T645-2007 标准。</span>
-
-<span class="sd">    :cvar BroadcastTimeSync: 广播校时命令（0x08）</span>
-<span class="sd">    :cvar ReadData: 读数据命令（0x11）</span>
-<span class="sd">    :cvar ReadAddress: 读通讯地址命令（0x13）</span>
-<span class="sd">    :cvar WriteData: 写数据命令（0x14）</span>
-<span class="sd">    :cvar WriteAddress: 写通讯地址命令（0x15）</span>
-<span class="sd">    :cvar FreezeCmd: 冻结命令（0x16）</span>
-<span class="sd">    :cvar ChangeBaudRate: 修改通信速率命令（0x17）</span>
-<span class="sd">    :cvar ChangePassword: 修改密码命令（0x18）</span>
-<span class="sd">    :cvar ClearDemand: 最大需量清零命令（0x19）</span>
-<span class="sd">    :cvar ClearMeter: 电表清零命令（0x1A）</span>
-<span class="sd">    :cvar ClearEvent: 事件清零命令（0x1B）</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="n">BroadcastTimeSync</span> <span class="o">=</span> <span class="mh">0x08</span>  <span class="c1"># 广播校时</span>
-    <span class="n">ReadData</span> <span class="o">=</span> <span class="mh">0x11</span>  <span class="c1"># 读数据</span>
-    <span class="n">ReadAddress</span> <span class="o">=</span> <span class="mh">0x13</span>  <span class="c1"># 读通讯地址</span>
-    <span class="n">WriteData</span> <span class="o">=</span> <span class="mh">0x14</span>  <span class="c1"># 写数据</span>
-    <span class="n">WriteAddress</span> <span class="o">=</span> <span class="mh">0x15</span>  <span class="c1"># 写通讯地址</span>
-    <span class="n">FreezeCmd</span> <span class="o">=</span> <span class="mh">0x16</span>  <span class="c1"># 冻结命令</span>
-    <span class="n">ChangeBaudRate</span> <span class="o">=</span> <span class="mh">0x17</span>  <span class="c1"># 修改通信速率</span>
-    <span class="n">ChangePassword</span> <span class="o">=</span> <span class="mh">0x18</span>  <span class="c1"># 改变密码</span>
-    <span class="n">ClearDemand</span> <span class="o">=</span> <span class="mh">0x19</span>  <span class="c1"># 最大需量清零</span>
-    <span class="n">ClearMeter</span> <span class="o">=</span> <span class="mh">0x1A</span>  <span class="c1"># 电表清零</span>
-    <span class="n">ClearEvent</span> <span class="o">=</span> <span class="mh">0x1B</span>  <span class="c1"># 事件清零</span></div>
-
-
-
-<span class="c1">#: 通信速率特征字映射（DL/T645-2007 附录C）</span>
-<span class="c1">#: 特征字为速率(bps)/300 的压缩 BCD 码：</span>
-<span class="c1">#: 1200BPS=04H, 2400BPS=08H, 4800BPS=16H, 9600BPS=32H, 19200BPS=64H</span>
-<span class="c1">#: （与文档&quot;通讯功能实现实例&quot;中的改波特率示例一致）</span>
-<span class="n">BaudRateCode</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="mi">1200</span><span class="p">:</span> <span class="mh">0x04</span><span class="p">,</span>
-    <span class="mi">2400</span><span class="p">:</span> <span class="mh">0x08</span><span class="p">,</span>
-    <span class="mi">4800</span><span class="p">:</span> <span class="mh">0x16</span><span class="p">,</span>
-    <span class="mi">9600</span><span class="p">:</span> <span class="mh">0x32</span><span class="p">,</span>
-    <span class="mi">19200</span><span class="p">:</span> <span class="mh">0x64</span><span class="p">,</span>
-<span class="p">}</span>
-
-<span class="c1">#: 特征字到通信速率的反向映射</span>
-<span class="n">CodeToBaudRate</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="n">code</span><span class="p">:</span> <span class="n">baud</span> <span class="k">for</span> <span class="n">baud</span><span class="p">,</span> <span class="n">code</span> <span class="ow">in</span> <span class="n">BaudRateCode</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
-
-
-<div class="viewcode-block" id="BroadcastAddr">
-<a class="viewcode-back" href="../../../../src.model.types.html#src.BroadcastAddr">[文档]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">BroadcastAddr</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;广播地址常量（DL/T645-2007 地址域说明）。</span>
-
-<span class="sd">    - 999999999999H（0x99 x6）：广播校时、广播冻结等特殊命令的广播地址，不要求从站应答。</span>
-<span class="sd">    - AAAAAAAAAAAAH（0xAA x6）：读/写通信地址等点对点命令使用的地址。</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="c1">#: 广播校时/广播冻结地址（999999999999H）</span>
-    <span class="n">TimeSync</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">([</span><span class="mh">0x99</span><span class="p">,</span> <span class="mh">0x99</span><span class="p">,</span> <span class="mh">0x99</span><span class="p">,</span> <span class="mh">0x99</span><span class="p">,</span> <span class="mh">0x99</span><span class="p">,</span> <span class="mh">0x99</span><span class="p">])</span>
-    <span class="c1">#: 读/写通信地址广播地址（AAAAAAAAAAAAH）</span>
-    <span class="n">Address</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">([</span><span class="mh">0xAA</span><span class="p">,</span> <span class="mh">0xAA</span><span class="p">,</span> <span class="mh">0xAA</span><span class="p">,</span> <span class="mh">0xAA</span><span class="p">,</span> <span class="mh">0xAA</span><span class="p">,</span> <span class="mh">0xAA</span><span class="p">])</span></div>
-
-
-
-<div class="viewcode-block" id="ErrorCode">
-<a class="viewcode-back" href="../../../../src.model.types.html#src.ErrorCode">[文档]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">ErrorCode</span><span class="p">(</span><span class="n">IntEnum</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;错误码枚举。</span>
-
-<span class="sd">    DLT645 协议中从站响应异常时返回的错误码。</span>
-<span class="sd">    错误码采用位域方式，可以组合多个错误。</span>
-
-<span class="sd">    :cvar OtherError: 其他错误（bit0）</span>
-<span class="sd">    :cvar RequestDataEmpty: 无请求数据（bit1）</span>
-<span class="sd">    :cvar AuthFailed: 认证失败/密码错误（bit2）</span>
-<span class="sd">    :cvar CommRateImmutable: 通信速率不可改变（bit3）</span>
-<span class="sd">    :cvar YearZoneNumExceeded: 年时区数超出范围（bit4）</span>
-<span class="sd">    :cvar DaySlotNumExceeded: 日时段数超出范围（bit5）</span>
-<span class="sd">    :cvar RateNumExceeded: 费率数超出范围（bit6）</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="n">OtherError</span> <span class="o">=</span> <span class="mb">0b0000001</span>  <span class="c1"># 其他错误</span>
-    <span class="n">RequestDataEmpty</span> <span class="o">=</span> <span class="mb">0b0000010</span>  <span class="c1"># 无请求数据</span>
-    <span class="n">AuthFailed</span> <span class="o">=</span> <span class="mb">0b0000100</span>  <span class="c1"># 认证失败</span>
-    <span class="n">CommRateImmutable</span> <span class="o">=</span> <span class="mb">0b0001000</span>  <span class="c1"># 通信速率不可改变</span>
-    <span class="n">YearZoneNumExceeded</span> <span class="o">=</span> <span class="mb">0b0010000</span>  <span class="c1"># 年区数超出范围</span>
-    <span class="n">DaySlotNumExceeded</span> <span class="o">=</span> <span class="mb">0b0100000</span>  <span class="c1"># 日区数超出范围</span>
-    <span class="n">RateNumExceeded</span> <span class="o">=</span> <span class="mb">0b1000000</span>  <span class="c1"># 速率数超出范围</span></div>
-
-
-
-<span class="c1">#: 错误码对应的中文错误信息映射表</span>
-<span class="n">error_messages</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="n">ErrorCode</span><span class="o">.</span><span class="n">OtherError</span><span class="p">:</span> <span class="s2">&quot;其他错误&quot;</span><span class="p">,</span>
-    <span class="n">ErrorCode</span><span class="o">.</span><span class="n">RequestDataEmpty</span><span class="p">:</span> <span class="s2">&quot;无请求数据&quot;</span><span class="p">,</span>
-    <span class="n">ErrorCode</span><span class="o">.</span><span class="n">AuthFailed</span><span class="p">:</span> <span class="s2">&quot;认证失败&quot;</span><span class="p">,</span>
-    <span class="n">ErrorCode</span><span class="o">.</span><span class="n">CommRateImmutable</span><span class="p">:</span> <span class="s2">&quot;通信速率不可改变&quot;</span><span class="p">,</span>
-    <span class="n">ErrorCode</span><span class="o">.</span><span class="n">YearZoneNumExceeded</span><span class="p">:</span> <span class="s2">&quot;年区数超出范围&quot;</span><span class="p">,</span>
-    <span class="n">ErrorCode</span><span class="o">.</span><span class="n">DaySlotNumExceeded</span><span class="p">:</span> <span class="s2">&quot;日区数超出范围&quot;</span><span class="p">,</span>
-    <span class="n">ErrorCode</span><span class="o">.</span><span class="n">RateNumExceeded</span><span class="p">:</span> <span class="s2">&quot;速率数超出范围&quot;</span><span class="p">,</span>
-<span class="p">}</span>
-
-
-<div class="viewcode-block" id="get_error_msg">
-<a class="viewcode-back" href="../../../../src.model.types.html#src.get_error_msg">[文档]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">get_error_msg</span><span class="p">(</span><span class="n">error_code</span><span class="p">:</span> <span class="n">ErrorCode</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;根据错误码获取对应的中文错误信息。</span>
-
-<span class="sd">    :param error_code: 错误码。</span>
-<span class="sd">    :type error_code: ErrorCode</span>
-<span class="sd">    :return: 对应的中文错误信息，如果错误码未知则返回 &quot;未知错误码&quot;。</span>
-<span class="sd">    :rtype: str</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">error_messages</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">error_code</span><span class="p">,</span> <span class="s2">&quot;未知错误码&quot;</span><span class="p">)</span></div>
-
-
-
-<span class="c1">#: 数据标识长度（4字节）</span>
-<span class="n">DI_LEN</span> <span class="o">=</span> <span class="mi">4</span>
-<span class="c1">#: 设备地址长度（6字节）</span>
-<span class="n">ADDRESS_LEN</span> <span class="o">=</span> <span class="mi">6</span>
-<span class="c1">#: 密码长度（4字节）</span>
-<span class="n">PASSWORD_LEN</span> <span class="o">=</span> <span class="mi">4</span>
-<span class="c1">#: 操作者代码长度（4字节）</span>
-<span class="n">OPERATOR_CODE_LEN</span> <span class="o">=</span> <span class="mi">4</span>
-
-
-<div class="viewcode-block" id="Demand">
-<a class="viewcode-back" href="../../../../src.model.types.html#src.Demand">[文档]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">Demand</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;需量数据类。</span>
-
-<span class="sd">    用于表示最大需量及其发生时间。</span>
-
-<span class="sd">    :ivar value: 需量值（单位由具体数据项定义）。</span>
-<span class="sd">    :ivar time: 需量发生时间。</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">time</span><span class="p">:</span> <span class="n">datetime</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;初始化 Demand 实例。</span>
-
-<span class="sd">        :param value: 需量值。</span>
-<span class="sd">        :type value: float</span>
-<span class="sd">        :param time: 需量发生时间。</span>
-<span class="sd">        :type time: datetime</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">time</span> <span class="o">=</span> <span class="n">time</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;返回 Demand 的字符串表示。</span>
-
-<span class="sd">        :return: 字符串表示。</span>
-<span class="sd">        :rtype: str</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Demand(value=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2">, time=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">)&quot;</span></div>
-
-
-
-<div class="viewcode-block" id="EventRecord">
-<a class="viewcode-back" href="../../../../src.model.types.html#src.EventRecord">[文档]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">EventRecord</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;事件记录类。</span>
-
-<span class="sd">    用于表示电表的事件记录数据。</span>
-
-<span class="sd">    :ivar di: 数据标识 (DI)。</span>
-<span class="sd">    :ivar event: 事件数据，可以是元组、浮点数或字符串。</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">di</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">event</span><span class="p">:</span> <span class="nb">tuple</span> <span class="o">|</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">str</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;初始化 EventRecord 实例。</span>
-
-<span class="sd">        :param di: 数据标识。</span>
-<span class="sd">        :type di: int</span>
-<span class="sd">        :param event: 事件数据。</span>
-<span class="sd">        :type event: tuple | float | str</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">di</span> <span class="o">=</span> <span class="n">di</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">event</span> <span class="o">=</span> <span class="n">event</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;返回 EventRecord 的字符串表示。</span>
-
-<span class="sd">        :return: 字符串表示。</span>
-<span class="sd">        :rtype: str</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;EventRecord(di=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">di</span><span class="si">}</span><span class="s2">, event=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="si">}</span><span class="s2">)&quot;</span></div>
-
-
-
-<div class="viewcode-block" id="PasswordManager">
-<a class="viewcode-back" href="../../../../src.model.types.html#src.PasswordManager">[文档]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">PasswordManager</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;密码管理器类。</span>
-
-<span class="sd">    用于管理 DLT645 协议中的九级密码。</span>
-<span class="sd">    密码级别从 0-8，数字越小权限越高。</span>
-
-<span class="sd">    :ivar _password_map: 密码映射表，键为密码级别，值为密码字节数组。</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;初始化 PasswordManager 实例。</span>
-
-<span class="sd">        创建九级密码映射表，每级密码初始化为全零。</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_password_map</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">bytearray</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># 九级密码</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">9</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_password_map</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">PASSWORD_LEN</span><span class="p">)</span>
-
-<div class="viewcode-block" id="PasswordManager.is_password_valid">
-<a class="viewcode-back" href="../../../../src.model.types.html#src.PasswordManager.is_password_valid">[文档]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">is_password_valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">password</span><span class="p">:</span> <span class="nb">bytearray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;验证密码格式是否有效。</span>
-
-<span class="sd">        检查密码长度是否为4字节，以及密码级别是否在有效范围内（0-8）。</span>
-
-<span class="sd">        :param password: 待验证的密码字节数组。</span>
-<span class="sd">        :type password: bytearray</span>
-<span class="sd">        :return: 密码格式有效返回 True，否则返回 False。</span>
-<span class="sd">        :rtype: bool</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">password</span><span class="p">)</span> <span class="o">!=</span> <span class="n">PASSWORD_LEN</span><span class="p">:</span>
-            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;密码长度错误，长度：</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">password</span><span class="p">)</span><span class="si">}</span><span class="s2">, 要求长度：</span><span class="si">{</span><span class="n">PASSWORD_LEN</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="k">return</span> <span class="kc">False</span>
-
-        <span class="c1"># 密码级别不能超过9</span>
-        <span class="n">level</span> <span class="o">=</span> <span class="n">password</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="k">if</span> <span class="n">level</span> <span class="o">&gt;=</span> <span class="mi">9</span><span class="p">:</span>
-            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;密码级别错误，级别：</span><span class="si">{</span><span class="n">level</span><span class="si">}</span><span class="s2">, 超出密码权限级别&quot;</span><span class="p">)</span>
-            <span class="k">return</span> <span class="kc">False</span>
-        <span class="k">return</span> <span class="kc">True</span></div>
-
-
-<div class="viewcode-block" id="PasswordManager.set_password">
-<a class="viewcode-back" href="../../../../src.model.types.html#src.PasswordManager.set_password">[文档]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">set_password</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">password</span><span class="p">:</span> <span class="nb">bytearray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;设置指定级别的密码。</span>
-
-<span class="sd">        :param password: 密码字节数组，第一个字节为密码级别。</span>
-<span class="sd">        :type password: bytearray</span>
-<span class="sd">        :return: 设置成功返回 True，失败返回 False。</span>
-<span class="sd">        :rtype: bool</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_password_valid</span><span class="p">(</span><span class="n">password</span><span class="p">):</span>
-            <span class="k">return</span> <span class="kc">False</span>
-        <span class="n">level</span> <span class="o">=</span> <span class="n">password</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_password_map</span><span class="p">[</span><span class="n">level</span><span class="p">]</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">password</span><span class="p">)</span>
-        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;设置密码成功，级别：</span><span class="si">{</span><span class="n">level</span><span class="si">}</span><span class="s2">, 密码：</span><span class="si">{</span><span class="n">bytes_to_spaced_hex</span><span class="p">(</span><span class="n">password</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="kc">True</span></div>
-
-
-<div class="viewcode-block" id="PasswordManager.get_password">
-<a class="viewcode-back" href="../../../../src.model.types.html#src.PasswordManager.get_password">[文档]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">get_password</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">level</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytearray</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;获取指定级别的密码。</span>
-
-<span class="sd">        :param level: 密码级别（0-8）。</span>
-<span class="sd">        :type level: int</span>
-<span class="sd">        :return: 密码字节数组，如果级别不存在则返回全零密码。</span>
-<span class="sd">        :rtype: bytearray</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">bytearray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_password_map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">PASSWORD_LEN</span><span class="p">)))</span></div>
-
-
-<div class="viewcode-block" id="PasswordManager.check_password">
-<a class="viewcode-back" href="../../../../src.model.types.html#src.PasswordManager.check_password">[文档]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">check_password</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">password</span><span class="p">:</span> <span class="nb">bytearray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;验证密码是否正确。</span>
-
-<span class="sd">        :param password: 待验证的密码字节数组。</span>
-<span class="sd">        :type password: bytearray</span>
-<span class="sd">        :return: 密码正确返回 True，错误返回 False。</span>
-<span class="sd">        :rtype: bool</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_password_valid</span><span class="p">(</span><span class="n">password</span><span class="p">):</span>
-            <span class="k">return</span> <span class="kc">False</span>
-        <span class="n">level</span> <span class="o">=</span> <span class="n">password</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">password</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_password_map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">PASSWORD_LEN</span><span class="p">))</span></div>
-
-
-<div class="viewcode-block" id="PasswordManager.change_password">
-<a class="viewcode-back" href="../../../../src.model.types.html#src.PasswordManager.change_password">[文档]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">change_password</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">old_password</span><span class="p">:</span> <span class="nb">bytearray</span><span class="p">,</span> <span class="n">new_password</span><span class="p">:</span> <span class="nb">bytearray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;修改密码。</span>
-
-<span class="sd">        只有当旧密码正确且旧密码权限等级不低于新密码权限等级时才能修改成功。</span>
-<span class="sd">        权限等级数字越小权限越高（0级最高，8级最低）。</span>
-
-<span class="sd">        :param old_password: 旧密码字节数组。</span>
-<span class="sd">        :type old_password: bytearray</span>
-<span class="sd">        :param new_password: 新密码字节数组。</span>
-<span class="sd">        :type new_password: bytearray</span>
-<span class="sd">        :return: 修改成功返回 True，失败返回 False。</span>
-<span class="sd">        :rtype: bool</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;尝试修改密码，旧密码：</span><span class="si">{</span><span class="n">bytes_to_spaced_hex</span><span class="p">(</span><span class="n">old_password</span><span class="p">)</span><span class="si">}</span><span class="s2">, 新密码：</span><span class="si">{</span><span class="n">bytes_to_spaced_hex</span><span class="p">(</span><span class="n">new_password</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
-        <span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_password_valid</span><span class="p">(</span><span class="n">old_password</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_password_valid</span><span class="p">(</span>
-            <span class="n">new_password</span>
+    <span class="n">peername</span><span class="p">:</span> <span class="n">Any</span>
+    <span class="n">sockname</span><span class="p">:</span> <span class="n">Any</span>
+    <span class="n">connection_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">()))</span>
+    <span class="n">connected_at</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">)</span>
+    <span class="n">last_activity_at</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">)</span>
+    <span class="n">disconnected_at</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">bytes_received</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">bytes_sent</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">messages_received</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">messages_sent</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">disconnect_reason</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">TcpDisconnectReason</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">disconnect_error</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="ne">BaseException</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">_connected_monotonic</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">,</span> <span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">_disconnected_monotonic</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">repr</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">status</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;connected&quot;</span><span class="p">,</span> <span class="s2">&quot;disconnected&quot;</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;返回当前连接状态。&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;disconnected&quot;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">disconnected_at</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;connected&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">duration</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;返回当前或最终连接时长（秒）。&quot;&quot;&quot;</span>
+        <span class="n">ended_at</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_disconnected_monotonic</span>
+        <span class="k">if</span> <span class="n">ended_at</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ended_at</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span>
+        <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">ended_at</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connected_monotonic</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">peer_host</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;尽可能从 ``peername`` 中提取客户端 IP/主机名。&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">peername</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">peername</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">peername</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">peer_port</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;尽可能从 ``peername`` 中提取客户端端口。&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">peername</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span>
+            <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">peername</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span>
+            <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">peername</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nb">int</span><span class="p">)</span>
         <span class="p">):</span>
-            <span class="k">return</span> <span class="kc">False</span>
-        <span class="c1"># 新密码权限</span>
-        <span class="n">new_level</span> <span class="o">=</span> <span class="n">new_password</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">old_level</span> <span class="o">=</span> <span class="n">old_password</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-
-        <span class="k">if</span> <span class="n">old_password</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_password</span><span class="p">(</span><span class="n">old_level</span><span class="p">):</span>
-            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;旧密码错误，旧密码：</span><span class="si">{</span><span class="n">bytes_to_spaced_hex</span><span class="p">(</span><span class="n">old_password</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="k">return</span> <span class="kc">False</span>
-
-        <span class="k">if</span> <span class="n">old_level</span> <span class="o">&lt;=</span> <span class="n">new_level</span><span class="p">:</span>  <span class="c1"># 数字越小，权限越高</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_password</span><span class="p">(</span><span class="n">new_password</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;旧密码权限等级不能低于新密码权限等级，旧密码权限等级：</span><span class="si">{</span><span class="n">old_level</span><span class="si">}</span><span class="s2">, 新密码权限等级：</span><span class="si">{</span><span class="n">new_level</span><span class="si">}</span><span class="s2">, 权限不足!&quot;</span>
-            <span class="p">)</span>
-            <span class="k">return</span> <span class="kc">False</span></div>
-</div>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">peername</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
 
 
+
+<div class="viewcode-block" id="TcpActivity">
+<a class="viewcode-back" href="../../../../src.html#src.TcpActivity">[文档]</a>
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">TcpActivity</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;一次成功接收或发送的完整 DL/T 645 报文。&quot;&quot;&quot;</span>
+
+    <span class="n">direction</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;RX&quot;</span><span class="p">,</span> <span class="s2">&quot;TX&quot;</span><span class="p">]</span>
+    <span class="n">data</span><span class="p">:</span> <span class="nb">bytes</span>
+    <span class="n">timestamp</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">frame</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Frame</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+
+<span class="n">TcpConnectCallback</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">TcpConnectionContext</span><span class="p">],</span> <span class="n">Any</span><span class="p">]</span>
+<span class="n">TcpActivityCallback</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">TcpConnectionContext</span><span class="p">,</span> <span class="n">TcpActivity</span><span class="p">],</span> <span class="n">Any</span><span class="p">]</span>
+<span class="n">TcpDisconnectCallback</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">TcpConnectionContext</span><span class="p">],</span> <span class="n">Any</span><span class="p">]</span>
 </pre></div>
 
            </div>
