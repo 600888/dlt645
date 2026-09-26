@@ -122,7 +122,7 @@ python cpp/tools/generate_type_definitions.py
 
 ## 在其他 C++ 项目中使用动态库
 
-先构建并安装本库，或从 GitHub Actions 的 `C++ shared library` 运行记录下载与目标系统、架构匹配的安装包。安装目录包含 `include/` 头文件、`lib/` 链接库与 CMake 包配置；Windows DLL 位于 `bin/`。调用方还需要 Boost 1.83 或更新版本的头文件。
+先构建并安装本库，或从 GitHub Release 下载与目标系统、架构匹配的 C++ 安装包。`cpp-v*` 标签会在四个平台的构建和测试全部通过后自动创建 Release，并上传 `dlt645-<平台>.zip`。安装目录包含 `include/` 头文件、`lib/` 链接库与 CMake 包配置；Windows DLL 位于 `bin/`。调用方还需要 Boost 1.83 或更新版本的头文件。
 
 在调用方项目中新建 `main.cpp`：
 
@@ -177,7 +177,7 @@ Copy-Item "<安装目录>\bin\dlt645.dll" .\build\Release\
 .\build\Release\meter_demo.exe
 ```
 
-GitHub Actions 的 `C++ shared library` 工作流在 Linux x64、Windows x64、macOS x64 和 macOS arm64 上构建、测试并上传独立安装包。产物可在对应的 Actions 运行记录中下载。
+GitHub Actions 的 `C++ shared library` 工作流在 Linux x64、Windows x64、macOS x64 和 macOS arm64 上构建、测试并上传独立安装包。推送 `cpp-v*` 标签后，这些安装包也会作为 GitHub Release 附件发布；普通分支构建的产物仍可在对应的 Actions 运行记录中下载。
 
 ## 使用示例
 
