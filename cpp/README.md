@@ -30,7 +30,7 @@
 
 请选择您感兴趣的语言版本查看详细文档：
 
-- C++版本(支持Linux平台和Windows平台)
+- C++版本（支持 Linux、Windows 和 macOS）
 - [Python版本](../python/README.md)
 - [Go版本](../go/README.md)
 
@@ -74,6 +74,7 @@
 - Boost >=1.83（用于Asio网络编程）
 - spdlog 日志库（已包含在third目录）
 - 数据项定义编译在 C++ 静态表中；维护时从 Python 版定义重新生成（见下文）
+- 默认构建动态库；安装包包含库文件、头文件和 CMake 包配置
 
 ## 数据定义维护
 
@@ -102,15 +103,74 @@ python cpp/tools/generate_type_definitions.py
 2. 创建构建目录并编译项目：
    ```bash
    cd cpp
-   cmake -S . -B build
-   cmake --build build
-   ctest --test-dir build --output-on-failure
+   cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+   cmake --build build --config Release
+   ctest --test-dir build -C Release --output-on-failure
    ```
 
 3. 安装（可选）：
    ```bash
-   sudo make install
+   cmake --install build --config Release --prefix ./build/stage
    ```
+
+## 在其他 C++ 项目中使用动态库
+
+先构建并安装本库，或从 GitHub Actions 的 `C++ shared library` 运行记录下载与目标系统、架构匹配的安装包。安装目录包含 `include/` 头文件、`lib/` 链接库与 CMake 包配置；Windows DLL 位于 `bin/`。调用方还需要 Boost 1.83 或更新版本的头文件。
+
+在调用方项目中新建 `main.cpp`：
+
+```cpp
+#include "dlt645/common/transform.h"
+#include <cstdint>
+#include <iostream>
+#include <vector>
+
+int main()
+{
+    const std::vector<uint8_t> bytes{0x01, 0x23, 0x45};
+    std::cout << dlt645::common::bytesToHexString(bytes) << '\n';
+}
+```
+
+对应的 `CMakeLists.txt`：
+
+```cmake
+cmake_minimum_required(VERSION 3.20)
+project(meter_demo LANGUAGES CXX)
+
+find_package(dlt645 1 CONFIG REQUIRED)
+add_executable(meter_demo main.cpp)
+target_link_libraries(meter_demo PRIVATE dlt645::dlt645)
+```
+
+在调用方项目目录中配置并编译，其中 `<安装目录>` 可填本地的 `cpp/build/stage` 或下载后解压的目录：
+
+```bash
+cmake -S . -B build -DCMAKE_PREFIX_PATH="<安装目录>"
+cmake --build build --config Release
+```
+
+如果 Boost 不在系统默认位置，再向配置命令添加 `-DBoost_ROOT=<Boost目录>`。Linux 和 macOS 可直接运行构建目录中的 `./build/meter_demo`；CMake 会为构建目录配置动态库搜索路径。
+
+运行时系统必须能找到动态库：
+
+| 平台 | 动态库及使用方式 |
+| --- | --- |
+| Windows MSVC | 将安装包 `bin/dlt645.dll` 放在 `meter_demo.exe` 同目录，或将安装包 `bin` 加入 `PATH`；CMake 自动链接 `lib/dlt645.lib`。 |
+| Windows MinGW | 将 `bin/libdlt645.dll` 放在程序同目录或加入 `PATH`；CMake 链接 `lib/libdlt645.dll.a`。调用方需使用兼容的 MinGW 工具链。 |
+| Linux | 动态库为 `lib/libdlt645.so`（以及版本号文件）；部署时将 `lib` 加入系统库搜索路径，或给可执行文件设置相对 RPATH。 |
+| macOS | 动态库为 `lib/libdlt645.dylib`（以及版本号文件）；部署时给可执行文件设置相对 RPATH。 |
+
+Linux 和 macOS 安装包内的示例程序已配置相对于 `bin/` 的库搜索路径。将自己的程序与库一同打包时，Linux 可使用 `$ORIGIN/../lib`，macOS 可使用 `@loader_path/../lib`；Windows 则将 DLL 放在程序旁边。MSVC 与 MinGW 的导入库不能混用。
+
+例如在 Windows 的 Visual Studio Release 构建中，可使用 PowerShell 将 DLL 复制到程序旁边后运行：
+
+```powershell
+Copy-Item "<安装目录>\bin\dlt645.dll" .\build\Release\
+.\build\Release\meter_demo.exe
+```
+
+GitHub Actions 的 `C++ shared library` 工作流在 Linux x64、Windows x64、macOS x64 和 macOS arm64 上构建、测试并上传独立安装包。产物可在对应的 Actions 运行记录中下载。
 
 ## 使用示例
 

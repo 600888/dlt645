@@ -46,9 +46,9 @@ namespace dlt645 {
             // 设置时间戳
             inline void setTimestamp(const std::chrono::system_clock::time_point& timePoint) { timestamp = timePoint; }
 
-            inline void setValue(const std::variant<std::monostate, float, int32_t, uint32_t, std::string, Demand>& value)
+            inline void setValue(const std::variant<std::monostate, float, int32_t, uint32_t, std::string, Demand>& newValue)
             {
-                this->value = value;
+                value = newValue;
             }
         };
 

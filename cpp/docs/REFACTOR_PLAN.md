@@ -7,6 +7,8 @@
 - 补充协议帧、BCD 转换和数据项定义的回归测试，修复已发现的越界及校验问题。
 - 参照 Python 版静态定义，生成 C++ 编译期数据表。程序启动时不再读取数据定义文件。
 - 日志初始化直接使用构造参数，并移除文件配置解析模块和相关第三方库。
+- 构建 C++17 动态库，安装 CMake 包配置；Windows 本地以 MinGW 和 MSVC 验证库及安装后调用。
+- 新增跨平台 GitHub Actions 工作流，构建并上传 Linux、Windows、macOS 的 C++ 安装包。
 
 ## 数据定义维护
 
@@ -22,4 +24,4 @@ python cpp/tools/generate_type_definitions.py
 
 1. TCP 与 RTU 接收逻辑增加分帧缓冲，覆盖粘包、半包、噪声及多帧连续输入。
 2. 梳理连接关闭、异步回调与共享数据的生命周期，消除潜在竞争。
-3. 在 Windows 和 Linux 分别执行 C++17 构建、测试及安装后使用验证。
+3. 结合 GitHub Actions 结果检查 Linux 与 macOS 的编译、安装和调用方测试，并处理平台差异。

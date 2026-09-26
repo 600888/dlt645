@@ -58,8 +58,8 @@ namespace dlt645
             buf.insert(buf.end(), encodedData.begin(), encodedData.end());
 
             // 计算校验和
-            uint8_t checkSum = calculateChecksum(buf.data(), buf.size());
-            buf.push_back(checkSum);
+            uint8_t calculatedChecksum = calculateChecksum(buf.data(), buf.size());
+            buf.push_back(calculatedChecksum);
             buf.push_back(FRAME_END_BYTE);
 
             // 前导字节添加
@@ -107,8 +107,8 @@ namespace dlt645
             buf.insert(buf.end(), encodedData.begin(), encodedData.end());
 
             // 计算并写入校验和
-            uint8_t checkSum = calculateChecksum(buf.data() + preamble.size(), buf.size() - preamble.size());
-            buf.push_back(checkSum);
+            uint8_t calculatedChecksum = calculateChecksum(buf.data() + preamble.size(), buf.size() - preamble.size());
+            buf.push_back(calculatedChecksum);
 
             // 写入结束符
             buf.push_back(endFlag);

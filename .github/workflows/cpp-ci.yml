@@ -1,0 +1,104 @@
+name: C++ shared library
+
+on:
+  push:
+    branches: [main, master, develop]
+    tags: ["v*"]
+    paths:
+      - "cpp/**"
+      - ".github/workflows/cpp-ci.yml"
+  pull_request:
+    branches: [main, master, develop]
+    paths:
+      - "cpp/**"
+      - ".github/workflows/cpp-ci.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cpp-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: ${{ matrix.artifact }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-24.04
+            artifact: dlt645-linux-x64
+          - os: windows-2022
+            artifact: dlt645-windows-x64
+          - os: macos-15-intel
+            artifact: dlt645-macos-x64
+          - os: macos-14
+            artifact: dlt645-macos-arm64
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch Boost headers
+        if: runner.os != 'Windows'
+        run: |
+          curl --fail --location --silent --show-error \
+            https://archives.boost.io/release/1.83.0/source/boost_1_83_0.tar.gz \
+            --output boost.tar.gz
+          tar -xzf boost.tar.gz
+
+      - name: Fetch Boost headers (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          curl.exe --fail --location --silent --show-error `
+            https://archives.boost.io/release/1.83.0/source/boost_1_83_0.tar.gz `
+            --output boost.tar.gz
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          tar -xzf boost.tar.gz
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+      - name: Configure
+        if: runner.os != 'Windows'
+        run: >-
+          cmake -S cpp -B cpp/build/ci
+          -DCMAKE_BUILD_TYPE=Release
+          -DBoost_ROOT="${{ github.workspace }}/boost_1_83_0"
+
+      - name: Configure (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: >-
+          cmake -S cpp -B cpp/build/ci -G "Visual Studio 17 2022" -A x64
+          -DBoost_ROOT="${{ github.workspace }}/boost_1_83_0"
+
+      - name: Build
+        run: cmake --build cpp/build/ci --config Release --parallel 4
+
+      - name: Test
+        run: ctest --test-dir cpp/build/ci -C Release --output-on-failure
+
+      - name: Install
+        run: cmake --install cpp/build/ci --config Release --prefix cpp/build/ci/stage
+
+      - name: Configure installed package consumer
+        run: >-
+          cmake -S cpp/tests/package_consumer -B cpp/build/package-consumer
+          -DCMAKE_BUILD_TYPE=Release
+          -DCMAKE_PREFIX_PATH="${{ github.workspace }}/cpp/build/ci/stage"
+          -DBoost_ROOT="${{ github.workspace }}/boost_1_83_0"
+
+      - name: Build installed package consumer
+        run: cmake --build cpp/build/package-consumer --config Release --parallel 4
+
+      - name: Test installed package consumer
+        run: ctest --test-dir cpp/build/package-consumer -C Release --output-on-failure
+
+      - name: Upload shared library package
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact }}
+          path: cpp/build/ci/stage/
+          if-no-files-found: error

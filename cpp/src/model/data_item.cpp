@@ -315,7 +315,7 @@ namespace dlt645 {
 
                     // 组合有功费率电能
                     uint32_t key = (di3 << 24) | (di2 << 16) | ((di1 + i) << 8) | (di0 + j);
-                    int energySize = energyTypes.size();
+                    const int energySize = static_cast<int>(energyTypes.size());
                     if (i < energySize) {
                         DataItem item(
                             key, namePrefix + energyTypes[i].name, DataFormat::XXXXXX_XX, defaultValue, energyTypes[i].unit);

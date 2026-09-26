@@ -1,6 +1,7 @@
 #include "dlt645/common/transform.h"
 #include "dlt645/common/log.h"
 #include <cmath>
+#include <stdexcept>
 
 namespace dlt645 {
     namespace common {
@@ -269,7 +270,14 @@ namespace dlt645 {
 
             // 转换为本地时间
             auto time = std::chrono::system_clock::to_time_t(timePoint);
-            std::tm localTime = *std::localtime(&time);
+            std::tm localTime{};
+#ifdef _WIN32
+            if (localtime_s(&localTime, &time) != 0) {
+#else
+            if (localtime_r(&time, &localTime) == nullptr) {
+#endif
+                throw std::runtime_error("Invalid local time");
+            }
 
             // 年（后两位）
             uint8_t year = static_cast<uint8_t>(localTime.tm_year % 100);

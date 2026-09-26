@@ -1,0 +1,8 @@
+@PACKAGE_INIT@
+
+include(CMakeFindDependencyMacro)
+find_dependency(Boost 1.83.0)
+find_dependency(Threads)
+
+include("${CMAKE_CURRENT_LIST_DIR}/dlt645Targets.cmake")
+check_required_components(dlt645)
