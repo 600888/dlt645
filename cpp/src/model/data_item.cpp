@@ -287,7 +287,7 @@ namespace dlt645 {
                 auto& item = diMap_[definition.di];
                 item.di = definition.di;
                 item.name = "Event record";
-                item.fields.push_back({definition.name, definition.format, definition.unit, {}});
+                item.fields.push_back({ definition.name, definition.format, definition.unit, {} });
             }
         }
 
@@ -300,7 +300,7 @@ namespace dlt645 {
                 item.name = definition.name;
                 item.unit = definition.unit;
                 item.dataFormat = definition.format;
-                item.fields.push_back({definition.name, definition.format, definition.unit, {}});
+                item.fields.push_back({ definition.name, definition.format, definition.unit, {} });
             }
         }
 

@@ -5,36 +5,31 @@
 #include "transport/read_frame.h"
 #include "log/default_logger.hpp"
 
-namespace dlt645
-{
-    namespace transport
-    {
-        namespace client
-        {
+namespace dlt645 {
+    namespace transport {
+        namespace client {
 
             TcpClient::TcpClient()
-                : io_context_(nullptr), isConnected_(false)
+                : io_context_(nullptr)
+                , isConnected_(false)
             {
             }
 
             TcpClient::~TcpClient()
             {
                 // 只在连接时才尝试断开连接
-                if (isConnected_)
-                {
+                if (isConnected_) {
                     disconnect();
                 }
-                if (io_thread_.joinable())
-                {
-                    if (io_context_)
-                    {
+                if (io_thread_.joinable()) {
+                    if (io_context_) {
                         io_context_->stop();
                     }
                     io_thread_.join();
                 }
             }
 
-            bool TcpClient::configure(const TcpClientConfig &config)
+            bool TcpClient::configure(const TcpClientConfig& config)
             {
                 config_ = config;
                 return true;
@@ -42,18 +37,17 @@ namespace dlt645
 
             void TcpClient::ensureIoContextRunning()
             {
-                if (!io_context_)
-                {
+                if (!io_context_) {
                     io_context_ = std::make_shared<boost::asio::io_context>();
-                    io_thread_ = std::thread([this]()
-                                             {
+                    io_thread_ = std::thread([this]() {
                         try {
                             boost::asio::executor_work_guard<boost::asio::io_context::executor_type> work_guard(
                                 io_context_->get_executor());
                             io_context_->run();
                         } catch (const std::exception& e) {
                             LOG_ERROR("IO Context thread exception: {}", e.what());
-                        } });
+                        }
+                    });
                 }
             }
 
@@ -62,8 +56,7 @@ namespace dlt645
                 auto promise = std::make_shared<std::promise<bool>>();
                 auto future = promise->get_future();
 
-                try
-                {
+                try {
                     ensureIoContextRunning();
 
                     socket_ = std::make_unique<boost::asio::ip::tcp::socket>(*io_context_);
@@ -80,8 +73,7 @@ namespace dlt645
                     auto completed = std::make_shared<std::atomic<bool>>(false);
 
                     // 设置定时器回调
-                    timer->async_wait([this, promise, completed](const boost::system::error_code &ec)
-                                      {
+                    timer->async_wait([this, promise, completed](const boost::system::error_code& ec) {
                         if (!completed->exchange(true)) { // 如果是第一个完成的操作
                             if (ec != boost::asio::error::operation_aborted) {
                                 // 超时，取消连接操作
@@ -93,10 +85,10 @@ namespace dlt645
                                 isConnected_ = false;
                                 promise->set_value(false);
                             }
-                        } });
+                        }
+                    });
 
-                    socket_->async_connect(endpoint, [this, promise, timer, completed](const boost::system::error_code &error)
-                                           {
+                    socket_->async_connect(endpoint, [this, promise, timer, completed](const boost::system::error_code& error) {
                         // 取消定时器
                         timer->cancel();
 
@@ -112,10 +104,9 @@ namespace dlt645
                                 isConnected_ = false;
                                 promise->set_value(false);
                             }
-                        } });
-                }
-                catch (const std::exception &e)
-                {
+                        }
+                    });
+                } catch (const std::exception& e) {
                     LOG_ERROR("Exception in TCP connectAsync: {}", e.what());
                     promise->set_value(false);
                 }
@@ -128,10 +119,8 @@ namespace dlt645
                 auto promise = std::make_shared<std::promise<void>>();
                 auto future = promise->get_future();
 
-                try
-                {
-                    boost::asio::post(*io_context_, [this, promise]()
-                                      {
+                try {
+                    boost::asio::post(*io_context_, [this, promise]() {
                         try {
                             if (socket_ && socket_->is_open()) {
                                 boost::system::error_code ec;
@@ -146,10 +135,9 @@ namespace dlt645
                         } catch (const std::exception& e) {
                             LOG_ERROR("Exception in TCP disconnectAsync: {}", e.what());
                             promise->set_exception(std::current_exception());
-                        } });
-                }
-                catch (const std::exception &e)
-                {
+                        }
+                    });
+                } catch (const std::exception& e) {
                     LOG_ERROR("Exception in TCP disconnectAsync wrapper: {}", e.what());
                     promise->set_exception(std::current_exception());
                 }
@@ -157,16 +145,14 @@ namespace dlt645
                 return future;
             }
 
-            std::future<std::vector<uint8_t>> TcpClient::sendRequestAsync(const std::vector<uint8_t> &frame)
+            std::future<std::vector<uint8_t>> TcpClient::sendRequestAsync(const std::vector<uint8_t>& frame)
             {
                 LOG_INFO("TX: {}({})", dlt645::common::bytesToHexString(frame), frame.size());
                 auto promise = std::make_shared<std::promise<std::vector<uint8_t>>>();
                 auto future = promise->get_future();
 
-                try
-                {
-                    if (!isConnected_ || !socket_ || !socket_->is_open())
-                    {
+                try {
+                    if (!isConnected_ || !socket_ || !socket_->is_open()) {
                         LOG_ERROR("TCP client not connected");
                         promise->set_value({});
                         return future;
@@ -176,10 +162,8 @@ namespace dlt645
                     boost::asio::async_write(
                         *socket_,
                         boost::asio::buffer(*buffer),
-                        [this, promise, buffer](const boost::system::error_code &error, std::size_t /*bytes_transferred*/)
-                        {
-                            if (error)
-                            {
+                        [this, promise, buffer](const boost::system::error_code& error, std::size_t /*bytes_transferred*/) {
+                            if (error) {
                                 LOG_ERROR("TCP send failed: {}", error.message());
                                 isConnected_ = false;
                                 promise->set_value({});
@@ -187,11 +171,10 @@ namespace dlt645
                             }
 
                             std::make_shared<transport::FrameReadOperation<boost::asio::ip::tcp::socket>>(
-                                *socket_, decoder_, *io_context_, config_.timeout, promise)->start();
+                                *socket_, decoder_, *io_context_, config_.timeout, promise)
+                                ->start();
                         });
-                }
-                catch (const std::exception &e)
-                {
+                } catch (const std::exception& e) {
                     LOG_ERROR("Exception in TCP sendRequestAsync: {}", e.what());
                     promise->set_value({});
                 }
@@ -208,11 +191,13 @@ namespace dlt645
                     return future;
                 }
                 auto buffer = std::make_shared<std::vector<uint8_t>>(frame);
-                boost::asio::async_write(*socket_, boost::asio::buffer(*buffer),
-                    [this, promise, buffer](const boost::system::error_code& error, size_t) {
-                        if (error) isConnected_ = false;
-                        promise->set_value(!error);
-                    });
+                boost::asio::async_write(*socket_,
+                                         boost::asio::buffer(*buffer),
+                                         [this, promise, buffer](const boost::system::error_code& error, size_t) {
+                                             if (error)
+                                                 isConnected_ = false;
+                                             promise->set_value(!error);
+                                         });
                 return future;
             }
 

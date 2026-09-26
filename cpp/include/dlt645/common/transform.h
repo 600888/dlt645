@@ -29,10 +29,12 @@ namespace dlt645 {
             static_assert(std::is_same_v<typename Container::value_type, uint8_t>, "Byte container required");
             std::ostringstream out;
             out << std::hex << std::setfill('0');
-            if (uppercase) out << std::uppercase;
+            if (uppercase)
+                out << std::uppercase;
             bool first = true;
             for (uint8_t byte : bytes) {
-                if (!first && withSpace) out << ' ';
+                if (!first && withSpace)
+                    out << ' ';
                 out << std::setw(2) << static_cast<unsigned int>(byte);
                 first = false;
             }
@@ -67,7 +69,8 @@ namespace dlt645 {
         {
             static_assert(std::is_same_v<typename Container::value_type, uint8_t>, "Byte container required");
             uint8_t lrc = 0;
-            for (uint8_t byte : data) lrc ^= byte;
+            for (uint8_t byte : data)
+                lrc ^= byte;
             return lrc;
         }
 

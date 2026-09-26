@@ -53,7 +53,7 @@ namespace dlt645 {
             std::shared_ptr<model::DataItem> read03(uint32_t di);
             std::shared_ptr<model::DataItem> read04(uint32_t di);
             bool write04(uint32_t di, const std::vector<std::string>& values);
-            bool write04(uint32_t di, const std::string& value) { return write04(di, std::vector<std::string>{value}); }
+            bool write04(uint32_t di, const std::string& value) { return write04(di, std::vector<std::string> { value }); }
 
             // 读取通讯地址
             std::shared_ptr<model::DataItem> readAddress();
@@ -68,8 +68,7 @@ namespace dlt645 {
             bool broadcastTimeSync(std::chrono::system_clock::time_point time = std::chrono::system_clock::now());
 
             // MM DD hh mm, each field in packed BCD. 0x99 is a wildcard.
-            std::shared_ptr<model::DataItem> freeze(const std::array<uint8_t, 4>& freezeTime,
-                                                     bool broadcast = false);
+            std::shared_ptr<model::DataItem> freeze(const std::array<uint8_t, 4>& freezeTime, bool broadcast = false);
             std::shared_ptr<model::DataItem> changeBaudRate(int baud);
 
             // 连接设备

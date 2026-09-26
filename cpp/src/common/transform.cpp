@@ -40,16 +40,10 @@ namespace dlt645 {
         }
 
         // 计算CRC校验
-        uint16_t calculateCRC(const std::vector<uint8_t>& data)
-        {
-            return calculateCRC<std::vector<uint8_t>>(data);
-        }
+        uint16_t calculateCRC(const std::vector<uint8_t>& data) { return calculateCRC<std::vector<uint8_t>>(data); }
 
         // 计算LRC校验
-        uint8_t calculateLRC(const std::vector<uint8_t>& data)
-        {
-            return calculateLRC<std::vector<uint8_t>>(data);
-        }
+        uint8_t calculateLRC(const std::vector<uint8_t>& data) { return calculateLRC<std::vector<uint8_t>>(data); }
 
         // 将整数转换为BCD码
         std::vector<uint8_t> intToBCD(uint32_t value, size_t byteCount, bool littleEndian)
@@ -270,7 +264,7 @@ namespace dlt645 {
 
             // 转换为本地时间
             auto time = std::chrono::system_clock::to_time_t(timePoint);
-            std::tm localTime{};
+            std::tm localTime {};
 #ifdef _WIN32
             if (localtime_s(&localTime, &time) != 0) {
 #else

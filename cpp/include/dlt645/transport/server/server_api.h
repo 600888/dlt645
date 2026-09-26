@@ -12,47 +12,40 @@
 #include <vector>
 #include "dlt645/protocol/protocol.h"
 
-namespace dlt645
-{
-    namespace transport
-    {
-        namespace server
-        {
+namespace dlt645 {
+    namespace transport {
+        namespace server {
 
             // 前向声明
             class TcpServer;
             class RtuServer;
 
             // 连接处理器接口定义
-            class ConnectionHandler
-            {
+            class ConnectionHandler {
             public:
                 virtual ~ConnectionHandler() = default;
 
                 // 处理接收到的数据
-                virtual std::vector<uint8_t> handleRequest(const protocol::Frame &frame) = 0;
+                virtual std::vector<uint8_t> handleRequest(const protocol::Frame& frame) = 0;
 
                 // 连接关闭时的回调
                 virtual void onConnectionClosed() = 0;
             };
 
             // 服务器配置基类
-            struct ServerConfig
-            {
+            struct ServerConfig {
                 std::chrono::milliseconds timeout = std::chrono::seconds(5); // 默认超时时间5秒
             };
 
             // TCP服务器配置
-            struct TcpServerConfig : public ServerConfig
-            {
+            struct TcpServerConfig : public ServerConfig {
                 std::string ip = "0.0.0.0";
                 uint16_t port = 10521;
                 int maxConnections = 10; // 最大连接数
             };
 
             // RTU服务器配置
-            struct RtuServerConfig : public ServerConfig
-            {
+            struct RtuServerConfig : public ServerConfig {
                 std::string port = "/dev/ttyS0";
                 int baudRate = 9600;
                 int dataBits = 8;
@@ -62,8 +55,7 @@ namespace dlt645
             };
 
             // 服务器接口定义
-            class Server
-            {
+            class Server {
             public:
                 virtual ~Server() = default;
 
@@ -81,14 +73,13 @@ namespace dlt645
             };
 
             // TCP服务器实现
-            class TcpServer : public Server
-            {
+            class TcpServer : public Server {
             public:
                 TcpServer();
                 ~TcpServer();
 
                 // 配置TCP服务器
-                bool configure(const TcpServerConfig &config);
+                bool configure(const TcpServerConfig& config);
 
                 // 实现Server接口
                 bool start() override;
@@ -114,14 +105,13 @@ namespace dlt645
             };
 
             // RTU服务器实现
-            class RtuServer : public Server
-            {
+            class RtuServer : public Server {
             public:
                 RtuServer();
                 ~RtuServer();
 
                 // 配置RTU服务器
-                bool configure(const RtuServerConfig &config);
+                bool configure(const RtuServerConfig& config);
 
                 // 实现Server接口
                 bool start() override;
@@ -141,13 +131,13 @@ namespace dlt645
                 std::optional<boost::asio::executor_work_guard<boost::asio::io_context::executor_type>> work_guard_;
 
                 // 配置串口参数
-                bool configureSerialPort(boost::asio::serial_port &port, const RtuServerConfig &config);
+                bool configureSerialPort(boost::asio::serial_port& port, const RtuServerConfig& config);
 
                 // 开始接收数据
                 void startReceive();
 
                 // 处理接收到的数据
-                void handleReceive(const boost::system::error_code &error, size_t bytes_transferred);
+                void handleReceive(const boost::system::error_code& error, size_t bytes_transferred);
             };
 
         } // namespace server

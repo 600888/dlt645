@@ -16,8 +16,7 @@ using LV = spdlog::level::level_enum;
 
 class LogInitializer {
 public:
-    LogInitializer(const std::string& loggerName, LV level = LV::info,
-                   bool enableTerminalLog = false, int threadNum = 1) noexcept
+    LogInitializer(const std::string& loggerName, LV level = LV::info, bool enableTerminalLog = false, int threadNum = 1) noexcept
     {
         static std::once_flag flag;
         std::call_once(flag, init, loggerName, level, enableTerminalLog, threadNum);
@@ -27,11 +26,11 @@ private:
     LogInitializer(const LogInitializer&) = delete;
     LogInitializer& operator=(const LogInitializer&) = delete;
 
-    static void init(const std::string& loggerName, LV level,
-                     bool enableTerminalLog, int threadNum) noexcept
+    static void init(const std::string& loggerName, LV level, bool enableTerminalLog, int threadNum) noexcept
     {
         try {
-            if (loggerName.empty() || spdlog::get(loggerName)) return;
+            if (loggerName.empty() || spdlog::get(loggerName))
+                return;
 
             std::vector<spdlog::sink_ptr> sinks;
             if (enableTerminalLog) {
@@ -43,13 +42,12 @@ private:
             const auto filename = loggerName + (level == LV::debug ? "-debug.log" : ".log");
             constexpr size_t fileSize = 10 * 1024 * 1024;
             constexpr size_t fileCount = 10;
-            sinks.push_back(std::make_shared<spdlog::sinks::rotating_file_sink_mt>(
-                (directory / filename).string(), fileSize, fileCount));
+            sinks.push_back(
+                std::make_shared<spdlog::sinks::rotating_file_sink_mt>((directory / filename).string(), fileSize, fileCount));
 
             spdlog::init_thread_pool(8192, threadNum > 0 ? threadNum : 1);
             auto logger = std::make_shared<spdlog::async_logger>(
-                loggerName, sinks.begin(), sinks.end(), spdlog::thread_pool(),
-                spdlog::async_overflow_policy::block);
+                loggerName, sinks.begin(), sinks.end(), spdlog::thread_pool(), spdlog::async_overflow_policy::block);
             spdlog::register_logger(logger);
             logger->set_level(level);
             logger->set_pattern("[%Y-%m-%d %H:%M:%S.%e][%P:%t][%l]%v");

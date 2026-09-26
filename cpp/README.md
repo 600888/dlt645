@@ -177,7 +177,7 @@ Copy-Item "<安装目录>\bin\dlt645.dll" .\build\Release\
 .\build\Release\meter_demo.exe
 ```
 
-GitHub Actions 的 `C++ shared library` 工作流在 Linux x64、Windows x64、macOS x64 和 macOS arm64 上构建、测试并上传独立安装包。推送 `cpp-v*` 标签后，这些安装包也会作为 GitHub Release 附件发布；普通分支构建的产物仍可在对应的 Actions 运行记录中下载。
+GitHub Actions 的 `C++ shared library` 工作流在 Linux x64、Windows x64、macOS x64 和 macOS arm64 上构建并测试。只有推送 `main` 分支或 `cpp-v*` 标签时才上传构建产物；`cpp-v*` 标签还会在全部平台通过后把安装包发布为 GitHub Release 附件。Pull Request 和手动运行只执行构建与测试。
 
 ## 使用示例
 

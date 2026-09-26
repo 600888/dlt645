@@ -13,28 +13,24 @@
 inline std::string rootPath()
 {
 #ifdef _MSC_VER
-  char *envRoot = nullptr;
-  size_t length = 0;
-  if (_dupenv_s(&envRoot, &length, VAR_ENV) != 0 || envRoot == nullptr)
-  {
-    return DEFAULT_ROOT_DIR;
-  }
-  std::string rootDir(envRoot);
-  std::free(envRoot);
-  return rootDir;
+    char* envRoot = nullptr;
+    size_t length = 0;
+    if (_dupenv_s(&envRoot, &length, VAR_ENV) != 0 || envRoot == nullptr) {
+        return DEFAULT_ROOT_DIR;
+    }
+    std::string rootDir(envRoot);
+    std::free(envRoot);
+    return rootDir;
 #else
-  std::string rootDir;
-  const char *envRoot = std::getenv(VAR_ENV);
-  if (nullptr == envRoot)
-  {
-    rootDir = DEFAULT_ROOT_DIR;
-  }
-  else
-  {
-    rootDir = envRoot;
-  }
+    std::string rootDir;
+    const char* envRoot = std::getenv(VAR_ENV);
+    if (nullptr == envRoot) {
+        rootDir = DEFAULT_ROOT_DIR;
+    } else {
+        rootDir = envRoot;
+    }
 
-  return rootDir;
+    return rootDir;
 #endif
 }
 

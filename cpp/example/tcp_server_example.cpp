@@ -10,19 +10,17 @@ using namespace dlt645;
 
 int main()
 {
-    try
-    {
+    try {
         std::cout << "Starting DLT645 TCP Server Example..." << std::endl;
 
         // 创建TCP服务端
         auto server = service::createTcpServer("0.0.0.0", 10521);
-        if (!server)
-        {
+        if (!server) {
             std::cerr << "Failed to create TCP server" << std::endl;
             return 1;
         }
 
-        server->setAddress({0x00, 0x00, 0x00, 0x00, 0x00, 0x00});
+        server->setAddress({ 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 });
         server->set00(0x00000000, 1234.56f);
         server->set00(0x00000100, 220.50f);
         server->set00(0x00000200, 5.25f);
@@ -31,18 +29,14 @@ int main()
 
         // 验证值是否成功写入
         auto dataItem = server->getDataItem(0x00000000);
-        if (dataItem)
-        {
+        if (dataItem) {
             std::cout << "0x00000000: " << std::get<float>(dataItem->value) << std::endl;
-        }
-        else
-        {
+        } else {
             std::cerr << "Failed to get data item 0x00000000" << std::endl;
         }
 
         // 启动服务
-        if (!server->start())
-        {
+        if (!server->start()) {
             std::cerr << "Failed to start server" << std::endl;
             return 1;
         }
@@ -59,9 +53,7 @@ int main()
         std::cout << "Server stopped" << std::endl;
 
         return 0;
-    }
-    catch (const std::exception &e)
-    {
+    } catch (const std::exception& e) {
         std::cerr << "Exception: " << e.what() << std::endl;
         return 1;
     }

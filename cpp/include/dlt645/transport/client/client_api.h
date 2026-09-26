@@ -33,7 +33,8 @@ namespace dlt645 {
 
                 // 发送请求并等待响应（异步）
                 virtual std::future<std::vector<uint8_t>> sendRequestAsync(const std::vector<uint8_t>& frame) = 0;
-                virtual std::future<bool> sendOnlyAsync(const std::vector<uint8_t>&) {
+                virtual std::future<bool> sendOnlyAsync(const std::vector<uint8_t>&)
+                {
                     std::promise<bool> promise;
                     promise.set_value(false);
                     return promise.get_future();
@@ -51,7 +52,11 @@ namespace dlt645 {
                     auto future = connectAsync();
                     return future.get();
                 }
-                bool connect(std::chrono::milliseconds timeout) { setTimeout(timeout); return connect(); }
+                bool connect(std::chrono::milliseconds timeout)
+                {
+                    setTimeout(timeout);
+                    return connect();
+                }
 
                 // 同步断开连接
                 void disconnect() { disconnectAsync().get(); }

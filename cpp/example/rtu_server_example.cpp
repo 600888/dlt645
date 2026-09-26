@@ -20,9 +20,9 @@ int main()
         }
 
         server->setAddress({ 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 });
-        server->set00(0x00000000, 1234.56f);    // 电能
+        server->set00(0x00000000, 1234.56f); // 电能
         server->set01(0x01010000, model::Demand(75.0f, std::chrono::system_clock::now()));
-        server->set02(0x02010100, 100.5f); 
+        server->set02(0x02010100, 100.5f);
         // 启动服务
         if (!server->start()) {
             std::cerr << "Failed to start server" << std::endl;

@@ -2,13 +2,13 @@ name: C++ shared library
 
 on:
   push:
-    branches: [main, master, develop]
-    tags: ["v*", "cpp-v*"]
+    branches: [main]
+    tags: ["cpp-v*"]
     paths:
       - "cpp/**"
       - ".github/workflows/cpp-ci.yml"
   pull_request:
-    branches: [main, master, develop]
+    branches: [main]
     paths:
       - "cpp/**"
       - ".github/workflows/cpp-ci.yml"
@@ -97,6 +97,7 @@ jobs:
         run: ctest --test-dir cpp/build/package-consumer -C Release --output-on-failure
 
       - name: Upload shared library package
+        if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/cpp-v'))
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.artifact }}
