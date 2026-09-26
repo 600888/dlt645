@@ -1,7 +1,9 @@
 #include "dlt645/service/client_service.h"
+#include <algorithm>
 #include <chrono>
 #include <cstdint>
 #include <cstring>
+#include <stdexcept>
 #include <sys/types.h>
 #include <vector>
 #include "dlt645/common/log.h"
@@ -102,49 +104,28 @@ namespace dlt645 {
 
         std::shared_ptr<model::DataItem> ClientService::read00(uint32_t di)
         {
-            // 构建数据部分（小端序）
-            std::vector<uint8_t> data(4);
-            data[0] = static_cast<uint8_t>(di & 0xFF);
-            data[1] = static_cast<uint8_t>((di >> 8) & 0xFF);
-            data[2] = static_cast<uint8_t>((di >> 16) & 0xFF);
-            data[3] = static_cast<uint8_t>((di >> 24) & 0xFF);
-
-            // 构建请求帧
-            auto frame = protocol::Frame::buildFrame(address_, model::CTRL_READ_DATA, data);
-
-            // 发送请求并处理响应
-            return sendAndHandleRequest(frame);
+            return readData(di);
         }
 
         std::shared_ptr<model::DataItem> ClientService::read01(uint32_t di)
         {
-            // 构建数据部分（小端序）
-            std::vector<uint8_t> data(4);
-            data[0] = static_cast<uint8_t>(di & 0xFF);
-            data[1] = static_cast<uint8_t>((di >> 8) & 0xFF);
-            data[2] = static_cast<uint8_t>((di >> 16) & 0xFF);
-            data[3] = static_cast<uint8_t>((di >> 24) & 0xFF);
-
-            // 构建请求帧
-            auto frame = protocol::Frame::buildFrame(address_, model::CTRL_READ_DATA, data);
-
-            // 发送请求并处理响应
-            return sendAndHandleRequest(frame);
+            return readData(di);
         }
 
         std::shared_ptr<model::DataItem> ClientService::read02(uint32_t di)
         {
-            // 构建数据部分（小端序）
+            return readData(di);
+        }
+
+        std::shared_ptr<model::DataItem> ClientService::readData(uint32_t di)
+        {
             std::vector<uint8_t> data(4);
             data[0] = static_cast<uint8_t>(di & 0xFF);
             data[1] = static_cast<uint8_t>((di >> 8) & 0xFF);
             data[2] = static_cast<uint8_t>((di >> 16) & 0xFF);
             data[3] = static_cast<uint8_t>((di >> 24) & 0xFF);
 
-            // 构建请求帧
             auto frame = protocol::Frame::buildFrame(address_, model::CTRL_READ_DATA, data);
-
-            // 发送请求并处理响应
             return sendAndHandleRequest(frame);
         }
 
@@ -218,7 +199,7 @@ namespace dlt645 {
             auto now = std::chrono::system_clock::now();
 
             // 构建广播地址
-            uint8_t broadcastAddr[6] = { 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA };
+            std::array<uint8_t, 6> broadcastAddr = { 0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA };
 
             // 构建数据部分（当前时间的BCD码表示）
             std::array<uint8_t, 5> timeBcd = common::timeToBcd(now);
@@ -238,7 +219,7 @@ namespace dlt645 {
                 LOG_INFO("Broadcast time sync sent");
                 return true;
             } catch (const std::exception& e) {
-                LOG_ERROR("Exception during broadcast time sync: %s", e.what());
+                LOG_ERROR("Exception during broadcast time sync: {}", e.what());
                 return false;
             }
         }
@@ -300,7 +281,7 @@ namespace dlt645 {
                 // 处理响应
                 return handleResponse(responseFrame);
             } catch (const std::exception& e) {
-                LOG_ERROR("Exception during sendAndHandleRequest: %s", e.what());
+                LOG_ERROR("Exception during sendAndHandleRequest: {}", e.what());
                 return nullptr;
             }
         }
@@ -385,9 +366,10 @@ namespace dlt645 {
                     case 0x02: {
                         // 02类：变量数据
                         LOG_INFO("Reading variable data response");
-                        if (frame->data.size() >= 6) {
-                            // 解析变量值（4-7字节）
-                            std::vector<uint8_t> valueBytes(frame->data.begin() + 4, frame->data.begin() + 8);
+                        const size_t digits = std::count(dataItem->dataFormat.begin(), dataItem->dataFormat.end(), 'X');
+                        const size_t valueLength = (digits + 1) / 2;
+                        if (valueLength > 0 && frame->data.size() >= 4 + valueLength) {
+                            std::vector<uint8_t> valueBytes(frame->data.begin() + 4, frame->data.begin() + 4 + valueLength);
                             float value = 0.0f;
                             if (dataItem && !dataItem->dataFormat.empty()) {
                                 // 使用dataFormat进行解析
@@ -451,6 +433,9 @@ namespace dlt645 {
 
         std::chrono::system_clock::time_point ClientService::getTime(const std::vector<uint8_t>& t) const
         {
+            if (t.size() < 4) {
+                throw std::invalid_argument("Timestamp requires four bytes");
+            }
             // 从字节数据获取时间戳
             uint32_t timestamp = dlt645::common::bytesToIntLittleEndian<uint32_t>(std::vector<uint8_t>(t.begin(), t.begin() + 4));
             LOG_INFO("Timestamp: {}", timestamp);

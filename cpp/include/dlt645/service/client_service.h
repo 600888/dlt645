@@ -8,6 +8,7 @@
 #include <cstdint>
 #include <future>
 #include <memory>
+#include <mutex>
 #include <thread>
 #include <vector>
 
@@ -69,6 +70,7 @@ namespace dlt645 {
             void disconnect() { connection_->disconnect(); }
 
         private:
+            std::shared_ptr<model::DataItem> readData(uint32_t di);
             std::array<uint8_t, 6> address_ = { 0 };
             std::array<uint8_t, 4> password_ = { 0 };
             std::shared_ptr<transport::client::Connection> connection_;

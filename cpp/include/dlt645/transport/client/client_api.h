@@ -2,6 +2,8 @@
 #define DLT645_CLIENT_API_H
 
 #include <vector>
+#include <atomic>
+#include <thread>
 #include <cstdint>
 #include <memory>
 #include <chrono>

@@ -1,0 +1,3 @@
+add_executable(dlt645_core_test core_test.cpp)
+target_link_libraries(dlt645_core_test PRIVATE dlt645)
+add_test(NAME dlt645_core_test COMMAND dlt645_core_test)

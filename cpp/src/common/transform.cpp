@@ -8,21 +8,7 @@ namespace dlt645 {
         // 字节数组转十六进制字符串
         std::string bytesToHexString(const std::vector<uint8_t>& bytes, bool uppercase, bool withSpace)
         {
-            std::ostringstream oss;
-            oss << std::setfill('0');
-
-            for (size_t i = 0; i < bytes.size(); ++i) {
-                if (i > 0 && withSpace) {
-                    oss << ' ';
-                }
-                oss << std::hex << std::setw(2);
-                if (uppercase) {
-                    oss << std::uppercase;
-                }
-                oss << static_cast<int>(bytes[i]);
-            }
-
-            return oss.str();
+            return bytesToHexString<std::vector<uint8_t>>(bytes, uppercase, withSpace);
         }
 
         // 十六进制字符串转字节数组
@@ -55,32 +41,13 @@ namespace dlt645 {
         // 计算CRC校验
         uint16_t calculateCRC(const std::vector<uint8_t>& data)
         {
-            uint16_t crc = 0xFFFF;
-
-            for (uint8_t byte : data) {
-                crc ^= static_cast<uint16_t>(byte);
-                for (int i = 0; i < 8; ++i) {
-                    if (crc & 0x0001) {
-                        crc = (crc >> 1) ^ 0xA001;
-                    } else {
-                        crc = crc >> 1;
-                    }
-                }
-            }
-
-            return crc;
+            return calculateCRC<std::vector<uint8_t>>(data);
         }
 
         // 计算LRC校验
         uint8_t calculateLRC(const std::vector<uint8_t>& data)
         {
-            uint8_t lrc = 0;
-
-            for (uint8_t byte : data) {
-                lrc ^= byte;
-            }
-
-            return lrc;
+            return calculateLRC<std::vector<uint8_t>>(data);
         }
 
         // 将整数转换为BCD码
@@ -104,14 +71,14 @@ namespace dlt645 {
             if (byteCount > 0) {
                 if (bcd.size() < byteCount) {
                     // 填充零
-                    bcd.insert(bcd.begin(), byteCount - bcd.size(), 0x00);
+                    bcd.insert(bcd.end(), byteCount - bcd.size(), 0x00);
                 } else if (bcd.size() > byteCount) {
                     // 截断
                     bcd.resize(byteCount);
                 }
             }
 
-            if (littleEndian) {
+            if (!littleEndian) {
                 std::reverse(bcd.begin(), bcd.end());
             }
             return bcd;
@@ -146,6 +113,10 @@ namespace dlt645 {
         std::vector<uint8_t> floatToBcd(float value, const std::string& dataFormat, bool littleEndian)
         {
             std::vector<uint8_t> bcd;
+            const size_t digitCount = std::count(dataFormat.begin(), dataFormat.end(), 'X');
+            if (digitCount == 0 || !std::isfinite(value)) {
+                throw std::invalid_argument("Invalid BCD value or data format");
+            }
 
             // 确定小数位数
             int decimalPlaces = 0;
@@ -157,6 +128,9 @@ namespace dlt645 {
             // 计算缩放因子
             uint64_t scaleFactor = 1;
             for (int i = 0; i < decimalPlaces; ++i) {
+                if (scaleFactor > std::numeric_limits<uint64_t>::max() / 10) {
+                    throw std::out_of_range("BCD scale is too large");
+                }
                 scaleFactor *= 10;
             }
 
@@ -165,16 +139,17 @@ namespace dlt645 {
             float absValue = std::abs(value);
 
             // 将浮点数转换为整数（四舍五入）
-            uint64_t intValue = static_cast<uint64_t>(std::round(absValue * scaleFactor));
-
-            // 特殊情况处理：值为0
-            if (intValue == 0) {
-                bcd.push_back(0x00);
-                return bcd;
+            const double scaled = std::round(static_cast<double>(absValue) * scaleFactor);
+            if (!std::isfinite(scaled) || scaled >= static_cast<double>(std::numeric_limits<uint64_t>::max())) {
+                throw std::out_of_range("BCD value is too large");
             }
+            uint64_t intValue = static_cast<uint64_t>(scaled);
 
             // 将整数转换为数字字符串以便处理
             std::string digits = std::to_string(intValue);
+            if (digits.size() > digitCount) {
+                throw std::out_of_range("BCD value does not fit data format");
+            }
 
             // 确保数字位数为偶数，便于BCD编码
             if (digits.size() % 2 != 0) {
@@ -189,17 +164,14 @@ namespace dlt645 {
                 bcd.push_back(bcdByte);
             }
 
-            // 处理符号位（如果需要）
-            if (isNegative) {
-                // 在最高字节添加符号标识，常见做法是最高位设为1
-                if (!bcd.empty()) {
-                    bcd[0] |= 0x80; // 设置最高位为1表示负数
-                }
+            // 补齐到指定字节数
+            while (bcd.size() < (digitCount + 1) / 2) {
+                bcd.insert(bcd.begin(), 0x00);
             }
 
-            // 补齐到指定字节数
-            while (bcd.size() < 4) {
-                bcd.insert(bcd.begin(), 0x00);
+            // 符号位在最高有效字节，必须在补齐后设置。
+            if (isNegative) {
+                bcd[0] |= 0x80;
             }
 
             // 大小端序处理
@@ -327,8 +299,14 @@ namespace dlt645 {
         }
 
         // 主转换函数：将BCD码字节数组转换为std::chrono::system_clock::time_point
-        std::chrono::system_clock::time_point bcdToTime(std::vector<uint8_t> bcd)
+        std::chrono::system_clock::time_point bcdToTime(std::vector<uint8_t> bcd, bool littleEndian)
         {
+            if (bcd.size() != 5) {
+                throw std::invalid_argument("BCD time requires five bytes");
+            }
+            if (littleEndian) {
+                std::reverse(bcd.begin(), bcd.end());
+            }
             // 提取并转换各时间字段
             int year = bcdToByte(bcd[0]) + 2000; // 假设为21世纪年份
             int month = bcdToByte(bcd[1]);

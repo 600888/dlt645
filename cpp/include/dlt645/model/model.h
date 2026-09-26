@@ -3,9 +3,7 @@
 
 #include <array>
 #include <chrono>
-#include <compare>
 #include <cstdint>
-#include <span>
 #include <string>
 #include <variant>
 

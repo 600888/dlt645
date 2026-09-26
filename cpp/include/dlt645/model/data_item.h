@@ -67,14 +67,8 @@ namespace dlt645 {
             // 初始化需量类型定义
             void initDemandDef();
 
-            // 从JSON文件加载类型定义
-            void loadTypeDefsFromJson();
-
-            // 从指定JSON文件加载类型定义
-            int loadTypeDefsFromFile(const std::string& filePath, const DataType& dataType);
-
             // 获取所有数据项类型定义
-            const std::unordered_map<uint32_t, DataItem>& getDataItems() const;
+            std::unordered_map<uint32_t, DataItem> getDataItems() const;
 
             // 根据DI获取数据项类型定义 - 保持向后兼容
             std::shared_ptr<DataItem> getDataItem(uint32_t di) const;
@@ -89,13 +83,13 @@ namespace dlt645 {
             void removeDataItem(uint32_t di);
 
         private:
+            void loadTypeDefinitions();
             // 数据项映射表
             std::unordered_map<uint32_t, DataItem> diMap_;
             // 互斥锁，用于线程安全
             mutable std::mutex mutex_;
             std::vector<DataItem> energyTypes;
             std::vector<DataItem> demandTypes;
-            std::vector<DataItem> variableTypes;
         };
 
     } // namespace model

@@ -9,38 +9,41 @@ namespace dlt645
     {
 
         // 解码数据域（±33H转换）
-        std::vector<uint8_t> Frame::decodeData(std::span<const uint8_t> data)
+        std::vector<uint8_t> Frame::decodeData(const std::vector<uint8_t>& data)
         {
             std::vector<uint8_t> result(data.size());
-            std::ranges::transform(data, result.begin(), [](uint8_t b)
+            std::transform(data.begin(), data.end(), result.begin(), [](uint8_t b)
                                    { return b - 0x33; });
             return result;
         }
 
         // 编码数据域（±33H转换）
-        std::vector<uint8_t> Frame::encodeData(std::span<const uint8_t> data)
+        std::vector<uint8_t> Frame::encodeData(const std::vector<uint8_t>& data)
         {
             std::vector<uint8_t> result(data.size());
-            std::ranges::transform(data, result.begin(), [](uint8_t b)
+            std::transform(data.begin(), data.end(), result.begin(), [](uint8_t b)
                                    { return b + 0x33; });
             return result;
         }
 
         // 计算校验和（模256求和）
-        uint8_t Frame::calculateChecksum(std::span<const uint8_t> data)
+        uint8_t Frame::calculateChecksum(const uint8_t* data, size_t length)
         {
             uint8_t sum = 0;
-            for (const auto &b : data)
+            for (size_t i = 0; i < length; ++i)
             {
-                sum += b;
+                sum = static_cast<uint8_t>(sum + data[i]);
             }
             return sum;
         }
 
         // 构建帧
         std::vector<uint8_t>
-        Frame::buildFrame(std::span<const uint8_t, 6> addr, uint8_t ctrlCode, const std::vector<uint8_t> &data)
+        Frame::buildFrame(const std::array<uint8_t, 6>& addr, uint8_t ctrlCode, const std::vector<uint8_t> &data)
         {
+            if (data.size() > 255) {
+                throw std::length_error("DL/T 645 data field exceeds 255 bytes");
+            }
             std::vector<uint8_t> buf;
             buf.reserve(12 + data.size()); // 预留空间
 
@@ -55,7 +58,7 @@ namespace dlt645
             buf.insert(buf.end(), encodedData.begin(), encodedData.end());
 
             // 计算校验和
-            uint8_t checkSum = calculateChecksum(buf);
+            uint8_t checkSum = calculateChecksum(buf.data(), buf.size());
             buf.push_back(checkSum);
             buf.push_back(FRAME_END_BYTE);
 
@@ -71,6 +74,9 @@ namespace dlt645
             if (startFlag != FRAME_START_BYTE || endFlag != FRAME_END_BYTE)
             {
                 throw std::runtime_error("Invalid start or end flag");
+            }
+            if (data.size() > 255) {
+                throw std::length_error("DL/T 645 data field exceeds 255 bytes");
             }
 
             std::vector<uint8_t> buf;
@@ -101,7 +107,7 @@ namespace dlt645
             buf.insert(buf.end(), encodedData.begin(), encodedData.end());
 
             // 计算并写入校验和
-            uint8_t checkSum = calculateChecksum(buf);
+            uint8_t checkSum = calculateChecksum(buf.data() + preamble.size(), buf.size() - preamble.size());
             buf.push_back(checkSum);
 
             // 写入结束符
@@ -120,8 +126,8 @@ namespace dlt645
             }
 
             // 帧边界检查
-            auto startIt = std::ranges::find(raw, FRAME_START_BYTE);
-            if (startIt == raw.end() || std::distance(startIt, raw.end()) < 11)
+            auto startIt = std::find(raw.begin(), raw.end(), FRAME_START_BYTE);
+            if (startIt == raw.end() || std::distance(startIt, raw.end()) < 12)
             {
                 return nullptr;
             }
@@ -142,17 +148,16 @@ namespace dlt645
             // 数据域提取
             size_t dataStart = startIdx + 10;
             size_t dataEnd = dataStart + frame->dataLen;
-            if (dataEnd > raw.size() - 2)
+            if (dataEnd > raw.size() || raw.size() - dataEnd < 2)
             { // 预留校验位和结束符
                 return nullptr;
             }
 
             // 数据域解码
-            frame->data = decodeData({raw.begin() + dataStart, frame->dataLen});
+            frame->data = decodeData(std::vector<uint8_t>(raw.begin() + dataStart, raw.begin() + dataEnd));
 
             // 校验和验证（从第一个68H到校验码前）
-            std::vector<uint8_t> checkData(raw.begin() + startIdx, raw.begin() + dataEnd);
-            uint8_t calculatedSum = calculateChecksum(checkData);
+            uint8_t calculatedSum = calculateChecksum(raw.data() + startIdx, dataEnd - startIdx);
 
             if (calculatedSum != raw[dataEnd])
             {
@@ -167,6 +172,7 @@ namespace dlt645
 
             frame->checkSum = raw[dataEnd];
             frame->endFlag = raw[dataEnd + 1];
+            frame->preamble.assign(raw.begin(), startIt);
 
             return frame;
         }

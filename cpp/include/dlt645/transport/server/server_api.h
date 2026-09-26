@@ -2,11 +2,13 @@
 #define DLT645_SERVER_API_H
 
 #include <boost/asio.hpp>
+#include <atomic>
 #include <chrono>
 #include <cstdint>
 #include <memory>
 #include <optional>
 #include <string>
+#include <thread>
 #include <vector>
 #include "dlt645/protocol/protocol.h"
 

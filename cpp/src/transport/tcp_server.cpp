@@ -217,14 +217,14 @@ namespace dlt645
                                     LOG_DEBUG("Received frame: ctrlCode={}, data length={}", frame->ctrlCode, frame->dataLen);
 
                                     // 调用handleFrame来处理解析后的帧
-                                    std::vector<uint8_t> response = connectionHandler_->handleRequest(*frame);
+                                    auto response = std::make_shared<std::vector<uint8_t>>(connectionHandler_->handleRequest(*frame));
 
                                     // 发送响应
-                                    if (!response.empty())
+                                    if (!response->empty())
                                     {
                                         boost::asio::async_write(
                                             *socket,
-                                            boost::asio::buffer(response),
+                                            boost::asio::buffer(*response),
                                             [socket, response](const boost::system::error_code &error, size_t)
                                             {
                                                 try
@@ -236,7 +236,7 @@ namespace dlt645
                                                     else
                                                     {
                                                         LOG_DEBUG("Sent response to TCP client: {}",
-                                                                  common::bytesToHexString(response));
+                                                                  common::bytesToHexString(*response));
                                                     }
                                                 }
                                                 catch (const std::exception &e)

@@ -2,11 +2,11 @@
 #define DLT645_PROTOCOL_H
 
 #include <cstdint>
+#include <cstddef>
 #include <memory>
 #include <string>
 #include <vector>
 #include <array>
-#include <span>
 
 namespace dlt645 {
     namespace protocol {
@@ -47,17 +47,17 @@ namespace dlt645 {
 
             // 构建帧
             static std::vector<uint8_t>
-            buildFrame(std::span<const uint8_t, 6> addr, uint8_t ctrlCode, const std::vector<uint8_t>& data);
+            buildFrame(const std::array<uint8_t, 6>& addr, uint8_t ctrlCode, const std::vector<uint8_t>& data);
 
             // 解码数据域（±33H转换）
-            static std::vector<uint8_t> decodeData(std::span<const uint8_t> data);
+            static std::vector<uint8_t> decodeData(const std::vector<uint8_t>& data);
 
             // 编码数据域（±33H转换）
-            static std::vector<uint8_t> encodeData(std::span<const uint8_t> data);
+            static std::vector<uint8_t> encodeData(const std::vector<uint8_t>& data);
 
         private:
             // 计算校验和（模256求和）
-            static uint8_t calculateChecksum(std::span<const uint8_t> data);
+            static uint8_t calculateChecksum(const uint8_t* data, size_t length);
         };
 
     } // namespace protocol

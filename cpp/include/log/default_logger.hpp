@@ -1,4 +1,5 @@
 #pragma once
+#include <cstring>
 #include "spdlog/spdlog.h"
 using LV = spdlog::level::level_enum;
 
@@ -10,24 +11,12 @@ inline const char *getFileName(const char *filePath)
 }
 
 // 日志宏定义
-#define LOG_TRACE(format, ...)                                                          \
-  spdlog::trace("[{}:{}]<{}> - " format, getFileName(__FILE__), __LINE__, __FUNCTION__, \
-                ##__VA_ARGS__)
-#define LOG_DEBUG(format, ...)                                                          \
-  spdlog::debug("[{}:{}]<{}> - " format, getFileName(__FILE__), __LINE__, __FUNCTION__, \
-                ##__VA_ARGS__)
-#define LOG_INFO(format, ...)                                                          \
-  spdlog::info("[{}:{}]<{}> - " format, getFileName(__FILE__), __LINE__, __FUNCTION__, \
-               ##__VA_ARGS__)
-#define LOG_WARN(format, ...)                                                          \
-  spdlog::warn("[{}:{}]<{}> - " format, getFileName(__FILE__), __LINE__, __FUNCTION__, \
-               ##__VA_ARGS__)
-#define LOG_ERROR(format, ...)                                                          \
-  spdlog::error("[{}:{}]<{}> - " format, getFileName(__FILE__), __LINE__, __FUNCTION__, \
-                ##__VA_ARGS__)
-#define LOG_CRITICAL(format, ...)                                                          \
-  spdlog::critical("[{}:{}]<{}> - " format, getFileName(__FILE__), __LINE__, __FUNCTION__, \
-                   ##__VA_ARGS__)
+#define LOG_TRACE(...) spdlog::trace("[{}:{}]<{}> - {}", getFileName(__FILE__), __LINE__, __FUNCTION__, fmt::format(__VA_ARGS__))
+#define LOG_DEBUG(...) spdlog::debug("[{}:{}]<{}> - {}", getFileName(__FILE__), __LINE__, __FUNCTION__, fmt::format(__VA_ARGS__))
+#define LOG_INFO(...) spdlog::info("[{}:{}]<{}> - {}", getFileName(__FILE__), __LINE__, __FUNCTION__, fmt::format(__VA_ARGS__))
+#define LOG_WARN(...) spdlog::warn("[{}:{}]<{}> - {}", getFileName(__FILE__), __LINE__, __FUNCTION__, fmt::format(__VA_ARGS__))
+#define LOG_ERROR(...) spdlog::error("[{}:{}]<{}> - {}", getFileName(__FILE__), __LINE__, __FUNCTION__, fmt::format(__VA_ARGS__))
+#define LOG_CRITICAL(...) spdlog::critical("[{}:{}]<{}> - {}", getFileName(__FILE__), __LINE__, __FUNCTION__, fmt::format(__VA_ARGS__))
 // LOG_SEPARATOR 宏保持不变
 #define LOG_SEPARATOR(content)                                             \
   spdlog::info("---------------------------{}---------------------------", \

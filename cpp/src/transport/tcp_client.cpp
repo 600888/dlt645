@@ -175,7 +175,7 @@ namespace dlt645
                     boost::asio::async_write(
                         *socket_,
                         boost::asio::buffer(*buffer),
-                        [this, promise](const boost::system::error_code &error, std::size_t /*bytes_transferred*/)
+                        [this, promise, buffer](const boost::system::error_code &error, std::size_t /*bytes_transferred*/)
                         {
                             if (error)
                             {

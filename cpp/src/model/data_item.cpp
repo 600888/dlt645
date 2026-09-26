@@ -1,11 +1,11 @@
 #include "dlt645/model/data_item.h"
-#include <fstream>
 #include <memory>
+#include <iterator>
 #include <string>
+#include <utility>
 #include "dlt645/common/log.h"
 #include "dlt645/model/model.h"
-#include "util/env.hpp"
-#include "util/json_opt.hpp"
+#include "dlt645/model/type_definitions.h"
 
 namespace dlt645 {
     namespace model {
@@ -15,7 +15,7 @@ namespace dlt645 {
         {
             LOG_DEBUG("DataItemManager: Constructor called - starting initialization");
             // 初始化所有类型定义
-            loadTypeDefsFromJson();
+            loadTypeDefinitions();
 
             // 初始化电能、需量、变量类型定义
             initEnergyDef();
@@ -25,23 +25,24 @@ namespace dlt645 {
             LOG_DEBUG("DataItemManager: Constructor completed - initialization finished");
         }
 
-        // 从JSON文件加载类型定义
-        void DataItemManager::loadTypeDefsFromJson()
+        // 与 Python 版一致，类型基础数据编译进程序，启动时不读取文件。
+        void DataItemManager::loadTypeDefinitions()
         {
-            std::lock_guard<std::mutex> lock(mutex_);
-
-            // 构建配置文件路径
-            std::string variableTypesFile = dataPath() + "variable_types.json";
-            std::string energyTypesFile = dataPath() + "energy_types.json";
-            std::string demandTypesFile = dataPath() + "demand_types.json";
-
-            // 加载三种类型定义
-            int loadedCount = 0;
-            loadedCount += loadTypeDefsFromFile(energyTypesFile, DataType::Energy);
-            loadedCount += loadTypeDefsFromFile(demandTypesFile, DataType::Demand);
-            loadedCount += loadTypeDefsFromFile(variableTypesFile, DataType::Variable);
-
-            LOG_INFO("Total loaded type definitions: {}", loadedCount);
+            energyTypes.reserve(std::size(definitions::energyTypes));
+            for (const auto& definition : definitions::energyTypes) {
+                DataItem item;
+                item.name = definition.name;
+                item.unit = definition.unit;
+                energyTypes.push_back(std::move(item));
+            }
+            demandTypes.reserve(std::size(definitions::demandTypes));
+            for (const auto& definition : definitions::demandTypes) {
+                DataItem item;
+                item.name = definition.name;
+                item.unit = definition.unit;
+                demandTypes.push_back(std::move(item));
+            }
+            LOG_INFO("Loaded {} energy and {} demand definitions", energyTypes.size(), demandTypes.size());
         }
 
         // 添加数据项类型定义
@@ -61,87 +62,12 @@ namespace dlt645 {
             }
         }
 
-        // 从指定JSON文件加载数据项类型定义
-        int DataItemManager::loadTypeDefsFromFile(const std::string& filePath, const DataType& dataType)
-        {
-            int count = 0;
-            JsonDoc jsonDoc;
-
-            LOG_INFO("Loading definitions from: {}", filePath);
-
-            // 检查文件是否存在
-            std::ifstream file(filePath);
-            if (!file.is_open()) {
-                LOG_ERROR("Failed to open file: {}", filePath);
-                return count;
-            }
-            file.close();
-
-            // 解析JSON文件
-            if (!parseJsonDoc(filePath, jsonDoc)) {
-                LOG_ERROR("Failed to parse JSON file: {}", filePath);
-                return 0;
-            }
-
-            // 检查是否是数组
-            if (!jsonDoc.IsArray()) {
-                LOG_ERROR("JSON is not an array: {}", filePath);
-                return 0;
-            }
-
-            // 遍历数组中的每个元素
-            const rapidjson::Value& array = jsonDoc;
-            for (rapidjson::SizeType i = 0; i < array.Size(); i++) {
-                const rapidjson::Value& item = array[i];
-
-                DataItem dataItem;
-
-                // 解析Di (数据项地址)
-                if (item.HasMember("Di") && item["Di"].IsString()) {
-                    std::string diStr = item["Di"].GetString();
-                    // 将16进制字符串转换为uint32_t
-                    try {
-                        dataItem.di = std::stoul(diStr, nullptr, 16);
-                    } catch (...) {
-                        LOG_WARN("Invalid Di value: {} in {} file", diStr, filePath);
-                        continue;
-                    }
-                }
-
-                // 解析Name (数据名称)
-                if (item.HasMember("Name") && item["Name"].IsString()) {
-                    dataItem.name = item["Name"].GetString();
-                }
-
-                // 解析Unit (单位)
-                if (item.HasMember("Unit") && item["Unit"].IsString()) {
-                    dataItem.unit = item["Unit"].GetString();
-                }
-
-                // 解析Dataformat (数据格式)
-                if (item.HasMember("DataFormat") && item["DataFormat"].IsString()) {
-                    dataItem.dataFormat = item["DataFormat"].GetString();
-                }
-
-                if (dataType == DataType::Energy) {
-                    energyTypes.push_back(dataItem);
-                } else if (dataType == DataType::Demand) {
-                    demandTypes.push_back(dataItem);
-                } else if (dataType == DataType::Variable) {
-                    variableTypes.push_back(dataItem);
-                }
-
-                // 添加到映射表中
-                diMap_[dataItem.di] = dataItem;
-                count++;
-            }
-
-            LOG_INFO("Loaded {} type definitions", count);
-            return count;
-        }
-
         // 获取所有数据项类型定义
-        const std::unordered_map<uint32_t, DataItem>& DataItemManager::getDataItems() const { return diMap_; }
+        std::unordered_map<uint32_t, DataItem> DataItemManager::getDataItems() const
+        {
+            std::lock_guard<std::mutex> lock(mutex_);
+            return diMap_;
+        }
 
         // 根据DI获取数据项类型定义 (保持向后兼容)
         std::shared_ptr<DataItem> DataItemManager::getDataItem(uint32_t di) const
@@ -339,7 +265,18 @@ namespace dlt645 {
         }
 
         // 初始化变量类型定义
-        void DataItemManager::initVariablesDef() { std::lock_guard<std::mutex> lock(mutex_); }
+        void DataItemManager::initVariablesDef()
+        {
+            std::lock_guard<std::mutex> lock(mutex_);
+            for (const auto& definition : definitions::variableTypes) {
+                DataItem item;
+                item.di = definition.di;
+                item.name = definition.name;
+                item.unit = definition.unit;
+                item.dataFormat = definition.format;
+                diMap_[item.di] = std::move(item);
+            }
+        }
 
         // 初始化电能类型定义
         void DataItemManager::initEnergyDef()

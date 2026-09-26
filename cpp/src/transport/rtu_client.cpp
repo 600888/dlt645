@@ -224,7 +224,7 @@ namespace dlt645
                     boost::asio::async_write(
                         *serial_port_,
                         boost::asio::buffer(*buffer),
-                        [this, promise](const boost::system::error_code &error, std::size_t /*bytes_transferred*/)
+                        [this, promise, buffer](const boost::system::error_code &error, std::size_t /*bytes_transferred*/)
                         {
                             if (error)
                             {
@@ -246,7 +246,7 @@ namespace dlt645
 
                             // 设置超时处理
                             timer->async_wait(
-                                [promise, response_buffer, read_in_progress](const boost::system::error_code &error)
+                                [this, promise, response_buffer, read_in_progress](const boost::system::error_code &error)
                                 {
                                     if (error == boost::asio::error::operation_aborted)
                                     {
@@ -257,6 +257,10 @@ namespace dlt645
                                     if (*read_in_progress)
                                     {
                                         *read_in_progress = false;
+                                        if (serial_port_ && serial_port_->is_open()) {
+                                            boost::system::error_code cancel_error;
+                                            serial_port_->cancel(cancel_error);
+                                        }
                                         LOG_WARN("RTU receive timeout");
                                         promise->set_value({});
                                     }

@@ -2,8 +2,9 @@
 #include <chrono>
 #include <string>
 #include <array>
-#include <span>
+#include <algorithm>
 #include <utility>
+#include <type_traits>
 #include "dlt645/common/log.h"
 #include "dlt645/common/transform.h"
 #include "dlt645/model/data_item.h"
@@ -57,13 +58,13 @@ namespace dlt645
         bool ServerService::validateDevice(const std::array<uint8_t, 6> &address) const
         {
             // 处理特殊命令地址
-            if (std::ranges::all_of(address, [](uint8_t b)
+            if (std::all_of(address.begin(), address.end(), [](uint8_t b)
                                     { return b == 0xAA; }))
             {
                 return true; // 读通讯地址命令
             }
 
-            if (std::ranges::all_of(address, [](uint8_t b)
+            if (std::all_of(address.begin(), address.end(), [](uint8_t b)
                                     { return b == 0x99; }))
             {
                 return true; // 广播时间同步命令
@@ -87,89 +88,34 @@ namespace dlt645
             LOG_INFO("Device address set to: {}", common::bytesToHexString(std::vector<uint8_t>(address.begin(), address.end())));
         }
 
-        bool ServerService::set00(uint32_t di, float value)
+        namespace {
+        template <typename T>
+        bool setDataItem(uint32_t di, const T& value, const char* category)
         {
-            LOG_INFO("Setting energy value for DI={}: {}", di, value);
-
-            // 获取数据项
-            auto dataItem = DIManager::inst()->getDataItem(di);
-
-            if (!dataItem)
-            {
+            static_assert(std::is_same_v<T, float> || std::is_same_v<T, model::Demand>, "Unsupported data item value");
+            const float numericValue = [&]() {
+                if constexpr (std::is_same_v<T, model::Demand>) return value.value;
+                else return value;
+            }();
+            LOG_INFO("Setting {} value for DI={}: {}", category, di, numericValue);
+            auto item = DIManager::inst()->getDataItem(di);
+            if (!item) {
                 LOG_ERROR("Failed to get data item");
                 return false;
             }
-
-            // 验证值是否符合数据项的格式
-            if (!model::isValueValid(dataItem->dataFormat, value))
-            {
-                LOG_ERROR("Value {} is out of range for data format {}", value, dataItem->dataFormat);
+            if (!model::isValueValid(item->dataFormat, numericValue)) {
+                LOG_ERROR("Value {} is out of range for data format {}", numericValue, item->dataFormat);
                 return false;
             }
-
-            // 更新数据项的值
-            dataItem->value = value;
-            dataItem->setTimestamp(std::chrono::system_clock::now());
-
-            // 使用updateDataItem方法更新原始数据
-            return DIManager::inst()->updateDataItem(di, *dataItem);
+            item->value = value;
+            item->setTimestamp(std::chrono::system_clock::now());
+            return DIManager::inst()->updateDataItem(di, *item);
         }
+        } // namespace
 
-        bool ServerService::set01(uint32_t di, const model::Demand &demand)
-        {
-            LOG_INFO("Setting demand value for DI={}: {}", di, demand.value);
-
-            // 获取数据项
-            auto dataItem = DIManager::inst()->getDataItem(di);
-
-            if (!dataItem)
-            {
-                LOG_ERROR("Failed to get data item");
-                return false;
-            }
-
-            // 验证值是否符合数据项的格式
-            if (!model::isValueValid(dataItem->dataFormat, demand.value))
-            {
-                LOG_ERROR("Demand value {} is out of range for data format {}", demand.value, dataItem->dataFormat);
-                return false;
-            }
-
-            // 更新数据项的值
-            dataItem->value = demand;
-            dataItem->setTimestamp(std::chrono::system_clock::now());
-
-            // 使用updateDataItem方法更新原始数据
-            return DIManager::inst()->updateDataItem(di, *dataItem);
-        }
-
-        bool ServerService::set02(uint32_t di, float value)
-        {
-            LOG_INFO("Setting variable value for DI={}: {}", di, value);
-
-            // 获取数据项
-            auto dataItem = DIManager::inst()->getDataItem(di);
-
-            if (!dataItem)
-            {
-                LOG_ERROR("Failed to get data item");
-                return false;
-            }
-
-            // 验证值是否符合数据项的格式
-            if (!model::isValueValid(dataItem->dataFormat, value))
-            {
-                LOG_ERROR("Value {} is out of range for data format {}", value, dataItem->dataFormat);
-                return false;
-            }
-
-            // 更新数据项的值
-            dataItem->value = value;
-            dataItem->setTimestamp(std::chrono::system_clock::now());
-
-            // 使用updateDataItem方法更新原始数据
-            return DIManager::inst()->updateDataItem(di, *dataItem);
-        }
+        bool ServerService::set00(uint32_t di, float value) { return setDataItem(di, value, "energy"); }
+        bool ServerService::set01(uint32_t di, const model::Demand& demand) { return setDataItem(di, demand, "demand"); }
+        bool ServerService::set02(uint32_t di, float value) { return setDataItem(di, value, "variable"); }
 
         void ServerService::setPassword(const std::array<uint8_t, 4> &password)
         {
@@ -271,7 +217,7 @@ namespace dlt645
                 if (frame.data.size() >= 6)
                 {
                     std::array<uint8_t, 6> newAddr;
-                    std::ranges::copy(frame.data.begin(), frame.data.begin() + 6, newAddr.begin());
+                    std::copy(frame.data.begin(), frame.data.begin() + 6, newAddr.begin());
                     setAddress(newAddr);
                 }
                 return protocol::Frame::buildFrame(address_, frame.ctrlCode | 0x80, {});
@@ -288,6 +234,7 @@ namespace dlt645
 
         std::vector<uint8_t> ServerService::handleReadEnergy(const protocol::Frame &frame)
         {
+            if (frame.data.size() < 4) return {};
             // 解析数据标识为32位无符号整数
             uint32_t dataId = dlt645::common::bytesToIntLittleEndian<uint32_t>(frame.data);
 
@@ -302,7 +249,7 @@ namespace dlt645
             // 构建响应数据
             std::vector<uint8_t> resData(8);
             // 复制前4字节数据标识
-            std::ranges::copy(frame.data.begin(), frame.data.begin() + 4, resData.begin());
+            std::copy(frame.data.begin(), frame.data.begin() + 4, resData.begin());
 
             if (std::holds_alternative<float>(dataItem->value))
             {
@@ -312,7 +259,7 @@ namespace dlt645
                 // 复制BCD值到响应数据
                 if (bcdValue.size() >= 4)
                 {
-                    std::ranges::copy(bcdValue.begin(), bcdValue.begin() + 4, resData.begin() + 4);
+                    std::copy(bcdValue.begin(), bcdValue.begin() + 4, resData.begin() + 4);
                 }
             }
 
@@ -322,6 +269,7 @@ namespace dlt645
 
         std::vector<uint8_t> ServerService::handleReadDemand(const protocol::Frame &frame)
         {
+            if (frame.data.size() < 4) return {};
             // 解析数据标识为32位无符号整数
             uint32_t dataId = common::bytesToIntLittleEndian<uint32_t>(frame.data);
 
@@ -336,7 +284,7 @@ namespace dlt645
             // 构建响应数据
             std::vector<uint8_t> resData(12);
             // 复制前4字节数据标识
-            std::ranges::copy(frame.data.begin(), frame.data.begin() + 4, resData.begin());
+            std::copy(frame.data.begin(), frame.data.begin() + 4, resData.begin());
 
             // 处理数据值
             if (std::holds_alternative<model::Demand>(dataItem->value))
@@ -352,16 +300,15 @@ namespace dlt645
                 // 复制BCD值到响应数据
                 if (bcdValue.size() >= 3)
                 {
-                    std::ranges::copy(bcdValue.begin(), bcdValue.begin() + 3, resData.begin() + 4);
+                    std::copy(bcdValue.begin(), bcdValue.begin() + 3, resData.begin() + 4);
                 }
 
                 // 获取当前时间并转换为BCD码
-                auto now = std::chrono::system_clock::now();
-                auto timeBcd = dlt645::common::timeToBcd(now, true);
+                auto timeBcd = dlt645::common::timeToBcd(demand.occurTime, true);
                 // 复制时间BCD码到响应数据
                 if (timeBcd.size() >= 5)
                 {
-                    std::ranges::copy(timeBcd.begin(), timeBcd.begin() + 5, resData.begin() + 7);
+                    std::copy(timeBcd.begin(), timeBcd.begin() + 5, resData.begin() + 7);
                 }
             }
 
@@ -373,6 +320,7 @@ namespace dlt645
 
         std::vector<uint8_t> ServerService::handleReadVariable(const protocol::Frame &frame)
         {
+            if (frame.data.size() < 4) return {};
             // 解析数据标识为32位无符号整数
             uint32_t dataId = dlt645::common::bytesToIntLittleEndian<uint32_t>(frame.data);
 
@@ -384,18 +332,13 @@ namespace dlt645
                 return {};
             }
 
-            // 计算变量数据长度
-            size_t dataLen = 4; // 数据标识长度
-            // 根据数据格式计算额外长度
-            if (!dataItem->dataFormat.empty())
-            {
-                dataLen += (dataItem->dataFormat.length() - 1) / 2; // (数据格式长度 - 1位小数点)/2
-            }
+            const size_t digits = std::count(dataItem->dataFormat.begin(), dataItem->dataFormat.end(), 'X');
+            const size_t dataLen = 4 + (digits + 1) / 2;
 
             // 构建响应数据
             std::vector<uint8_t> resData(dataLen);
             // 复制前4字节数据标识
-            std::ranges::copy(frame.data.begin(), frame.data.begin() + 4, resData.begin());
+            std::copy(frame.data.begin(), frame.data.begin() + 4, resData.begin());
 
             // 处理数据值
             if (std::holds_alternative<float>(dataItem->value))
@@ -405,7 +348,7 @@ namespace dlt645
                 auto bcdValue = dlt645::common::floatToBcd(value, dataItem->dataFormat, true);
                 // 复制BCD值到响应数据
                 size_t bcdCopyLen = std::min(bcdValue.size(), dataLen - 4);
-                std::ranges::copy(bcdValue.begin(), bcdValue.begin() + bcdCopyLen, resData.begin() + 4);
+                std::copy(bcdValue.begin(), bcdValue.begin() + bcdCopyLen, resData.begin() + 4);
             }
 
             // 构建响应帧

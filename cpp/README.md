@@ -69,11 +69,21 @@
 
 ## 依赖项
 
-- C++20 标准
-- CMake 3.16+ 
-- Boost >=1.81（用于Asio网络编程）
+- C++17 标准
+- CMake 3.20+
+- Boost >=1.83（用于Asio网络编程）
 - spdlog 日志库（已包含在third目录）
-- rapidjson （已包含在third目录）
+- 数据项定义编译在 C++ 静态表中；维护时从 Python 版定义重新生成（见下文）
+
+## 数据定义维护
+
+C++ 已实现的电能、需量和变量类型以 Python 版的 `python/src/config/` 定义为维护源。在仓库根目录运行以下命令，更新 C++ 头文件，并将生成结果与 Python 定义一起提交：
+
+```bash
+python cpp/tools/generate_type_definitions.py
+```
+
+生成结果位于 `cpp/include/dlt645/model/type_definitions.h`。C++ 编译及运行时无需 Python 或额外的数据配置文件。
 
 ## 构建步骤
 
@@ -92,10 +102,9 @@
 2. 创建构建目录并编译项目：
    ```bash
    cd cpp
-   mkdir build
-   cd build
-   cmake ..
-   make
+   cmake -S . -B build
+   cmake --build build
+   ctest --test-dir build --output-on-failure
    ```
 
 3. 安装（可选）：
